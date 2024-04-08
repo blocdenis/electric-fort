@@ -1,0 +1,18 @@
+// .header {
+//   color: #ffffff;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// }
+.container {
+  background-color: #6eb900;
+  color: white;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0px 24px;
+}
+.content {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+}
