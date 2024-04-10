@@ -8,44 +8,52 @@ import {
   TikTokIcon,
 } from '../icons'
 import styles from './Header.module.scss'
+import ContactText from '../ContactText/ContactText'
+import SearchInput from '../SearchInput/SearchInput'
 const Header = () => {
   return (
-    // TO DO
-    <header className={styles.header}>
-      <div className={styles.container}>
+    <div className={styles.header}>
+      <div className={styles.container_top}>
         <div className={styles.content}>
-          <div>
-            <TikTokIcon />
-            <InstagramIcon />
+          <div className={styles.container_icons}>
+            <TikTokIcon href="https://www.tiktok.com/" />
+            <InstagramIcon href="https://www.instagram.com" />
+          </div>
+          <div className={styles.container_lang}>
+            <button>
+              <span>UA</span>
+            </button>
+            <div className={styles.line}></div>
+            <button>
+              <span>RU</span>
+            </button>
           </div>
           <div>
-            <span>UA</span>
-            <span>RU</span>
-          </div>
-          <div>
-            <h1>Увийты</h1>
+            <h1>Увійти</h1>
           </div>
         </div>
       </div>
-      <div className={styles.content}>
-        <div>
+      <div className={styles.container_bot}>
+        <div className={styles.container_logo}>
           <MainLogo />
-          <h2>Elektrychna Fortecia </h2>
+          <h2>
+            Електрична <span>фортеця</span>
+          </h2>
         </div>
         {/* TO DO */}
-        <div>
-          <PhoneIcon />
-          <span>+38(000) 000-00-00</span>
-          <PhoneIcon />
-          <span>+38(000) 000-00-00</span>
-          <input type="text" name="" id="" />
+        <div className={styles.container_search}>
+          <div className={styles.container_contact}>
+            <ContactText />
+            <ContactText />
+          </div>
+          <SearchInput placeholder="Пошук" />
         </div>
-        <div>
+        <div className={styles.container_icons}>
           <HeartIcon />
           <CartIcon />
         </div>
       </div>
-    </header>
+    </div>
   )
 }
 

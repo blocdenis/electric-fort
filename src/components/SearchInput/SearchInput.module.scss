@@ -1,0 +1,21 @@
+.search {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input {
+  padding: 7px 24px 7px 16px; /* Добавляем отступ для иконки */
+  border: 1px solid #f5f5f5;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  width: 100%;
+}
+
+.icon {
+  position: absolute;
+  right: 10px;
+  color: #f5f5f5;
+}
