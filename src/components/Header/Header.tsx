@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import {
   CartIcon,
   HeartIcon,
@@ -6,18 +6,18 @@ import {
   MainLogo,
   PhoneIcon,
   TikTokIcon,
-} from '../icons'
-import styles from './Header.module.scss'
-import ContactText from '../ContactText/ContactText'
-import SearchInput from '../SearchInput/SearchInput'
+} from '../icons';
+import styles from './Header.module.scss';
+import ContactText from '../Contact/ContactText/ContactText';
+import SearchInput from '../SearchInput/SearchInput';
 const Header = () => {
   return (
     <div className={styles.header}>
       <div className={styles.container_top}>
         <div className={styles.content}>
           <div className={styles.container_icons}>
-            <TikTokIcon href="https://www.tiktok.com/" />
-            <InstagramIcon href="https://www.instagram.com" />
+            <TikTokIcon href="https://www.tiktok.com/" color="#ADFE35" />
+            <InstagramIcon href="https://www.instagram.com" color="#ADFE35" />
           </div>
           <div className={styles.container_lang}>
             <button>
@@ -54,7 +54,7 @@ const Header = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
