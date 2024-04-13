@@ -1,10 +1,9 @@
 'use client';
-import Link from 'next/link';
 import styles from './Navigation.module.scss';
-import classNames from 'classnames';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import Catalog from './Catalog';
 import NavigationItem from './NavigationItem';
+import { useEffect, useState } from 'react';
 
 export const navigationItems = [
   { id: '1', title: 'Про нас', href: '/about_us' },
@@ -15,9 +14,10 @@ export const navigationItems = [
 ];
 
 function Navigation() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className={styles.navigation_catalog_container}>
-      <Catalog />
+      <Catalog onClick={() => setIsOpen(true)} />
       <div className={styles.navigation}>
         <div className={styles.navigation_container}>
           <nav className={styles.menu}>
@@ -34,10 +34,8 @@ function Navigation() {
           </nav>
         </div>
       </div>
-      {/* <BurgerMenu
-        isOpen={viewWidth <= 1023}
-        onCloseClick={() => console.log('close')}
-      /> */}
+
+      <BurgerMenu isOpen={isOpen} onCloseClick={() => setIsOpen(false)} />
     </div>
   );
 }

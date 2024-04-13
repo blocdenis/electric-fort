@@ -5,14 +5,23 @@ export interface BurgerMenuItemProps {
   title: string;
   value?: number;
   children?: ReactNode;
+  onClick: () => void;
 }
 
-function BurgerMenuItem({ children, title, value }: BurgerMenuItemProps) {
+function BurgerMenuItem({
+  children,
+  title,
+  value,
+  onClick,
+}: BurgerMenuItemProps) {
   return (
-    <li className="flex justify-between items-center mb-6 last:mb-0 ">
+    <li
+      onClick={onClick}
+      className="flex justify-between items-center mb-6 last:mb-0 "
+    >
       <Link href="/cart" className="flex items-center justify-center">
         {children ? (
-          <div className="w-[40px] h-[40px] [&_svg]:w-full flex items-center">
+          <div className="w-[40px] h-[40px] [&_svg]:w-full [&_path]:stroke-white flex items-center">
             {children}
           </div>
         ) : null}
