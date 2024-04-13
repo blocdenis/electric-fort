@@ -1,0 +1,12 @@
+.container_logo {
+  display: flex;
+  position: relative;
+  h2 {
+    padding: 12px;
+    span {
+      position: absolute;
+      top: 0px;
+      right: -24px;
+    }
+  }
+}
