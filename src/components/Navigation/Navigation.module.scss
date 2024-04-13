@@ -1,0 +1,37 @@
+@use '../../scss/abstracts/' as *;
+
+.navigation {
+  position: relative;
+  display: flex;
+  padding: 8px 64px 8px 448px;
+  background: $accent-primary;
+  color: $white;
+}
+
+.catalog {
+  position: absolute;
+  bottom: 0;
+  left: 64px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 339px;
+  height: 65px;
+  background: $accent-primary-strong;
+}
+
+.menu_list {
+  display: flex;
+}
+
+.menu_item {
+  color: $black;
+  padding: 8px 12px;
+}
+
+.menu_item__accent {
+  padding-left: 48px;
+  padding-right: 48px;
+  background: $accent-secondary;
+  box-shadow: 2px 3px 4px 0 rgba(46, 46, 46, 0.25);
+}
