@@ -20,3 +20,5 @@ export { default as AdvantagesIconPrices } from './AdvantagesIconPrices';
 export { default as AdvantagesIconDiscounts } from './AdvantagesIconDiscounts';
 export { default as MasterCardIcon } from './MasterCardIcon';
 export { default as VisaIcon } from './VisaIcon';
+export { default as CrossIcon } from './CrossIcon';
+export { default as ProfileIcon } from './ProfileIcon';

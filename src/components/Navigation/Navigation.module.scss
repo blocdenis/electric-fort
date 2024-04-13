@@ -1,37 +1,82 @@
 @use '../../scss/abstracts/' as *;
 
-.navigation {
+.navigation_catalog_container {
   position: relative;
-  display: flex;
-  padding: 8px 64px 8px 448px;
+  @include breakpoint(tablet) {
+    height: 57px;
+  }
+}
+
+.navigation {
   background: $accent-primary;
   color: $white;
+  font-size: 18px;
+  @media (min-width: 1024px) and (max-width: 1388px) {
+    font-size: calc(12px + (16 - 12) * ((100vw - 788px) / (1388 - 768)));
+  }
+  @include breakpoint(tablet) {
+    display: none;
+  }
+}
+
+.navigation_container {
+  display: flex;
+  padding: 8px 64px 8px 448px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .catalog {
   position: absolute;
+  top: -5px;
   bottom: 0;
   left: 64px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 339px;
-  height: 65px;
   background: $accent-primary-strong;
+  @include breakpoint(tablet) {
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
 }
 
 .menu_list {
   display: flex;
+  align-items: center;
+  justify-items: flex-start;
+  gap: 24px;
+  @media (min-width: 1024px) and (max-width: 1295px) {
+    gap: 16px;
+  }
+  @include breakpoint(tablet) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .menu_item {
   color: $black;
-  padding: 8px 12px;
+  padding: 8px;
+  @include breakpoint(tablet) {
+    color: $white;
+  }
 }
 
 .menu_item__accent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding-left: 48px;
   padding-right: 48px;
   background: $accent-secondary;
   box-shadow: 2px 3px 4px 0 rgba(46, 46, 46, 0.25);
+  @include breakpoint(tablet) {
+    color: $black;
+    align-self: center;
+    width: 100%;
+    margin-bottom: 32px;
+  }
 }
