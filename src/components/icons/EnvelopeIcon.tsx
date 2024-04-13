@@ -1,15 +1,19 @@
-import { SVGProps } from 'react';
-const EnvelopeIcon = (props: SVGProps<SVGSVGElement>) => (
+import { FC, SVGProps } from 'react';
+
+interface EnvelopIconProps extends SVGProps<SVGSVGElement> {
+  color?: string;
+}
+const EnvelopeIcon: FC<EnvelopIconProps> = ({ color = 'white', ...rest }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="22"
     height="20"
     viewBox="0 0 22 20"
     fill="none"
-    {...props}
+    {...rest}
   >
     <path
-      stroke="#fff"
+      stroke={color}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth="1.5"

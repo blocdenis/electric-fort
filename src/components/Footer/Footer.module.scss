@@ -1,0 +1,71 @@
+@use '../../scss/abstracts/' as *;
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #9cec25;
+  color: $black;
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  gap: 80px;
+  border-bottom: 1px solid $white;
+  @include breakpoint(tablet) {
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px;
+  }
+  @include breakpoint(mobile) {
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+  }
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.nav li {
+  font: $regular16;
+}
+
+.block h3 {
+  font-size: 24px;
+  line-height: 33.6px;
+  font: $bold24;
+}
+.container_icons {
+  display: flex;
+  padding: 1px;
+  gap: 50px;
+}
+.menu_toggle {
+  display: none;
+}
+@include breakpoint(mobile) {
+  .menu_toggle {
+    display: block;
+    font-size: 24px;
+  }
+  .nav {
+    display: none;
+  }
+  .nav ul {
+    gap: 10px;
+  }
+  .s {
+    display: flex;
+    gap: 4px;
+  }
+  .open {
+    display: block;
+  }
+}
