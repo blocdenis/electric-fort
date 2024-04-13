@@ -51,16 +51,32 @@
   @media (min-width: 1024px) and (max-width: 1295px) {
     gap: 16px;
   }
+  @include breakpoint(tablet) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 .menu_item {
   color: $black;
   padding: 8px;
+  @include breakpoint(tablet) {
+    color: $white;
+  }
 }
 
 .menu_item__accent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding-left: 48px;
   padding-right: 48px;
   background: $accent-secondary;
   box-shadow: 2px 3px 4px 0 rgba(46, 46, 46, 0.25);
+  @include breakpoint(tablet) {
+    color: $black;
+    align-self: center;
+    width: 100%;
+    margin-bottom: 32px;
+  }
 }
