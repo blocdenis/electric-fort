@@ -10,6 +10,7 @@ import {
 import styles from './Header.module.scss';
 import ContactText from '../Contact/ContactText/ContactText';
 import SearchInput from '../SearchInput/SearchInput';
+import Brand from '../Brand/Brand';
 const Header = () => {
   return (
     <div className={styles.header}>
@@ -34,13 +35,7 @@ const Header = () => {
         </div>
       </div>
       <div className={styles.container_bot}>
-        <div className={styles.container_logo}>
-          <MainLogo />
-          <h2>
-            Електрична <span>фортеця</span>
-          </h2>
-        </div>
-        {/* TO DO */}
+        <Brand />
         <div className={styles.container_search}>
           <div className={styles.container_contact}>
             <ContactText />

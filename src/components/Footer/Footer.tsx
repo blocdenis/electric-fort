@@ -8,13 +8,17 @@ import {
   TikTokIcon,
 } from '../icons';
 import ContactContent from '../Contact/ContactContent/ContactContent';
+import PaymentMethods from '../PaymentMethods/PaymentMethods';
+import Brand from '../Brand/Brand';
+import Map from '../Map/Map';
+import Link from 'next/link';
 
 const Footer: React.FC = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.block}>
-        <h3>Карта</h3>
-        {/* Здесь может быть ваше содержимое для блока "Карта" */}
+        <Brand />
+        <Map />
       </div>
       <div className={styles.block}>
         <h3>Контакти</h3>
@@ -28,17 +32,23 @@ const Footer: React.FC = () => {
       </div>
       <div className={styles.block}>
         <h3>Клієнтам</h3>
-        <p>Доставка і оплата</p>
-        <p>Повернення та обмін</p>
+        <p>
+          <Link href="/delivery">Доставка і оплата</Link>
+        </p>
+        <p>
+          <Link href="/return_policy">Повернення та обмін</Link>
+        </p>
         <p>Публічна оферта</p>
         <p>Політика конфеденційності</p>
         <p>Програма лояльності</p>
         <p>Співпраця з партнерами</p>
-        <p>Співпраця</p>
+        <p>
+          <Link href="/cooperation">Співпраця</Link>
+        </p>
       </div>
       <div className={styles.block}>
-        <h3>Способи оплати</h3>
-        {/* Здесь может быть ваше содержимое для блока "Способы оплаты" */}
+        <h3>Способи оплати:</h3>
+        <PaymentMethods />
       </div>
     </footer>
   );
