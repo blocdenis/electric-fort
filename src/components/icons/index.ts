@@ -18,3 +18,5 @@ export { default as AdvantagesIconIndividual } from './AdvantagesIconIndividual'
 export { default as AdvantagesIconOfficial } from './AdvantagesIconOfficial';
 export { default as AdvantagesIconPrices } from './AdvantagesIconPrices';
 export { default as AdvantagesIconDiscounts } from './AdvantagesIconDiscounts';
+export { default as CrossIcon } from './CrossIcon';
+export { default as ProfileIcon } from './ProfileIcon';
