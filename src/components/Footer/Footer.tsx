@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import styles from './Footer.module.scss';
 import ContactText from '../Contact/ContactText/ContactText';
 import {
@@ -14,6 +15,12 @@ import Map from '../Map/Map';
 import Link from 'next/link';
 
 const Footer: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+    console.log('toggled' + isMenuOpen);
+  };
   return (
     <footer className={styles.footer}>
       <div className={styles.block}>
@@ -31,20 +38,31 @@ const Footer: React.FC = () => {
         </div>
       </div>
       <div className={styles.block}>
-        <h3>Клієнтам</h3>
-        <p>
-          <Link href="/delivery">Доставка і оплата</Link>
-        </p>
-        <p>
-          <Link href="/return_policy">Повернення та обмін</Link>
-        </p>
-        <p>Публічна оферта</p>
-        <p>Політика конфеденційності</p>
-        <p>Програма лояльності</p>
-        <p>Співпраця з партнерами</p>
-        <p>
-          <Link href="/cooperation">Співпраця</Link>
-        </p>
+        <div className={styles.s}>
+          <h3>Клієнтам</h3>
+          <button className={styles.menu_toggle} onClick={toggleMenu}>
+            +
+          </button>
+        </div>
+
+        <nav className={`${styles.nav} ${isMenuOpen ? styles.open : ''}`}>
+          <ul>
+            <li>
+              <Link href="/delivery">Доставка і оплата</Link>
+            </li>
+
+            <li>
+              <Link href="/return_policy">Повернення та обмін</Link>
+            </li>
+            <li>Публічна оферта</li>
+            <li>Програма лояльності</li>
+            <li>Політика конфеденційності</li>
+            <li>Співпраця з партнерами</li>
+            <li>
+              <Link href="/cooperation">Співпраця</Link>
+            </li>
+          </ul>
+        </nav>
       </div>
       <div className={styles.block}>
         <h3>Способи оплати:</h3>
