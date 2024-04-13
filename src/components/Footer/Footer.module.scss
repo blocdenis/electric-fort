@@ -1,8 +1,6 @@
 @use '../../scss/abstracts/' as *;
 
 .footer {
-  position: fixed;
-  bottom: 0;
   width: 100%;
   background-color: #9cec25;
   color: $black;
@@ -67,5 +65,29 @@
   }
   .open {
     display: block;
+  }
+}
+.footer_wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.bottomBar {
+  background-color: $accent-primary-strong;
+  text-align: center;
+  > h4 {
+    padding: 17px 578px;
+  }
+  @include breakpoint(tablet) {
+    h4 {
+      padding: 0px;
+      overflow-y: scroll;
+    }
+  }
+  @include breakpoint(mobile) {
+    h4 {
+      padding: 0px;
+      overflow-y: scroll;
+    }
   }
 }

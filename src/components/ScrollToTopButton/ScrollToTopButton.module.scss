@@ -1,0 +1,23 @@
+@use '../../scss/abstracts/' as *;
+.button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+
+  background-color: $accent-secondary;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  @include breakpoint(mobile) {
+    .button {
+      bottom: 10px;
+      right: 10px;
+    }
+  }
+}
+
+.button:hover {
+  background-color: $accent-primary-strong;
+}
