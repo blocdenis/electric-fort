@@ -38,6 +38,7 @@ const burgerMenuItems = [
       />
     ),
     value: 12,
+    href: '/profile/favorites',
   },
 ];
 
@@ -45,8 +46,9 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
   const isLogIn = false;
   return (
     <div
+      onClick={(e) => e.stopPropagation()}
       className={classNames(
-        'lg:hidden text-base font-normal absolute z-20 w-full top-[-180px] left-0 transition-transform duration-1000',
+        'lg:hidden text-base font-normal absolute z-20 w-full top-[0] left-0 transition-transform duration-1000',
         isOpen ? 'translate-y-0' : 'translate-y-[-150%]'
       )}
     >
@@ -57,13 +59,14 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
         {isLogIn ? <BurgerUserhNav /> : <BurgerAuthNav />}
       </div>
       <div className=" px-4 pt-4 pb-8 h-auto bg-black">
-        <ul className=" bg-black pb-6 mb-6 border-b border-b-gray-ligthMax ">
+        <ul className=" bg-black text-white pb-6 mb-6 border-b border-b-gray-ligthMax ">
           {burgerMenuItems.map((item) => (
             <BurgerMenuItem
               onClick={onCloseClick}
               key={item.title}
               title={item.title}
               value={item.value}
+              href={item?.href}
             >
               {item.icon}
             </BurgerMenuItem>
@@ -91,7 +94,7 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
             <InstagramIcon href="https://www.instagram.com" color="#69AF00" />
           </div>
         </div>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 text-white">
           <ContactText color="#69AF00" />
           <ContactText color="#69AF00" />
         </div>
