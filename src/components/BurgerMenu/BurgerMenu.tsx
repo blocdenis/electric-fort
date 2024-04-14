@@ -99,12 +99,12 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
           <ContactText color="#69AF00" />
         </div>
         <div className="flex items-center justify-center">
-          <div className={stylesHeader.container_lang}>
-            <button>
+          <div className=" flex gap-3">
+            <button className=" hover:text-yellow">
               <span>UA</span>
             </button>
-            <div className={stylesHeader.line}></div>
-            <button>
+            <span className="">|</span>
+            <button className=" hover:text-yellow">
               <span>RU</span>
             </button>
           </div>

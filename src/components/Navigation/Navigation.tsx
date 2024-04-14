@@ -39,10 +39,6 @@ function Navigation() {
           </nav>
         </div>
       </div>
-
-      <Backdrop isOpen={isOpen} onClick={handleOpenCloseMenu}>
-        <BurgerMenu isOpen={isOpen} onCloseClick={() => setIsOpen(false)} />
-      </Backdrop>
     </div>
   );
 }
