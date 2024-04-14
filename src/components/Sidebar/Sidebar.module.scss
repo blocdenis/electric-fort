@@ -1,0 +1,13 @@
+@use '../../scss/abstracts/' as *;
+
+.sidebar {
+  width: 340px;
+  height: 3119px;
+  padding: 12px 0 24px 0;
+  margin-left: 64px;
+  border-right: 1px solid $accent-primary;
+  grid-area: sidebar;
+  @include breakpoint(tablet) {
+    display: none;
+  }
+}

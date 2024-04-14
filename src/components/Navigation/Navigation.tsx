@@ -4,6 +4,7 @@ import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import Catalog from './Catalog';
 import NavigationItem from './NavigationItem';
 import { useEffect, useState } from 'react';
+import Backdrop from '../Backdrop/Backdrop';
 
 export const navigationItems = [
   { id: '1', title: 'Про нас', href: '/about_us' },
@@ -15,9 +16,13 @@ export const navigationItems = [
 
 function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenCloseMenu = () => {
+    setIsOpen((prevValue) => !prevValue);
+  };
   return (
     <div className={styles.navigation_catalog_container}>
-      <Catalog onClick={() => setIsOpen(true)} />
+      <Catalog onClick={handleOpenCloseMenu} />
       <div className={styles.navigation}>
         <div className={styles.navigation_container}>
           <nav className={styles.menu}>
@@ -34,8 +39,6 @@ function Navigation() {
           </nav>
         </div>
       </div>
-
-      <BurgerMenu isOpen={isOpen} onCloseClick={() => setIsOpen(false)} />
     </div>
   );
 }
