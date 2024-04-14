@@ -7,11 +7,13 @@ interface NavigationItemProps {
   title: string;
   href: string;
   accent: boolean;
+  onClick?: () => void;
 }
 
-function NavigationItem({ title, href, accent }: NavigationItemProps) {
+function NavigationItem({ title, href, accent, onClick }: NavigationItemProps) {
   return (
     <li
+      onClick={onClick}
       className={classNames(styles.menu_item, {
         [styles.menu_item__accent]: accent,
       })}

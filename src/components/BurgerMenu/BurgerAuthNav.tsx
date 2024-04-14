@@ -1,9 +1,9 @@
 function BurgerAuthNav() {
   return (
-    <div className=" text-white px-4">
-      <button className="mr-2">Увійти</button>
+    <div className="py-[13px] px-4 justify-self-center">
+      <button className="mr-2 text-black">Увійти</button>
       <span>|</span>
-      <button className="ml-2">Зареєструватися</button>
+      <button className="ml-2  text-black">Зареєструватися</button>
     </div>
   );
 }
