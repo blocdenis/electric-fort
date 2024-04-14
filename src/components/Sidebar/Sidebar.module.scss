@@ -2,10 +2,9 @@
 
 .sidebar {
   width: 340px;
-  height: 3119px;
-  padding: 12px 0 24px 0;
+  padding-top: 12px;
   margin-left: 64px;
-  border-right: 1px solid $accent-primary;
+  border-right: 1px solid $accent-primary-strong;
   grid-area: sidebar;
   @include breakpoint(tablet) {
     display: none;
