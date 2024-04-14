@@ -1,5 +1,7 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import {
+  BurgerIcon,
   CartIcon,
   HeartIcon,
   InstagramIcon,
@@ -11,10 +13,23 @@ import styles from './Header.module.scss';
 import ContactText from '../Contact/ContactText/ContactText';
 import SearchInput from '../SearchInput/SearchInput';
 import Brand from '../Brand/Brand';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const handleMenuToggle = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
   return (
     <div className={styles.header}>
       <div className={styles.container_top}>
+        <div className={styles.mobile_header}>
+          <button onClick={handleMenuToggle}>
+            <BurgerIcon />
+          </button>
+          <CartIcon />
+
+          {/* <button onClick={handleMenuToggle}> ___</button> */}
+        </div>
         <div className={styles.content}>
           <div className={styles.container_icons}>
             <TikTokIcon href="https://www.tiktok.com/" color="#ADFE35" />
@@ -35,6 +50,7 @@ const Header = () => {
         </div>
       </div>
       <div className={styles.container_bot}>
+        <BurgerMenu isOpen={isMenuOpen} onCloseClick={handleMenuToggle} />
         <Brand />
         <div className={styles.container_search}>
           <div className={styles.container_contact}>

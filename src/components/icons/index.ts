@@ -23,3 +23,4 @@ export { default as VisaIcon } from './VisaIcon';
 export { default as CrossIcon } from './CrossIcon';
 export { default as ProfileIcon } from './ProfileIcon';
 export { default as BackButton } from './BackButton';
+export { default as BurgerIcon } from './BurgerIcon';

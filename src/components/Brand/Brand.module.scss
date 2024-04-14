@@ -1,3 +1,4 @@
+@use '../../scss/abstracts/' as *;
 .container_logo {
   display: flex;
   position: relative;
@@ -7,6 +8,9 @@
       position: absolute;
       top: 0px;
       right: -24px;
+      @include breakpoint(tablet) {
+        right: 0;
+      }
     }
   }
 }
