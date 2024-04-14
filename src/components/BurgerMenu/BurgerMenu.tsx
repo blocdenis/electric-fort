@@ -46,7 +46,7 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
   return (
     <div
       className={classNames(
-        'lg:hidden text-base font-normal absolute z-20 w-full top-[-180px] left-0 transition-transform duration-1000',
+        'lg:hidden text-base font-normal absolute z-20 w-full top-[0] left-0 transition-transform duration-1000',
         isOpen ? 'translate-y-0' : 'translate-y-[-150%]'
       )}
     >
