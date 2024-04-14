@@ -6,7 +6,7 @@ const Brand = () => {
     <div className={styles.container_logo}>
       <MainLogo />
       <h2>
-        Електрична <span>фортеця</span>
+        Електрична<span>фортеця</span>
       </h2>
     </div>
   );
