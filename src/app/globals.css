@@ -11,4 +11,29 @@ body {
   background-color: #1e1e1e;
   color: #ffffff;
   font-family: Verdana, sans-serif;
+  display: grid;
+  grid-template-areas:
+    'header header'
+    'sidebar content'
+    'footer footer';
+  grid-template-columns: 404px 1fr;
+  grid-template-rows: auto;
+}
+
+@media (max-width: 1024px) {
+  body {
+    display: block;
+  }
+}
+
+main {
+  grid-area: content;
+}
+
+footer {
+  grid-area: footer;
+}
+
+header {
+  grid-area: header;
 }
