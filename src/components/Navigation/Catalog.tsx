@@ -10,7 +10,7 @@ function Catalog({ onClick }: CatalogProps) {
   return (
     <div className={styles.catalog} onClick={onClick}>
       <CatalogIcon />
-      <p>Каталог</p>
+      <p className=" cursor-pointer">Каталог</p>
     </div>
   );
 }
