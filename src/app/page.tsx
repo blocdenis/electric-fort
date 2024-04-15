@@ -17,10 +17,10 @@ const slides = [
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center  p-24 ">
-      <div className="text-white">
-        <HeroSlider data={slides} />
-      </div>
+    <main>
+      <HeroSlider data={slides} />
     </main>
   );
 }
+
+// className="flex min-h-screen flex-col items-center
