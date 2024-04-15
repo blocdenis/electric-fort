@@ -9,6 +9,7 @@ import Brand from '../Brand/Brand';
 import Map from '../Map/Map';
 import Link from 'next/link';
 import ScrollToTopButton from '../ScrollToTopButton/ScrollToTopButton';
+import LogoIcon from '../icons/LogoIcon';
 
 const Footer: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -21,7 +22,12 @@ const Footer: React.FC = () => {
     <footer className={styles.footer_wrapper}>
       <div className={styles.footer}>
         <div className={styles.block}>
-          <Brand />
+          <div className={styles.logo_wrapper}>
+            {/* <Brand /> */}
+            <Link href="/">
+              <LogoIcon className="[&_path]:fill-black" />
+            </Link>
+          </div>
           <Map />
         </div>
         <div className={styles.block}>

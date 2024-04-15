@@ -5,6 +5,7 @@ import Catalog from './Catalog';
 import NavigationItem from './NavigationItem';
 import { useEffect, useState } from 'react';
 import Backdrop from '../Backdrop/Backdrop';
+import CatalogList from './CatalogList';
 
 export const navigationItems = [
   { id: '1', title: 'Про нас', href: '/about_us' },
@@ -39,6 +40,11 @@ function Navigation() {
           </nav>
         </div>
       </div>
+      {isOpen ? (
+        <div className={styles.mobile_catalog_container}>
+          <CatalogList />
+        </div>
+      ) : null}
     </div>
   );
 }

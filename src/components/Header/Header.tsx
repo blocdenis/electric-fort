@@ -16,13 +16,15 @@ import Brand from '../Brand/Brand';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import Navigation from '../Navigation/Navigation';
 import Backdrop from '../Backdrop/Backdrop';
+import LogoIcon from '../icons/LogoIcon';
+import Link from 'next/link';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   return (
-    <header>
+    <header className=" bg-backgroung">
       <div className={styles.header}>
         <div className={styles.container_top}>
           <div className={styles.mobile_header}>
@@ -53,7 +55,10 @@ const Header = () => {
           </div>
         </div>
         <div className={styles.container_bot}>
-          <Brand />
+          {/* <Brand /> */}
+          <Link href="/">
+            <LogoIcon />
+          </Link>
           <div className={styles.container_search}>
             <div className={styles.container_contact}>
               <ContactText />
