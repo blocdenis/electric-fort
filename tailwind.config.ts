@@ -17,6 +17,7 @@ const config: Config = {
         dark_green: '#2A4700',
         yellow: '#ffe500',
         backdrop: 'rgba(33, 89, 0, 0.9)',
+        backgroung: '#1e1e1e',
       },
     },
   },
