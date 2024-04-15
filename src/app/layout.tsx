@@ -3,8 +3,7 @@ import './globals.css';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import { categories } from '@/lib/db/categories';
-import CatalogItem from '@/components/Navigation/CatalogItem';
+import CatalogList from '@/components/Navigation/CatalogList';
 
 export const metadata: Metadata = {
   title: 'Elektrychna fortecia',
@@ -21,13 +20,7 @@ export default function RootLayout({
       <body>
         <Header />
         <Sidebar>
-          <ul>
-            {categories.map((category) => (
-              <li key={category.id}>
-                <CatalogItem category={category} />
-              </li>
-            ))}
-          </ul>
+          <CatalogList />
         </Sidebar>
         <main>{children}</main>
         <Footer />

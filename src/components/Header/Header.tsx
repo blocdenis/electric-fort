@@ -22,7 +22,7 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   return (
-    <header>
+    <header className=" bg-backgroung">
       <div className={styles.header}>
         <div className={styles.container_top}>
           <div className={styles.mobile_header}>

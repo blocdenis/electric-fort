@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, { MouseEventHandler, useState } from 'react';
 import { ArrowCatalogIcon } from '../icons';
 import Link from 'next/link';
 import classNames from 'classnames';
@@ -16,22 +17,37 @@ interface catalogItemProps {
 
 function CatalogItem({ category }: catalogItemProps) {
   const { id, name, subcategories } = category;
+  const [isClicked, setIsClicked] = useState(false);
+  const handleArrowClick = () => {
+    setIsClicked((prevState) => !prevState);
+  };
   return (
     <div className={styles.category}>
-      <Link href={`/${id}`} className={styles.category_item}>
-        {name}
-        <ArrowCatalogIcon />
-      </Link>
-      {category.subcategories ? (
-        <div className={styles.subcategory}>
-          <ul>
-            {subcategories?.map((item) => (
-              <li key={item.id}>
-                <Link href={`/${item.name}`}>{item.name}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+      <div className={styles.category_item}>
+        <Link href={`/${id}`}>{name}</Link>
+        {subcategories ? (
+          <button onClick={handleArrowClick} id="arrowBtn">
+            <ArrowCatalogIcon />
+          </button>
+        ) : null}
+      </div>
+      {subcategories ? (
+        <>
+          <div
+            id="subcategory-wrapper"
+            className={classNames(styles.subcategory, {
+              [styles.open]: isClicked,
+            })}
+          >
+            <ul>
+              {subcategories?.map((item) => (
+                <li key={item.id}>
+                  <Link href={`/${item.name}`}>{item.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
       ) : null}
     </div>
   );

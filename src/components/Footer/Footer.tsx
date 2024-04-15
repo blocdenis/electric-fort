@@ -21,7 +21,9 @@ const Footer: React.FC = () => {
     <footer className={styles.footer_wrapper}>
       <div className={styles.footer}>
         <div className={styles.block}>
-          <Brand />
+          <div className={styles.logo_wrapper}>
+            <Brand />
+          </div>
           <Map />
         </div>
         <div className={styles.block}>
