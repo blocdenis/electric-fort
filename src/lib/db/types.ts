@@ -3,7 +3,7 @@ import { StaticImageData } from 'next/image';
 // need to correct acording to backand responce
 export interface Category {
   id: string;
-  image: string | StaticImageData;
+  image?: string | StaticImageData;
   name: string;
   subcategories?: Brand[];
 }
@@ -11,9 +11,9 @@ export interface Category {
 // need to correct acording to backand responce
 export interface Brand {
   id: string;
-  image: string;
+  image?: string;
   name: string;
-  category_id: string;
+  category_id?: string;
 }
 // need to correct acording to backand responce
 export interface ProductSeries {
