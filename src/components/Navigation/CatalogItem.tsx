@@ -4,12 +4,7 @@ import { ArrowCatalogIcon } from '../icons';
 import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './Navigation.module.scss';
-
-type Category = {
-  id: string;
-  name: string;
-  subcategories?: { id: string; name: string }[];
-};
+import { Category } from '@/lib/db/types';
 
 interface catalogItemProps {
   category: Category;
