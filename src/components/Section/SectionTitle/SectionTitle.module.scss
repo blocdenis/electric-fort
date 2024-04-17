@@ -1,0 +1,20 @@
+@use '../../../scss/abstracts/' as *;
+
+.section_heading {
+  font: $bold36;
+  position: relative;
+
+  &::before {
+    content: '';
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 42px;
+    border-radius: 0px 4px 4px 0px;
+
+    background-color: $accent-primary;
+  }
+  padding-left: 40px;
+}

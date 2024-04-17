@@ -1,3 +1,4 @@
+import CategoriesSection from '@/components/Categories/CategoriesSection';
 import HeroSlider from '@/components/Hero/HeroSlider';
 
 const slides = [
@@ -17,9 +18,10 @@ const slides = [
 
 export default function Home() {
   return (
-    <main>
+    <>
       <HeroSlider data={slides} />
-    </main>
+      <CategoriesSection />
+    </>
   );
 }
 
