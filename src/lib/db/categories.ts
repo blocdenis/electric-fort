@@ -1,6 +1,7 @@
 export const categories = [
   {
     id: '1',
+    image: '',
     name: 'Розетки та вимикачі',
     subcategories: [
       { id: '101', name: 'Schneider Electric' },
@@ -15,6 +16,7 @@ export const categories = [
   },
   {
     id: '2',
+    image: '',
     name: 'Автоматичні вимикачі, УЗО',
     subcategories: [
       { id: '201', name: 'Schneider Electric' },
@@ -26,6 +28,7 @@ export const categories = [
   },
   {
     id: '3',
+    image: '',
     name: 'Шини, клемники, клеми, гребінки',
     subcategories: [
       { id: '201', name: 'Schneider Electric' },
@@ -35,54 +38,89 @@ export const categories = [
   },
   {
     id: '4',
+    image: '',
     name: 'Релейне обладнання',
   },
   {
     id: '5',
+    image: '',
     name: 'Лючки та розеткові модулі',
   },
   {
     id: '6',
+    image: '',
     name: 'Бокси під автомати (щити)',
   },
   {
     id: '7',
+    image: '',
     name: 'Кабель, провід',
+    subcategories: [
+      { id: '701', name: 'ШВВП' },
+      { id: '702', name: 'ПВС' },
+      { id: '703', name: 'ПВ-1' },
+      { id: '704', name: 'ПВ-3' },
+      { id: '705', name: 'АВВГ' },
+      { id: '706', name: 'ВВГнг' },
+      { id: '707', name: 'ВВГнгд' },
+      { id: '708', name: 'ВВГП нг' },
+      { id: '709', name: 'Акустичний провід' },
+      { id: '710', name: 'Телевізійний та мережевий кабель' },
+      { id: '711', name: 'Гофра пластикова' },
+      { id: '712', name: 'Металорукав' },
+      { id: '713', name: 'Кабель-канали' },
+      { id: '714', name: 'Металеві лотки' },
+    ],
   },
   {
     id: '8',
+    image: '',
     name: 'Ізолюючі матеріали та кріплення',
   },
   {
     id: '9',
+    image: '',
     name: 'Терморегулятори',
   },
   {
     id: '10',
+    image: '',
     name: 'Тепла підлога',
+    subcategories: [
+      { id: '1001', name: ' Ryxon (мат)' },
+      { id: '1002', name: 'Ryxon (кабель)' },
+      { id: '1003', name: 'Nexons (мат' },
+      { id: '1004', name: 'Nexons (кабель)' },
+    ],
   },
   {
     id: '11',
+    image: '',
     name: 'Коробки монтажні та розподільні',
   },
   {
     id: '12',
+    image: '',
     name: 'Подовжувачі та колодки',
   },
   {
     id: '13',
+    image: '',
     name: 'Освітлення',
   },
   {
     id: '14',
+    image: '',
     name: 'Вентилятори',
   },
   {
     id: '15',
+    image: '',
     name: 'Стабілізатори',
   },
   {
     id: '16',
+    image: '',
     name: 'Вимірювальне обладнання та інструменти',
   },
 ];

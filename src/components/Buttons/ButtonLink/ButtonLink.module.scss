@@ -1,0 +1,16 @@
+@use '../../../scss/abstracts/' as *;
+
+.button_link {
+  display: flex;
+  align-items: center;
+  border: 1px solid $accent-primary;
+  background: $white;
+  color: $black;
+  min-height: fit-content;
+  min-width: fit-content;
+  &:hover {
+    border-color: $accent-secondary;
+  }
+}
+
+// 'flex items-center border border-primary_green bg-white text-black min-h-[48px] min-w-[250px] w-fit',
