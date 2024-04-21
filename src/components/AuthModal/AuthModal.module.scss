@@ -1,0 +1,36 @@
+/* RegistrationModal.module.scss */
+.modal {
+  //   display: none; /* по умолчанию скрыто */
+  position: fixed; /* фиксированное положение на экране */
+  z-index: 999; /* сверху всех остальных элементов */
+  left: 0;
+  top: 0;
+  width: 100%; /* на всю ширину экрана */
+  height: 100%; /* на всю высоту экрана */
+  overflow: auto; /* добавление прокрутки, если содержимое длинное */
+  background-color: rgb(0, 0, 0); /* цвет фона */
+  background-color: rgba(0, 0, 0, 0.8); /* полупрозрачный цвет фона */
+}
+
+.modal_content {
+  background-color: black; /* белый фон */
+  margin: 15% auto; /* отступ от верхнего края */
+  padding: 20px;
+  border: 1px solid;
+  width: 440px;
+  height: 670px; /* ширина модального окна */
+}
+
+.close {
+  color: white;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
