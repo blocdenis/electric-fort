@@ -101,4 +101,11 @@
     align-items: center;
     text-decoration: underline;
   }
+  span {
+    font-size: 12px;
+  }
+}
+.text_container {
+  display: flex;
+  gap: 54px;
 }
