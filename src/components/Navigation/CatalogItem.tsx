@@ -19,7 +19,7 @@ function CatalogItem({ category }: catalogItemProps) {
   return (
     <div className={styles.category}>
       <div className={styles.category_item}>
-        <Link href={`/${id}`}>{name}</Link>
+        <Link href={`/categories/${name}`}>{name}</Link>
         {subcategories ? (
           <button onClick={handleArrowClick} id="arrowBtn">
             <ArrowCatalogIcon />
@@ -37,7 +37,9 @@ function CatalogItem({ category }: catalogItemProps) {
             <ul>
               {subcategories?.map((item) => (
                 <li key={item.id}>
-                  <Link href={`/${item.name}`}>{item.name}</Link>
+                  <Link href={`/categories/${name}/${item.name}`}>
+                    {item.name}
+                  </Link>
                 </li>
               ))}
             </ul>
