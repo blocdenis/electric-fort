@@ -1,3 +1,4 @@
+import Advantages from '@/components/Advantages/Advantages';
 import CategoriesSection from '@/components/Categories/CategoriesSection';
 import HeroSlider from '@/components/Hero/HeroSlider';
 
@@ -21,6 +22,7 @@ export default function Home() {
     <>
       <HeroSlider data={slides} />
       <CategoriesSection />
+      <Advantages />
     </>
   );
 }
