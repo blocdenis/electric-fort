@@ -1,3 +1,4 @@
+@use '../../scss/abstracts/' as *;
 .container {
   display: flex;
   flex-direction: row;
@@ -11,8 +12,21 @@
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
   }
+  @include breakpoint(mobile) {
+    flex-wrap: wrap;
+    gap: 0px;
+  }
 }
-
+.wrapper {
+  height: 628px;
+  width: 100%;
+  @include breakpoint(mobile) {
+    display: flex;
+    height: 900px;
+    width: 375px;
+    flex-direction: column;
+  }
+}
 .item {
   display: flex;
   width: 222px;
@@ -21,6 +35,11 @@
   color: black;
   align-items: center;
   justify-content: center;
+  position: relative;
+  @include breakpoint(tablet) {
+    width: 168px;
+    height: 138px;
+  }
 }
 
 .blurry_ellipse_yellow {
@@ -29,9 +48,9 @@
   width: 38px;
   height: 52px;
   background-color: #ffe500;
-  border-radius: 40%; // делаем форму эллипса
-  filter: blur(10px); // применяем размытие
-  transform: rotate(-28deg); // поворачиваем и наклоняем
+  border-radius: 40%;
+  filter: blur(10px);
+  transform: rotate(-28deg);
 }
 .blurry_ellipse_green {
   position: relative;
@@ -39,24 +58,64 @@
   width: 38px;
   height: 52px;
   background-color: #00ff00;
-  border-radius: 40%; // делаем форму эллипса
-  filter: blur(10px); // применяем размытие
-  transform: rotate(46deg); // поворачиваем и наклоняем
+  border-radius: 40%;
+  filter: blur(10px);
+  transform: rotate(46deg);
 }
 .advantages {
   display: flex;
   width: 376px;
   height: 481px;
+  font-size: 36px;
+  line-height: 50px;
+  font-weight: 700;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   align-items: center;
   background-color: #9cec25;
   color: black;
   position: absolute;
   z-index: -1;
+  padding: 40px;
+  margin: 40px 40px 40px 0px;
+  @include breakpoint(mobile) {
+    width: 24px;
+    font-size: 24px;
+    color: white;
+    height: 52px;
+    padding: 0;
+    border-radius: 0 4px 4px 0;
+    h2 {
+      height: 36px;
+      width: 187px;
+      flex-wrap: nowrap;
+    }
+    display: block;
+    padding: 0;
+  }
 }
 .cards_wrapper {
   display: flex;
   flex-direction: column;
   gap: 24px;
   justify-self: flex-end;
-  //   padding-left: 200px;
+  @include breakpoint(mobile) {
+    flex-direction: row;
+    gap: 10px;
+    height: 700px;
+  }
+}
+.text {
+  display: flex;
+  width: 198px;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 19.6px;
+  align-items: center;
+  justify-content: center;
+  color: #3c3c3c;
 }
