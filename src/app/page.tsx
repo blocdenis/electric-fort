@@ -1,7 +1,9 @@
 import Advantages from '@/components/Advantages/Advantages';
 import CategoriesSection from '@/components/Categories/CategoriesSection';
 import HeroSlider from '@/components/Hero/HeroSlider';
+import TextSection from '@/components/TextSection/TextSection';
 import PopularProductsSection from '@/components/Products/PopularProductSection/PopularProductsSection';
+
 
 const slides = [
   {
@@ -25,6 +27,7 @@ export default function Home() {
       <CategoriesSection />
       <PopularProductsSection />
       <Advantages />
+      <TextSection />
     </>
   );
 }
