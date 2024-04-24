@@ -2,7 +2,6 @@
 
 .container {
   padding-right: 64px;
-  max-width: 1036px;
   @include breakpoint(tablet) {
     padding-right: 0;
   }
@@ -26,13 +25,5 @@
   right: 0;
   @include breakpoint(tablet) {
     display: none;
-  }
-}
-
-.button_container {
-  display: flex;
-  justify-content: flex-end;
-  @include breakpoint(tablet) {
-    justify-content: center;
   }
 }

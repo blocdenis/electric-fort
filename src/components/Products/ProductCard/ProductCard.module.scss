@@ -1,0 +1,25 @@
+@use '/src/scss/abstracts/' as *;
+
+.truncated_text {
+  height: 66px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product_name {
+  color: $black;
+  font: $regular16;
+}
+
+.product_price {
+  color: $accent-primary-dark;
+  font: $bold18;
+  margin-right: 1px;
+}
+.product_price_measurement_unit {
+  color: $accent-primary-dark;
+  font: $regular18;
+}
