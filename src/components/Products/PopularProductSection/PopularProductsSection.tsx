@@ -22,6 +22,8 @@ function PopularProductsSection() {
         <div className={styles.swiper_container}>
           <Swiper
             wrapperTag="ul"
+            wrapperClass=" items-center"
+            className="max-w-[286px] md:max-w-full lg:max-w-full"
             spaceBetween={45}
             slidesPerView={1}
             navigation={{
@@ -29,7 +31,10 @@ function PopularProductsSection() {
               prevEl: '#products_btn_prev',
             }}
             breakpoints={{
-              973: {
+              640: {
+                slidesPerView: 2,
+              },
+              900: {
                 slidesPerView: 3,
               },
             }}
