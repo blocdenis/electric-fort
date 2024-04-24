@@ -3,6 +3,9 @@
 .section_heading {
   font: $bold36;
   position: relative;
+  @include breakpoint(mobile) {
+    font: $regular24;
+  }
 
   &::before {
     content: '';
