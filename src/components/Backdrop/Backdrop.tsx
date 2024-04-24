@@ -10,7 +10,7 @@ function Backdrop({ isOpen, onClick, children }: BackdropProps) {
     <div
       onClick={onClick}
       className={classNames(
-        'fixed top-0 right-0 w-[100vw] h-full z-20 bg-backdrop transition-opacity duration-1000 overflow-y-scroll ',
+        'fixed top-0 left-0 right-0 w-[100vw] h-full z-20 bg-backdrop transition-opacity duration-1000 overflow-y-scroll ',
         { 'opacity-1': isOpen },
         { 'opacity-0 pointer-events-none': !isOpen }
       )}

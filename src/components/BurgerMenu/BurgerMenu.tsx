@@ -1,3 +1,4 @@
+'use client';
 import classNames from 'classnames';
 import {
   CartIcon,
@@ -12,8 +13,8 @@ import BurgerAuthNav from './BurgerAuthNav';
 import { navigationItems } from '../Navigation/Navigation';
 import NavigationItem from '../Navigation/NavigationItem';
 import styles from '../Navigation/Navigation.module.scss';
-import stylesHeader from '../Header/Header.module.scss';
 import ContactText from '../Contact/ContactText/ContactText';
+import { useState } from 'react';
 
 export interface BurgerMenuProps {
   onCloseClick: () => void;
@@ -43,7 +44,7 @@ const burgerMenuItems = [
 ];
 
 function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
-  const isLogIn = false;
+  const [isLogIn, setIsLogIn] = useState(false);
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -55,8 +56,12 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
       <div className=" flex h-[72px] items-center justify-start px-[20px] bg-secondary_green">
         <CrossIcon onClick={onCloseClick} className="[&_rect]:fill-yellow" />
       </div>
-      <div className="py-[11px] bg-primary_green grid justify-items-start">
-        {isLogIn ? <BurgerUserhNav /> : <BurgerAuthNav />}
+      <div className="py-[26px] px-4 bg-primary_green">
+        {isLogIn ? (
+          <BurgerUserhNav onClick={() => setIsLogIn((prevVal) => !prevVal)} />
+        ) : (
+          <BurgerAuthNav onClick={() => setIsLogIn((prevVal) => !prevVal)} />
+        )}
       </div>
       <div className=" px-4 pt-4 pb-8 h-auto bg-black">
         <ul className=" bg-black text-white pb-6 mb-6 border-b border-b-gray-ligthMax ">
@@ -89,12 +94,12 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
         </ul>
         <div className="w-full mb-6">
           <p className="mb-2 ">Ми в соціальних мережах</p>
-          <div className={stylesHeader.container_icons}>
+          <div className=" flex gap-10 items-center h-12">
             <TikTokIcon href="https://www.tiktok.com/" color="#69AF00" />
             <InstagramIcon href="https://www.instagram.com" color="#69AF00" />
           </div>
         </div>
-        <div className="flex flex-col gap-4 text-white">
+        <div className="flex flex-col gap-4 text-white mb-8">
           <ContactText color="#69AF00" />
           <ContactText color="#69AF00" />
         </div>
