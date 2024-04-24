@@ -12,14 +12,22 @@ import {
 import styles from './Header.module.scss';
 import ContactText from '../Contact/ContactText/ContactText';
 import SearchInput from '../SearchInput/SearchInput';
-import Brand from '../Brand/Brand';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import Navigation from '../Navigation/Navigation';
 import Backdrop from '../Backdrop/Backdrop';
 import LogoIcon from '../icons/LogoIcon';
 import Link from 'next/link';
+import AuthModal from '../AuthModal/AuthModal';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const openModal = () => {
+    setIsAuthOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsAuthOpen(false);
+  };
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -32,8 +40,6 @@ const Header = () => {
               <BurgerIcon />
             </button>
             <CartIcon />
-
-            {/* <button onClick={handleMenuToggle}> ___</button> */}
           </div>
           <div className={styles.content}>
             <div className={styles.container_icons}>
@@ -50,12 +56,13 @@ const Header = () => {
               </button>
             </div>
             <div>
-              <h1>Увійти</h1>
+              <button onClick={openModal}>
+                <h1>Увійти</h1>
+              </button>
             </div>
           </div>
         </div>
         <div className={styles.container_bot}>
-          {/* <Brand /> */}
           <Link href="/">
             <LogoIcon />
           </Link>
@@ -76,6 +83,7 @@ const Header = () => {
       <Backdrop isOpen={isMenuOpen} onClick={handleMenuToggle}>
         <BurgerMenu isOpen={isMenuOpen} onCloseClick={handleMenuToggle} />
       </Backdrop>
+      {isAuthOpen && <AuthModal onClose={closeModal} />}
     </header>
   );
 };
