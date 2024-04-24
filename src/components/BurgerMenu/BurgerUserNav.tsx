@@ -1,8 +1,12 @@
 import { ProfileIcon } from '../icons';
 
-function BurgerUserhNav() {
+interface BurgerUserhNavProps {
+  onClick: () => void;
+}
+
+function BurgerUserhNav({ onClick }: BurgerUserhNavProps) {
   return (
-    <div className=" text-black px-4 flex items-center">
+    <div onClick={onClick} className=" text-black px-4 flex items-center">
       <div className="w-[48px] h-[48px] flex justify-center items-center mr-3">
         <ProfileIcon width={34} height={34} className="[&_*]:stroke-black" />
       </div>
