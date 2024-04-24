@@ -8,7 +8,7 @@ import ButtonLink from '../Buttons/ButtonLink/ButtonLink';
 import styles from './CategoriesSection.module.scss';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Autoplay } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -28,6 +28,9 @@ function CategoriesSection() {
             navigation={{
               nextEl: '#categories_btn_next',
               prevEl: '#categories_btn_prev',
+            }}
+            autoplay={{
+              delay: 2500,
             }}
             breakpoints={{
               375: {
@@ -52,7 +55,7 @@ function CategoriesSection() {
             }}
             loop
             className=""
-            modules={[Navigation]}
+            modules={[Navigation, Autoplay]}
           >
             {categories.map(({ id, name, image }, index) => (
               <SwiperSlide tag="li" className=" w-[220px]" key={id}>
