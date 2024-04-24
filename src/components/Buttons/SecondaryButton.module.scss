@@ -1,0 +1,15 @@
+@use '/src/scss/abstracts/' as *;
+
+.button {
+  padding: 8.5px 60px 7.5px 60px;
+  background-color: $accent-primary;
+  color: black;
+
+  &:hover {
+    border: 1px solid $accent-secondary;
+  }
+
+  &:active {
+    background-color: $accent-primary-strong;
+  }
+}

@@ -11,6 +11,7 @@ export { default as CatalogIcon } from './CatalogIcon';
 export { default as ChatIcon } from './ChatIcon';
 export { default as EnvelopeIcon } from './EnvelopeIcon';
 export { default as HeartWithShadowIcon } from './HeartWithShadowIcon';
+export { default as HeartWithShadowFilledIcon } from './HeartWithShadowFilledIcon';
 export { default as LocationIcon } from './LocationIcon';
 export { default as AdvantagesIconStorage } from './AdvantagesIconStorage';
 export { default as AdvantagesIconFast } from './AdvantagesIconFast';
