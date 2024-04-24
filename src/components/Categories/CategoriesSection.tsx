@@ -53,8 +53,6 @@ function CategoriesSection() {
                 slidesPerView: 4,
               },
             }}
-            loop
-            className=""
             modules={[Navigation, Autoplay]}
           >
             {categories.map(({ id, name, image }, index) => (
