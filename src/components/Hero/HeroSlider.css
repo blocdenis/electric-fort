@@ -3,8 +3,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 972px;
+  /* width: 972px; */
   height: 488px;
+  padding-right: 64px;
 }
 
 .slide {
