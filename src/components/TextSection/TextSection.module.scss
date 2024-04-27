@@ -1,8 +1,8 @@
 @use '../../scss/abstracts/' as *;
 
 .text_wrapper {
-  width: 932px;
-  height: 449px;
+  //   width: 932px;
+  height: auto;
   margin: 24px 64px 40px 40px;
   @include breakpoint(mobile) {
     width: 100%;
