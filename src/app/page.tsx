@@ -3,6 +3,7 @@ import HeroSlider from '@/components/Hero/HeroSlider';
 import TextSection from '@/components/TextSection/TextSection';
 import PopularProductsSection from '@/components/Products/PopularProductSection/PopularProductsSection';
 import Advantages from '@/components/Advantages/Advantages';
+import Partners from '@/components/Partners/Partners';
 
 const slides = [
   {
@@ -26,6 +27,7 @@ export default function Home() {
       <CategoriesSection />
       <PopularProductsSection />
       <Advantages />
+      <Partners />
       <TextSection />
     </>
   );
