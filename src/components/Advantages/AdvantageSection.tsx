@@ -1,6 +1,7 @@
 // AdvantagesSection.tsx
 import React, { ReactNode } from 'react';
 import styles from './Advantages.module.scss';
+import SectionTitle from '../Section/SectionTitle/SectionTitle';
 
 interface AdvantagesSectionProps {
   title: string;
@@ -8,13 +9,14 @@ interface AdvantagesSectionProps {
 }
 
 const AdvantagesSection: React.FC<AdvantagesSectionProps> = ({
-  title,
   children,
+  title,
 }) => {
   return (
-    <div className={styles.advantages}>
-      <h2>{title}</h2>
-      <div className={styles.cards_wrapper}>{children}</div>
+    <div className={styles.section_desktop_wrapper}>
+      <div className={styles.advantages}>{title}</div>
+      <SectionTitle title={title} />
+      {children}
     </div>
   );
 };
