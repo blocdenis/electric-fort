@@ -1,0 +1,30 @@
+@use '/src/scss/abstracts/' as *;
+
+.container {
+  padding-right: 64px;
+  @include breakpoint(tablet) {
+    padding-right: 0;
+  }
+}
+
+.swiper_container {
+  position: relative;
+  width: 972px;
+  padding-left: 24px;
+  background: $white;
+  @include breakpoint(tablet) {
+    padding-left: 16px;
+    width: 100vw;
+  }
+}
+
+.navigation_buttons_container {
+  display: flex;
+  gap: 12px;
+  position: absolute;
+  top: -68px;
+  right: 0;
+  @include breakpoint(tablet) {
+    display: none;
+  }
+}
