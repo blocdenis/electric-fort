@@ -2,9 +2,14 @@
 
 .section_heading {
   font: $bold36;
+  height: 52px;
+  display: flex;
+  align-items: center;
   position: relative;
+  padding-left: 40px;
   @include breakpoint(mobile) {
     font: $regular24;
+    padding-left: 56px;
   }
 
   &::before {
@@ -14,10 +19,11 @@
     top: 0;
     left: 0;
     width: 24px;
-    height: 42px;
+    height: 52px;
     border-radius: 0px 4px 4px 0px;
-
     background-color: $accent-primary;
+    @include breakpoint(mobile) {
+      left: 16px;
+    }
   }
-  padding-left: 40px;
 }

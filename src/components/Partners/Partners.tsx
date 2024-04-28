@@ -18,7 +18,7 @@ function Partners() {
   return (
     <Section>
       <div className={styles.container}>
-        <SectionTitle title="Наші партнери" />
+        <SectionTitle title="Наші партнери" className=" mb-4 lg:mb-6" />
         <div className={styles.swiper_container}>
           <Swiper
             wrapperTag="ul"
