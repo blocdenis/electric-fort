@@ -5,8 +5,20 @@
   margin: 0 auto;
   max-width: 1440px;
 
+  @media screen and (min-width: 1024px) and (max-width: 1440px) {
+    padding: 0px 32px;
+  }
+
   @include breakpoint(tablet) {
     padding: 0px;
-    max-width: 1024px;
+    max-width: 1023px;
+  }
+}
+
+.content_container {
+  width: calc(100% - 340px);
+  flex-shrink: 1;
+  @include breakpoint(tablet) {
+    width: 100%;
   }
 }
