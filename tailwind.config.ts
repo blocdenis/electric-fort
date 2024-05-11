@@ -19,6 +19,12 @@ const config: Config = {
         backdrop: 'rgba(33, 89, 0, 0.9)',
         backgroung: '#1e1e1e',
       },
+      screens: {
+        mobile: '425px',
+        tablet: '768px',
+        laptop: '1024px',
+        desktop: '1440px',
+      },
     },
   },
   plugins: [],

@@ -1,14 +1,14 @@
 @use '../../scss/abstracts/' as *;
 
 .navigation_catalog_container {
-  position: relative;
-  @include breakpoint(tablet) {
-    height: 57px;
-  }
+  background: $accent-primary;
+  // position: relative;
+  // @include breakpoint(desktop) {
+  //   height: 57px;
+  // }
 }
 
 .navigation {
-  background: $accent-primary;
   color: $white;
   font-size: 18px;
   @media (min-width: 1024px) and (max-width: 1388px) {
@@ -21,7 +21,7 @@
 
 .navigation_container {
   display: flex;
-  padding: 8px 64px 8px 448px;
+  padding: 8px 0px 8px 435px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -37,6 +37,10 @@
   align-items: center;
   width: 339px;
   background: $accent-primary-strong;
+  @media screen and (min-width: 1024px) and (max-width: 1440px) {
+    left: 32px;
+  }
+
   @include breakpoint(tablet) {
     left: 0;
     top: 0;

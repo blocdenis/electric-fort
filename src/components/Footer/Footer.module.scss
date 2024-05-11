@@ -1,11 +1,12 @@
 @use '../../scss/abstracts/' as *;
 
 .footer {
-  width: 100%;
-  background-color: #9cec25;
+  // width: 100%;
+  // background-color: #9cec25;
   color: $black;
-  padding: 40px;
+  padding: 40px 0px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 80px;
   border-bottom: 1px solid $white;
@@ -75,15 +76,19 @@
   }
 }
 .footer_wrapper {
+  background-color: $accent-primary;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 .bottomBar {
   background-color: $accent-primary-strong;
-  text-align: center;
+
   > h4 {
-    padding: 17px 578px;
+    text-align: center;
+    padding: 17px 0px;
+    width: 285px;
+    margin: 0 auto;
   }
   @include breakpoint(tablet) {
     h4 {

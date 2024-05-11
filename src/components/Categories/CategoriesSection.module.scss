@@ -1,8 +1,6 @@
 @use '/src/scss/abstracts/' as *;
 
 .container {
-  padding-right: 64px;
-  max-width: 1036px;
   @include breakpoint(tablet) {
     padding-right: 0;
   }
@@ -10,11 +8,10 @@
 
 .swiper_container {
   position: relative;
-  width: 972px;
+  width: 100%;
   padding-left: 24px;
   @include breakpoint(tablet) {
     padding-left: 16px;
-    width: 100vw;
   }
 }
 

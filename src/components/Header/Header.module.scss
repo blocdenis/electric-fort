@@ -1,11 +1,13 @@
 @use '../../scss/abstracts/index' as *;
-.container_top {
+.header_top {
   background-color: #6eb900;
+}
+.container_top {
   color: white;
   height: 80px;
   display: flex;
   justify-content: flex-end;
-  padding: 0px 64px;
+  // padding: 0px 64px;
   @include breakpoint(tablet) {
     display: block;
     padding: 0px 36px;
