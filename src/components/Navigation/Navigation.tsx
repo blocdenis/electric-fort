@@ -6,6 +6,7 @@ import NavigationItem from './NavigationItem';
 import { useEffect, useState } from 'react';
 import Backdrop from '../Backdrop/Backdrop';
 import CatalogList from './CatalogList';
+import Container from '../Container/Container';
 
 export const navigationItems = [
   { id: '1', title: 'Про нас', href: '/about_us' },
@@ -23,28 +24,30 @@ function Navigation() {
   };
   return (
     <div className={styles.navigation_catalog_container}>
-      <Catalog onClick={handleOpenCloseMenu} />
-      <div className={styles.navigation}>
-        <div className={styles.navigation_container}>
-          <nav className={styles.menu}>
-            <ul className={styles.menu_list}>
-              {navigationItems.map((item) => (
-                <NavigationItem
-                  key={item.id}
-                  title={item.title}
-                  href={item.href}
-                  accent={item.href == '/cooperation'}
-                />
-              ))}
-            </ul>
-          </nav>
+      <Container className=" relative">
+        <Catalog onClick={handleOpenCloseMenu} />
+        <div className={styles.navigation}>
+          <div className={styles.navigation_container}>
+            <nav className={styles.menu}>
+              <ul className={styles.menu_list}>
+                {navigationItems.map((item) => (
+                  <NavigationItem
+                    key={item.id}
+                    title={item.title}
+                    href={item.href}
+                    accent={item.href == '/cooperation'}
+                  />
+                ))}
+              </ul>
+            </nav>
+          </div>
         </div>
-      </div>
-      {isOpen ? (
-        <div className={styles.mobile_catalog_container}>
-          <CatalogList />
-        </div>
-      ) : null}
+        {isOpen ? (
+          <div className={styles.mobile_catalog_container}>
+            <CatalogList />
+          </div>
+        ) : null}
+      </Container>
     </div>
   );
 }

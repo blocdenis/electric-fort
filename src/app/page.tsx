@@ -4,6 +4,15 @@ import TextSection from '@/components/TextSection/TextSection';
 import PopularProductsSection from '@/components/Products/PopularProductSection/PopularProductsSection';
 import Advantages from '@/components/Advantages/Advantages';
 import Partners from '@/components/Partners/Partners';
+import Sidebar from '@/components/Sidebar/Sidebar';
+import CatalogList from '@/components/Navigation/CatalogList';
+import classNames from 'classnames';
+
+import ContactText from '@/components/Contact/ContactText/ContactText';
+import ContactContent from '@/components/Contact/ContactContent/ContactContent';
+import Map from '@/components/Map/Map';
+import Container from '@/components/Container/Container';
+import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 
 const slides = [
   {
@@ -22,15 +31,16 @@ const slides = [
 
 export default function Home() {
   return (
-    <>
-      <HeroSlider data={slides} />
-      <CategoriesSection />
-      <PopularProductsSection />
-      <Advantages />
-      <Partners />
-      <TextSection />
-    </>
+    <Container className="flex">
+      <SidebarWithAttachments />
+      <div className="w-full laptop:w-[calc(100%-340px)] flex-shrink">
+        <HeroSlider data={slides} />
+        <CategoriesSection />
+        <PopularProductsSection />
+        <Advantages />
+        <Partners />
+        <TextSection />
+      </div>
+    </Container>
   );
 }
-
-// className="flex min-h-screen flex-col items-center

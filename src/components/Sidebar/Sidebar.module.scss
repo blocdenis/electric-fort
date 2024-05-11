@@ -1,10 +1,11 @@
 @use '../../scss/abstracts/' as *;
 
 .sidebar {
-  width: 340px;
+  min-width: 340px;
+  flex-basis: 340px;
+  flex-shrink: 0;
   padding-top: 12px;
   padding-bottom: 12px;
-  margin-left: 64px;
   border-right: 1px solid $accent-primary-strong;
   grid-area: sidebar;
   @include breakpoint(tablet) {
