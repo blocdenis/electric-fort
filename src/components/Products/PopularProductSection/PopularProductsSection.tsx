@@ -23,7 +23,7 @@ function PopularProductsSection() {
           <Swiper
             wrapperTag="ul"
             wrapperClass=" items-center"
-            className="max-w-[286px] md:max-w-full lg:max-w-full"
+            className={styles.swiper_}
             spaceBetween={45}
             slidesPerView={1}
             navigation={{
@@ -34,7 +34,7 @@ function PopularProductsSection() {
               640: {
                 slidesPerView: 2,
               },
-              900: {
+              1330: {
                 slidesPerView: 3,
               },
             }}

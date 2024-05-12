@@ -48,7 +48,7 @@ function CategoriesSection() {
               708: {
                 slidesPerView: 3,
               },
-              973: {
+              1240: {
                 spaceBetween: 23,
                 slidesPerView: 4,
               },
@@ -56,7 +56,7 @@ function CategoriesSection() {
             modules={[Navigation, Autoplay]}
           >
             {categories.map(({ id, name, image }, index) => (
-              <SwiperSlide tag="li" className=" w-[220px]" key={id}>
+              <SwiperSlide tag="li" key={id}>
                 <CategoryCard id={id} name={name} image={image} />
               </SwiperSlide>
             ))}
