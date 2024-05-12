@@ -37,7 +37,6 @@ function Partners() {
                 spaceBetween: 0,
               },
             }}
-            loop
           >
             {partners.map(({ id, logo, url, name }, index) => (
               <SwiperSlide

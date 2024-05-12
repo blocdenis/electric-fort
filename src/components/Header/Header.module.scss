@@ -47,7 +47,7 @@
 .container_bot {
   display: flex;
   justify-content: space-between;
-  padding: 4px 64px;
+  padding: 16px 0px;
   align-items: center;
   color: white;
   @include breakpoint(mobile) {
