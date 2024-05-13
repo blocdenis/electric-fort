@@ -87,31 +87,25 @@ const Header = () => {
             </div>
             <div className={styles.container_icons}>
               <HeartIcon />
-              <CartIcon />
+              <button onClick={openCart} style={{ position: 'relative' }}>
+                <CartIcon />
+                <div
+                  className=" bg-yellow d-flex justify-content-center align-items-center"
+                  style={{
+                    color: 'white',
+                    width: '25.5px',
+                    // height: '28px',
+                    position: 'absolute',
+                    bottom: 0,
+                    right: 0,
+                    transform: 'translate(25%, -110%)',
+                    borderRadius: '50%',
+                  }}
+                >
+                  {cartQuantity}
+                </div>
+              </button>
             </div>
-
-            <SearchInput placeholder="Пошук" />
-          </div>
-          <div className={styles.container_icons}>
-            <HeartIcon />
-            <button onClick={openCart} style={{ position: 'relative' }}>
-              <CartIcon />
-              <div
-                className=" bg-yellow d-flex justify-content-center align-items-center"
-                style={{
-                  color: 'white',
-                  width: '25.5px',
-                  // height: '28px',
-                  position: 'absolute',
-                  bottom: 0,
-                  right: 0,
-                  transform: 'translate(25%, -110%)',
-                  borderRadius: '50%',
-                }}
-              >
-                {cartQuantity}
-              </div>
-            </button>
           </div>
         </Container>
       </div>
