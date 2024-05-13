@@ -1,8 +1,5 @@
 'use client';
 
-import Error from '@/components/Error/Error';
-import error500 from './../../public/500.png';
-
 export default function GlobalError({
   error,
   reset,
@@ -13,7 +10,8 @@ export default function GlobalError({
   return (
     <html>
       <body>
-        <Error errorText="" errorCode={error500} />
+        <h2>Something went wrong!</h2>
+        <p>{error.name}</p>
         <button onClick={() => reset()}>Try again</button>
       </body>
     </html>
