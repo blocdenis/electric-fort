@@ -2,14 +2,20 @@ import React, { ButtonHTMLAttributes } from 'react';
 import styles from './SecondaryButton.module.scss';
 import classNames from 'classnames';
 
-interface SecondaryButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  className?: string;
-}
-
-function SecondaryButton({ children, className }: SecondaryButtonProps) {
+function SecondaryButton({
+  children,
+  className,
+  onClick,
+  type,
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <button className={classNames(styles.button, className)}>{children}</button>
+    <button
+      type={type}
+      onClick={onClick}
+      className={classNames(styles.button, className)}
+    >
+      {children}
+    </button>
   );
 }
 

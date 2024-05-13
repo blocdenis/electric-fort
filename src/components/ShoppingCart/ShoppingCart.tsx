@@ -31,7 +31,13 @@ const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
                   return total + (item?.price || 0) * cartItem.quantity;
                 }, 0)}
               </span>
-              <span>Вартість зі знижкою : </span>
+              <span>
+                Вартість зі знижкою :
+                {cartItems.reduce((total, cartItem) => {
+                  const item = products.find((i) => i.id === cartItem.id);
+                  return total + (item?.price || 0) * cartItem.quantity;
+                }, 0)}{' '}
+              </span>
               <button>Оформити замовлення</button>
             </div>
           </>

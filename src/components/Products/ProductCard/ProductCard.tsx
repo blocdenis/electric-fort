@@ -73,9 +73,12 @@ function ProductCard({
         </div>
       </div>
       <div className=" flex justify-between items-center">
-        <button onClick={() => increaseCartQuantity(id)}>
+        {/* <button onClick={() => increaseCartQuantity(id)}>
           Купити {quantity}
-        </button>
+        </button> */}
+        <SecondaryButton type="button" onClick={() => increaseCartQuantity(id)}>
+          Купити
+        </SecondaryButton>
         <div className=" flex justify-center items-center w-[41px] h-[41px]">
           {isFavorite ? (
             <HeartWithShadowFilledIcon
