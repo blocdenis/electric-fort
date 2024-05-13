@@ -11,6 +11,7 @@ import { Product } from '@/lib/db/types';
 import classNames from 'classnames';
 import SecondaryButton from '@/components/Buttons/SecondaryButton';
 import { useState } from 'react';
+import { useShoppingCart } from '@/context/ShoppingCartContext';
 
 function ProductCard({
   id,
@@ -26,16 +27,21 @@ function ProductCard({
   brand_id,
 }: Product) {
   const productPageLink = `/${name}`;
-  const handleBuyBtn = () => {
-    console.log(`Товар ${name} додано в корзину`);
-  };
-
+  const {
+    cartItems,
+    getItemQuantity,
+    increaseCartQuantity,
+    decreaseCartQuantity,
+    removeFromCart,
+    cartQuantity,
+  } = useShoppingCart();
   const [isFavorite, setIsFavorite] = useState(false);
-
+  console.log(cartItems);
+  const quantity = getItemQuantity(id);
   const handleFavoriteIconClick = () => {
     setIsFavorite((prevValue) => !prevValue);
   };
-
+  console.log(quantity);
   return (
     <div className=" inline-block bg-white w-[286px] h-[400px] px-4 pt-4 pb-6 shadow-[0_1px_1px_0_rgba(0,0,0,0.25)]">
       <div className=" w-[254px] h-[176px] overflow-hidden mb-4 ">
@@ -67,9 +73,9 @@ function ProductCard({
         </div>
       </div>
       <div className=" flex justify-between items-center">
-        <SecondaryButton onClick={handleBuyBtn} type="button">
-          Купити
-        </SecondaryButton>
+        <button onClick={() => increaseCartQuantity(id)}>
+          Купити {quantity}
+        </button>
         <div className=" flex justify-center items-center w-[41px] h-[41px]">
           {isFavorite ? (
             <HeartWithShadowFilledIcon

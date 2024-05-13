@@ -24,12 +24,12 @@ export interface ProductSeries {
 }
 // need to correct acording to backand responce
 export interface Product {
-  id: string;
+  id: number;
   vendorCode: string;
   name: string;
   measurementUnit: string;
   brand: string;
-  price: string;
+  price: number;
   description: string;
   image: string;
   series: string;

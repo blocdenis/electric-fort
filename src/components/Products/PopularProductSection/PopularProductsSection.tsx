@@ -41,41 +41,11 @@ function PopularProductsSection() {
             modules={[Navigation]}
             loop
           >
-            {products.map(
-              (
-                {
-                  id,
-                  vendorCode,
-                  name,
-                  image,
-                  measurementUnit,
-                  brand,
-                  brand_id,
-                  price,
-                  description,
-                  series,
-                  series_id,
-                },
-                index
-              ) => (
-                <SwiperSlide tag="li" className="" key={id}>
-                  <ProductCard
-                    key={id}
-                    id={id}
-                    vendorCode={vendorCode}
-                    name={name}
-                    image={image}
-                    measurementUnit={measurementUnit}
-                    brand={brand}
-                    brand_id={brand_id}
-                    price={price}
-                    description={description}
-                    series={series}
-                    series_id={series_id}
-                  />
-                </SwiperSlide>
-              )
-            )}
+            {products.map((product) => (
+              <SwiperSlide tag="li" className="" key={product.id}>
+                <ProductCard {...product} />
+              </SwiperSlide>
+            ))}
           </Swiper>
           <div className={styles.navigation_buttons_container}>
             <div

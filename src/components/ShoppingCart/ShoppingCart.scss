@@ -1,0 +1,111 @@
+// CartModal.scss
+@use '../../scss/abstracts/' as *;
+.cart-modal {
+  display: none;
+  position: fixed;
+  color: black;
+  z-index: 12;
+  left: 0;
+  top: 0;
+  width: 1239px;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+
+  &.open {
+    display: block;
+    width: 100%;
+  }
+
+  .cart-modal-content {
+    background-color: #2a4700;
+    margin: 15% auto;
+    padding: 60px;
+    width: 80%;
+
+    h2 {
+      text-align: left;
+      color: #ffffff;
+      font: $bold24;
+    }
+
+    .close {
+      color: #ffffff;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+
+      &:hover,
+      &:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+
+    .cart-item {
+      display: flex;
+      flex-direction: row;
+      gap: 53px;
+      height: 146px;
+      align-items: center;
+      img {
+        height: 98px;
+      }
+      span {
+        font: $regular16;
+        color: white;
+        width: 100%;
+      }
+
+      .quantity-controls {
+        display: flex;
+        align-items: center;
+        border: 1px solid white;
+        border-radius: 6px;
+
+        button {
+          background-color: #4caf50;
+          color: white;
+          border: none;
+          padding: 5px 10px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 0 5px;
+          cursor: pointer;
+          border-radius: 5px;
+
+          &:hover {
+            background-color: #45a049;
+          }
+        }
+      }
+
+      .icon-container {
+        display: flex;
+        flex-direction: row;
+        gap: 32px;
+      }
+      .remove-button {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-left: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+
+        &:hover {
+          background-color: #d32f2f;
+        }
+      }
+    }
+  }
+}

@@ -9,6 +9,7 @@ import ContactContent from '@/components/Contact/ContactContent/ContactContent';
 
 import classNames from 'classnames';
 import Map from '@/components/Map/Map';
+import { ShoppingCartProvider } from '@/context/ShoppingCartContext';
 
 export const metadata: Metadata = {
   title: 'Elektrychna fortecia',
@@ -23,10 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header />
-
-        <main>{children}</main>
-        <Footer />
+        <ShoppingCartProvider>
+            <Header />
+              <main>{children}</main>
+            <Footer />
+        </ShoppingCartProvider>
       </body>
     </html>
   );
