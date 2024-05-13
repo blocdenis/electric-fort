@@ -20,7 +20,7 @@ export function CartItem({ id, quantity }: CartItemProps) {
   } = useShoppingCart();
   const item = products.find((i) => i.id === id);
   if (item == null) return null;
-  console.log(quantity);
+
   return (
     <div key={item.id} className="cart-item">
       <Image
