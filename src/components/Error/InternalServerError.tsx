@@ -9,10 +9,10 @@ interface ErrorProps {
   // errorCode: string | StaticImport;
 }
 
-function NotFoundError({ errorText }: ErrorProps) {
+function InternalServerError({ errorText }: ErrorProps) {
   return (
     <div className={styles.error}>
-      <div className={styles.error_wrapper_not_found}>
+      <div className={styles.error_wrapper}>
         <div className={styles.text_button_container}>
           <h2 className={styles.error_text}>{errorText}</h2>
           <ButtonLink
@@ -26,4 +26,4 @@ function NotFoundError({ errorText }: ErrorProps) {
   );
 }
 
-export default NotFoundError;
+export default InternalServerError;
