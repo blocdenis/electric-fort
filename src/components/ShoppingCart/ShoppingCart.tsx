@@ -3,6 +3,7 @@ import React from 'react';
 import './ShoppingCart.scss';
 
 import { CartItem } from './CartItem';
+import { products } from '@/lib/db/products';
 type ShoppingCartProps = {
   isOpen: boolean;
 };
@@ -23,7 +24,13 @@ const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
               <CartItem key={item.id} {...item} />
             ))}
             <div>
-              <span>До сплати :</span>
+              <span>
+                До сплати :
+                {cartItems.reduce((total, cartItem) => {
+                  const item = products.find((i) => i.id === cartItem.id);
+                  return total + (item?.price || 0) * cartItem.quantity;
+                }, 0)}
+              </span>
               <span>Вартість зі знижкою : </span>
               <button>Оформити замовлення</button>
             </div>
