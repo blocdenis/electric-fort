@@ -1,25 +1,56 @@
 @use '../../scss/abstracts/' as *;
 
 .error {
-  position: relative;
-  background-image: url(/StripedLine.png), url(/Error-bg.png),
-    url(/StripedLine.png);
-  background-position-y: top, 100px, bottom;
-  background-size: contain, contain, contain, contain;
+  // position: relative;
+  background-image: url(/StripedLine.png), url(/StripedLine.png);
+  background-position: top, bottom;
+  background-size: contain, contain;
   background-repeat: no-repeat, no-repeat;
   width: 100%;
   height: 100%;
 }
 
-.error_code {
-  position: absolute;
-  top: 200px;
-  left: 50%;
-  transform: translate(-50%);
-  font-size: 7vw;
-  color: #dd0000;
-  width: 25vw;
+.error_wrapper_not_found {
+  background-image: url(/404-desktop2x.png);
+  background-position: center 55px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  @include breakpoint(mobile) {
+    background-image: url(/404-mobile2x.png);
+    background-position: center 18px;
+  }
 }
+.error_wrapper_internal_server {
+  background-image: url(/500error-desktop2x.png);
+  background-position: center 55px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  @include breakpoint(mobile) {
+    background-image: url(/500error-desktop2x.png);
+    background-position: center 18px;
+  }
+}
+
+// .error_code {
+//   position: absolute;
+//   top: 262px;
+//   left: 50%;
+//   transform: translate(-50%);
+//   font-size: 7vw;
+//   color: #dd0000;
+//   width: 25vw;
+//   @include breakpoint(mobile) {
+//     top: 83px;
+//   }
+// }
 
 .text_button_container {
   display: flex;
@@ -27,7 +58,7 @@
   align-items: center;
   flex-direction: column;
   gap: 42px;
-  padding: 35vw 16px 100px;
+  padding: 514px 16px 112px;
   margin-left: auto;
   margin-right: auto;
   text-align: center;

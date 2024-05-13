@@ -6,7 +6,7 @@ export const partners = [
     url: 'https://www.se.com/ua/uk/',
   },
   {
-    id: '5',
+    id: '2',
     name: 'Hager',
     logo: '/partners-logo/Hager-logo.svg',
     url: 'https://www.hager.ua/',
@@ -50,7 +50,7 @@ export const partners = [
   {
     id: '9',
     name: 'Plank',
-    logo: '',
+    logo: '/partners-logo/biom-logo.svg',
     url: 'https://plank.ua/',
   },
   {
