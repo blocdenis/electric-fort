@@ -1,36 +1,42 @@
 @use '../../scss/abstracts/' as *;
 
 .error {
-  position: relative;
-  background-image: url(/StripedLine.png), url(/404.png), url(/Error-bg.png),
-    url(/StripedLine.png);
-  background-position: top, center 262px, center 55px, bottom;
-  background-size: contain, 25vw, contain, contain;
-  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  // position: relative;
+  background-image: url(/StripedLine.png), url(/StripedLine.png);
+  background-position: top, bottom;
+  background-size: contain, contain;
+  background-repeat: no-repeat, no-repeat;
   width: 100%;
   height: 100%;
-  @include breakpoint(tablet) {
-    background-position-y: top, 150px, 30px, bottom;
-  }
-  @include breakpoint(mobile) {
-    background-position-y: top, 83px, 26px, bottom;
-  }
-  max-width: 1440px;
-  margin: 0 auto;
 }
 
-.error_code {
-  position: absolute;
-  top: 262px;
-  left: 50%;
-  transform: translate(-50%);
-  font-size: 7vw;
-  color: #dd0000;
-  width: 25vw;
+.error_wrapper {
+  background-image: url(/404-desktop2x.png);
+  background-position: center 55px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
   @include breakpoint(mobile) {
-    top: 83px;
+    background-image: url(/404-mobile2x.png);
+    background-position: center 18px;
   }
 }
+
+// .error_code {
+//   position: absolute;
+//   top: 262px;
+//   left: 50%;
+//   transform: translate(-50%);
+//   font-size: 7vw;
+//   color: #dd0000;
+//   width: 25vw;
+//   @include breakpoint(mobile) {
+//     top: 83px;
+//   }
+// }
 
 .text_button_container {
   display: flex;

@@ -12,13 +12,15 @@ interface ErrorProps {
 function NotFoundError({ errorText }: ErrorProps) {
   return (
     <div className={styles.error}>
-      <div className={styles.text_button_container}>
-        <p className={styles.error_text}>{errorText}</p>
-        <ButtonLink
-          title="Повернутись на головну"
-          href="/"
-          className="w-[331px] max-w-full"
-        />
+      <div className={styles.error_wrapper}>
+        <div className={styles.text_button_container}>
+          <p className={styles.error_text}>{errorText}</p>
+          <ButtonLink
+            title="Повернутись на головну"
+            href="/"
+            className="w-[331px] max-w-full"
+          />
+        </div>
       </div>
     </div>
   );
