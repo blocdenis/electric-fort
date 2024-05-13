@@ -5,7 +5,7 @@ export const products = [
     name: 'Розетка з заземленням Schneider Electric Asfora Білий',
     measurementUnit: 'шт',
     brand: 'Schneider',
-    price: 444,
+    price: 4443,
     description: '',
     image: '',
     series: 'Asfora',
