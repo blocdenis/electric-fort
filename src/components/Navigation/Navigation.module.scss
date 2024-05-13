@@ -21,7 +21,7 @@
 
 .navigation_container {
   display: flex;
-  padding: 8px 0px 8px 435px;
+  padding: 8px 0px 8px 370px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -87,6 +87,11 @@
     width: 100%;
     margin-bottom: 32px;
   }
+}
+
+.menu_item__active {
+  border-bottom: solid 2px $accent-secondary;
+  font: $bold18;
 }
 
 .category {

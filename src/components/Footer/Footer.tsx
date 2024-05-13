@@ -33,7 +33,7 @@ const Footer: React.FC = () => {
             <Map />
           </div>
           <div className={styles.block}>
-            <h3>Контакти</h3>
+            <h3 id="contacts">Контакти</h3>
             <ContactText color="black" />
             <ContactText color="black" />
             <ContactContent color="black" />
@@ -61,7 +61,9 @@ const Footer: React.FC = () => {
                 </li>
                 <li>Публічна оферта</li>
                 <li>Програма лояльності</li>
-                <li>Політика конфеденційності</li>
+                <li>
+                  <Link href="/policy">Політика конфеденційності</Link>
+                </li>
                 <li>Співпраця з партнерами</li>
                 <li>
                   <Link href="/cooperation">Співпраця</Link>

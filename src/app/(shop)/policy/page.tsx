@@ -16,7 +16,7 @@ function Page() {
         <Section>
           <SectionTitle
             className="mb-[10px]"
-            title="Умови повернення та обміну"
+            title="Політика конфіденційності"
           />
           <TextContainer>{text}</TextContainer>
         </Section>

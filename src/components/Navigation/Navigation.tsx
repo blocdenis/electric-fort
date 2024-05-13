@@ -12,7 +12,7 @@ export const navigationItems = [
   { id: '1', title: 'Про нас', href: '/about_us' },
   { id: '2', title: 'Доставка і оплата', href: '/delivery' },
   { id: '3', title: 'Повернення та обмін', href: '/return_policy' },
-  { id: '4', title: 'Контакти', href: '#' },
+  { id: '4', title: 'Контакти', href: '#contacts' },
   { id: '5', title: 'Співпраця', href: '/cooperation' },
 ];
 
