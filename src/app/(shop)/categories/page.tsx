@@ -12,36 +12,35 @@ import stylesFooter from '@/components/Footer/Footer.module.scss';
 import ContactText from '@/components/Contact/ContactText/ContactText';
 import ContactContent from '@/components/Contact/ContactContent/ContactContent';
 import Map from '@/components/Map/Map';
+import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
+import ContentContainer from '@/components/Container/ContentContainer';
+import Partners from '@/components/Partners/Partners';
+import PageBredcramb from '@/components/Breadcrumb/PageBredcramb';
 
 function Page() {
   return (
-    <Container>
-      <Sidebar>
-        <CatalogList />
-        <div className={classNames(stylesFooter.block, ' mt-8')}>
-          <h3 className=" mb-4">Контакти</h3>
-          <ContactText color="white" />
-          <ContactText color="white" />
-          <ContactContent color="white" />
-        </div>
-        <Map className=" mt-6" />
-      </Sidebar>
-      <Section>
-        <div className=" pr-[64px] mx-auto overflow-hidden">
-          <SectionTitle className="mb-4" title="Категорії товарів" />
-          <ul className={styles.categories_list}>
-            {categories.map((category) => (
-              <li key={category.id} className="w-[220px] h-[228px]">
-                <CategoryCard
-                  id={category.id}
-                  name={category.name}
-                  image={category.image}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Section>
+    <Container className="flex">
+      <SidebarWithAttachments />
+      <ContentContainer>
+        <PageBredcramb />
+        <Section>
+          <div className=" pr-[64px] mx-auto overflow-hidden">
+            <SectionTitle className="mb-4" title="Категорії товарів" />
+            <ul className={styles.categories_list}>
+              {categories.map((category) => (
+                <li key={category.id} className="w-[220px] h-[228px]">
+                  <CategoryCard
+                    id={category.id}
+                    name={category.name}
+                    image={category.image}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Section>
+        <Partners />
+      </ContentContainer>
     </Container>
   );
 }

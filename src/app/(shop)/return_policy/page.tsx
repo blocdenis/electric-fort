@@ -1,3 +1,5 @@
+import Breadcramb from '@/components/Breadcrumb/Breadcramb';
+import PageBredcramb from '@/components/Breadcrumb/PageBredcramb';
 import Container from '@/components/Container/Container';
 import ContentContainer from '@/components/Container/ContentContainer';
 import TextContainer from '@/components/Container/TextContainer';
@@ -13,6 +15,7 @@ function Page() {
     <Container className="flex">
       <SidebarWithAttachments />
       <ContentContainer>
+        <PageBredcramb />
         <Section>
           <SectionTitle
             className="mb-[10px]"

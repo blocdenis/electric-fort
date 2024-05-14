@@ -92,7 +92,7 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
             }
           })}
         </ul>
-        <div className="w-full mb-6">
+        <div className="w-full mb-6 mt-8">
           <p className="mb-2 ">Ми в соціальних мережах</p>
           <div className=" flex gap-10 items-center h-12">
             <TikTokIcon href="https://www.tiktok.com/" color="#69AF00" />

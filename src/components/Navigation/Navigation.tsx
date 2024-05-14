@@ -35,7 +35,7 @@ function Navigation() {
                     key={item.id}
                     title={item.title}
                     href={item.href}
-                    accent={item.href == '/cooperation'}
+                    // accent={item.href == '/cooperation'}
                   />
                 ))}
               </ul>

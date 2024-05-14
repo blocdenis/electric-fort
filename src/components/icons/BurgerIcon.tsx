@@ -1,5 +1,5 @@
 import { SVGProps } from 'react';
-const ArrowCategoriesIcon = (props: SVGProps<SVGSVGElement>) => (
+const BurgerIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
     width="50"
     height="28"
@@ -13,4 +13,4 @@ const ArrowCategoriesIcon = (props: SVGProps<SVGSVGElement>) => (
     <rect y="24" width="50" height="4" rx="2" fill="#FFE500" />
   </svg>
 );
-export default ArrowCategoriesIcon;
+export default BurgerIcon;
