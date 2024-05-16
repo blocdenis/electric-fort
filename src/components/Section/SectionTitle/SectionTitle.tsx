@@ -3,7 +3,7 @@ import React, { ElementType } from 'react';
 import styles from './SectionTitle.module.scss';
 
 interface SectionTitleProps {
-  title: string;
+  title: React.ReactNode;
   className?: string;
 }
 

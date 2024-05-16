@@ -25,6 +25,9 @@ const config: Config = {
         laptop: '1024px',
         desktop: '1440px',
       },
+      fontSize: {
+        base: ['16px', '1.4'],
+      },
     },
   },
   plugins: [],
