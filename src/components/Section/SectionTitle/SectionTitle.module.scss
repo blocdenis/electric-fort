@@ -19,11 +19,17 @@
     top: 0;
     left: 0;
     width: 24px;
-    height: 52px;
+    height: 100%;
     border-radius: 0px 4px 4px 0px;
     background-color: $accent-primary;
     @include breakpoint(mobile) {
       left: 16px;
     }
   }
+}
+
+.section_heading_return {
+  font: $regular20;
+  height: fit-content;
+  margin-bottom: 10px;
 }
