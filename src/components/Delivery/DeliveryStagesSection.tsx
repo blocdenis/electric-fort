@@ -4,35 +4,36 @@ import CartIconDelivery from '../icons/CartIconDelivery';
 import TruckIcon from '../icons/TruckIcon';
 import CashIcon from '../icons/CashIcon';
 import GeoIcon from '../icons/GeoIcon';
+import styles from './Delivery.module.scss';
 
-function DeliveryStages() {
+function DeliveryStagesSection() {
   return (
-    <div className=" px-9 flex gap-[135px] ">
-      <div className="flex flex-col items-center justify-center gap-3">
+    <div className={styles.delivery_stages}>
+      <div className={styles.delivery_stages_item}>
         <div>
           <CartIconDelivery width={46} height={46} />
         </div>
-        <p className=" text-center">Обрати товар</p>
+        <p className=" text-center items-center">Обрати товар</p>
       </div>
-      <div className="flex flex-col items-center justify-center gap-3">
+      <div className={styles.delivery_stages_item}>
         <div>
           <PassIcon width={46} height={46} />
         </div>
         <p className=" text-center">Вказати дані для відправки</p>
       </div>
-      <div className="flex flex-col items-center justify-center gap-3">
+      <div className={styles.delivery_stages_item}>
         <div>
           <TruckIcon />
         </div>
         <p className=" text-center">Обрати спосіб доставки</p>
       </div>
-      <div className="flex flex-col items-center justify-center gap-3">
+      <div className={styles.delivery_stages_item}>
         <div>
           <CashIcon />
         </div>
         <p className=" text-center">Обрати спосіб оплати</p>
       </div>
-      <div className="flex flex-col items-center justify-center gap-3">
+      <div className={styles.delivery_stages_item}>
         <div>
           <GeoIcon />
         </div>
@@ -42,4 +43,4 @@ function DeliveryStages() {
   );
 }
 
-export default DeliveryStages;
+export default DeliveryStagesSection;
