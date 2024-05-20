@@ -1,22 +1,22 @@
 import PageBredcramb from '@/components/Breadcrumb/PageBredcramb';
 import Container from '@/components/Container/Container';
 import DeliverySectionTitle from '@/components/Delivery/DeliverySectionTitle';
-import DeliveryStages from '@/components/Delivery/DeliveryStages';
-import DeliveryTop from '@/components/Delivery/DeliveryTop';
+import DeliveryStagesSection from '@/components/Delivery/DeliveryStagesSection';
+import DeliveryStages from '@/components/Delivery/DeliveryStagesSection';
+import DeliveryTextSection from '@/components/Delivery/DeliveryTextSection';
+import DeliveryTopSection from '@/components/Delivery/DeliveryTopSection';
+import DeliveryTop from '@/components/Delivery/DeliveryTopSection';
 
 function Page() {
   return (
     <Container>
       <PageBredcramb />
-      <DeliveryTop />
+      <DeliveryTopSection />
       <DeliverySectionTitle className=" mb-6">
         Як це працює?
       </DeliverySectionTitle>
-      <DeliveryStages />
-      <DeliverySectionTitle className=" mb-3">
-        Про доставку
-      </DeliverySectionTitle>
-      <div>
+      <DeliveryStagesSection />
+      <DeliveryTextSection title="Про доставку">
         Був смажень, і швимкі яски Спіралили в кружві, І марамулькали псашки, Як
         трулі долові. Був смажень, і швимкі яски Спіралили в кружві, І
         марамулькали псашки, Як трулі долові. Був смажень, і швимкі яски
@@ -40,9 +40,8 @@ function Page() {
         долові. Був смажень, і швимкі яски Спіралили в кружві, І марамулькали
         псашки, Як трулі долові. Був смажень, і швимкі яски Спіралили в кружві,
         І марамулькали псашки, Як трулі долові.{' '}
-      </div>
-      <DeliverySectionTitle className=" mb-3">Про оплату</DeliverySectionTitle>
-      <div>
+      </DeliveryTextSection>
+      <DeliveryTextSection title="Про оплату">
         Був смажень, і швимкі яски Спіралили в кружві, І марамулькали псашки, Як
         трулі долові. Був смажень, і швимкі яски Спіралили в кружві, І
         марамулькали псашки, Як трулі долові. Був смажень, і швимкі яски
@@ -66,11 +65,8 @@ function Page() {
         долові. Був смажень, і швимкі яски Спіралили в кружві, І марамулькали
         псашки, Як трулі долові. Був смажень, і швимкі яски Спіралили в кружві,
         І марамулькали псашки, Як трулі долові.{' '}
-      </div>
-      <DeliverySectionTitle className=" mb-3">
-        Політика повернення та обміну
-      </DeliverySectionTitle>
-      <div className="pb-[42px]">
+      </DeliveryTextSection>
+      <DeliveryTextSection title="Політика повернення та обміну">
         Був смажень, і швимкі яски Спіралили в кружві, І марамулькали псашки, Як
         трулі долові. Був смажень, і швимкі яски Спіралили в кружві, І
         марамулькали псашки, Як трулі долові. Був смажень, і швимкі яски
@@ -117,7 +113,7 @@ function Page() {
         Спіралили в кружві, І марамулькали псашки, Як трулі долові. Був смажень,
         і швимкі яски Спіралили в кружві, І марамулькали псашки, Як трулі
         долові.
-      </div>
+      </DeliveryTextSection>
     </Container>
   );
 }

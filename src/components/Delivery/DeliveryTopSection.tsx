@@ -2,12 +2,13 @@ import Image from 'next/image';
 import deliveryImg from '../../../public/delivery_img-min.png';
 import CarIcon from '../icons/CarIcon';
 import WalletIcon from '../icons/WalletIcon';
+import styles from './Delivery.module.scss';
 
-function DeliveryTop() {
+function DeliveryTopSection() {
   return (
-    <div className="flex px-[64px] justify-between">
-      <div className=" mr-[152.5px] my-[86.5px]">
-        <div className=" flex items-center justify-center mb-8">
+    <div className={styles.delivery_top}>
+      <div className={styles.delivery_top_item}>
+        <div className={styles.delivery_top_item_head}>
           <div className=" mr-8">
             <WalletIcon width={59} height={59} />
           </div>
@@ -20,8 +21,8 @@ function DeliveryTop() {
           <li>Накладений платіж</li>
         </ul>
       </div>
-      <div className="mr-[152.5px] my-[86.5px]">
-        <div className=" flex items-center justify-center mb-8">
+      <div className={styles.delivery_top_item}>
+        <div className={styles.delivery_top_item_head}>
           <div className=" mr-8">
             <CarIcon width={82} height={59} />
           </div>
@@ -32,7 +33,7 @@ function DeliveryTop() {
           <li>Самовивіз</li>
         </ul>
       </div>
-      <div className="w-[412px] h-[412px]">
+      <div className={styles.delivery_top_image_wrapper}>
         <Image
           src={deliveryImg}
           alt="delivery_image"
@@ -44,4 +45,4 @@ function DeliveryTop() {
   );
 }
 
-export default DeliveryTop;
+export default DeliveryTopSection;
