@@ -59,12 +59,15 @@ const Footer: React.FC = () => {
                 <li>
                   <Link href="/return_policy">Повернення та обмін</Link>
                 </li>
-                <li>Публічна оферта</li>
-                <li>Програма лояльності</li>
+                <li>
+                  <Link href="/oferta">Публічна оферта</Link>
+                </li>
+                <li>
+                  <Link href="/programa_loyalnosti">Програма лояльності</Link>
+                </li>
                 <li>
                   <Link href="/policy">Політика конфеденційності</Link>
                 </li>
-                <li>Співпраця з партнерами</li>
                 <li>
                   <Link href="/cooperation">Співпраця</Link>
                 </li>

@@ -6,7 +6,7 @@ function PageBredcramb() {
     { name: 'Доставка і оплата', href: 'delivery' },
     { name: 'Умови повернення та обміну', href: 'return_policy' },
     { name: 'Політика конфіденційності', href: 'policy' },
-    { name: 'Співпраця з партнерами', href: 'cooperation' },
+    { name: 'Співпраця', href: 'cooperation' },
     { name: 'Категорії', href: 'categories' },
   ];
   return (
