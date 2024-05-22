@@ -6,7 +6,7 @@ import { ArrowCategoriesIcon } from '@/components/icons';
 import styles from './Partners.module.scss';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Grid } from 'swiper/modules';
+import { Navigation, Grid, Autoplay } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -30,13 +30,18 @@ function Partners() {
               nextEl: '#partners_btn_next',
               prevEl: '#partners_btn_prev',
             }}
-            modules={[Navigation, Grid]}
+            modules={[Navigation, Grid, Autoplay]}
             grid={{ rows: 2, fill: 'row' }}
             breakpoints={{
               900: {
                 spaceBetween: 0,
               },
             }}
+            autoplay={{
+              delay: 2500,
+            }}
+            loop
+            loopAddBlankSlides
           >
             {partners.map(({ id, logo, url, name }, index) => (
               <SwiperSlide
@@ -45,7 +50,7 @@ function Partners() {
                 key={id}
               >
                 <a href={url} target="_blank" className=" w-full">
-                  <div className=" w-[74px] h-[74px] lg:w-[106px] lg:h-[106px] flex items-center justify-center">
+                  <div className=" w-[74px] h-[74px] [&>img]:w- lg:w-[106px] lg:h-[106px] flex items-center justify-center">
                     <Image
                       className=" w-full"
                       width={74}
