@@ -9,7 +9,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 80px;
-  border-bottom: 1px solid $white;
+
   @include breakpoint(tablet) {
     flex-direction: column;
     gap: 24px;
@@ -83,6 +83,7 @@
 }
 .bottomBar {
   background-color: $accent-primary-strong;
+  border-top: 1px solid $white;
 
   > h4 {
     text-align: center;
