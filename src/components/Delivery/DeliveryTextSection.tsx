@@ -6,10 +6,10 @@ function DeliveryTextSection({
   title,
 }: PropsWithChildren<{ title?: string }>) {
   return (
-    <div className={styles.delivery_text_section}>
+    <section className={styles.delivery_text_section}>
       <h2 className={styles.delivery_text_title}>{title}</h2>
       <p>{children}</p>
-    </div>
+    </section>
   );
 }
 

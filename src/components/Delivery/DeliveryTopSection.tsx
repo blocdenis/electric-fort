@@ -6,7 +6,7 @@ import styles from './Delivery.module.scss';
 
 function DeliveryTopSection() {
   return (
-    <div className={styles.delivery_top}>
+    <section className={styles.delivery_top}>
       <div className={styles.delivery_top_item}>
         <div className={styles.delivery_top_item_head}>
           <div className=" mr-8">
@@ -14,10 +14,10 @@ function DeliveryTopSection() {
           </div>
           <p className=" text-[24px] font-bold">Оплата</p>
         </div>
-        <ul>
-          <li className="mb-4">Готівкою при отриманні</li>
-          <li className="mb-4">Безготівковий</li>
-          <li className="mb-4">Оплата на сайті</li>
+        <ul className={styles.payment_options_list}>
+          <li>Онлайн-оплата карткою, Google Pay або Apple Pay</li>
+          <li>Безготівковий</li>
+          <li>Готівкою при отриманні</li>
           <li>Накладений платіж</li>
         </ul>
       </div>
@@ -28,20 +28,18 @@ function DeliveryTopSection() {
           </div>
           <p className=" text-[24px] font-bold">Доставка</p>
         </div>
-        <ul>
-          <li className="mb-4">Нова Пошта</li>
+        <ul className={styles.delivery_options_list}>
+          <li>Нова Пошта</li>
+          <li>Укрпошта</li>
+          <li>Поштомат</li>
+          <li>Курьєр</li>
           <li>Самовивіз</li>
         </ul>
       </div>
       <div className={styles.delivery_top_image_wrapper}>
-        <Image
-          src={deliveryImg}
-          alt="delivery_image"
-          width={412}
-          height={412}
-        />
+        <Image src={deliveryImg} alt="delivery_image" width={332} />
       </div>
-    </div>
+    </section>
   );
 }
 
