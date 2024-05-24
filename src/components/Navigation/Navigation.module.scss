@@ -27,7 +27,6 @@
 }
 
 .catalog {
-  cursor: pointer;
   position: absolute;
   top: -5px;
   bottom: 0;
@@ -35,10 +34,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 10px;
   width: 339px;
   background: $accent-primary-strong;
   @media screen and (min-width: 1024px) and (max-width: 1439px) {
     left: 32px;
+  }
+  @include breakpoint(tablet) {
+    cursor: pointer;
   }
 
   @include breakpoint(tablet) {
