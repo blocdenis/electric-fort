@@ -8,6 +8,7 @@ function PageBredcramb() {
     { name: 'Політика конфіденційності', href: 'policy' },
     { name: 'Співпраця', href: 'cooperation' },
     { name: 'Категорії', href: 'categories' },
+    { name: 'Публічна оферта', href: 'oferta' },
   ];
   return (
     <Breadcramb
