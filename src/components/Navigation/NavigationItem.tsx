@@ -18,11 +18,11 @@ function NavigationItem({ title, href, accent, onClick }: NavigationItemProps) {
     <li
       onClick={onClick}
       className={classNames(
-        styles.menu_item
+        styles.menu_item,
         // {
         //   [styles.menu_item__accent]: accent,
         // },
-        // { [styles.menu_item__active]: pathname === href }
+        { [styles.menu_item__active]: pathname === href }
       )}
     >
       <Link href={href}>{title}</Link>
