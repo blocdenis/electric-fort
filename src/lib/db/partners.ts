@@ -50,7 +50,7 @@ export const partners = [
   {
     id: '9',
     name: 'Plank',
-    logo: '/partners-logo/biom-logo.svg',
+    logo: '/partners-logo/Plank-logo.svg',
     url: 'https://plank.ua/',
   },
   {
