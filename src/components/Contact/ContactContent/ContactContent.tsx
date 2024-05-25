@@ -9,7 +9,9 @@ const ContactContent: React.FC<ContactContentProps> = ({ color }) => {
   return (
     <div className={styles.container_content}>
       <div className={styles.container}>
-        <EnvelopeIcon color={color} />
+        <a href="mailto:electricalfortress@gmail.com">
+          <EnvelopeIcon color={color} />
+        </a>
         <p>electricalfortress@gmail.com</p>
       </div>
       <div className={styles.container}>
