@@ -4,8 +4,11 @@ import './ShoppingCart.scss';
 
 import { CartItem } from './CartItem';
 import { products } from '@/lib/db/products';
-import { applyDiscount } from '@/services/applyDiscount';
+import { applyDiscount, discounts } from '@/services/applyDiscount';
 import { formatPriceUAH } from '@/services/formatCurrency';
+import { EmptyCart } from '../icons';
+import ButtonLink from '../Buttons/ButtonLink/ButtonLink';
+import Link from 'next/link';
 type ShoppingCartProps = {
   isOpen: boolean;
 };
@@ -27,16 +30,21 @@ const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
 
         {cartQuantity > 0 ? (
           <>
-            <h2>Кошик</h2>
+            <h2 className="cart-hero">Кошик</h2>
             {cartItems.map((item) => (
               <CartItem key={item.id} {...item} />
             ))}
             <div className="checkout-container">
-              <span>До сплати {formatPriceUAH(calculateTotal())}</span>
-              <span className="discount">
-                Вартість зі знижкою{' '}
-                {formatPriceUAH(applyDiscount(calculateTotal()))}
-              </span>
+              <div className="checkout-info">
+                <p>Сума</p> <span>{formatPriceUAH(calculateTotal())}</span>
+              </div>
+              <div className="checkout-info">
+                <p>Знижка</p> <span>{discounts(calculateTotal())} %</span>
+              </div>
+              <div className="checkout-info">
+                <p>До сплати</p>{' '}
+                <span>{formatPriceUAH(applyDiscount(calculateTotal()))}</span>
+              </div>
               <button
                 className="checkout-btn"
                 onClick={() => console.log(cartItems)}
@@ -47,9 +55,19 @@ const ShoppingCart = ({ isOpen }: ShoppingCartProps) => {
           </>
         ) : (
           <div>
-            <h2>кошик порожній</h2>
-            <h1>Ви ще не додали жодного товару</h1>
-            <button>Назад до покупок</button>
+            <div className="empty-cart">
+              <EmptyCart />
+
+              <div className="empty-cart-container">
+                <h2 className="cart-hero">Кошик порожній</h2>
+                <h1>Ви ще не додали жодного товару в кошик...</h1>
+              </div>
+            </div>
+            <div className="btn">
+              <button className="checkout-btn" onClick={closeCart}>
+                <Link href={'/'}>Назад до покупок</Link>
+              </button>
+            </div>
           </div>
         )}
       </div>

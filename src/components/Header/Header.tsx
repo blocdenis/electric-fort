@@ -36,7 +36,7 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   return (
-    <header className=" bg-backgroung">
+    <header className="bg-backgroung">
       <div className={styles.header}>
         <div className={styles.header_top}>
           <Container>
@@ -45,7 +45,26 @@ const Header = () => {
                 <button onClick={handleMenuToggle}>
                   <BurgerIcon />
                 </button>
-                <CartIcon />
+
+                <button onClick={openCart} style={{ position: 'relative' }}>
+                  <CartIcon />
+                  {cartQuantity > 0 && (
+                    <div
+                      className="bg-yellow d-flex justify-content-center align-items-center"
+                      style={{
+                        color: 'white',
+                        width: '25.5px',
+                        position: 'absolute',
+                        bottom: 0,
+                        right: 0,
+                        transform: 'translate(25%, -110%)',
+                        borderRadius: '50%',
+                      }}
+                    >
+                      {cartQuantity}
+                    </div>
+                  )}
+                </button>
               </div>
               <div className={styles.content}>
                 <div className={styles.container_icons}>
@@ -89,21 +108,22 @@ const Header = () => {
               <HeartIcon />
               <button onClick={openCart} style={{ position: 'relative' }}>
                 <CartIcon />
-                <div
-                  className=" bg-yellow d-flex justify-content-center align-items-center"
-                  style={{
-                    color: 'white',
-                    width: '25.5px',
-                    // height: '28px',
-                    position: 'absolute',
-                    bottom: 0,
-                    right: 0,
-                    transform: 'translate(25%, -110%)',
-                    borderRadius: '50%',
-                  }}
-                >
-                  {cartQuantity}
-                </div>
+                {cartQuantity > 0 && (
+                  <div
+                    className="bg-yellow d-flex justify-content-center align-items-center"
+                    style={{
+                      color: 'white',
+                      width: '25.5px',
+                      position: 'absolute',
+                      bottom: 0,
+                      right: 0,
+                      transform: 'translate(25%, -110%)',
+                      borderRadius: '50%',
+                    }}
+                  >
+                    {cartQuantity}
+                  </div>
+                )}
               </button>
             </div>
           </div>
