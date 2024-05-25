@@ -68,10 +68,10 @@ const Header = () => {
               </div>
               <div className={styles.content}>
                 <div className={styles.container_icons}>
-                  <TikTokIcon href="https://www.tiktok.com/" color="#ADFE35" />
+                  <TikTokIcon href="https://www.tiktok.com/" color="#69af00" />
                   <InstagramIcon
                     href="https://www.instagram.com"
-                    color="#ADFE35"
+                    color="#69af00"
                   />
                 </div>
                 <div className={styles.container_lang}>
