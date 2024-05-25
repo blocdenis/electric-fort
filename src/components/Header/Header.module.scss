@@ -31,14 +31,20 @@
 .container_lang {
   display: flex;
   gap: 12px;
-  span:hover {
-    color: yellow;
-  }
   @include breakpoint(mobile) {
     display: none;
   }
   @include breakpoint(tablet) {
     display: none;
+  }
+  .button {
+    border: none;
+    cursor: pointer;
+    color: #ffffff;
+
+    &.active {
+      color: #ffe500;
+    }
   }
 }
 .line {
