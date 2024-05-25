@@ -25,6 +25,11 @@ const Header = () => {
   const { openCart, cartQuantity } = useShoppingCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [activeLanguage, setActiveLanguage] = useState<'UA' | 'RU'>('UA');
+
+  const handleToggle = (language: 'UA' | 'RU') => {
+    setActiveLanguage(language);
+  };
   const openModal = () => {
     setIsAuthOpen(true);
   };
@@ -75,12 +80,22 @@ const Header = () => {
                   />
                 </div>
                 <div className={styles.container_lang}>
-                  <button>
-                    <span>UA</span>
+                  <button
+                    className={`${styles.button} ${
+                      activeLanguage === 'UA' ? styles.active : ''
+                    }`}
+                    onClick={() => handleToggle('UA')}
+                  >
+                    UA
                   </button>
                   <div className={styles.line}></div>
-                  <button>
-                    <span>RU</span>
+                  <button
+                    className={`${styles.button} ${
+                      activeLanguage === 'RU' ? styles.active : ''
+                    }`}
+                    onClick={() => handleToggle('RU')}
+                  >
+                    RU
                   </button>
                 </div>
                 <div>
