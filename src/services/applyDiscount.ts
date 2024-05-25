@@ -11,3 +11,14 @@ export const applyDiscount = (total: number) => {
 
   return total - total * discount;
 };
+export const discounts = (total: number) => {
+  if (total >= 50000 && total < 100000) {
+    return 2;
+  } else if (total >= 100000 && total < 200000) {
+    return 5;
+  } else if (total >= 200000) {
+    return 10;
+  } else {
+    return 0;
+  }
+};

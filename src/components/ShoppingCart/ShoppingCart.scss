@@ -4,7 +4,7 @@
   display: none;
   position: fixed;
   color: black;
-  z-index: 12;
+  z-index: 1200;
   left: 0;
   top: 0;
   width: 1239px;
@@ -23,8 +23,17 @@
     margin: 15% auto;
     padding: 60px;
     width: 80%;
+    @include breakpoint(tablet) {
+      margin: 0;
+      padding: 16px;
+      width: 100%;
+    }
+    @include breakpoint(mobile) {
+      height: auto;
+    }
 
-    h2 {
+    .cart-hero {
+      padding-top: 8px;
       text-align: left;
       color: #ffffff;
       font: $bold24;
@@ -49,16 +58,89 @@
       flex-direction: row;
       gap: 53px;
       height: 146px;
+      width: 100%;
       align-items: center;
+      border-bottom: 1px solid white;
+
+      .desktop_wrapper {
+        @include breakpoint(tablet) {
+          display: none;
+        }
+      }
+
+      @include breakpoint(tablet) {
+        margin-top: 24px;
+        height: auto;
+      }
+      @include breakpoint(mobile) {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 24px;
+      }
+      .product-info {
+        display: flex;
+        flex-direction: row;
+        gap: 53px;
+        @include breakpoint(mobile) {
+          display: flex;
+          flex-direction: row;
+          gap: 12px;
+        }
+        .product-name {
+          width: 434px;
+          @include breakpoint(tablet) {
+            width: auto;
+          }
+        }
+      }
+      .product-description {
+        @include breakpoint(mobile) {
+          display: flex;
+          flex-direction: row;
+          width: 188px;
+          align-items: center;
+          align-content: space-between;
+          justify-content: space-between;
+          span {
+            text-align: right;
+          }
+        }
+      }
+      .mobile_wrapper {
+        @include breakpoint(desktop) {
+          display: none;
+        }
+      }
       img {
         height: 98px;
+      }
+      p {
+        color: #adadad;
+        display: flex;
+        justify-content: right;
+        font: $regular14;
       }
       span {
         font: $regular16;
         color: white;
         width: 100%;
       }
-
+      .items-info {
+        @include breakpoint(desktop) {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          gap: 53px;
+        }
+        @include breakpoint(mobile) {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          span {
+            font: $regular20;
+          }
+        }
+      }
       .quantity-controls {
         display: flex;
         align-items: center;
@@ -78,11 +160,24 @@
           border-radius: 5px;
 
           &:hover {
-            background-color: #45a049;
+            background-color: #adadad43;
           }
         }
       }
-
+      .info-wrapper {
+        display: flex;
+        flex-direction: row;
+        gap: 53px;
+        align-items: center;
+        width: 100%;
+        @include breakpoint(tablet) {
+          display: flex;
+          flex-direction: row-reverse;
+          width: auto;
+          gap: 12px;
+          width: auto;
+        }
+      }
       .icon-container {
         display: flex;
         flex-direction: row;
@@ -108,22 +203,80 @@
     }
   }
   .checkout-container {
+    padding-top: 32px;
     font: $bold24;
     color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 32px;
+    :nth-child(3n) {
+      border-top: 1px solid;
+    }
+    @include breakpoint(mobile) {
+      padding-top: 24px;
+    }
+    .checkout-info {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 280px;
+      font: $regular20;
+
+      @include breakpoint(mobile) {
+        width: 100%;
+      }
+      span {
+        font: $bold24;
+      }
+    }
+    @include breakpoint(mobile) {
+      display: flex;
+      gap: 8px;
+    }
     .discount {
       color: red;
     }
-    .checkout-btn {
-      background-color: #ffe500;
-      color: #000;
-      font: $regular18;
-      padding: 4px 32px 4px 32px;
-      height: 47px;
-      width: 281px;
+  }
+  .checkout-btn {
+    background-color: #ffe500;
+    color: #000;
+    font: $regular18;
+    padding: 4px 32px 4px 32px;
+    height: 47px;
+    width: 281px;
+  }
+  .empty-cart {
+    display: flex;
+    flex-direction: row;
+    gap: 250px;
+    @include breakpoint(tablet) {
+      gap: 0;
+      flex-direction: column;
+      svg {
+        width: auto;
+        height: 116px;
+      }
+    }
+    .empty-cart-container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      h1 {
+        font: $regular24;
+        color: white;
+      }
+    }
+  }
+  .btn {
+    display: flex;
+    justify-content: right;
+    @include breakpoint(tablet) {
+      justify-content: center;
+      padding-top: 40px;
     }
   }
 }
