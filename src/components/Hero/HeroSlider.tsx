@@ -52,7 +52,13 @@ const HeroSlider: FC<CarouselProps> = ({ data }) => {
           onClick={handleSlideClick}
           className={slide === idx ? 'slide' : 'slide slide-hidden'}
         >
-          <Image src={item.src} alt={item.alt} width={400} height={600} />
+          <Image
+            src={item.src}
+            alt={item.alt}
+            width={400}
+            height={600}
+            className="hero-image"
+          />
         </div>
       ))}
       <span className="indicators">
