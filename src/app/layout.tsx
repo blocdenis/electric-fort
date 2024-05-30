@@ -2,7 +2,9 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
+
 import { ShoppingCartProvider } from '@/context/ShoppingCartContext';
+import Provider from '@/context/Providers';
 
 export const metadata: Metadata = {
   title: 'Elektrychna fortecia',
@@ -19,7 +21,9 @@ export default function RootLayout({
       <body>
         <ShoppingCartProvider>
           <Header />
-          <main>{children}</main>
+          <main>
+            <Provider>{children}</Provider>
+          </main>
           <Footer />
         </ShoppingCartProvider>
       </body>
