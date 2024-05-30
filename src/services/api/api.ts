@@ -1,11 +1,8 @@
-import { categories } from '@/lib/db/categories';
 import { Brand, Category } from '@/lib/db/types';
 
-export const url =
-  'https://fea5-91-235-68-209.ngrok-free.app/api/get/Category/?all_data=true&pagination=true';
+export const URL = 'https://5ac2-91-235-68-209.ngrok-free.app/api/';
 
-const buildUrl = (...paths: string[]) =>
-  `https://fea5-91-235-68-209.ngrok-free.app/api/get/${paths.join('/')}`;
+const buildUrl = (...paths: string[]) => `${URL}/${paths.join('/')}`;
 
 const stringifyQueryParams = (params: Record<string, string>) =>
   new URLSearchParams(params).toString();
@@ -38,20 +35,20 @@ export const getCategories = async (
   init?: RequestInit
 ) => {
   return sendRequest<getCategories>(
-    `${buildUrl('Category')}?all_data=true&pagination=true`,
+    `${buildUrl('get', 'Category')}?all_data=true&pagination=true`,
     init
   );
 };
 
 export const getBrands = async (
   //   params: Record<string, string> = {},
-  category_id: number,
   init?: RequestInit
 ) => {
-  return sendRequest<getBrands>(
+  return sendRequest<Brand[]>(
     `${buildUrl(
+      'get',
       'Brand'
-    )}?all_data=true&field=category_id&search=${category_id}&pagination=true`,
+    )}?all_data=true&equal=false&pagination=false&page_size=25&page=1`,
     init
   );
 };

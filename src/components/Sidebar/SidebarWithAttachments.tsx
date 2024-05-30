@@ -6,8 +6,16 @@ import ContactContent from '../Contact/ContactContent/ContactContent';
 import Map from '../Map/Map';
 import { categories } from '@/lib/db/categories';
 import { brands } from '@/lib/db/brands';
+import { getBrands, getCategories } from '@/services/api/api';
 
-function SidebarWithAttachments() {
+async function SidebarWithAttachments() {
+  // const categoriesData = await getCategories();
+  // const categories = categoriesData.data;
+
+  // const brandsData = await getBrands();
+
+  // const brands = brandsData.data;
+
   return (
     <Sidebar>
       <CatalogList categories={categories} brands={brands} />
