@@ -1,20 +1,46 @@
+'use client';
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import EyeIcon from '../icons/EyeIcon';
 import styles from './SignUpForm.module.scss';
 import GoogleIcon from '../icons/GoogleIcon';
 import Link from 'next/link';
+import axios from 'axios';
 
 type Inputs = {
-  phone: string;
+  email: string;
   password: string;
-  confirm_password: string;
+  confirm_password?: string;
+};
+
+type RegisterData = {
+  email: string;
+  password: string;
+};
+
+type LoginData = {
+  credential: string;
+  password: string;
+};
+
+const URL = 'https://5ac2-91-235-68-209.ngrok-free.app/api/';
+const registerUser = async (data: RegisterData) => {
+  const response = await axios.post(`${URL}user/register`, data);
+  return response.data;
+};
+
+const loginUser = async (data: LoginData) => {
+  const response = await axios.post(`${URL}user/login`, data);
+  return response.data;
 };
 
 export default function SignUpForm() {
   const [isRegistration, setIsRegistration] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
-  const togglePasswordVisiblity = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const togglePasswordVisibility = () => {
     setPasswordShown((passwordShown) => !passwordShown);
   };
 
@@ -25,38 +51,56 @@ export default function SignUpForm() {
     reset,
     watch,
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-    reset();
-    //fetch POST
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setLoading(true);
+    setError(null);
+    try {
+      if (isRegistration) {
+        const response = await registerUser({
+          email: data.email,
+          password: data.password,
+        });
+        console.log('Registration Success:', response);
+      } else {
+        const response = await loginUser({
+          credential: data.email,
+          password: data.password,
+        });
+        console.log('Login Success:', response);
+      }
+      reset();
+    } catch (error) {
+      setError('An error occurred. Please try again.');
+      console.error('Error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div className={styles.form_container}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Номер телефону</label>
+        <label>Електронна пошта</label>
         <input
-          placeholder="+380 (__)___-__-__"
-          {...(register('phone'), { required: true })}
+          placeholder="Введіть електронну пошту"
+          {...register('email', { required: true })}
         />
         <div className={styles.password_container}>
           <label>Пароль</label>
           <input
             placeholder="Пароль (не менше 6 символів)"
             type={passwordShown ? 'text' : 'password'}
-            {...register('password', {
-              required: true,
-            })}
+            {...register('password', { required: true })}
           />
           <EyeIcon
             className={styles.eye_icon}
-            onClick={togglePasswordVisiblity}
+            onClick={togglePasswordVisibility}
           />
         </div>
         {!isRegistration && (
           <div className={styles.policy_container}>
-            {' '}
-            <input type="checkbox" />{' '}
+            <input type="checkbox" />
             <div className={styles.text_container}>
               <span>Запам’ятати мене</span>
               <span>Забули пароль?</span>
@@ -72,7 +116,7 @@ export default function SignUpForm() {
                 type={passwordShown ? 'text' : 'password'}
                 {...register('confirm_password', {
                   required: true,
-                  validate: (val: string) => {
+                  validate: (val: string | undefined) => {
                     if (watch('password') !== val) {
                       return 'Your passwords do not match';
                     }
@@ -81,27 +125,33 @@ export default function SignUpForm() {
               />
               <EyeIcon
                 className={styles.eye_icon}
-                onClick={togglePasswordVisiblity}
+                onClick={togglePasswordVisibility}
               />
             </div>
             <div className={styles.policy_container}>
-              {' '}
-              <input type="checkbox" />{' '}
+              <input type="checkbox" />
               <Link href="/return_policy">
                 Я приймаю умови користувальницької угоди
               </Link>
             </div>
           </>
         )}
-
         {errors.password && (
           <span className={styles.error_message}>Це поле обовязкове</span>
         )}
         <input
           type="submit"
-          value={isRegistration ? 'Зареєструватися' : 'Увійти'}
+          value={
+            loading
+              ? 'Завантаження...'
+              : isRegistration
+              ? 'Зареєструватися'
+              : 'Увійти'
+          }
+          disabled={loading}
         />
       </form>
+      {error && <span className={styles.error_message}>{error}</span>}
       {!isRegistration && (
         <button className={styles.btn} onClick={() => setIsRegistration(true)}>
           Зареєструватися
@@ -112,7 +162,6 @@ export default function SignUpForm() {
           Увійти
         </button>
       )}
-
       <div className={styles.seperate_container}>
         <div className={styles.line}></div>
         <span>або</span>
