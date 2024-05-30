@@ -1,38 +1,45 @@
 import { StaticImageData } from 'next/image';
 
-// need to correct acording to backand responce
 export interface Category {
-  id: string;
-  image?: string | StaticImageData;
+  id: number;
+  image: string[] | null;
   name: string;
-  subcategories?: Brand[];
+  add_date: string;
 }
-
-// need to correct acording to backand responce
 export interface Brand {
-  id: string;
-  image?: string;
+  id: number;
+  image: string[] | null;
   name: string;
-  category_id?: string;
+  add_date: string;
+  category_id: number;
 }
-// need to correct acording to backand responce
 export interface ProductSeries {
-  id: string;
-  image: string;
+  id: number;
+  image: string[] | null;
   name: string;
-  brand_id: string;
+  add_date: string;
+  brand_id: number;
 }
-// need to correct acording to backand responce
+export interface ProductSubSeries {
+  id: number;
+  image: string[] | null;
+  name: string;
+  add_date: string;
+  series_id: number;
+}
 export interface Product {
   id: number;
-  vendorCode: string;
+  images: string[][];
   name: string;
-  measurementUnit: string;
-  brand: string;
+  article: string;
+  unit_of_measurement: string;
   price: number;
-  description: string;
-  image: string;
-  series: string;
-  series_id: string;
-  brand_id: string;
+  description?: string | null;
+  in_stock?: boolean;
+  popular?: boolean;
+  brand_id: number;
+  series_id?: number | null;
+  subseries_id?: number | null;
+  updated_info_date?: string | null;
+  add_date: string;
 }

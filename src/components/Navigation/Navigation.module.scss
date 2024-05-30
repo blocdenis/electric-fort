@@ -106,6 +106,7 @@
   @include breakpoint(desktop) {
     &:hover {
       & .subcategory {
+        color: $white;
         display: block;
         position: absolute;
         top: 0px;

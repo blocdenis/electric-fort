@@ -1,12 +1,12 @@
 'use client';
 import styles from './Navigation.module.scss';
-import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import Catalog from './Catalog';
 import NavigationItem from './NavigationItem';
-import { useEffect, useState } from 'react';
-import Backdrop from '../Backdrop/Backdrop';
+import { useState } from 'react';
 import CatalogList from './CatalogList';
 import Container from '../Container/Container';
+import { categories } from '@/lib/db/categories';
+import { brands } from '@/lib/db/brands';
 
 export const navigationItems = [
   { id: '1', title: 'Про нас', href: '/about_us' },
@@ -44,7 +44,7 @@ function Navigation() {
         </div>
         {isOpen ? (
           <div className={styles.mobile_catalog_container}>
-            <CatalogList />
+            <CatalogList categories={categories} brands={brands} />
           </div>
         ) : null}
       </Container>
