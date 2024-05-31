@@ -1,4 +1,4 @@
-import { Brand, Category } from '@/lib/db/types';
+import { Brand, Category } from '@/lib/types/types';
 
 export const URL = 'https://5ac2-91-235-68-209.ngrok-free.app/api/';
 

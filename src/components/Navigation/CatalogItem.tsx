@@ -4,7 +4,7 @@ import { ArrowCatalogIcon } from '../icons';
 import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './Navigation.module.scss';
-import { Brand, Category } from '@/lib/db/types';
+import { Brand, Category } from '@/lib/types/types';
 
 interface catalogItemProps {
   category: Category;

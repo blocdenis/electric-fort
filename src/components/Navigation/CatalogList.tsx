@@ -1,7 +1,7 @@
 // import { categories } from '@/lib/db/categories';
 import React from 'react';
 import CatalogItem from './CatalogItem';
-import { Brand, Category } from '@/lib/db/types';
+import { Brand, Category } from '@/lib/types/types';
 
 type Props = {
   categories: Category[];

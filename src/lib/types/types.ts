@@ -29,7 +29,7 @@ export interface ProductSubSeries {
 }
 export interface Product {
   id: number;
-  images: string[][];
+  images: string[][] | null;
   name: string;
   article: string;
   unit_of_measurement: string;

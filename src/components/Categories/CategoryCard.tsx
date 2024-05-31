@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import categotyImg from '../../../public/category-img.jpg';
-import { Category } from '@/lib/db/types';
+import { Category } from '@/lib/types/types';
 import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './CategoryCard.module.scss';

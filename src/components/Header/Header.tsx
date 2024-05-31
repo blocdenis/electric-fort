@@ -20,6 +20,8 @@ import Link from 'next/link';
 import AuthModal from '../AuthModal/AuthModal';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
 import Container from '../Container/Container';
+import Favorites from '../Favorites/Favorites';
+import Popup from '../Popup/Popup';
 
 const Header = () => {
   const { openCart, cartQuantity } = useShoppingCart();
@@ -145,10 +147,17 @@ const Header = () => {
         </Container>
       </div>
       <Navigation />
-      <Backdrop isOpen={isMenuOpen} onClick={handleMenuToggle}>
+      <Backdrop
+        isOpen={isMenuOpen}
+        onClick={handleMenuToggle}
+        className=" bg-backdrop_green"
+      >
         <BurgerMenu isOpen={isMenuOpen} onCloseClick={handleMenuToggle} />
       </Backdrop>
       {isAuthOpen && <AuthModal onClose={closeModal} />}
+      <Popup isOpen={true} onClick={() => console.log('Clicked')}>
+        <Favorites />
+      </Popup>
     </header>
   );
 };

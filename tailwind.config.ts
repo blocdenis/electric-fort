@@ -16,7 +16,8 @@ const config: Config = {
         secondary_green: '#69AF00',
         dark_green: '#2A4700',
         yellow: '#ffe500',
-        backdrop: 'rgba(33, 89, 0, 0.9)',
+        backdrop_green: 'rgba(33, 89, 0, 0.9)',
+        backdrop_black: 'rgba(17, 22, 22, 0.85)',
         backgroung: '#1e1e1e',
       },
       screens: {

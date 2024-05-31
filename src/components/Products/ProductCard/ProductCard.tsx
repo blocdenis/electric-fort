@@ -7,7 +7,7 @@ import {
 } from '@/components/icons';
 import notFoundImage from '@/../public/notFound.jpg';
 import styles from './ProductCard.module.scss';
-import { Product } from '@/lib/db/types';
+import { Product } from '@/lib/types/types';
 import classNames from 'classnames';
 import SecondaryButton from '@/components/Buttons/SecondaryButton';
 import { useState } from 'react';
@@ -15,16 +15,18 @@ import { useShoppingCart } from '@/context/ShoppingCartContext';
 
 function ProductCard({
   id,
-  vendorCode,
   name,
-  measurementUnit,
-  brand,
+  unit_of_measurement,
   price,
   description,
-  image,
-  series,
+  in_stock,
+  popular,
+  images,
   series_id,
+  subseries_id,
   brand_id,
+  updated_info_date,
+  add_date,
 }: Product) {
   const productPageLink = `/${name}`;
   const {
@@ -48,7 +50,7 @@ function ProductCard({
         <Link href={productPageLink}>
           <Image
             className=""
-            src={image ? image : notFoundImage}
+            src={notFoundImage}
             alt={`${name} image`}
             width={254}
             height={176}
@@ -69,7 +71,7 @@ function ProductCard({
           <span className={styles.product_price_measurement_unit}>грн/</span>
           <p
             className={styles.product_price_measurement_unit}
-          >{`${measurementUnit}`}</p>
+          >{`${unit_of_measurement}`}</p>
         </div>
       </div>
       <div className=" flex justify-between items-center">
