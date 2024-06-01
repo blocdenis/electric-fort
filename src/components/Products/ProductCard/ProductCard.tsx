@@ -12,6 +12,7 @@ import classNames from 'classnames';
 import SecondaryButton from '@/components/Buttons/SecondaryButton';
 import { useState } from 'react';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
+import { useFavorites } from '@/context/FavoritesContext';
 
 function ProductCard({
   id,
@@ -27,6 +28,7 @@ function ProductCard({
   brand_id,
   updated_info_date,
   add_date,
+  article,
 }: Product) {
   const productPageLink = `/${name}`;
   const {
@@ -37,12 +39,37 @@ function ProductCard({
     removeFromCart,
     cartQuantity,
   } = useShoppingCart();
-  const [isFavorite, setIsFavorite] = useState(false);
+
+  const { toggleFavorites, isFavorite } = useFavorites();
+
+  // const [isFavorite, setIsFavorite] = useState(false);
 
   const quantity = getItemQuantity(id);
+
   const handleFavoriteIconClick = () => {
-    setIsFavorite((prevValue) => !prevValue);
+    // setIsFavorite((prevValue) => !prevValue);
+    toggleFavorites({
+      id,
+      name,
+      unit_of_measurement,
+      price,
+      description,
+      in_stock,
+      popular,
+      images,
+      series_id,
+      subseries_id,
+      brand_id,
+      updated_info_date,
+      add_date,
+      article,
+    });
   };
+
+  // const handleFavoriteIconClickDelete = () => {
+  //   // setIsFavorite((prevValue) => !prevValue);
+  //   removeFromFavorites(id);
+  // };
 
   return (
     <div className=" inline-block bg-white w-[286px] h-[400px] px-4 pt-4 pb-6 shadow-[0_1px_1px_0_rgba(0,0,0,0.25)]">
@@ -82,7 +109,7 @@ function ProductCard({
           Купити
         </SecondaryButton>
         <div className=" flex justify-center items-center w-[41px] h-[41px]">
-          {isFavorite ? (
+          {isFavorite(id) ? (
             <HeartWithShadowFilledIcon
               onClick={handleFavoriteIconClick}
               width={32}

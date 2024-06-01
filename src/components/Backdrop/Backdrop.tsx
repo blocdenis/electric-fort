@@ -8,13 +8,14 @@ type BackdropProps = PropsWithChildren<{
   className: string;
 }>;
 function Backdrop({ isOpen, onClick, className, children }: BackdropProps) {
-  useEffect(() => {
-    document.body.classList.add('body_overflow');
+  // useEffect(() => {
+  //   document.body.classList.add('body_overflow');
 
-    return () => {
-      document.body.classList.remove('body_overflow');
-    };
-  }, []);
+  //   return () => {
+  //     document.body.classList.remove('body_overflow');
+  //   };
+  // }, []);
+
   return (
     <div
       onClick={onClick}

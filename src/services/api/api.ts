@@ -52,3 +52,16 @@ export const getBrands = async (
     init
   );
 };
+
+export const getFavorites = async (
+  //   params: Record<string, string> = {},
+  init?: RequestInit
+) => {
+  return sendRequest<Brand[]>(
+    `${buildUrl(
+      'get',
+      'Brand'
+    )}?all_data=true&equal=false&pagination=false&page_size=25&page=1`,
+    init
+  );
+};

@@ -1,11 +1,14 @@
+// 'use client';
 import styles from './Favorites.module.scss';
 import Button from '../Buttons/Button/Button';
 import FavoritesList from './FavoritesList';
 import { products } from '@/lib/db/products';
 import FavoritesEmpty from './FavoritesEmpty';
+import { useFavorites } from '@/context/FavoritesContext';
 
 function Favorites() {
   const isAuthUser = false;
+  const { favoritesItems } = useFavorites();
 
   return (
     <section>
@@ -24,7 +27,7 @@ function Favorites() {
         </div>
       ) : null}
       {products.length ? (
-        <FavoritesList products={products} />
+        <FavoritesList products={favoritesItems} />
       ) : (
         <FavoritesEmpty />
       )}
