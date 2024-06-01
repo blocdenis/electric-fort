@@ -15,9 +15,8 @@ const AdvantageCard: React.FC<AdvantageCardProps> = ({
 }) => {
   return (
     <div className={styles.item}>
-      <Icon style={{ position: 'absolute', zIndex: '999' }} />
-      <div className={styles.blurry_ellipse_yellow}></div>
-      <div className={styles.blurry_ellipse_green}></div>
+      {/* <Icon style={{ position: 'absolute', zIndex: '999' }} /> */}
+      <Icon />
       <p className={styles.text}>{text}</p>
       {children}
     </div>

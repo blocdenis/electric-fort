@@ -1,7 +1,7 @@
 'use client';
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { useLocalStorage } from '@/services/useLocalStorage';
 import ShoppingCart from '@/components/ShoppingCart/ShoppingCart';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 type ShoppingCartProviderProps = {
   children: ReactNode;
 };
