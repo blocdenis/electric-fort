@@ -1,6 +1,6 @@
 'use client';
 import { createContext, ReactNode, useContext, useState } from 'react';
-import { useLocalStorage } from '@/services/useLocalStorage';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import Popup from '@/components/Popup/Popup';
 import Favorites from '@/components/Favorites/Favorites';
 import { Product } from '@/lib/types/types';
