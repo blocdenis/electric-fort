@@ -57,7 +57,7 @@ function CategoriesSection() {
           >
             {categories.map(({ id, name, image }, index) => (
               <SwiperSlide tag="li" key={id}>
-                <CategoryCard id={id} name={name} image={image} />
+                <CategoryCard id={id} name={name} image={image} add_date="" />
               </SwiperSlide>
             ))}
           </Swiper>

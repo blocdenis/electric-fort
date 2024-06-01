@@ -5,6 +5,7 @@ import Footer from '@/components/Footer/Footer';
 
 import { ShoppingCartProvider } from '@/context/ShoppingCartContext';
 import Provider from '@/context/Providers';
+import { FavoritesProvider } from '@/context/FavoritesContext';
 
 export const metadata: Metadata = {
   title: 'Elektrychna fortecia',
@@ -20,11 +21,13 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <ShoppingCartProvider>
-          <Header />
-          <main>
-            <Provider>{children}</Provider>
-          </main>
-          <Footer />
+          <FavoritesProvider>
+            <Header />
+            <main>
+              <Provider>{children}</Provider>
+            </main>
+            <Footer />
+          </FavoritesProvider>
         </ShoppingCartProvider>
       </body>
     </html>

@@ -15,7 +15,7 @@ const AdvantagesIconPrices = (props: SVGProps<SVGSVGElement>) => (
         ry="26.2014"
         transform="matrix(0.876588 0.481241 -0.476493 0.879178 60.0535 0.499985)"
         fill="#FFE600"
-        fill-opacity="0.4"
+        fillOpacity="0.4"
       />
     </g>
     <g filter="url(#filter1_f_364_4639)">
@@ -26,7 +26,7 @@ const AdvantagesIconPrices = (props: SVGProps<SVGSVGElement>) => (
         ry="26.1559"
         transform="matrix(0.691986 -0.721911 0.717737 0.696314 0.00158691 61.0745)"
         fill="#00FF00"
-        fill-opacity="0.4"
+        fillOpacity="0.4"
       />
     </g>
     <path
@@ -41,9 +41,9 @@ const AdvantagesIconPrices = (props: SVGProps<SVGSVGElement>) => (
         width="54.1423"
         height="61.7107"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend
           mode="normal"
           in="SourceGraphic"
@@ -62,9 +62,9 @@ const AdvantagesIconPrices = (props: SVGProps<SVGSVGElement>) => (
         width="58.1584"
         height="57.9483"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feBlend
           mode="normal"
           in="SourceGraphic"

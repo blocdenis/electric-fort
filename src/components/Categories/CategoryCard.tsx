@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import categotyImg from '../../../public/category-img.jpg';
-import { Category } from '@/lib/db/types';
+import { Category } from '@/lib/types/types';
 import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './CategoryCard.module.scss';
@@ -17,7 +17,7 @@ function CategoryCard({ id, name, image }: Category) {
           <Image
             width={140}
             height={140}
-            src={image ? image : categotyImg}
+            src={image ? image[1] : categotyImg}
             alt="product-category-image"
           ></Image>
         </div>

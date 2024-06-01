@@ -20,9 +20,13 @@ import Link from 'next/link';
 import AuthModal from '../AuthModal/AuthModal';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
 import Container from '../Container/Container';
+import { useFavorites } from '@/context/FavoritesContext';
+import CircleWithQuantity from '../CircleWithQuantity/CircleWithQuantity';
 
 const Header = () => {
   const { openCart, cartQuantity } = useShoppingCart();
+  const { openCloseFavorites, favoritesQuantity } = useFavorites();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [activeLanguage, setActiveLanguage] = useState<'UA' | 'RU'>('UA');
@@ -120,7 +124,12 @@ const Header = () => {
               <SearchInput placeholder="Пошук" />
             </div>
             <div className={styles.container_icons}>
-              <HeartIcon />
+              <div onClick={openCloseFavorites} className=" relative">
+                <HeartIcon />
+                {favoritesQuantity > 0 && (
+                  <CircleWithQuantity quantity={favoritesQuantity} />
+                )}
+              </div>
               <button onClick={openCart} style={{ position: 'relative' }}>
                 <CartIcon />
                 {cartQuantity > 0 && (
@@ -145,7 +154,11 @@ const Header = () => {
         </Container>
       </div>
       <Navigation />
-      <Backdrop isOpen={isMenuOpen} onClick={handleMenuToggle}>
+      <Backdrop
+        isOpen={isMenuOpen}
+        onClick={handleMenuToggle}
+        className=" bg-backdrop_green"
+      >
         <BurgerMenu isOpen={isMenuOpen} onCloseClick={handleMenuToggle} />
       </Backdrop>
       {isAuthOpen && <AuthModal onClose={closeModal} />}

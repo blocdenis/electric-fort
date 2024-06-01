@@ -26,7 +26,7 @@ export function CartItem({ id, quantity }: CartItemProps) {
       <div className="product-info">
         <Image
           className=""
-          src={item.image ? item.image : notFoundImage}
+          src={item.images ? item.images : notFoundImage}
           alt={`${item.name} image`}
           width={80}
           height={98}

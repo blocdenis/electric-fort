@@ -1,0 +1,32 @@
+@use '../../scss/abstracts/' as *;
+
+.title {
+  font: $bold24;
+  margin-bottom: 31px;
+}
+
+.warrning_block {
+  display: flex;
+}
+
+.warning_text {
+  width: 903px;
+  padding: 0 80px;
+  font: $regular20;
+  text-align: center;
+  margin: 11px 0;
+}
+
+.warning_buttons_block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 31px;
+}
+
+.fav_list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  column-gap: 24px;
+  row-gap: 32px;
+}

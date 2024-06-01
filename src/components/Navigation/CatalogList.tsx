@@ -1,13 +1,19 @@
-import { categories } from '@/lib/db/categories';
+// import { categories } from '@/lib/db/categories';
 import React from 'react';
 import CatalogItem from './CatalogItem';
+import { Brand, Category } from '@/lib/types/types';
 
-function CatalogList() {
+type Props = {
+  categories: Category[];
+  brands: Brand[];
+};
+
+function CatalogList({ categories, brands }: Props) {
   return (
     <ul className=" bg-backgroung">
-      {categories.map((category) => (
+      {categories?.map((category) => (
         <li key={category.id}>
-          <CatalogItem category={category} />
+          <CatalogItem brands={brands} category={category} />
         </li>
       ))}
     </ul>
