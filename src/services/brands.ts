@@ -1,5 +1,5 @@
 import { URL } from '@/constants';
-import { Brand } from '@/lib/db/types';
+import { Brand } from '@/lib/types/types';
 
 import axios from 'axios';
 
