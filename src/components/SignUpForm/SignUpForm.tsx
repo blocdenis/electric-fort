@@ -6,6 +6,7 @@ import styles from './SignUpForm.module.scss';
 import GoogleIcon from '../icons/GoogleIcon';
 import Link from 'next/link';
 import axios from 'axios';
+import { URL } from '@/constants';
 
 type Inputs = {
   email: string;
@@ -23,14 +24,17 @@ type LoginData = {
   password: string;
 };
 
-const URL = 'https://5ac2-91-235-68-209.ngrok-free.app/api/';
 const registerUser = async (data: RegisterData) => {
-  const response = await axios.post(`${URL}user/register`, data);
+  const response = await axios.post(`${URL}user/register`, data, {
+    withCredentials: true,
+  });
   return response.data;
 };
 
 const loginUser = async (data: LoginData) => {
-  const response = await axios.post(`${URL}user/login`, data);
+  const response = await axios.post(`${URL}user/login`, data, {
+    withCredentials: true,
+  });
   return response.data;
 };
 
@@ -68,6 +72,7 @@ export default function SignUpForm() {
           password: data.password,
         });
         console.log('Login Success:', response);
+        console.log('Cookies after login:', document.cookie);
       }
       reset();
     } catch (error) {

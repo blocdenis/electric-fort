@@ -1,13 +1,11 @@
 import { useShoppingCart } from '@/context/ShoppingCartContext';
 import React from 'react';
 import './ShoppingCart.scss';
-
 import { CartItem } from './CartItem';
 import { products } from '@/lib/db/products';
 import { applyDiscount, discounts } from '@/services/applyDiscount';
 import { formatPriceUAH } from '@/services/formatCurrency';
 import { EmptyCart } from '../icons';
-import ButtonLink from '../Buttons/ButtonLink/ButtonLink';
 import Link from 'next/link';
 type ShoppingCartProps = {
   isOpen: boolean;

@@ -13,8 +13,9 @@ import {
   AdvantagesIconPrices,
   AdvantagesIconStorage,
 } from '../icons';
-import useMediaQuery from '@/services/useMediaQuery';
+
 import { advantagesData } from '@/lib/db/advantagesData';
+import useMediaQuery from '@/hooks/useMediaQuery';
 
 const Advantages: React.FC = () => {
   const isAboveMediumScreeens = useMediaQuery('(min-width:769px)');
