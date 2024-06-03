@@ -10,17 +10,17 @@ const FavoritesEmptyIcon = (props: SVGProps<SVGSVGElement>) => (
   >
     <path
       stroke="#69AF00"
-      stroke-width="4"
+      strokeWidth="4"
       d="M6 191.97V19.19h36.27V6h60.672v13.19h36.271v172.78H6ZM53.48 17.21h38.25"
     />
     <path
       stroke="#9CEC25"
-      stroke-width="4"
+      strokeWidth="4"
       d="M27.104 42.272h89.688M27.104 58.098h89.688M27.104 73.926h89.688M27.104 89.752h89.688M27.104 105.579h89.688M27.104 121.407h89.688M27.104 137.234h89.688M27.104 153.062h89.688M27.104 168.889h89.688"
     />
     <path
       stroke="#69AF00"
-      stroke-width="4"
+      strokeWidth="4"
       d="M17.872 180.759V30.4h108.153V180.76H17.872Z"
     />
     <g filter="url(#a)">
@@ -36,10 +36,10 @@ const FavoritesEmptyIcon = (props: SVGProps<SVGSVGElement>) => (
         height="65.309"
         x="37.974"
         y="67.991"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
         filterUnits="userSpaceOnUse"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           result="hardAlpha"

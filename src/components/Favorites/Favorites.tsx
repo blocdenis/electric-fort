@@ -26,7 +26,7 @@ function Favorites() {
           </div>
         </div>
       ) : null}
-      {products.length ? (
+      {favoritesItems.length ? (
         <FavoritesList products={favoritesItems} />
       ) : (
         <FavoritesEmpty />
