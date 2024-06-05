@@ -30,7 +30,7 @@ export default function Home() {
       <ContentContainer>
         <HeroSlider data={slides} />
         <CategoriesSection />
-        <PopularProductsSection />
+        <PopularProductsSection title={''} />
         <Advantages />
         <Partners />
         <TextSection />

@@ -1,0 +1,141 @@
+@use '../../scss/abstracts/' as *;
+/* styles for tabs */
+.tabs {
+  width: 560px;
+  display: flex;
+  gap: 40px;
+  list-style-type: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.tab {
+  width: 160px;
+  text-align: center;
+  cursor: pointer;
+}
+.active-tab {
+  font-weight: bold;
+  color: yellow;
+  border-bottom: 3px solid yellow;
+}
+.description-container {
+  margin-top: 24px;
+}
+/* styles for description section */
+.product-description-container {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  @include breakpoint(tablet) {
+    flex-direction: column;
+  }
+  .image-section {
+    width: 252px;
+  }
+  .description-section {
+    display: flex;
+    flex-direction: column;
+    gap: 19.67px;
+    width: 667px;
+    .name {
+      font: $bold18;
+    }
+    .articel {
+      font: $regular16;
+    }
+    .price-section {
+      width: 663px;
+      display: flex;
+      justify-content: space-between;
+      @include breakpoint(tablet) {
+        flex-direction: column;
+        justify-content: inherit;
+      }
+      .price {
+        font: $bold36;
+      }
+      .btn {
+        width: 188px;
+        button {
+          width: auto;
+        }
+      }
+    }
+    .delivery-section {
+      // width: 535px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      // :last-child {
+      //   width: auto;
+      // }
+      @include breakpoint(tablet) {
+        flex-direction: column;
+        justify-content: inherit;
+      }
+
+      .options_list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 50%;
+        font: $regular16;
+        :first-child {
+          width: 222px;
+        }
+      }
+      .payment {
+        width: 100%;
+      }
+      .delivery-header {
+        display: flex;
+        width: 125px;
+        gap: 10px;
+        .delivery-hero {
+          font: $semibold18;
+        }
+      }
+    }
+  }
+}
+
+/* styles for specification section */
+.specification-container {
+  display: flex;
+  flex-direction: row;
+  // justify-content: space-between;
+  .specification-block {
+    flex: 1;
+    margin-top: 32px;
+    .specification-description {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      .specification-image {
+        width: 154px;
+        height: 194px;
+        border: 1px solid grey;
+      }
+      .spesification-description {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        width: 267px;
+        .specification-name {
+          font: $semibold16;
+        }
+        .specification-article {
+          font: $regular14;
+        }
+        .specification-price {
+          font: $semibold24;
+        }
+        .btn {
+          width: 188px;
+        }
+      }
+    }
+  }
+}
+/* styles for review section */
