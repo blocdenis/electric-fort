@@ -14,11 +14,17 @@ import 'swiper/css/navigation';
 import ProductCard from '../ProductCard/ProductCard';
 import { ArrowCategoriesIcon } from '@/components/icons';
 
-function PopularProductsSection() {
+interface PopularProductsSectionProps {
+  title: string;
+}
+
+const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
+  title = 'Популярні товари',
+}) => {
   return (
     <Section>
       <div className={styles.container}>
-        <SectionTitle title="Популярні товари" className=" mb-4" />
+        <SectionTitle title={title} className=" mb-4" />
         <div className={styles.swiper_container}>
           <Swiper
             wrapperTag="ul"
@@ -65,6 +71,6 @@ function PopularProductsSection() {
       </div>
     </Section>
   );
-}
+};
 
 export default PopularProductsSection;
