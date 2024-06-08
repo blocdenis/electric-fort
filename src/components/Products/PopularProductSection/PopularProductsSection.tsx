@@ -17,7 +17,7 @@ import { Product } from '@/lib/types/types';
 
 interface PopularProductsSectionProps {
   title: string;
-  products: Product[];
+  products?: Product[];
 }
 
 const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
