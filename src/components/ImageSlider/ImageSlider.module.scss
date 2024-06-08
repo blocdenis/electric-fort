@@ -1,0 +1,38 @@
+.image-slider {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .main-image {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 10px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .thumbnail-container {
+    display: flex;
+    justify-content: center;
+    gap: 8.25px;
+
+    .thumbnail {
+      width: 44px;
+      height: 54px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .active {
+      border-color: blue;
+    }
+  }
+}
