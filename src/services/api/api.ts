@@ -1,6 +1,6 @@
-import { Brand, Category } from '@/lib/types/types';
+import { Brand, Category, Product } from '@/lib/types/types';
 
-export const URL = 'https://5ac2-91-235-68-209.ngrok-free.app/api/';
+export const URL = 'https://2qtsbt2v-80.euw.devtunnels.ms/api';
 
 const buildUrl = (...paths: string[]) => `${URL}/${paths.join('/')}`;
 
@@ -30,6 +30,13 @@ type getBrands = {
   data: Brand[];
 };
 
+type getProducts = {
+  count: number;
+  total_pages: number;
+  page: number;
+  data: Product[];
+};
+
 export const getCategories = async (
   //   params: Record<string, string> = {},
   init?: RequestInit
@@ -53,11 +60,37 @@ export const getBrands = async (
   );
 };
 
+export const getProducts = async (
+  //   params: Record<string, string> = {},
+  init?: RequestInit
+) => {
+  return sendRequest<getProducts>(
+    `${buildUrl(
+      'get',
+      'Product'
+    )}?all_data=true&equal=false&pagination=true&page_size=25&page=1`,
+    init
+  );
+};
+
+export const getPopularProducts = async (
+  //   params: Record<string, string> = {},
+  init?: RequestInit
+) => {
+  return sendRequest<getProducts>(
+    `${buildUrl(
+      'get',
+      'Product'
+    )}?all_data=true&field=popular&search=true&equal=false&pagination=true&page_size=25&page=1`,
+    init
+  );
+};
+
 export const getFavorites = async (
   //   params: Record<string, string> = {},
   init?: RequestInit
 ) => {
-  return sendRequest<Brand[]>(
+  return sendRequest<Product[]>(
     `${buildUrl(
       'get',
       'Brand'

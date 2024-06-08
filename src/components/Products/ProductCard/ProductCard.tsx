@@ -73,14 +73,18 @@ function ProductCard({
 
   return (
     <div className=" inline-block bg-white w-[286px] h-[400px] px-4 pt-4 pb-6 shadow-[0_1px_1px_0_rgba(0,0,0,0.25)]">
-      <div className=" w-[254px] h-[176px] overflow-hidden mb-4 ">
+      <div className=" w-auto h-[176px] overflow-hidden mb-4 ">
         <Link href={productPageLink}>
           <Image
             className=""
-            src={notFoundImage}
+            src={
+              images
+                ? `data:${images[0][0]}; base64, ${images[0][1]}`
+                : notFoundImage
+            }
             alt={`${name} image`}
             width={254}
-            height={176}
+            height={254}
           />
         </Link>
       </div>
