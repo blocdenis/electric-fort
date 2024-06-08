@@ -2,7 +2,7 @@
 
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
-import { products } from '@/lib/db/products';
+// import { products } from '@/lib/db/products';
 import styles from './PopularProductsSection.module.scss';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -13,13 +13,16 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import ProductCard from '../ProductCard/ProductCard';
 import { ArrowCategoriesIcon } from '@/components/icons';
+import { Product } from '@/lib/types/types';
 
 interface PopularProductsSectionProps {
-  title: string;
+  title?: string;
+  products: Product[];
 }
 
 const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
   title = 'Популярні товари',
+  products,
 }) => {
   return (
     <Section>
@@ -47,7 +50,7 @@ const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
             modules={[Navigation]}
             loop
           >
-            {products.map((product) => (
+            {products?.map((product) => (
               <SwiperSlide tag="li" className="" key={product.id}>
                 <ProductCard {...product} />
               </SwiperSlide>

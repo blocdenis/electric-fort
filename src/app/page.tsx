@@ -7,6 +7,7 @@ import Partners from '@/components/Partners/Partners';
 import Container from '@/components/Container/Container';
 import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 import ContentContainer from '@/components/Container/ContentContainer';
+import { getPopularProducts, getProducts } from '@/services/api/api';
 
 const slides = [
   {
@@ -23,14 +24,18 @@ const slides = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const response = await getPopularProducts();
+  console.log(response);
+  const products = response.data;
+
   return (
     <Container className="flex">
       <SidebarWithAttachments />
       <ContentContainer>
         <HeroSlider data={slides} />
         <CategoriesSection />
-        <PopularProductsSection title={''} />
+        <PopularProductsSection products={products} />
         <Advantages />
         <Partners />
         <TextSection />
