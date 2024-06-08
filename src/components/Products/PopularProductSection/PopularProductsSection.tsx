@@ -16,12 +16,12 @@ import { ArrowCategoriesIcon } from '@/components/icons';
 import { Product } from '@/lib/types/types';
 
 interface PopularProductsSectionProps {
-  title?: string;
+  title: string;
   products: Product[];
 }
 
 const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
-  title = 'Популярні товари',
+  title,
   products,
 }) => {
   return (

@@ -26,7 +26,6 @@ const slides = [
 
 export default async function Home() {
   const response = await getPopularProducts();
-  console.log(response);
   const products = response.data;
 
   return (
@@ -35,7 +34,7 @@ export default async function Home() {
       <ContentContainer>
         <HeroSlider data={slides} />
         <CategoriesSection />
-        <PopularProductsSection products={products} />
+        <PopularProductsSection title="Популярні товари" products={products} />
         <Advantages />
         <Partners />
         <TextSection />
