@@ -33,7 +33,6 @@ function Page() {
             </ul>
           </div>
         </Section>
-        <Partners />
       </ContentContainer>
     </Container>
   );
