@@ -20,15 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ShoppingCartProvider>
-          <FavoritesProvider>
-            <Header />
-            <main>
-              <Provider>{children}</Provider>
-            </main>
-            <Footer />
-          </FavoritesProvider>
-        </ShoppingCartProvider>
+        <Provider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+        </Provider>
       </body>
     </html>
   );
