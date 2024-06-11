@@ -10,9 +10,15 @@ import styles from './ProductCard.module.scss';
 import { Product } from '@/lib/types/types';
 import classNames from 'classnames';
 import SecondaryButton from '@/components/Buttons/SecondaryButton';
-import { useState } from 'react';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
 import { useFavorites } from '@/context/FavoritesContext';
+import {
+  addFavorites,
+  deleteFavorites,
+  getFavorites,
+} from '@/services/api/api';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 
 function ProductCard({
   id,
@@ -40,40 +46,21 @@ function ProductCard({
     cartQuantity,
   } = useShoppingCart();
 
-  const { toggleFavorites, isFavorite } = useFavorites();
-
-  // const [isFavorite, setIsFavorite] = useState(false);
-
   const quantity = getItemQuantity(id);
 
-  const handleFavoriteIconClick = () => {
-    // setIsFavorite((prevValue) => !prevValue);
-    toggleFavorites({
-      id,
-      name,
-      unit_of_measurement,
-      price,
-      description,
-      in_stock,
-      popular,
-      images,
-      series_id,
-      subseries_id,
-      brand_id,
-      updated_info_date,
-      add_date,
-      article,
-    });
-  };
+  const { addToFavorites, deleteFromFavorites, isFavorite } = useFavorites();
 
-  // const handleFavoriteIconClickDelete = () => {
-  //   // setIsFavorite((prevValue) => !prevValue);
-  //   removeFromFavorites(id);
-  // };
+  const handleFavoriteIconClick = () => {
+    if (isFavorite(id)) {
+      deleteFromFavorites.mutateAsync(id);
+    } else {
+      addToFavorites.mutateAsync(id);
+    }
+  };
 
   return (
     <div className=" inline-block bg-white w-[286px] h-[400px] px-4 pt-4 pb-6 shadow-[0_1px_1px_0_rgba(0,0,0,0.25)]">
-      <div className=" w-auto h-[176px] overflow-hidden mb-4 ">
+      <div className=" flex justify-center w-[254px] h-[176px] overflow-hidden mb-4 ">
         <Link href={productPageLink}>
           <Image
             className=""
@@ -83,8 +70,8 @@ function ProductCard({
                 : notFoundImage
             }
             alt={`${name} image`}
-            width={254}
-            height={254}
+            width={176}
+            height={176}
           />
         </Link>
       </div>

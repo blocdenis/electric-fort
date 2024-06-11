@@ -5,15 +5,26 @@ import FavoritesList from './FavoritesList';
 import { products } from '@/lib/db/products';
 import FavoritesEmpty from './FavoritesEmpty';
 import { useFavorites } from '@/context/FavoritesContext';
+import { useQuery } from '@tanstack/react-query';
+import { useAuth } from '@/context/AuthContext';
+import { getFavorites } from '@/services/api/api';
 
 function Favorites() {
-  const isAuthUser = false;
-  const { favoritesItems } = useFavorites();
+  const { isAuthenticated, isLoading } = useAuth();
+
+  // const [isLoading, isAuthenticated] = [false, false];
+  const { favoritesItems, isPending } = useFavorites();
+
+  console.log(favoritesItems);
+
+  // const isPending = false;
 
   return (
     <section>
       <h2 className={styles.title}>Список бажань</h2>
-      {!isAuthUser ? (
+      {isLoading ? (
+        <div>Loading user</div>
+      ) : !isAuthenticated ? (
         <div className={styles.warrning_block}>
           <p className={styles.warning_text}>
             Звертаємо вашу увагу, додані Вами товари будуть видалені через 3 дні
@@ -26,7 +37,9 @@ function Favorites() {
           </div>
         </div>
       ) : null}
-      {favoritesItems.length ? (
+      {isPending ? (
+        <div>Loading</div>
+      ) : favoritesItems?.length ? (
         <FavoritesList products={favoritesItems} />
       ) : (
         <FavoritesEmpty />

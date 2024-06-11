@@ -4,8 +4,8 @@ export const URL = 'https://2qtsbt2v-80.euw.devtunnels.ms/api';
 
 const buildUrl = (...paths: string[]) => `${URL}/${paths.join('/')}`;
 
-const stringifyQueryParams = (params: Record<string, string>) =>
-  new URLSearchParams(params).toString();
+// const stringifyQueryParams = (params: Record<string, string>) =>
+//   new URLSearchParams(params).toString();
 
 const sendRequest = async <T>(url: string, init?: RequestInit) => {
   const res = await fetch(url, init);
@@ -91,10 +91,43 @@ export const getFavorites = async (
   init?: RequestInit
 ) => {
   return sendRequest<Product[]>(
-    `${buildUrl(
-      'get',
-      'Brand'
-    )}?all_data=true&equal=false&pagination=false&page_size=25&page=1`,
+    buildUrl('get', 'user', 'favorite_products'),
     init
+  );
+};
+
+export const addFavorites = async (
+  // params: Record<string, number>,
+  id: number,
+  init?: RequestInit
+) => {
+  return sendRequest<string>(
+    `${buildUrl('add', 'favorite_product')}?product_id=${id}`,
+    {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const deleteFavorites = async (
+  // params: Record<string, number>,
+  id: number,
+  init?: RequestInit
+) => {
+  return sendRequest<string>(
+    `${buildUrl('delete', 'favorite_product')}?product_id=${id}`,
+    {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
   );
 };

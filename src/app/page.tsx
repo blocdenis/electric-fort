@@ -7,7 +7,7 @@ import Partners from '@/components/Partners/Partners';
 import Container from '@/components/Container/Container';
 import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 import ContentContainer from '@/components/Container/ContentContainer';
-import { getPopularProducts, getProducts } from '@/services/api/api';
+import { getPopularProducts } from '@/services/api/api';
 
 const slides = [
   {
