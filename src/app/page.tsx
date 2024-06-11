@@ -8,18 +8,20 @@ import Container from '@/components/Container/Container';
 import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 import ContentContainer from '@/components/Container/ContentContainer';
 import { getPopularProducts } from '@/services/api/api';
+import hero from '../../public/Hero.jpg';
+import hero2 from '../../public/Hero2.jpg';
 
 const slides = [
   {
-    src: 'https://picsum.photos/seed/img5/600/400',
-    alt: 'Image 1 for carousel',
+    src: hero,
+    alt: 'Hero image Electric Fort',
   },
   {
-    src: 'https://picsum.photos/seed/img6/600/400',
+    src: hero2,
     alt: 'Image 2 for carousel',
   },
   {
-    src: 'https://picsum.photos/seed/img7/600/400',
+    src: hero2,
     alt: 'Image 3 for carousel',
   },
 ];
