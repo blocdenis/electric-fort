@@ -157,7 +157,7 @@ const Header = () => {
       <Backdrop
         isOpen={isMenuOpen}
         onClick={handleMenuToggle}
-        className=" bg-backdrop_green"
+        className=" bg-backdrop_green lg:hidden"
       >
         <BurgerMenu isOpen={isMenuOpen} onCloseClick={handleMenuToggle} />
       </Backdrop>
