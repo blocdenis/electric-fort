@@ -1,4 +1,5 @@
-export const URL = 'https://1b8a-91-235-68-209.ngrok-free.app/api/';
+import { BASE_URL } from '@/services/api/api';
+export const URL = BASE_URL;
 export const TABS = {
   DESCRIPTION: 'Опис',
   SPECIFICATION: 'Xарактеристики',

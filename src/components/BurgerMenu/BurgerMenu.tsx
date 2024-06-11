@@ -15,35 +15,51 @@ import NavigationItem from '../Navigation/NavigationItem';
 import styles from '../Navigation/Navigation.module.scss';
 import ContactText from '../Contact/ContactText/ContactText';
 import { useState } from 'react';
+import { useShoppingCart } from '@/context/ShoppingCartContext';
+import { useFavorites } from '@/context/FavoritesContext';
+import { useAuth } from '@/context/AuthContext';
 
 export interface BurgerMenuProps {
   onCloseClick: () => void;
   isOpen: boolean;
 }
 
-const burgerMenuItems = [
-  {
-    title: 'Кошик',
-    icon: (
-      <CartIcon width={37} hanging={37} className=" [&_path]:stroke-black" />
-    ),
-    value: 3,
-  },
-  {
-    title: 'Список бажань',
-    icon: (
-      <HeartIcon
-        width={30}
-        hanging={26.75}
-        className=" [&_path]:stroke-black"
-      />
-    ),
-    value: 12,
-    href: '/profile/favorites',
-  },
-];
-
 function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
+  const { cartQuantity, openCart } = useShoppingCart();
+  const { favoritesQuantity, openCloseFavorites, openCloseAuth } =
+    useFavorites();
+  const { isAuthenticated } = useAuth();
+  const burgerMenuItems = [
+    {
+      title: 'Кошик',
+      icon: (
+        <CartIcon width={37} hanging={37} className=" [&_path]:stroke-black" />
+      ),
+      value: cartQuantity,
+      onClick: () => {
+        onCloseClick();
+        openCart();
+      },
+      href: '/',
+    },
+    {
+      title: 'Список бажань',
+      icon: (
+        <HeartIcon
+          width={30}
+          hanging={26.75}
+          className=" [&_path]:stroke-black"
+        />
+      ),
+      value: favoritesQuantity,
+      onClick: () => {
+        onCloseClick();
+        openCloseFavorites();
+      },
+      href: '/',
+    },
+  ];
+
   const [isLogIn, setIsLogIn] = useState(false);
   return (
     <div
@@ -57,17 +73,21 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
         <CrossIcon onClick={onCloseClick} className="[&_rect]:fill-yellow" />
       </div>
       <div className="py-[26px] px-4 bg-primary_green">
-        {isLogIn ? (
+        {isAuthenticated ? (
           <BurgerUserhNav onClick={() => setIsLogIn((prevVal) => !prevVal)} />
         ) : (
-          <BurgerAuthNav onClick={() => setIsLogIn((prevVal) => !prevVal)} />
+          <BurgerAuthNav
+            onClick={() => {
+              openCloseAuth();
+            }}
+          />
         )}
       </div>
       <div className=" px-4 pt-4 pb-8 h-auto bg-black">
         <ul className=" bg-black text-white pb-6 mb-6 border-b border-b-gray-ligthMax ">
           {burgerMenuItems.map((item) => (
             <BurgerMenuItem
-              onClick={onCloseClick}
+              onClick={item.onClick}
               key={item.title}
               title={item.title}
               value={item.value}

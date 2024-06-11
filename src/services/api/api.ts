@@ -1,9 +1,8 @@
 import { Brand, Category, Product } from '@/lib/types/types';
-import axios from 'axios';
 
-export const URL = 'https://2qtsbt2v-80.euw.devtunnels.ms/api';
+export const BASE_URL = 'https://2qtsbt2v-80.euw.devtunnels.ms/api';
 
-const buildUrl = (...paths: string[]) => `${URL}/${paths.join('/')}`;
+const buildUrl = (...paths: string[]) => `${BASE_URL}/${paths.join('/')}`;
 
 // // const stringifyQueryParams = (params: Record<string, string>) =>
 // //   new URLSearchParams(params).toString();
@@ -46,6 +45,11 @@ type getProducts = {
   total_pages: number;
   page: number;
   data: Product[];
+};
+
+type User = {
+  email: string;
+  password: string;
 };
 
 export const getCategories = async (
@@ -148,4 +152,34 @@ export const deleteFavorites = async (
       },
     }
   );
+};
+export const registrationUser = async (
+  // params: Record<string, number>,
+  data: User,
+  init?: RequestInit
+) => {
+  return sendRequest<string>(`${buildUrl('user', 'register')}`, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
+};
+
+export const isAuth = async (
+  // params: Record<string, number>,
+  data: User,
+  init?: RequestInit
+) => {
+  return sendRequest<string>(`${buildUrl('jwt', 'user')}`, {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
 };
