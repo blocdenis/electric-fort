@@ -27,7 +27,7 @@ const slides = [
 export default async function Home() {
   const response = await getPopularProducts();
   const products = response.data;
-
+  console.log(products);
   return (
     <Container className="flex">
       <SidebarWithAttachments />

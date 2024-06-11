@@ -30,7 +30,7 @@ function ProductCard({
   add_date,
   article,
 }: Product) {
-  const productPageLink = `/${name}`;
+  const productPageLink = `/products/${id}`;
   const {
     cartItems,
     getItemQuantity,

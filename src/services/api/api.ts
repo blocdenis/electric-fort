@@ -30,7 +30,7 @@ type getBrands = {
   data: Brand[];
 };
 
-type getProducts = {
+export type getProducts = {
   count: number;
   total_pages: number;
   page: number;
