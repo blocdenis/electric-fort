@@ -1,4 +1,5 @@
-export const URL = 'https://2qtsbt2v-80.euw.devtunnels.ms/api/';
+import { BASE_URL } from '@/services/api/api';
+export const URL = BASE_URL;
 export const TABS = {
   DESCRIPTION: 'Опис',
   SPECIFICATION: 'Xарактеристики',
