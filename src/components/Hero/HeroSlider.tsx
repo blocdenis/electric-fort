@@ -1,10 +1,10 @@
 'use client';
 import React, { FC, useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 import './HeroSlider.css';
 
 interface CarouselProps {
-  data: { src: string; alt: string }[];
+  data: { src: string | StaticImageData; alt: string }[];
 }
 
 const HeroSlider: FC<CarouselProps> = ({ data }) => {

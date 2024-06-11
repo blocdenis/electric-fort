@@ -13,7 +13,14 @@ export const navigationItems = [
   { id: '2', title: 'Доставка і оплата', href: '/delivery' },
   { id: '3', title: 'Повернення та обмін', href: '/return_policy' },
   { id: '4', title: 'Контакти', href: '#contacts' },
-  { id: '5', title: 'Співпраця', href: '/cooperation' },
+  {
+    id: '5',
+    title: 'Співпраця',
+    subitems: [
+      { title: 'Торгові марки', href: '/cooperation' },
+      { title: 'Офіційне дилерство', href: '/cooperation' },
+    ],
+  },
 ];
 
 function Navigation() {
@@ -35,7 +42,8 @@ function Navigation() {
                     key={item.id}
                     title={item.title}
                     href={item.href}
-                    // accent={item.href == '/cooperation'}
+                    accent={item.title == 'Співпраця'}
+                    subitems={item.subitems}
                   />
                 ))}
               </ul>

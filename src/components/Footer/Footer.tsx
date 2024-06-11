@@ -68,9 +68,6 @@ const Footer: React.FC = () => {
                 <li>
                   <Link href="/policy">Політика конфіденційності</Link>
                 </li>
-                <li>
-                  <Link href="/cooperation">Співпраця</Link>
-                </li>
               </ul>
             </nav>
           </div>

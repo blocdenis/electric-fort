@@ -10,7 +10,7 @@ function CategoryCard({ id, name, image }: Category) {
   return (
     <div className=" w-[220px] h-[228px] laptop:w-[100%] desktop:w-[220px] bg-white border border-[#DEDEDE] py-4 ">
       <Link
-        href={`/categories/${name}`}
+        href={`/categories/${id}`}
         className="w-full h-full flex flex-col items-center justify-start"
       >
         <div className=" w-[160px] h-[160px] flex items-center justify-center object-cover">
