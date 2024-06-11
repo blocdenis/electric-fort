@@ -15,6 +15,7 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
+import AuthModal from '@/components/AuthModal/AuthModal';
 
 type FavoritesProviderProps = {
   children: ReactNode;
@@ -26,6 +27,7 @@ type FavoritesProviderProps = {
 
 type FavoritesContext = {
   openCloseFavorites: () => void;
+  openCloseAuth: () => void;
   deleteFromFavorites: UseMutationResult<string, Error, number, unknown>;
   addToFavorites: UseMutationResult<string, Error, number, unknown>;
   favoritesItems: Product[] | undefined;
@@ -42,27 +44,29 @@ export function useFavorites() {
 
 export function FavoritesProvider({ children }: FavoritesProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
 
-  const { data: favorites, isPending } = useQuery({
+  const { data: favoritesItems, isPending } = useQuery({
     queryKey: ['favorites'],
     queryFn: getFavorites,
     staleTime: 10 * 1000,
   });
 
-  const [favoritesItems, setFavoritesItems] = useLocalStorage<
-    Product[] | undefined
-  >('favorites', favorites);
+  // const [favoritesItems, setFavoritesItems] = useLocalStorage<
+  //   Product[] | undefined
+  // >('favorites', []);
 
   const queryClient = useQueryClient();
 
   const addToFavorites = useMutation({
     mutationFn: addFavorites,
-    onSuccess: (data) => {
-      queryClient.setQueriesData({ queryKey: ['favorites'] }, (oldData) => {
-        if (oldData) {
-          [oldData, data];
-        }
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['favorites'],
+        exact: true,
+        refetchType: 'active',
       });
+      console.log('added');
     },
   });
 
@@ -77,6 +81,7 @@ export function FavoritesProvider({ children }: FavoritesProviderProps) {
     !!favoritesItems?.find((item) => item.id === id) ?? false;
 
   const openCloseFavorites = () => setIsOpen((prevVal) => !prevVal);
+  const openCloseAuth = () => setIsAuthOpen((prevVal) => !prevVal);
 
   const favoritesQuantity = favoritesItems?.length ? favoritesItems.length : 0;
 
@@ -86,6 +91,7 @@ export function FavoritesProvider({ children }: FavoritesProviderProps) {
         addToFavorites,
         deleteFromFavorites,
         openCloseFavorites,
+        openCloseAuth,
         favoritesItems,
         isPending,
         favoritesQuantity,
@@ -96,6 +102,7 @@ export function FavoritesProvider({ children }: FavoritesProviderProps) {
       <Popup isOpen={isOpen} onClick={openCloseFavorites}>
         <Favorites />
       </Popup>
+      {isAuthOpen && <AuthModal onClose={openCloseAuth}></AuthModal>}
     </FavoritesContext.Provider>
   );
 }

@@ -12,13 +12,6 @@ import classNames from 'classnames';
 import SecondaryButton from '@/components/Buttons/SecondaryButton';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
 import { useFavorites } from '@/context/FavoritesContext';
-import {
-  addFavorites,
-  deleteFavorites,
-  getFavorites,
-} from '@/services/api/api';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
 
 function ProductCard({
   id,

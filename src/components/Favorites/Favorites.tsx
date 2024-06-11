@@ -2,22 +2,22 @@
 import styles from './Favorites.module.scss';
 import Button from '../Buttons/Button/Button';
 import FavoritesList from './FavoritesList';
-import { products } from '@/lib/db/products';
 import FavoritesEmpty from './FavoritesEmpty';
 import { useFavorites } from '@/context/FavoritesContext';
-import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/context/AuthContext';
-import { getFavorites } from '@/services/api/api';
 
 function Favorites() {
   const { isAuthenticated, isLoading } = useAuth();
 
   // const [isLoading, isAuthenticated] = [false, false];
-  const { favoritesItems, isPending } = useFavorites();
 
-  console.log(favoritesItems);
+  const { favoritesItems, isPending, openCloseFavorites, openCloseAuth } =
+    useFavorites();
 
-  // const isPending = false;
+  function handleEnterRegisterClick() {
+    openCloseFavorites();
+    openCloseAuth();
+  }
 
   return (
     <section>
@@ -32,8 +32,8 @@ function Favorites() {
             зареєструйтесь.
           </p>
           <div className={styles.warning_buttons_block}>
-            <Button>Увійти</Button>
-            <Button>Зареєструватися</Button>
+            <Button onClick={handleEnterRegisterClick}>Увійти</Button>
+            <Button onClick={handleEnterRegisterClick}>Зареєструватися</Button>
           </div>
         </div>
       ) : null}
