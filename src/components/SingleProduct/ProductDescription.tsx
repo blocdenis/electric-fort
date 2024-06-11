@@ -6,27 +6,27 @@ import { useFavorites } from '@/context/FavoritesContext';
 import WalletIcon from '../icons/WalletIcon';
 import CarIcon from '../icons/CarIcon';
 import ImageSlider from '../ImageSlider/ImageSlider';
+import { Product } from '@/lib/types/Product.type';
 
-const ProductDescription = () => {
+const ProductDescription = ({ product }: { product: Product }) => {
   const productImages = [
-    'https://picsum.photos/seed/img5/600/400',
-    'https://picsum.photos/seed/img6/600/400',
-    'https://picsum.photos/seed/img4/600/400',
-    'https://picsum.photos/seed/img3/600/400',
-    'https://picsum.photos/seed/img2/600/400',
+    `data:${product.images[0][0]};base64,${product.images[0][1]}`,
+    `data:${product.images[0][0]};base64,${product.images[0][1]}`,
+    `data:${product.images[0][0]};base64,${product.images[0][1]}`,
+    `data:${product.images[0][0]};base64,${product.images[0][1]}`,
   ];
   return (
     <div className="product-description-container">
       <div className="image-section">
-        <ImageSlider images={productImages} />
+        {product.images && <ImageSlider images={productImages} />}
       </div>
       <div className="description-section">
-        <div className="name">{products[0].name}</div>
-        <div className="article">код:{products[0].article}</div>
+        <div className="name">{product.name}</div>
+        <div className="article">код:{product.article}</div>
         <div className="price-section">
           <div>
-            <span className="price">{products[0].price}</span>грн/
-            {products[0].unit_of_measurement}
+            <span className="price">{product.price}</span>грн/
+            {product.unit_of_measurement}
           </div>
           <div className=" flex justify-between items-center ">
             <div className="btn">
