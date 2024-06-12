@@ -18,6 +18,7 @@ interface BreadCrumbProps {
   activeClasses?: string;
   capitalizeLinks?: boolean;
   linksСorrespondence: BreadcrambLink[];
+  linksNotFromURL?: (string | undefined)[];
 }
 
 function Breadcramb({
@@ -28,6 +29,7 @@ function Breadcramb({
   // activeClasses,
   capitalizeLinks,
   linksСorrespondence,
+  linksNotFromURL,
 }: BreadCrumbProps) {
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path) => path);
@@ -64,6 +66,15 @@ function Breadcramb({
                 {pathNames.length !== index + 1 && separator}
               </React.Fragment>
             );
+          } else {
+            return linksNotFromURL?.map((link, indexLink) => (
+              <React.Fragment key={indexLink}>
+                <li className={styles.list}>
+                  <Link href={href}>{link}</Link>
+                </li>
+                {linksNotFromURL.length !== indexLink + 1 && separator}
+              </React.Fragment>
+            ));
           }
         })}
       </ul>

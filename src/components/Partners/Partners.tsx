@@ -40,7 +40,7 @@ function Partners() {
             autoplay={{
               delay: 2500,
             }}
-            loop
+            // loop
             loopAddBlankSlides
           >
             {partners.map(({ id, logo, url, name }, index) => (

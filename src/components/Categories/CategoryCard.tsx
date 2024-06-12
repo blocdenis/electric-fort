@@ -6,11 +6,31 @@ import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './CategoryCard.module.scss';
 
-function CategoryCard({ id, name, image }: Category) {
+interface CategoryCardProps {
+  category_id?: number;
+  name: string;
+  image: string[] | null;
+  brand_id?: number;
+  series_id?: number;
+}
+
+function CategoryCard({
+  category_id,
+  name,
+  image,
+  brand_id,
+  series_id,
+}: CategoryCardProps) {
   return (
     <div className=" w-[220px] h-[228px] laptop:w-[100%] desktop:w-[220px] bg-white border border-[#DEDEDE] py-4 ">
       <Link
-        href={`/categories/${id}`}
+        href={
+          series_id
+            ? `/categories/${category_id}/${brand_id}/${series_id}`
+            : brand_id
+            ? `/categories/${category_id}/${brand_id}/`
+            : `/categories/${category_id}/`
+        }
         className="w-full h-full flex flex-col items-center justify-start"
       >
         <div className=" w-[160px] h-[160px] flex items-center justify-center object-cover">
