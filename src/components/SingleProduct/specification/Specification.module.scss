@@ -1,0 +1,25 @@
+.specification {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.specificationItem {
+  display: flex;
+  //   align-items: center;
+  gap: 12px;
+}
+
+.characteristic {
+  flex: 1;
+}
+
+.underline {
+  width: 232px;
+  flex: 2;
+  border-bottom: 1px dashed #ccc;
+}
+
+.description {
+  flex: 3;
+}

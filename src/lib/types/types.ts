@@ -43,3 +43,9 @@ export interface Product {
   updated_info_date?: string | null;
   add_date: string;
 }
+export interface Review {
+  id: number;
+  name: string;
+  date: string;
+  reviewText: string;
+}

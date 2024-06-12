@@ -5,8 +5,8 @@ import './SingleProduct.scss';
 import ProductDescription from './ProductDescription';
 import ProductSpecification from './ProductSpecification';
 import ProductReview from './ProductReview';
-import { products } from '@/lib/db/products';
-const SingleProduct = () => {
+import { Product } from '@/lib/types/Product.type';
+const SingleProduct = ({ product }: { product: Product }) => {
   const [currentTab, setCurrentTab] = useState(TABS.DESCRIPTION);
 
   const handleChange = (e: React.MouseEvent<HTMLLIElement>) => {
@@ -41,12 +41,16 @@ const SingleProduct = () => {
           </li>
         </ul>
       </section>
-      {currentTab === TABS.DESCRIPTION && <ProductDescription />}
-      {currentTab === TABS.SPECIFICATION && <ProductSpecification />}
-      {currentTab === TABS.REVIEW && <ProductReview />}
+      {currentTab === TABS.DESCRIPTION && (
+        <ProductDescription product={product} />
+      )}
+      {currentTab === TABS.SPECIFICATION && (
+        <ProductSpecification product={product} />
+      )}
+      {currentTab === TABS.REVIEW && <ProductReview product={product} />}
       <div className="description-container">
         <h1>Опис</h1>
-        {products[0].description}
+        {product.description}
       </div>
     </div>
   );

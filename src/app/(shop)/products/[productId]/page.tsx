@@ -1,27 +1,18 @@
-import PageBredcramb from '@/components/Breadcrumb/PageBredcramb';
-import Container from '@/components/Container/Container';
-import ContentContainer from '@/components/Container/ContentContainer';
-import PopularProductsSection from '@/components/Products/PopularProductSection/PopularProductsSection';
-import Section from '@/components/Section/Section';
-import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
-import SingleProduct from '@/components/SingleProduct/SingleProduct';
 import React from 'react';
+import ProductDetails from '@/components/ProductDetails/ProductDetails';
+import { productService } from '@/services/products';
 
-const ProductDetails = ({ params }: { params: { productId: string } }) => {
-  return (
-    <Container className="flex">
-      <SidebarWithAttachments />
+interface ProductDetailsPageProps {
+  params: { productId: string };
+}
 
-      <ContentContainer>
-        <PageBredcramb />
-        <Section>
-          <SingleProduct />
-        </Section>
-        <PopularProductsSection title="Також вас можуть зацікавити" />
-        <PopularProductsSection title="Нещодавно переглянуті" />
-      </ContentContainer>
-    </Container>
-  );
+const ProductDetailsPage: React.FC<ProductDetailsPageProps> = async ({
+  params,
+}) => {
+  const newid = Number(params.productId);
+  const product = await productService.getProductById(newid);
+
+  return <ProductDetails product={product} />;
 };
 
-export default ProductDetails;
+export default ProductDetailsPage;
