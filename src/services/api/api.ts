@@ -58,7 +58,14 @@ export const getCategories = async (
 ) => {
   return sendRequestJSON<getCategories>(
     `${buildUrl('get', 'Category')}?all_data=true&pagination=true`,
-    init
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
   );
 };
 
@@ -71,7 +78,14 @@ export const getBrands = async (
       'get',
       'Brand'
     )}?all_data=true&equal=false&pagination=false&page_size=25&page=1`,
-    init
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
   );
 };
 
@@ -84,7 +98,14 @@ export const getProducts = async (
       'get',
       'Product'
     )}?all_data=true&equal=false&pagination=true&page_size=25&page=1`,
-    init
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
   );
 };
 
@@ -97,7 +118,14 @@ export const getPopularProducts = async (
       'get',
       'Product'
     )}?all_data=true&field=popular&search=true&equal=false&pagination=true&page_size=25&page=1`,
-    init
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
   );
 };
 

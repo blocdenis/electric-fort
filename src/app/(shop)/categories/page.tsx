@@ -23,10 +23,9 @@ function Page() {
               {categories.map((category) => (
                 <li key={category.id} className="w-[220px] h-[228px]">
                   <CategoryCard
-                    id={category.id}
+                    category_id={category.id}
                     name={category.name}
                     image={category.image}
-                    add_date=""
                   />
                 </li>
               ))}
