@@ -11,7 +11,7 @@ class ProductService {
 
   async getProducts(): Promise<Product[]> {
     const { data } = await axios.get<ProductApiResponse>(
-      `${URL}get/Product?all_data=true&equal=false&pagination=true&page_size=25&page=1`,
+      `${URL}/get/Product?all_data=true&equal=false&pagination=true&page_size=25&page=1`,
       { withCredentials: true }
     );
     console.log('API Response:', data.data);
@@ -20,7 +20,7 @@ class ProductService {
 
   async getProductById(id: number): Promise<Product> {
     const response = await axios.get<Product[]>(
-      `${URL}get/Product?all_data=true&field=id&search=${id}&equal=true&pagination=false&page_size=25&page=1`,
+      `${URL}/get/Product?all_data=true&field=id&search=${id}&equal=true&pagination=false&page_size=25&page=1`,
       { withCredentials: true }
     );
     console.log('API Response:', response.data);

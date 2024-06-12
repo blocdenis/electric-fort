@@ -4,7 +4,7 @@ import { URL } from '@/constants';
 
 export const checkAuthStatus = async (): Promise<boolean> => {
   try {
-    const response = await fetch(`${URL}jwt/docs`, {
+    const response = await fetch(`${URL}/jwt/docs`, {
       method: 'GET',
       credentials: 'include',
     });

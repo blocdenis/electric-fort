@@ -25,14 +25,14 @@ type LoginData = {
 };
 
 const registerUser = async (data: RegisterData) => {
-  const response = await axios.post(`${URL}user/register`, data, {
+  const response = await axios.post(`${URL}/user/register`, data, {
     withCredentials: true,
   });
   return response.data;
 };
 
 const loginUser = async (data: LoginData) => {
-  const response = await axios.post(`${URL}user/login`, data, {
+  const response = await axios.post(`${URL}/user/login`, data, {
     withCredentials: true,
   });
   return response.data;
