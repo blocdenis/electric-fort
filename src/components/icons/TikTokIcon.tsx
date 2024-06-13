@@ -3,9 +3,10 @@ import { FC, SVGProps } from 'react';
 interface TikTokIconProps extends SVGProps<SVGSVGElement> {
   href: string;
   color: string;
+  target: string;
 }
-const TikTokIcon: FC<TikTokIconProps> = ({ href, color, ...rest }) => (
-  <a href={href}>
+const TikTokIcon: FC<TikTokIconProps> = ({ href, target, color, ...rest }) => (
+  <a href={href} target={target}>
     <svg
       width="45"
       height="45"

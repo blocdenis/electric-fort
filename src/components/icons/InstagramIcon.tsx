@@ -3,9 +3,15 @@ import { FC, SVGProps } from 'react';
 interface InstagramIconProps extends SVGProps<SVGSVGElement> {
   href: string;
   color: string;
+  target: string;
 }
-const InstagramIcon: FC<InstagramIconProps> = ({ href, color, ...rest }) => (
-  <a href={href}>
+const InstagramIcon: FC<InstagramIconProps> = ({
+  href,
+  target,
+  color,
+  ...rest
+}) => (
+  <a href={href} target={target}>
     <svg
       width="45"
       height="46"
