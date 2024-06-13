@@ -4,8 +4,8 @@ interface TikTokIconProps extends SVGProps<SVGSVGElement> {
   href: string;
   color: string;
 }
-const TikTokIcon: FC<TikTokIconProps> = ({ href, color, ...rest }) => (
-  <a href={href}>
+const TikTokIcon: FC<TikTokIconProps> = ({ href, color, target, ...rest }) => (
+  <a href={href} target={target}>
     <svg
       width="45"
       height="45"

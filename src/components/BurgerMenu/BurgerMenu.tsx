@@ -115,8 +115,16 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
         <div className="w-full mb-6 mt-8">
           <p className="mb-2 ">Ми в соціальних мережах</p>
           <div className=" flex gap-10 items-center h-12">
-            <TikTokIcon href="https://www.tiktok.com/" color="#69AF00" />
-            <InstagramIcon href="https://www.instagram.com" color="#69AF00" />
+            <TikTokIcon
+              href="https://www.tiktok.com/@electrychna_fortec?_t=8jWQfj7DEsH&_r=1"
+              color="#69AF00"
+              target="_blank"
+            />
+            <InstagramIcon
+              href="https://www.instagram.com/electrychna_fortecia/"
+              color="#69AF00"
+              target="_blank"
+            />
           </div>
         </div>
         <div className="flex flex-col gap-4 text-white mb-8">
