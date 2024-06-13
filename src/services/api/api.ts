@@ -109,6 +109,72 @@ export const getProducts = async (
   );
 };
 
+export const getProductsByBrand = async (
+  //   params: Record<string, string> = {},
+  brand_id: number,
+  page: number,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<getProducts>(
+    `${buildUrl(
+      'get',
+      'Product'
+    )}?all_data=true&field=brand_id&search=${brand_id}&equal=true&pagination=true&page_size=6&page=${page}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getProductsBySeria = async (
+  //   params: Record<string, string> = {},
+  series_id: number,
+  page: number,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<getProducts>(
+    `${buildUrl(
+      'get',
+      'Product'
+    )}?all_data=true&field=series_id&search=${series_id}&equal=true&pagination=true&page_size=6&page=${page}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+// export const getProductsByCategory = async (
+//   //   params: Record<string, string> = {},
+//   category_id: number,
+//   page: number,
+//   init?: RequestInit
+// ) => {
+//   return sendRequestJSON<getProducts>(
+//     `${buildUrl(
+//       'get',
+//       'Product'
+//     )}?all_data=true&field=brand_id&search=${category_id}&equal=true&pagination=true&page_size=6&page=${page}`,
+//     {
+//       method: 'GET',
+//       credentials: 'include',
+//       headers: {
+//         ...(init && init.headers),
+//         'content-type': 'application/json',
+//       },
+//     }
+//   );
+// };
+
 export const getPopularProducts = async (
   //   params: Record<string, string> = {},
   init?: RequestInit

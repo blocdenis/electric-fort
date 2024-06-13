@@ -4,17 +4,20 @@ import styles from '@/components/Categories/CategoriesList.module.scss';
 import CategoryCard from '@/components/Categories/CategoryCard';
 import { categories } from '@/lib/db/categories';
 import { brands } from '@/lib/db/brands';
-import { products } from '@/lib/db/products';
+// import { products } from '@/lib/db/products';
 import ProductCard from '@/components/Products/ProductCard/ProductCard';
 import { series } from '@/lib/db/productSeries';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
+import { getProductsByBrand } from '@/services/api/api';
 
 export interface PageProps {
   params: { category_id: number; brand_id: number };
 }
 
-function Page({ params }: PageProps) {
+async function Page({ params }: PageProps) {
   const { category_id, brand_id } = params;
+
+  const products = (await getProductsByBrand(Number(brand_id), 1)).data;
 
   const categoryName = categories.find(
     (category) => category.id === Number(category_id)

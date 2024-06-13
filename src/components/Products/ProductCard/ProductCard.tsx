@@ -98,6 +98,7 @@ function ProductCard({
               onClick={handleFavoriteIconClick}
               width={32}
               height={30}
+              className=" fill-yellow hover:scale-[128%] transition-transform duration-300"
             />
           ) : (
             <HeartWithShadowIcon

@@ -4,16 +4,19 @@ import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
 import { brands } from '@/lib/db/brands';
 import { categories } from '@/lib/db/categories';
-import { products } from '@/lib/db/products';
+// import { products } from '@/lib/db/products';
 import { series } from '@/lib/db/productSeries';
+import { getProductsBySeria } from '@/services/api/api';
 import React from 'react';
 
 export interface PageProps {
   params: { category_id: number; brand_id: number; series_id: number };
 }
 
-function Page({ params }: PageProps) {
+async function Page({ params }: PageProps) {
   const { category_id, brand_id, series_id } = params;
+
+  const products = (await getProductsBySeria(Number(series_id), 1)).data;
 
   const categoryName = categories.find(
     (category) => category.id === Number(category_id)
