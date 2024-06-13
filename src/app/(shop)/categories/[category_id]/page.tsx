@@ -1,8 +1,5 @@
-import Container from '@/components/Container/Container';
-import ContentContainer from '@/components/Container/ContentContainer';
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
-import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 import { brands } from '@/lib/db/brands';
 import React from 'react';
 import styles from '@/components/Categories/CategoriesList.module.scss';

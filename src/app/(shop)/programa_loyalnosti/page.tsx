@@ -1,6 +1,5 @@
 'use client';
 import { useAuth } from '@/context/AuthContext';
-import React from 'react';
 
 function Page() {
   const { isAuthenticated } = useAuth();
