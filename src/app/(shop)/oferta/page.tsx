@@ -8,13 +8,15 @@ import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments'
 import React from 'react';
 import styles from '@/components/Section/SectionTitle/SectionTitle.module.scss';
 import Text from '@/components/Text/Text';
+import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 
 function Page() {
+  const links = [{ name: 'Публічна оферта' }];
   return (
     <Container className="flex">
       <SidebarWithAttachments />
       <ContentContainer>
-        <PageBredcramb />
+        <Breadcrumbs items={links} />
         <Section>
           <SectionTitle
             className={styles.section_heading_return}

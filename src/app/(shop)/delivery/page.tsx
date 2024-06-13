@@ -1,3 +1,4 @@
+import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import PageBredcramb from '@/components/Breadcrumb/PageBredcramb';
 import Container from '@/components/Container/Container';
 import ContentContainer from '@/components/Container/ContentContainer';
@@ -8,11 +9,12 @@ import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
 import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 
 function Page() {
+  const links = [{ name: 'Доставка і оплата' }];
   return (
     <Container className="flex">
       <SidebarWithAttachments />
       <ContentContainer>
-        <PageBredcramb />
+        <Breadcrumbs items={links} />
         <div className=" ">
           <SectionTitle title="Доставка і оплата" className=" mt-6 mb-[60px]" />
         </div>
