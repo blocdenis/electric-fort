@@ -38,8 +38,16 @@ const Footer: React.FC = () => {
             <ContactText color="black" />
             <ContactContent color="black" />
             <div className={styles.container_icons}>
-              <TikTokIcon href={''} color="black" />
-              <InstagramIcon href={''} color="black" />
+              <TikTokIcon
+                href="https://www.tiktok.com/@electrychna_fortec?_t=8jWQfj7DEsH&_r=1"
+                color="black"
+                target="_blank"
+              />
+              <InstagramIcon
+                href="https://www.instagram.com/electrychna_fortecia/"
+                color="black"
+                target="_blank"
+              />
             </div>
           </div>
           <div className={styles.block}>
