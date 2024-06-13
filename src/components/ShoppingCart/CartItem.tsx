@@ -3,15 +3,54 @@ import { useShoppingCart } from '@/context/ShoppingCartContext';
 import notFoundImage from '@/../public/notFound.jpg';
 import Image from 'next/image';
 import { products } from '@/lib/db/products';
-import { HeartWithShadowIcon } from '../icons';
+import { HeartWithShadowFilledIcon, HeartWithShadowIcon } from '../icons';
 import TrashIcon from '../icons/TrashIcon';
 import { formatPriceUAH } from '@/services/formatCurrency';
+import {
+  addFavorites,
+  deleteFavorites,
+  getFavorites,
+} from '@/services/api/api';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 type CartItemProps = {
   id: number;
   quantity: number;
 };
 
 export function CartItem({ id, quantity }: CartItemProps) {
+  const { data: favoritesItems, isPending } = useQuery({
+    queryKey: ['favorites'],
+    queryFn: getFavorites,
+    staleTime: 10 * 1000,
+  });
+  const queryClient = useQueryClient();
+  const addToFavorites = useMutation({
+    mutationFn: addFavorites,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['favorites'],
+        exact: true,
+        refetchType: 'active',
+      });
+      console.log('added');
+    },
+  });
+  const deleteFromFavorites = useMutation({
+    mutationFn: deleteFavorites,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['favorites'] });
+    },
+  });
+  const isFavorite = (id: number) =>
+    !!favoritesItems?.find((item) => item.id === id) ?? false;
+  const handleFavoriteIconClick = () => {
+    if (isFavorite(id)) {
+      deleteFromFavorites.mutateAsync(id);
+    } else {
+      addToFavorites.mutateAsync(id);
+    }
+  };
+
   const {
     removeFromCart,
     decreaseCartQuantity,
@@ -53,13 +92,24 @@ export function CartItem({ id, quantity }: CartItemProps) {
             <span>{formatPriceUAH(getItemQuantity(item.id) * item.price)}</span>
           </div>
         </div>
-
         <div className="icon-container">
-          <HeartWithShadowIcon
-            width={41}
-            height={41}
-            className="fill-yellow hover:scale-[128%] transition-transform duration-300"
-          />
+          <div className=" flex justify-center items-center w-[41px] h-[41px]">
+            {isFavorite(id) ? (
+              <HeartWithShadowFilledIcon
+                onClick={handleFavoriteIconClick}
+                width={32}
+                height={30}
+                className=" fill-yellow hover:scale-[128%] transition-transform duration-300"
+              />
+            ) : (
+              <HeartWithShadowIcon
+                onClick={handleFavoriteIconClick}
+                width={32}
+                height={30}
+                className=" fill-yellow hover:scale-[128%] transition-transform duration-300"
+              />
+            )}
+          </div>
           <button onClick={() => removeFromCart(item.id)}>
             <TrashIcon />
           </button>

@@ -21,7 +21,7 @@ function CatalogItem({ category, brands }: catalogItemProps) {
   return (
     <div className={styles.category}>
       <div className={styles.category_item}>
-        <Link href={`/categories/${name}`}>{name}</Link>
+        <Link href={`/categories/${id}`}>{name}</Link>
         {categoryBrands.length ? (
           <button onClick={handleArrowClick} id="arrowBtn">
             <ArrowCatalogIcon />
@@ -39,9 +39,7 @@ function CatalogItem({ category, brands }: catalogItemProps) {
             <ul>
               {categoryBrands.map((item) => (
                 <li key={item.id}>
-                  <Link href={`/categories/${name}/${item.name}`}>
-                    {item.name}
-                  </Link>
+                  <Link href={`/categories/${id}/${item.id}`}>{item.name}</Link>
                 </li>
               ))}
             </ul>
