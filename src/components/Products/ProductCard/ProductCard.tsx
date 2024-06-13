@@ -41,7 +41,12 @@ function ProductCard({
 
   const quantity = getItemQuantity(id);
 
-  const { addToFavorites, deleteFromFavorites, isFavorite } = useFavorites();
+  const {
+    addToFavorites,
+    deleteFromFavorites,
+    isFavorite,
+    openCloseFavorites,
+  } = useFavorites();
 
   const handleFavoriteIconClick = () => {
     if (isFavorite(id)) {
@@ -53,7 +58,10 @@ function ProductCard({
 
   return (
     <div className=" inline-block bg-white w-[286px] h-[400px] px-4 pt-4 pb-6 shadow-[0_1px_1px_0_rgba(0,0,0,0.25)]">
-      <div className=" flex justify-center w-[254px] h-[176px] overflow-hidden mb-4 ">
+      <div
+        onClick={openCloseFavorites}
+        className=" flex justify-center w-[254px] h-[176px] overflow-hidden mb-4 "
+      >
         <Link href={productPageLink}>
           <Image
             className=""
@@ -69,7 +77,7 @@ function ProductCard({
         </Link>
       </div>
       <div className=" flex flex-col gap-3 mb-4">
-        <Link href={productPageLink}>
+        <Link onClick={openCloseFavorites} href={productPageLink}>
           <p
             title={name}
             className={classNames(styles.product_name, styles.truncated_text)}

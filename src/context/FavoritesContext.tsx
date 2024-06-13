@@ -66,7 +66,6 @@ export function FavoritesProvider({ children }: FavoritesProviderProps) {
         exact: true,
         refetchType: 'active',
       });
-      console.log('added');
     },
   });
 
