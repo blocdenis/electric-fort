@@ -1,4 +1,4 @@
-import PageBredcramb from '@/components/Breadcrumb/PageBredcramb';
+import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import Container from '@/components/Container/Container';
 import ContentContainer from '@/components/Container/ContentContainer';
 import TextContainer from '@/components/Container/TextContainer';
@@ -9,11 +9,12 @@ import Text from '@/components/Text/Text';
 import React from 'react';
 
 function Page() {
+  const links = [{ name: 'Політика конфіденційності' }];
   return (
     <Container className="flex">
       <SidebarWithAttachments />
       <ContentContainer>
-        <PageBredcramb />
+        <Breadcrumbs items={links} />
         <Section>
           <SectionTitle
             className="mb-[10px]"

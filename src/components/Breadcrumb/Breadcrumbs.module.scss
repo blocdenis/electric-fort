@@ -1,0 +1,18 @@
+@use '../../scss/abstracts/' as *;
+.container {
+  width: 100%;
+  display: flex;
+  color: #acacac;
+  font: $regular14;
+  margin-top: 12px;
+  overflow: hidden;
+}
+.item {
+  padding: 0 12px;
+  width: fit-content;
+  text-wrap: nowrap;
+  &:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

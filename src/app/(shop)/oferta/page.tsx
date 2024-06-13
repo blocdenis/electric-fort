@@ -1,20 +1,20 @@
-import PageBredcramb from '@/components/Breadcrumb/PageBredcramb';
 import Container from '@/components/Container/Container';
 import ContentContainer from '@/components/Container/ContentContainer';
 import TextContainer from '@/components/Container/TextContainer';
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
 import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
-import React from 'react';
 import styles from '@/components/Section/SectionTitle/SectionTitle.module.scss';
 import Text from '@/components/Text/Text';
+import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 
 function Page() {
+  const links = [{ name: 'Публічна оферта' }];
   return (
     <Container className="flex">
       <SidebarWithAttachments />
       <ContentContainer>
-        <PageBredcramb />
+        <Breadcrumbs items={links} />
         <Section>
           <SectionTitle
             className={styles.section_heading_return}
