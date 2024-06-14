@@ -32,7 +32,7 @@ function ProductCard({
   updated_info_date,
   add_date,
   article,
-  onCardClick
+  onCardClick,
 }: ProductCardProps) {
   const productPageLink = `/products/${id}`;
   const {
@@ -68,7 +68,7 @@ function ProductCard({
                 : notFoundImage
             }
             alt={`${name} image`}
-            width={176}
+            width={254}
             height={176}
           />
         </Link>
