@@ -14,7 +14,7 @@ import { useShoppingCart } from '@/context/ShoppingCartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 
 interface ProductCardProps extends Product {
-  onCardClick: () => void;
+  onCardClick?: () => void;
 }
 
 function ProductCard({
