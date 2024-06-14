@@ -4,9 +4,25 @@
 }
 .container {
   display: flex;
+  position: relative;
   gap: 8px;
+  cursor: pointer;
   span {
     user-select: none;
     cursor: default;
   }
+  :hover {
+    color: yellow;
+    cursor: pointer;
+  }
+}
+.notification {
+  position: absolute;
+  top: -20px;
+  right: 10px;
+  background-color: #4caf50;
+  color: white;
+  padding: 8px;
+  border-radius: 4px;
+  z-index: 999;
 }
