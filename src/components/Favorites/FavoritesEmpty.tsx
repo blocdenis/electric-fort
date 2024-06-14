@@ -2,7 +2,7 @@ import FavoritesEmptyIcon from '../icons/FavoritesEmptyIcon';
 
 function FavoritesEmpty() {
   return (
-    <div className=" flex gap-24 justify-start items-center text-lg ">
+    <div className=" flex gap-24 justify-start items-center text-lg ml-4 ">
       <div>
         <FavoritesEmptyIcon />
       </div>
