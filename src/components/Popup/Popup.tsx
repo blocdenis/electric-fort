@@ -16,9 +16,9 @@ function Popup({ onClick, isOpen, children }: PropsWithChildren<PopupProps>) {
       isOpen={isOpen}
     >
       <div className={styles.popup_body} onClick={(e) => e.stopPropagation()}>
-        <div onClick={onClick} className={styles.icon_wrapper}>
+        <button onClick={onClick} className={styles.icon_wrapper}>
           <CrossIcon className={styles.icon} />
-        </div>
+        </button>
         {children}
       </div>
     </Backdrop>
