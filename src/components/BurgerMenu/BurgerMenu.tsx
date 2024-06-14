@@ -10,7 +10,7 @@ import {
 import BurgerMenuItem from './BurgerMenuItem';
 import BurgerUserhNav from './BurgerUserNav';
 import BurgerAuthNav from './BurgerAuthNav';
-import { navigationItems } from '../Navigation/Navigation';
+// import { navigationItems } from '../Navigation/Navigation';
 import NavigationItem from '../Navigation/NavigationItem';
 import styles from '../Navigation/Navigation.module.scss';
 import ContactText from '../Contact/ContactText/ContactText';
@@ -60,6 +60,23 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
     },
   ];
 
+  const navigationItems = [
+    { id: '1', title: 'Про нас', href: '/about_us' },
+    { id: '2', title: 'Доставка і оплата', href: '/delivery' },
+    { id: '3', title: 'Повернення та обмін', href: '/return_policy' },
+    { id: '4', title: 'Контакти', href: '#contacts' },
+    {
+      id: '5',
+      title: 'Торгові марки',
+      href: '/cooperation_tm',
+    },
+    {
+      id: '6',
+      title: 'Офіційне дилерство',
+      href: '/cooperation_od',
+    },
+  ];
+
   const [isLogIn, setIsLogIn] = useState(false);
   return (
     <div
@@ -106,7 +123,7 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
                   key={item.id}
                   title={item.title}
                   href={item.href}
-                  accent={item.href == '/cooperation'}
+                  // accent={item.href == '/cooperation'}
                 />
               );
             }

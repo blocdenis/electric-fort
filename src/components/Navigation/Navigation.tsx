@@ -17,8 +17,8 @@ export const navigationItems = [
     id: '5',
     title: 'Співпраця',
     subitems: [
-      { title: 'Торгові марки', href: '/cooperation' },
-      { title: 'Офіційне дилерство', href: '/cooperation' },
+      { title: 'Торгові марки', href: '/cooperation_tm' },
+      { title: 'Офіційне дилерство', href: '/cooperation_od' },
     ],
   },
 ];

@@ -13,6 +13,10 @@ import SecondaryButton from '@/components/Buttons/SecondaryButton';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 
+interface ProductCardProps extends Product {
+  onCardClick?: () => void;
+}
+
 function ProductCard({
   id,
   name,
@@ -28,7 +32,8 @@ function ProductCard({
   updated_info_date,
   add_date,
   article,
-}: Product) {
+  onCardClick,
+}: ProductCardProps) {
   const productPageLink = `/products/${id}`;
   const {
     cartItems,
@@ -41,12 +46,7 @@ function ProductCard({
 
   const quantity = getItemQuantity(id);
 
-  const {
-    addToFavorites,
-    deleteFromFavorites,
-    isFavorite,
-    openCloseFavorites,
-  } = useFavorites();
+  const { addToFavorites, deleteFromFavorites, isFavorite } = useFavorites();
 
   const handleFavoriteIconClick = () => {
     if (isFavorite(id)) {
@@ -58,11 +58,8 @@ function ProductCard({
 
   return (
     <div className=" inline-block bg-white w-[286px] h-[400px] px-4 pt-4 pb-6 shadow-[0_1px_1px_0_rgba(0,0,0,0.25)]">
-      <div
-        onClick={openCloseFavorites}
-        className=" flex justify-center w-[254px] h-[176px] overflow-hidden mb-4 "
-      >
-        <Link href={productPageLink}>
+      <div className=" flex justify-center w-[254px] h-[176px] overflow-hidden mb-4 ">
+        <Link onClick={onCardClick} href={productPageLink}>
           <Image
             className=""
             src={
@@ -71,13 +68,13 @@ function ProductCard({
                 : notFoundImage
             }
             alt={`${name} image`}
-            width={176}
+            width={254}
             height={176}
           />
         </Link>
       </div>
       <div className=" flex flex-col gap-3 mb-4">
-        <Link onClick={openCloseFavorites} href={productPageLink}>
+        <Link onClick={onCardClick} href={productPageLink}>
           <p
             title={name}
             className={classNames(styles.product_name, styles.truncated_text)}
