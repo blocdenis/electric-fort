@@ -18,7 +18,7 @@ function Page() {
       <ContentContainer>
         <Breadcrumbs items={links} />
         <Section>
-          <SectionTitle className="mb-[10px]" title="Співпраця з партнерами" />
+          <SectionTitle className="mb-[10px]" title="Офіційне дилерство" />
           <TextContainer>{text}</TextContainer>
         </Section>
       </ContentContainer>
