@@ -129,12 +129,12 @@ const Header = () => {
               <SearchInput placeholder="Пошук" />
             </div>
             <div className={styles.container_icons}>
-              <div onClick={openCloseFavorites} className=" relative">
+              <button onClick={openCloseFavorites} className=" relative">
                 <HeartIcon />
                 {favoritesQuantity > 0 && (
                   <CircleWithQuantity quantity={favoritesQuantity} />
                 )}
-              </div>
+              </button>
               <button onClick={openCart} style={{ position: 'relative' }}>
                 <CartIcon />
                 {cartQuantity > 0 && (

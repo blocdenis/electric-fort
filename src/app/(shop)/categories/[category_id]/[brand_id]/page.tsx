@@ -5,8 +5,8 @@ import CategoryCard from '@/components/Categories/CategoryCard';
 import { categories } from '@/lib/db/categories';
 import { brands } from '@/lib/db/brands';
 // import { products } from '@/lib/db/products';
-import ProductCard from '@/components/Products/ProductCard/ProductCard';
 import { series } from '@/lib/db/productSeries';
+import ProductCard from '@/components/Products/ProductCard/ProductCard';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import { getProductsByBrand } from '@/services/api/api';
 
@@ -18,6 +18,8 @@ async function Page({ params }: PageProps) {
   const { category_id, brand_id } = params;
 
   const products = (await getProductsByBrand(Number(brand_id), 1)).data;
+
+  // console.log(products);
 
   const categoryName = categories.find(
     (category) => category.id === Number(category_id)
