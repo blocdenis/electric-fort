@@ -4,7 +4,7 @@ import styles from '@/components/Categories/CategoriesList.module.scss';
 import CategoryCard from '@/components/Categories/CategoryCard';
 import { categories } from '@/lib/db/categories';
 import { brands } from '@/lib/db/brands';
-// import { products } from '@/lib/db/products';
+import { products } from '@/lib/db/products';
 import { series } from '@/lib/db/productSeries';
 import ProductCard from '@/components/Products/ProductCard/ProductCard';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
@@ -17,7 +17,7 @@ export interface PageProps {
 async function Page({ params }: PageProps) {
   const { category_id, brand_id } = params;
 
-  const products = (await getProductsByBrand(Number(brand_id), 1)).data;
+  // const products = (await getProductsByBrand(Number(brand_id), 1)).data;
 
   // console.log(products);
 
