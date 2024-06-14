@@ -27,9 +27,9 @@ function Favorites() {
       ) : !isAuthenticated ? (
         <div className={styles.warrning_block}>
           <p className={styles.warning_text}>
-            Звертаємо вашу увагу, додані Вами товари будуть видалені через 3 дні
-            Для того щоб вони були збережені увійдіть у свій обліковий запис або
-            зареєструйтесь.
+            Звертаємо вашу увагу, додані Вами товари будуть видалені через 3
+            дні. Для того щоб вони були збережені увійдіть у свій обліковий
+            запис або зареєструйтесь.
           </p>
           <div className={styles.warning_buttons_block}>
             <Button onClick={handleEnterRegisterClick}>Увійти</Button>
