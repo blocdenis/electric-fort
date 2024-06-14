@@ -1,4 +1,3 @@
-'use client';
 import { products } from '@/lib/db/products';
 import React from 'react';
 import SecondaryButton from '../Buttons/SecondaryButton';
@@ -10,14 +9,6 @@ import ImageSlider from '../ImageSlider/ImageSlider';
 import { Product } from '@/lib/types/Product.type';
 
 const ProductDescription = ({ product }: { product: Product }) => {
-  const { addToFavorites, deleteFromFavorites, isFavorite } = useFavorites();
-  const handleFavoriteIconClick = () => {
-    if (isFavorite(product.id)) {
-      deleteFromFavorites.mutateAsync(product.id);
-    } else {
-      addToFavorites.mutateAsync(product.id);
-    }
-  };
   const productImages = [
     `data:${product.images[0][0]};base64,${product.images[0][1]}`,
     `data:${product.images[0][0]};base64,${product.images[0][1]}`,
@@ -42,22 +33,12 @@ const ProductDescription = ({ product }: { product: Product }) => {
               <SecondaryButton>Купити</SecondaryButton>
             </div>
 
-            <div className=" flex justify-center items-center w-[41px] h-[41px]">
-              {isFavorite(product.id) ? (
-                <HeartWithShadowFilledIcon
-                  onClick={handleFavoriteIconClick}
-                  width={32}
-                  height={30}
-                  className=" fill-yellow hover:scale-[128%] transition-transform duration-300"
-                />
-              ) : (
-                <HeartWithShadowIcon
-                  onClick={handleFavoriteIconClick}
-                  width={32}
-                  height={30}
-                  className=" fill-yellow hover:scale-[128%] transition-transform duration-300"
-                />
-              )}
+            <div className=" flex justify-center items-center w-[41px] h-[41px]  ">
+              <HeartWithShadowIcon
+                width={41}
+                height={41}
+                className=" fill-yellow hover:scale-[128%] transition-transform duration-300"
+              />
             </div>
           </div>
         </div>

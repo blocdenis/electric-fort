@@ -6,12 +6,21 @@
   gap: 40px;
   list-style-type: none;
   border-bottom: 1px solid #ccc;
+  @include breakpoint(mobile) {
+    width: auto;
+  }
+  @include breakpoint(tablet) {
+    max-width: fit-content;
+  }
 }
 
 .tab {
   width: 160px;
   text-align: center;
   cursor: pointer;
+  @include breakpoint(mobile) {
+    width: auto;
+  }
 }
 .active-tab {
   font-weight: bold;
@@ -37,15 +46,24 @@
     display: flex;
     flex-direction: column;
     gap: 19.67px;
-    width: 667px;
+    @include breakpoint(tablet) {
+      max-width: fit-content;
+      width: auto;
+    }
+    @include breakpoint(desktop) {
+      max-width: fit-content;
+    }
     .name {
       font: $bold18;
+      @include breakpoint(tablet) {
+        width: 335px;
+      }
     }
     .articel {
       font: $regular16;
     }
     .price-section {
-      width: 663px;
+      // width: 663px;
       display: flex;
       justify-content: space-between;
       @include breakpoint(tablet) {

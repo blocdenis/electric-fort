@@ -10,6 +10,9 @@
   background-color: $accent-primary-dark;
   padding: 60px;
   // overflow-y: scroll;
+  @include breakpoint(mobile) {
+    padding: 0;
+  }
 }
 
 .icon_wrapper {

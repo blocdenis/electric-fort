@@ -1,8 +1,8 @@
 'use client';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
+import Link from 'next/link';
 import notFoundImage from '@/../public/notFound.jpg';
 import Image from 'next/image';
-import { products } from '@/lib/db/products';
 import { HeartWithShadowFilledIcon, HeartWithShadowIcon } from '../icons';
 import TrashIcon from '../icons/TrashIcon';
 import { formatPriceUAH } from '@/services/formatCurrency';
@@ -12,12 +12,17 @@ import {
   getFavorites,
 } from '@/services/api/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
+import { useProducts } from '@/hooks/useProducts';
+import ConfirmationModal from './ConfirmationalModal';
+import { useState, useRef } from 'react';
 type CartItemProps = {
   id: number;
   quantity: number;
+  close: any;
 };
 
-export function CartItem({ id, quantity }: CartItemProps) {
+export function CartItem({ id, quantity, close }: CartItemProps) {
   const { data: favoritesItems, isPending } = useQuery({
     queryKey: ['favorites'],
     queryFn: getFavorites,
@@ -57,21 +62,41 @@ export function CartItem({ id, quantity }: CartItemProps) {
     increaseCartQuantity,
     getItemQuantity,
   } = useShoppingCart();
-  const item = products.find((i) => i.id === id);
+  const { products } = useProducts();
+  const item = products?.find((i) => i.id === id);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const trashButtonRef = useRef(null);
   if (item == null) return null;
+  const handleRemoveClick = () => {
+    setIsModalOpen(true);
+  };
 
+  const handleConfirmRemove = () => {
+    removeFromCart(id);
+    setIsModalOpen(false);
+  };
   return (
     <div key={item.id} className="cart-item">
       <div className="product-info">
-        <Image
-          className=""
-          src={item.images ? item.images : notFoundImage}
-          alt={`${item.name} image`}
-          width={80}
-          height={98}
-          priority
-        />
-        <span className="product-name">{item.name}</span>
+        <Link href={`/products/${item.id}`} replace onClick={close}>
+          <Image
+            className="image"
+            src={
+              item.images
+                ? `data:${item.images[0][0]}; base64, ${item.images[0][1]}`
+                : notFoundImage
+            }
+            alt={`${item.name} image`}
+            width={80}
+            height={98}
+            priority
+          />
+        </Link>
+        <span className="product-name">
+          <Link href={`/products/${item.id}`} replace onClick={close}>
+            {item.name}
+          </Link>
+        </span>
       </div>
       <div className="info-wrapper">
         <div className="items-info">
@@ -82,7 +107,12 @@ export function CartItem({ id, quantity }: CartItemProps) {
           <div className="product-description">
             <p>Кількість</p>
             <div className="quantity-controls">
-              <button onClick={() => decreaseCartQuantity(item.id)}>-</button>
+              <button
+                onClick={() => decreaseCartQuantity(item.id)}
+                disabled={getItemQuantity(item.id) === 1}
+              >
+                -
+              </button>
               <span>{getItemQuantity(item.id)}</span>
               <button onClick={() => increaseCartQuantity(item.id)}>+</button>
             </div>
@@ -110,9 +140,15 @@ export function CartItem({ id, quantity }: CartItemProps) {
               />
             )}
           </div>
-          <button onClick={() => removeFromCart(item.id)}>
+          <button ref={trashButtonRef} onClick={handleRemoveClick}>
             <TrashIcon />
           </button>
+          <ConfirmationModal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            onConfirm={handleConfirmRemove}
+            buttonRef={trashButtonRef}
+          />
         </div>
       </div>
     </div>

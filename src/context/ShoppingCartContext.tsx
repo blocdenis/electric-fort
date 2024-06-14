@@ -2,6 +2,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 import ShoppingCart from '@/components/ShoppingCart/ShoppingCart';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
+import Popup from '@/components/Popup/Popup';
 type ShoppingCartProviderProps = {
   children: ReactNode;
 };
@@ -79,7 +80,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       return currItems.filter((item) => item.id !== id);
     });
   }
-
+  const openCloseShopCart = () => setIsOpen((prevVal) => !prevVal);
   return (
     <ShoppingCartContext.Provider
       value={{
@@ -94,7 +95,9 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       }}
     >
       {children}
-      <ShoppingCart isOpen={isOpen} />
+      <Popup onClick={openCloseShopCart} isOpen={isOpen}>
+        <ShoppingCart />
+      </Popup>
     </ShoppingCartContext.Provider>
   );
 }
