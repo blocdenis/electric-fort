@@ -101,6 +101,15 @@
       opacity: 1;
       transform: translateY(0%);
       z-index: 5;
+      height: 146px;
+    }
+    & .menu_subitem {
+      opacity: 1;
+      transform: translateY(0%);
+      z-index: 5;
+      height: 146px;
+      color: $black;
+      font: $regular18;
     }
   }
 }
@@ -111,6 +120,7 @@
 }
 
 .menu_subitems_list {
+  height: 10%;
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -119,13 +129,16 @@
   background-color: $accent-primary;
   padding: 32px 16px;
   opacity: 0;
-  transform: translateY(-150%);
+  transform: translateY(-80%);
   transition: all 500ms ease;
 }
 
 .menu_subitem {
-  color: $black;
+  color: $accent-primary;
   font: $regular18;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 1000ms ease;
 }
 
 .category {
