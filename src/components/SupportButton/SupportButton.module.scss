@@ -5,6 +5,10 @@
   z-index: 20;
   top: 472px;
   right: 32px;
+  @include breakpoint(tablet) {
+    right: 16px;
+    top: 516px;
+  }
   width: 61px;
   height: 61px;
   &:hover {
