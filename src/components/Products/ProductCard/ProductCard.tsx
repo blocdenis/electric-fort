@@ -100,7 +100,7 @@ function ProductCard({
         <SecondaryButton type="button" onClick={() => increaseCartQuantity(id)}>
           Купити
         </SecondaryButton>
-        <div className=" flex justify-center items-center w-[41px] h-[41px]">
+        <div className=" flex justify-center items-center w-[41px] h-[41px] cursor-pointer">
           {isFavorite(id) ? (
             <HeartWithShadowFilledIcon
               onClick={handleFavoriteIconClick}
