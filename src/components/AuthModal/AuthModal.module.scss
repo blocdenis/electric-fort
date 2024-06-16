@@ -1,24 +1,27 @@
-/* RegistrationModal.module.scss */
+@use '/src/scss/abstracts/' as *;
 .modal {
-  //   display: none; /* по умолчанию скрыто */
-  position: fixed; /* фиксированное положение на экране */
-  z-index: 999; /* сверху всех остальных элементов */
+  position: fixed;
+  z-index: 999;
   left: 0;
   top: 0;
-  width: 100%; /* на всю ширину экрана */
-  height: 100%; /* на всю высоту экрана */
-  overflow: auto; /* добавление прокрутки, если содержимое длинное */
-  background-color: rgb(0, 0, 0); /* цвет фона */
-  background-color: rgba(0, 0, 0, 0.8); /* полупрозрачный цвет фона */
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .modal_content {
-  background-color: black; /* белый фон */
-  margin: 15% auto; /* отступ от верхнего края */
+  background-color: black;
+  margin: 15% auto;
   padding: 20px;
   border: 1px solid;
   width: 440px;
-  height: 670px; /* ширина модального окна */
+  height: 670px;
+  @include breakpoint(tablet) {
+    width: 100%;
+    margin: 0;
+  }
 }
 
 .close {
