@@ -1,17 +1,38 @@
-import { FC } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import styles from './AuthModal.module.scss';
 import LogoIcon from '../icons/LogoIcon';
 import SignUpForm from '../SignUpForm/SignUpForm';
-interface AuthModal {
+import { CrossIcon } from '../icons';
+
+interface AuthModalProps {
   onClose: () => void;
 }
 
-const AuthModal: FC<AuthModal> = ({ onClose }) => {
+const AuthModal: FC<AuthModalProps> = ({ onClose }) => {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        modalRef.current &&
+        !modalRef.current.contains(event.target as Node)
+      ) {
+        onClose();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onClose]);
+
   return (
     <div className={styles.modal}>
-      <div className={styles.modal_content}>
+      <div className={styles.modal_content} ref={modalRef}>
         <span className={styles.close} onClick={onClose}>
-          &times;
+          <CrossIcon />
         </span>
         <LogoIcon />
         <SignUpForm />
@@ -19,4 +40,5 @@ const AuthModal: FC<AuthModal> = ({ onClose }) => {
     </div>
   );
 };
+
 export default AuthModal;

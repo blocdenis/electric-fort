@@ -7,6 +7,9 @@ import GoogleIcon from '../icons/GoogleIcon';
 import Link from 'next/link';
 import axios from 'axios';
 import { URL } from '@/constants';
+import CloseEyeIcon from '../icons/CloseEyeIcon';
+import CheckboxTrue from '../icons/CheckboxTrue';
+import CheckboxFalse from '../icons/CheckboxFalse';
 
 type Inputs = {
   email: string;
@@ -43,6 +46,11 @@ export default function SignUpForm() {
   const [passwordShown, setPasswordShown] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [checked, setChecked] = useState(false);
+
+  const handleCheckboxChange = () => {
+    setChecked(!checked);
+  };
 
   const togglePasswordVisibility = () => {
     setPasswordShown((passwordShown) => !passwordShown);
@@ -94,18 +102,32 @@ export default function SignUpForm() {
         <div className={styles.password_container}>
           <label>Пароль</label>
           <input
-            placeholder="Пароль (не менше 6 символів)"
+            placeholder="Пароль (не менше 8 символів)"
             type={passwordShown ? 'text' : 'password'}
             {...register('password', { required: true })}
           />
-          <EyeIcon
-            className={styles.eye_icon}
-            onClick={togglePasswordVisibility}
-          />
+          {passwordShown ? (
+            <CloseEyeIcon
+              className={styles.eye_icon}
+              onClick={togglePasswordVisibility}
+            />
+          ) : (
+            <EyeIcon
+              className={styles.eye_icon}
+              onClick={togglePasswordVisibility}
+            />
+          )}
         </div>
         {!isRegistration && (
           <div className={styles.policy_container}>
-            <input type="checkbox" />
+            <label className={styles.checkbox_container}>
+              <input
+                type="checkbox"
+                checked={checked}
+                onChange={handleCheckboxChange}
+              />
+              {checked ? <CheckboxTrue /> : <CheckboxFalse />}
+            </label>
             <div className={styles.text_container}>
               <span>Запам’ятати мене</span>
               <span>Забули пароль?</span>
@@ -128,14 +150,29 @@ export default function SignUpForm() {
                   },
                 })}
               />
-              <EyeIcon
-                className={styles.eye_icon}
-                onClick={togglePasswordVisibility}
-              />
+              {passwordShown ? (
+                <CloseEyeIcon
+                  className={styles.eye_icon}
+                  onClick={togglePasswordVisibility}
+                />
+              ) : (
+                <EyeIcon
+                  className={styles.eye_icon}
+                  onClick={togglePasswordVisibility}
+                />
+              )}
             </div>
             <div className={styles.policy_container}>
-              <input type="checkbox" />
-              <Link href="/return_policy">
+              <label className={styles.checkbox_container}>
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={handleCheckboxChange}
+                />
+                {checked ? <CheckboxTrue /> : <CheckboxFalse />}
+              </label>
+
+              <Link href="/oferta">
                 Я приймаю умови користувальницької угоди
               </Link>
             </div>
