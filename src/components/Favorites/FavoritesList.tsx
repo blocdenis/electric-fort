@@ -2,17 +2,18 @@
 import { Product } from '@/lib/types/types';
 import ProductCard from '../Products/ProductCard/ProductCard';
 import { useFavorites } from '@/context/FavoritesContext';
+import styles from './Favorites.module.scss';
 
 interface FavoritesListProps {
-  products: Product[];
+  products: Product[] | undefined;
 }
 
 function FavoritesList({ products }: FavoritesListProps) {
   const { openCloseFavorites } = useFavorites();
   return (
-    <ul className=" grid md:grid-cols-2 lg:grid-cols-3 desktop:grid-cols-4 gap-8">
-      {products.map((product) => (
-        <li key={product.id}>
+    <ul className={styles.fav_list}>
+      {products?.map((product) => (
+        <li className=" w-fit" key={product.id}>
           <ProductCard {...product} onCardClick={openCloseFavorites} />
         </li>
       ))}

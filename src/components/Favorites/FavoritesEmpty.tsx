@@ -1,12 +1,15 @@
 import FavoritesEmptyIcon from '../icons/FavoritesEmptyIcon';
+import styles from './Favorites.module.scss';
 
 function FavoritesEmpty() {
   return (
-    <div className=" flex gap-24 justify-start items-center text-lg ml-4 ">
+    <div className={styles.fav_empty}>
       <div>
         <FavoritesEmptyIcon />
       </div>
-      <p>Ви ще не додали жодного товару в список бажань...</p>
+      <p className={styles.fav_empty_text}>
+        Ви ще не додали жодного товару в список бажань...
+      </p>
     </div>
   );
 }
