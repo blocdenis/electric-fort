@@ -10,8 +10,6 @@ import { products } from '@/lib/db/products';
 function Favorites() {
   const { isAuthenticated, isLoading } = useAuth();
 
-  // const [isLoading, isAuthenticated] = [false, false];
-
   const { favoritesItems, isPending, openCloseFavorites, openCloseAuth } =
     useFavorites();
 
