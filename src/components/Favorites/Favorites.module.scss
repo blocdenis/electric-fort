@@ -7,6 +7,10 @@
 
 .warrning_block {
   display: flex;
+  @include breakpoint(tablet) {
+    flex-direction: column;
+    gap: 32px;
+  }
 }
 
 .warning_text {
@@ -15,6 +19,12 @@
   font: $regular20;
   text-align: center;
   margin: 11px 0;
+  @include breakpoint(tablet) {
+    font: $regular16;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
 }
 
 .warning_buttons_block {
@@ -22,6 +32,10 @@
   flex-direction: column;
   gap: 12px;
   margin-bottom: 31px;
+  @include breakpoint(tablet) {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 .fav_list {
@@ -29,4 +43,36 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   column-gap: 24px;
   row-gap: 32px;
+  justify-items: center;
+  @media (min-width: 1024px) and (max-width: 1400px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  @include breakpoint(tablet) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  @include breakpoint(mobile) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+.fav_empty {
+  display: flex;
+  gap: 96px;
+  justify-content: flex-start;
+  align-items: center;
+  font: $regular24;
+  margin-left: 16px;
+  @include breakpoint(tablet) {
+    flex-direction: column-reverse;
+    margin-left: 0;
+    gap: 32px;
+  }
+}
+
+.fav_empty_text {
+  font: $regular24;
+  @include breakpoint(tablet) {
+    font: $regular16;
+    text-align: center;
+  }
 }

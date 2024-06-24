@@ -5,11 +5,10 @@ import FavoritesList from './FavoritesList';
 import FavoritesEmpty from './FavoritesEmpty';
 import { useFavorites } from '@/context/FavoritesContext';
 import { useAuth } from '@/context/AuthContext';
+import { products } from '@/lib/db/products';
 
 function Favorites() {
   const { isAuthenticated, isLoading } = useAuth();
-
-  // const [isLoading, isAuthenticated] = [false, false];
 
   const { favoritesItems, isPending, openCloseFavorites, openCloseAuth } =
     useFavorites();
@@ -27,9 +26,9 @@ function Favorites() {
       ) : !isAuthenticated ? (
         <div className={styles.warrning_block}>
           <p className={styles.warning_text}>
-            Звертаємо вашу увагу, додані Вами товари будуть видалені через 3
-            дні. Для того щоб вони були збережені увійдіть у свій обліковий
-            запис або зареєструйтесь.
+            Звертаємо вашу увагу,<br></br>
+            додані Вами товари будуть видалені через 3 дні. Для того щоб вони
+            були збережені увійдіть у свій обліковий запис або зареєструйтесь.
           </p>
           <div className={styles.warning_buttons_block}>
             <Button onClick={handleEnterRegisterClick}>Увійти</Button>
