@@ -21,10 +21,6 @@ type FavoritesProviderProps = {
   children: ReactNode;
 };
 
-// type FavoritesItem = {
-//   id: number;
-// };
-
 type FavoritesContext = {
   openCloseFavorites: () => void;
   openCloseAuth: () => void;
@@ -51,10 +47,6 @@ export function FavoritesProvider({ children }: FavoritesProviderProps) {
     queryFn: getFavorites,
     staleTime: 10 * 1000,
   });
-
-  // const [favoritesItems, setFavoritesItems] = useLocalStorage<
-  //   Product[] | undefined
-  // >('favorites', []);
 
   const queryClient = useQueryClient();
 
