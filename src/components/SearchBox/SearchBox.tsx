@@ -1,20 +1,12 @@
-import React, { useState } from 'react';
-import styles from './SearchInput.module.scss';
-import { SearchIcon } from '../icons';
 import { useQuery } from '@tanstack/react-query';
+import { useReducer, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
-import { SearchResult } from './SearchResult';
-import { useRouter } from 'next/navigation';
+import { Product } from '@/lib/types/types';
+import Link from 'next/link';
+import { SearchResult } from '../SearchInput/SearchResult';
 
-interface SearchInputProps {
-  placeholder?: string;
-}
-
-const SearchInput: React.FC<SearchInputProps> = ({
-  placeholder = 'Search...',
-}) => {
+export default function SearchBox() {
   const [search, setSearch] = useState('');
-  const router = useRouter();
 
   const debouncedSearchTerm = useDebounce(search, 200);
 
@@ -36,29 +28,25 @@ const SearchInput: React.FC<SearchInputProps> = ({
 
     enabled: !!debouncedSearchTerm,
   });
-  const handleSearch = (e: any) => {
-    e.preventDefault();
-    if (debouncedSearchTerm) {
-      router.replace(`/products?q=${debouncedSearchTerm}`);
-    }
-  };
+
+  const handleSearch = () => {};
+
   return (
-    <div className={styles.search}>
+    <div>
       <input
         type="search"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder={placeholder}
-        className={styles.input}
+        placeholder="Enter your search term here"
+        className="p-2 w-full focus:outline-none rounded-md bg-gray-600 placeholder:text-gray-500 text-gray-50 focus:ring focus:ring-purple-500"
       />
-      <button className={styles.icon} onClick={handleSearch}>
-        <SearchIcon />
+      <button
+        onClick={handleSearch}
+        className="mt-2 p-2 bg-purple-500 text-white rounded-md"
+      >
+        Search
       </button>
-      <div className={styles.results}>
-        {data?.data && <SearchResult isLoading={isLoading} data={data.data} />}
-      </div>
+      {data?.data && <SearchResult isLoading={isLoading} data={data.data} />}
     </div>
   );
-};
-
-export default SearchInput;
+}
