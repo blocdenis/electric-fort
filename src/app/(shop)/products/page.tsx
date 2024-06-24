@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -18,29 +18,31 @@ const ProductsList: React.FC = () => {
   const searchParams = useSearchParams();
   const q = searchParams.get('q');
 
-  const { data, error, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ['products', q],
     queryFn: () => fetchProducts(q || ''),
     enabled: !!q,
   });
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading products</div>;
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>Error loading products</div>;
   const products = data?.data || [];
   return (
-    <div>
-      <Breadcrumbs items={links} />
-      <h1>Search results</h1>
-      {products?.length > 0 ? (
-        <ul>
-          {products?.map((product: any) => (
-            <li key={product.id}>{product.name}</li>
-          ))}
-        </ul>
-      ) : (
-        <p>No products found</p>
-      )}
-    </div>
+    <Suspense fallback={<>Loading</>}>
+      <div>
+        <Breadcrumbs items={links} />
+        <h1>Search results</h1>
+        {products?.length > 0 ? (
+          <ul>
+            {products?.map((product: any) => (
+              <li key={product.id}>{product.name}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>No products found</p>
+        )}
+      </div>
+    </Suspense>
   );
 };
 
