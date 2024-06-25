@@ -55,9 +55,6 @@ export default async function Home() {
 
   const dehydratedState = dehydrate(queryClient);
 
-  // const response = await getPopularProducts();
-  // const products = response.data;
-  // console.log(products);
   return (
     <HydrationBoundary state={dehydratedState}>
       <Container className="flex">
