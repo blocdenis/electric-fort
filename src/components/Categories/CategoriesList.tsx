@@ -5,13 +5,14 @@ import styles from './CategoriesList.module.scss';
 import { useQuery } from '@tanstack/react-query';
 import { getCategories } from '@/services/api/api';
 import { formatedString } from '@/lib/utils/formatString';
+import { categories } from '@/lib/db/categories';
 
 function CategoriesList() {
-  const { data: categories } = useQuery({
-    queryKey: ['categories'],
-    queryFn: () => getCategories(),
-    staleTime: 10 * 1000,
-  });
+  // const { data: categories } = useQuery({
+  //   queryKey: ['categories'],
+  //   queryFn: () => getCategories(),
+  //   staleTime: 10 * 1000,
+  // });
   return (
     <ul className={styles.categories_list}>
       {categories?.map((category) => (

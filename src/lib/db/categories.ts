@@ -8,7 +8,7 @@ export const categories = [
   {
     id: 2,
     image: null,
-    name: 'Автоматичні вимикачі, УЗО',
+    name: 'Автоматичні вимикачі, ПЗВ',
     add_date: '',
   },
   {
