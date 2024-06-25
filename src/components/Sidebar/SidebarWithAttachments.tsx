@@ -9,16 +9,9 @@ import { brands } from '@/lib/db/brands';
 import { getBrands, getCategories } from '@/services/api/api';
 
 async function SidebarWithAttachments() {
-  // const categoriesData = await getCategories();
-  // const categories = categoriesData.data;
-
-  // const brandsData = await getBrands();
-
-  // const brands = brandsData.data;
-
   return (
     <Sidebar>
-      <CatalogList categories={categories} brands={brands} />
+      <CatalogList />
       <div className="flex flex-col gap-4  mt-8">
         <h3 className=" mb-4">Контакти</h3>
         <ContactText color="white" />

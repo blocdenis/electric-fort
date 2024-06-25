@@ -18,8 +18,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = async ({ product }) => {
   const brandsServer = await getBrands();
   const categoriesServer = await getCategories();
 
-  const brand = brandsServer.find((brand) => brand.id === product.brand_id);
-  const category = categoriesServer.find(
+  const brand = brandsServer?.find((brand) => brand.id === product.brand_id);
+  const category = categoriesServer?.find(
     (category) => category.id === brand?.category_id
   );
 

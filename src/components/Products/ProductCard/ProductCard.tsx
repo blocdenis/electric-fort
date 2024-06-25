@@ -50,9 +50,26 @@ function ProductCard({
 
   const handleFavoriteIconClick = () => {
     if (isFavorite(id)) {
-      deleteFromFavorites.mutateAsync(id);
+      // deleteFromFavorites.mutateAsync(id);
+      deleteFromFavorites(id);
     } else {
-      addToFavorites.mutateAsync(id);
+      // addToFavorites.mutateAsync(id);
+      addToFavorites({
+        id,
+        name,
+        unit_of_measurement,
+        price,
+        description,
+        in_stock,
+        popular,
+        images,
+        series_id,
+        subseries_id,
+        brand_id,
+        updated_info_date,
+        add_date,
+        article,
+      });
     }
   };
 
