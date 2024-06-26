@@ -54,6 +54,7 @@ export default async function Home() {
   });
 
   const dehydratedState = dehydrate(queryClient);
+  //
 
   return (
     <HydrationBoundary state={dehydratedState}>
