@@ -7,9 +7,15 @@ import Partners from '@/components/Partners/Partners';
 import Container from '@/components/Container/Container';
 import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 import ContentContainer from '@/components/Container/ContentContainer';
-import { getPopularProducts } from '@/services/api/api';
+import {
+  getBrands,
+  getCategories,
+  getPopularProducts,
+} from '@/services/api/api';
 import hero from '../../public/Hero.jpg';
 import hero2 from '../../public/Hero2.jpg';
+import getQueryClient from '@/lib/utils/getQueryClient';
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 
 const slides = [
   {
@@ -27,20 +33,41 @@ const slides = [
 ];
 
 export default async function Home() {
-  const response = await getPopularProducts();
-  const products = response.data;
-  // console.log(products);
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['popularProducts'],
+    queryFn: () => getPopularProducts(),
+    staleTime: 10 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['categories'],
+    queryFn: () => getCategories(),
+    staleTime: 10 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['brands'],
+    queryFn: () => getBrands(),
+    staleTime: 10 * 1000,
+  });
+
+  const dehydratedState = dehydrate(queryClient);
+
   return (
-    <Container className="flex">
-      <SidebarWithAttachments />
-      <ContentContainer>
-        <HeroSlider data={slides} />
-        <CategoriesSection />
-        <PopularProductsSection title="Популярні товари" products={products} />
-        <Advantages />
-        <Partners />
-        <TextSection />
-      </ContentContainer>
-    </Container>
+    <HydrationBoundary state={dehydratedState}>
+      <Container className="flex">
+        <SidebarWithAttachments />
+        <ContentContainer>
+          <HeroSlider data={slides} />
+          <CategoriesSection />
+          <PopularProductsSection title="Популярні товари" />
+          <Advantages />
+          <Partners />
+          <TextSection />
+        </ContentContainer>
+      </Container>
+    </HydrationBoundary>
   );
 }

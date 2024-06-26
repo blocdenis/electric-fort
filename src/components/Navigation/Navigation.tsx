@@ -52,7 +52,7 @@ function Navigation() {
         </div>
         {isOpen ? (
           <div className={styles.mobile_catalog_container}>
-            <CatalogList categories={categories} brands={brands} />
+            <CatalogList />
           </div>
         ) : null}
       </Container>

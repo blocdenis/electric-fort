@@ -3,31 +3,35 @@ import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
 import React from 'react';
 import { categories } from '@/lib/db/categories';
 import CategoryCard from '@/components/Categories/CategoryCard';
-import styles from '@/components/Categories/CategoriesList.module.scss';
-import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 
-function Page() {
+import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
+import getQueryClient from '@/lib/utils/getQueryClient';
+import { getCategories } from '@/services/api/api';
+import CategoriesList from '@/components/Categories/CategoriesList';
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
+
+async function Page() {
   const links = [{ name: 'Категорії' }];
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['categories'],
+    queryFn: () => getCategories(),
+    staleTime: 10 * 1000,
+  });
+
+  const dehydratedState = dehydrate(queryClient);
+
   return (
-    <>
+    <HydrationBoundary state={dehydratedState}>
       <Breadcrumbs items={links} />
       <Section>
         <div className=" pr-[64px] mx-auto overflow-hidden">
           <SectionTitle className="mb-4" title="Категорії товарів" />
-          <ul className={styles.categories_list}>
-            {categories.map((category) => (
-              <li key={category.id} className="w-[220px] h-[228px]">
-                <CategoryCard
-                  category_id={category.id}
-                  name={category.name}
-                  image={category.image}
-                />
-              </li>
-            ))}
-          </ul>
+          <CategoriesList />
         </div>
       </Section>
-    </>
+    </HydrationBoundary>
   );
 }
 

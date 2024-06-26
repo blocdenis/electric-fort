@@ -17,13 +17,17 @@ const sendRequest = async <T>(url: string, init?: RequestInit) => {
 };
 
 const sendRequestJSON = async <T>(url: string, init?: RequestInit) => {
-  const res = await fetch(url, init);
+  try {
+    const res = await fetch(url, init);
 
-  if (!res.ok) {
-    throw new Error(await res.text());
+    if (!res.ok) {
+      throw new Error(await res.text());
+    }
+
+    return (await res.json()) as T;
+  } catch (error) {
+    console.log('Some error ocured', error);
   }
-
-  return (await res.json()) as T;
 };
 
 type getCategories = {
@@ -56,8 +60,8 @@ export const getCategories = async (
   //   params: Record<string, string> = {},
   init?: RequestInit
 ) => {
-  return sendRequestJSON<getCategories>(
-    `${buildUrl('get', 'Category')}?all_data=true&pagination=true`,
+  return sendRequestJSON<Category[]>(
+    `${buildUrl('get', 'Category')}?all_data=true&equal=false&pagination=false`,
     {
       method: 'GET',
       credentials: 'include',
@@ -179,11 +183,11 @@ export const getPopularProducts = async (
   //   params: Record<string, string> = {},
   init?: RequestInit
 ) => {
-  return sendRequestJSON<getProducts>(
+  return sendRequestJSON<Product[]>(
     `${buildUrl(
       'get',
       'Product'
-    )}?all_data=true&field=popular&search=true&equal=false&pagination=true&page_size=25&page=1`,
+    )}?all_data=true&field=popular&search=true&equal=false&pagination=false`,
     {
       method: 'GET',
       credentials: 'include',

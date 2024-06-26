@@ -21,15 +21,13 @@ type FavoritesProviderProps = {
   children: ReactNode;
 };
 
-// type FavoritesItem = {
-//   id: number;
-// };
-
 type FavoritesContext = {
   openCloseFavorites: () => void;
   openCloseAuth: () => void;
-  deleteFromFavorites: UseMutationResult<string, Error, number, unknown>;
-  addToFavorites: UseMutationResult<string, Error, number, unknown>;
+  // deleteFromFavorites: UseMutationResult<string, Error, number, unknown>;
+  // addToFavorites: UseMutationResult<string, Error, number, unknown>;
+  deleteFromFavorites: (id: number) => void;
+  addToFavorites: (data: Product) => void;
   favoritesItems: Product[] | undefined;
   isPending: boolean;
   favoritesQuantity: number;
@@ -45,36 +43,38 @@ export function useFavorites() {
 export function FavoritesProvider({ children }: FavoritesProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isPending, setIsPending] = useState(false);
+  const [favoritesItems, setFavoritesItems] = useState<Product[]>([]);
+  const addToFavorites = (data: Product) =>
+    setFavoritesItems((prevVal) => [...prevVal, data]);
+  const deleteFromFavorites = (id: number) =>
+    setFavoritesItems((prevVal) => prevVal.filter((item) => item.id !== id));
 
-  const { data: favoritesItems, isPending } = useQuery({
-    queryKey: ['favorites'],
-    queryFn: getFavorites,
-    staleTime: 10 * 1000,
-  });
+  // const { data: favoritesItems, isPending } = useQuery({
+  //   queryKey: ['favorites'],
+  //   queryFn: getFavorites,
+  //   staleTime: 10 * 1000,
+  // });
 
-  // const [favoritesItems, setFavoritesItems] = useLocalStorage<
-  //   Product[] | undefined
-  // >('favorites', []);
+  // const queryClient = useQueryClient();
 
-  const queryClient = useQueryClient();
+  // const addToFavorites = useMutation({
+  //   mutationFn: addFavorites,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({
+  //       queryKey: ['favorites'],
+  //       exact: true,
+  //       refetchType: 'active',
+  //     });
+  //   },
+  // });
 
-  const addToFavorites = useMutation({
-    mutationFn: addFavorites,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['favorites'],
-        exact: true,
-        refetchType: 'active',
-      });
-    },
-  });
-
-  const deleteFromFavorites = useMutation({
-    mutationFn: deleteFavorites,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['favorites'] });
-    },
-  });
+  // const deleteFromFavorites = useMutation({
+  //   mutationFn: deleteFavorites,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({ queryKey: ['favorites'] });
+  //   },
+  // });
 
   const isFavorite = (id: number) =>
     !!favoritesItems?.find((item) => item.id === id) ?? false;

@@ -2,7 +2,7 @@
 
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
-// import { products } from '@/lib/db/products';
+import { products } from '@/lib/db/products';
 import styles from './PopularProductsSection.module.scss';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -14,16 +14,23 @@ import 'swiper/css/navigation';
 import ProductCard from '../ProductCard/ProductCard';
 import { ArrowCategoriesIcon } from '@/components/icons';
 import { Product } from '@/lib/types/types';
+import { useQuery } from '@tanstack/react-query';
+import { getPopularProducts } from '@/services/api/api';
 
 interface PopularProductsSectionProps {
   title: string;
-  products?: Product[];
+  // products?: Product[];
 }
 
 const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
   title,
-  products,
+  // products,
 }) => {
+  // const { data: products } = useQuery({
+  //   queryKey: ['popularProducts'],
+  //   queryFn: () => getPopularProducts(),
+  //   staleTime: 10 * 1000,
+  // });
   return (
     <Section>
       <div className={styles.container}>
