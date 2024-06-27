@@ -6,9 +6,9 @@ import { categories } from '@/lib/db/categories';
 import { brands } from '@/lib/db/brands';
 import { products } from '@/lib/db/products';
 import { series } from '@/lib/db/productSeries';
-import ProductCard from '@/components/Products/ProductCard/ProductCard';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import { getProductsByBrand } from '@/services/api/api';
+import ProductList from '@/components/Products/ProductList/ProductList';
 
 export interface PageProps {
   params: { category_id: number; brand_id: number };
@@ -36,7 +36,7 @@ async function Page({ params }: PageProps) {
     <>
       <Breadcrumbs items={breadcrumsItems} />
       <Section>
-        <div className=" pr-[64px] mx-auto overflow-hidden">
+        <div className=" mx-auto overflow-hidden">
           <SectionTitle
             className="mb-4"
             title={brands.find((brand) => brand.id === Number(brand_id))?.name}
@@ -59,46 +59,9 @@ async function Page({ params }: PageProps) {
         </div>
       </Section>
       <Section>
-        <div className=" pr-[64px] mx-auto overflow-hidden">
+        <div className=" mx-auto overflow-hidden">
           <SectionTitle className="mb-4" title="Товари" />
-          <ul className=" pl-6 grid laptop:grid-cols-2 desktop:grid-cols-3 gap-x-[45px] gap-y-8">
-            {products.map(
-              ({
-                id,
-                name,
-                unit_of_measurement,
-                price,
-                description,
-                in_stock,
-                popular,
-                images,
-                series_id,
-                subseries_id,
-                brand_id,
-                updated_info_date,
-                add_date,
-                article,
-              }) => (
-                <ProductCard
-                  key={id}
-                  id={id}
-                  name={name}
-                  unit_of_measurement={unit_of_measurement}
-                  price={price}
-                  description={description}
-                  in_stock={in_stock}
-                  popular={popular}
-                  images={images}
-                  series_id={series_id}
-                  subseries_id={subseries_id}
-                  brand_id={brand_id}
-                  updated_info_date={updated_info_date}
-                  add_date={add_date}
-                  article={article}
-                />
-              )
-            )}
-          </ul>
+          <ProductList products={products} />
         </div>
       </Section>
     </>

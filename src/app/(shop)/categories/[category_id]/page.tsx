@@ -6,15 +6,45 @@ import styles from '@/components/Categories/CategoriesList.module.scss';
 import CategoryCard from '@/components/Categories/CategoryCard';
 import { categories } from '@/lib/db/categories';
 import { products } from '@/lib/db/products';
-import ProductCard from '@/components/Products/ProductCard/ProductCard';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
+import ProductList from '@/components/Products/ProductList/ProductList';
+import getQueryClient from '@/lib/utils/getQueryClient';
+import {
+  getBrandsByCategoryId,
+  getCategories,
+  getCategoriesById,
+} from '@/services/api/api';
+import { Category } from '@/lib/types/types';
+import { notFound } from 'next/navigation';
 
 export interface PageProps {
   params: { category_id: number };
 }
 
-function Page({ params }: PageProps) {
+async function Page({ params }: PageProps) {
   const { category_id } = params;
+
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['category_brands', category_id],
+    queryFn: () => getBrandsByCategoryId(category_id),
+    staleTime: 10 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['categories', category_id],
+    queryFn: () => getCategoriesById(category_id),
+    staleTime: 10 * 1000,
+  });
+
+  const category = queryClient.getQueryData([
+    'categories',
+    category_id,
+  ]) as Category;
+  if (!category) {
+    notFound();
+  }
 
   const categoryName = categories.find(
     (category) => category.id === Number(category_id)
@@ -29,7 +59,7 @@ function Page({ params }: PageProps) {
     <>
       <Breadcrumbs items={breadcrumsItems} />
       <Section>
-        <div className=" pr-[64px] mx-auto overflow-hidden">
+        <div className=" mx-auto overflow-hidden">
           <SectionTitle className="mb-4" title={categoryName} />
           <ul className={styles.categories_list}>
             {brands
@@ -48,46 +78,9 @@ function Page({ params }: PageProps) {
         </div>
       </Section>
       <Section>
-        <div className=" pr-[64px] mx-auto overflow-hidden">
+        <div className=" mx-auto overflow-hidden">
           <SectionTitle className="mb-4" title="Товари" />
-          <ul className=" pl-6 grid laptop:grid-cols-2 desktop:grid-cols-3 gap-x-[45px] gap-y-8">
-            {products.map(
-              ({
-                id,
-                name,
-                unit_of_measurement,
-                price,
-                description,
-                in_stock,
-                popular,
-                images,
-                series_id,
-                subseries_id,
-                brand_id,
-                updated_info_date,
-                add_date,
-                article,
-              }) => (
-                <ProductCard
-                  key={id}
-                  id={id}
-                  name={name}
-                  unit_of_measurement={unit_of_measurement}
-                  price={price}
-                  description={description}
-                  in_stock={in_stock}
-                  popular={popular}
-                  images={images}
-                  series_id={series_id}
-                  subseries_id={subseries_id}
-                  brand_id={brand_id}
-                  updated_info_date={updated_info_date}
-                  add_date={add_date}
-                  article={article}
-                />
-              )
-            )}
-          </ul>
+          <ProductList products={products} />
         </div>
       </Section>
     </>

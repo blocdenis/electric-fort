@@ -3,12 +3,12 @@ import ProductCard from '../ProductCard/ProductCard';
 import { Product } from '@/lib/types/types';
 
 interface ProductListProps {
-  products: Product[];
+  products: Product[] | undefined;
 }
 function ProductList({ products }: ProductListProps) {
   return (
     <ul className=" pl-6 grid laptop:grid-cols-2 desktop:grid-cols-3 gap-x-[45px] gap-y-8">
-      {products.map(
+      {products?.map(
         ({
           id,
           name,

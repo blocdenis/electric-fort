@@ -73,6 +73,27 @@ export const getCategories = async (
   );
 };
 
+export const getCategoriesById = async (
+  //   params: Record<string, string> = {},
+  category_id: number,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<Category[]>(
+    `${buildUrl(
+      'get',
+      'Category'
+    )}?all_data=true&field=category_id&search=${category_id}&equal=true&pagination=false`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
 export const getBrands = async (
   //   params: Record<string, string> = {},
   init?: RequestInit
@@ -82,6 +103,69 @@ export const getBrands = async (
       'get',
       'Brand'
     )}?all_data=true&equal=false&pagination=false&page_size=25&page=1`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getBrandsByCategoryId = async (
+  //   params: Record<string, string> = {},
+  categoryId: number,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<Brand[]>(
+    `${buildUrl(
+      'get',
+      'Brand'
+    )}?all_data=true&field=category_id&search=${categoryId}&equal=true&pagination=false`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getSeriesByBrandId = async (
+  //   params: Record<string, string> = {},
+  brandId: number,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<Brand[]>(
+    `${buildUrl(
+      'get',
+      'Series'
+    )}?all_data=true&field=brand_id&search=${brandId}&equal=true&pagination=false`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getSubSeriesBySeriesId = async (
+  //   params: Record<string, string> = {},
+  seriesId: number,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<Brand[]>(
+    `${buildUrl(
+      'get',
+      'SubSeries'
+    )}?all_data=true&field=series_id&search=${seriesId}&equal=true&pagination=false`,
     {
       method: 'GET',
       credentials: 'include',

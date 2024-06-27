@@ -1,5 +1,5 @@
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
-import ProductCard from '@/components/Products/ProductCard/ProductCard';
+import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
 import ProductList from '@/components/Products/ProductList/ProductList';
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
@@ -8,6 +8,7 @@ import { brands } from '@/lib/db/brands';
 import { categories } from '@/lib/db/categories';
 import { products } from '@/lib/db/products';
 import { series } from '@/lib/db/productSeries';
+import { getProductsBySeria } from '@/services/api/api';
 // import { getProductsBySeria } from '@/services/api/api';
 
 export interface PageProps {
@@ -17,7 +18,7 @@ export interface PageProps {
 async function Page({ params }: PageProps) {
   const { category_id, brand_id, series_id } = params;
 
-  // const products = (await getProductsBySeria(Number(series_id), 1)).data;
+  // const products = (await getProductsBySeria(Number(series_id), 1))?.data;
 
   const categoryName = categories.find(
     (category) => category.id === Number(category_id)
@@ -33,6 +34,7 @@ async function Page({ params }: PageProps) {
     { name: brandName, href: `/categories/${category_id}/${brand_id}` },
     { name: seriesName },
   ];
+
   return (
     <>
       <Breadcrumbs items={breadcrumsItems} />
@@ -40,6 +42,7 @@ async function Page({ params }: PageProps) {
         <div className=" mx-auto overflow-hidden">
           <SectionTitle className="mb-4" title={seriesName} />
           <Sort />
+          <FiltersPanel incomeFilters={[brandName]} categoryId={category_id} />
           <ProductList products={products} />
         </div>
       </Section>
