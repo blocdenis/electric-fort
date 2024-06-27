@@ -50,6 +50,7 @@ const ProductsPage: React.FC = () => {
   return (
     <div>
       <Breadcrumbs items={links} />
+
       <Suspense fallback={<div>Loading...</div>}>
         <ProductsList query={q} />
       </Suspense>
