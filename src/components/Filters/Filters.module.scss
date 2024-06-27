@@ -1,0 +1,82 @@
+@use '../../scss/abstracts/' as *;
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding: 16px;
+  border-bottom: 3px solid #69af00;
+}
+.hero {
+  font: $bold24;
+}
+.filterItem {
+  margin-bottom: 10px;
+}
+
+.filterHeader {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 24px 0px 24px 0px;
+}
+
+.priceSlider {
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 24px;
+}
+.inputs {
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputs input {
+  width: 136px;
+  padding: 8px 54px 8px 54px;
+  margin-bottom: 10px;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  background-color: transparent;
+  font: $regular16;
+  color: #acacac;
+}
+.inputNumber {
+  -moz-appearance: textfield;
+}
+
+.inputNumber::-webkit-outer-spin-button,
+.inputNumber::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 24px;
+  border: 1px solid #ddd;
+  color: #acacac;
+  outline: none;
+}
+
+.brandsList {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.brandItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  gap: 10px;
+}
+.arrowIcon {
+  padding-right: 12px;
+  svg {
+    fill: white;
+  }
+}
