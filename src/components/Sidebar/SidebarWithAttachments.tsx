@@ -7,10 +7,12 @@ import Map from '../Map/Map';
 import { categories } from '@/lib/db/categories';
 import { brands } from '@/lib/db/brands';
 import { getBrands, getCategories } from '@/services/api/api';
+import Filters from '../Filters/Filters';
 
 async function SidebarWithAttachments() {
   return (
     <Sidebar>
+      {/* <Filters /> */}
       <CatalogList />
       <div className="flex flex-col gap-4  mt-8">
         <h3 className=" mb-4">Контакти</h3>
