@@ -12,12 +12,14 @@ export interface Product {
   article: string;
   unit_of_measurement: string;
   price: number;
-  description: string;
+  description: string | null;
   in_stock: boolean;
   popular: boolean;
+  category_id: number;
   brand_id: number;
-  series_id: number;
-  subseries_id: number;
+  series_id: number | null;
+  subseries_id: number | null;
+  subsubseries_id: number | null;
   updated_info_date: string | null;
   add_date: string;
 }
