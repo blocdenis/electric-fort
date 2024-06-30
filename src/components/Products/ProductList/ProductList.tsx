@@ -21,7 +21,9 @@ function ProductList({ products }: ProductListProps) {
             images,
             series_id,
             subseries_id,
+            subsubseries_id,
             brand_id,
+            category_id,
             updated_info_date,
             add_date,
             article,
@@ -38,6 +40,8 @@ function ProductList({ products }: ProductListProps) {
               images={images}
               series_id={series_id}
               subseries_id={subseries_id}
+              subsubseries_id={subsubseries_id}
+              category_id={category_id}
               brand_id={brand_id}
               updated_info_date={updated_info_date}
               add_date={add_date}
