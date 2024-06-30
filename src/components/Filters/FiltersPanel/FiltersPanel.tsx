@@ -21,7 +21,7 @@ function FiltersPanel({ incomeFilters, categoryId }: FiltersPanelProps) {
     const filterName = (event.target as HTMLElement).textContent;
 
     setFilters((prevVal) => prevVal.filter((item) => item !== filterName));
-    router.push(`/products?q=${filters.toString()}`);
+    router.push(`/categories/${categoryId}`);
   };
 
   return (

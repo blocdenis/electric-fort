@@ -7,8 +7,18 @@ import { brands } from '@/lib/db/brands';
 import { products } from '@/lib/db/products';
 import { series } from '@/lib/db/productSeries';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
-import { getProductsByBrand } from '@/services/api/api';
+import {
+  getBrandById,
+  getCategoryById,
+  getProductsByBrand,
+  getSeriesByBrandId,
+} from '@/services/api/api';
 import ProductList from '@/components/Products/ProductList/ProductList';
+import getQueryClient from '@/lib/utils/getQueryClient';
+import NotFound from '@/app/not-found';
+import SeriesList from '@/components/Categories/SeriesList';
+import Sort from '@/components/Sort/Sort';
+import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
 
 export interface PageProps {
   params: { category_id: number; brand_id: number };
@@ -17,19 +27,23 @@ export interface PageProps {
 async function Page({ params }: PageProps) {
   const { category_id, brand_id } = params;
 
-  // const products = (await getProductsByBrand(Number(brand_id), 1)).data;
+  const categoryData = await getCategoryById(category_id);
+  const brandData = await getBrandById(brand_id);
+  const seriesData = await getSeriesByBrandId(brand_id);
 
-  // console.log(products);
+  if (!categoryData || !brandData) {
+    return NotFound();
+  }
 
-  const categoryName = categories.find(
-    (category) => category.id === Number(category_id)
-  )?.name;
-  const brandName = brands.find((brand) => brand.id === Number(brand_id))?.name;
+  const [category] = categoryData;
+  const [brand] = brandData;
+
+  const products = (await getProductsByBrand(brand_id, 1))?.data;
 
   const breadcrumsItems = [
     { name: 'Категорії', href: '/categories' },
-    { name: categoryName, href: `/categories/${category_id}` },
-    { name: brandName },
+    { name: category.name, href: `/categories/${category_id}` },
+    { name: brand.name },
   ];
 
   return (
@@ -37,33 +51,29 @@ async function Page({ params }: PageProps) {
       <Breadcrumbs items={breadcrumsItems} />
       <Section>
         <div className=" mx-auto overflow-hidden">
-          <SectionTitle
-            className="mb-4"
-            title={brands.find((brand) => brand.id === Number(brand_id))?.name}
-          />
-          <ul className={styles.categories_list}>
-            {series
-              .filter((item) => item.brand_id === Number(brand_id))
-              .map((seria) => (
-                <li key={seria.id} className="w-[220px] h-[228px]">
-                  <CategoryCard
-                    category_id={category_id}
-                    brand_id={brand_id}
-                    series_id={seria.id}
-                    name={seria.name}
-                    image={seria.image}
-                  />
-                </li>
-              ))}
-          </ul>
+          <SectionTitle className="mb-4" title={brand.name} />
+          {seriesData?.length ? (
+            <SeriesList categoryId={category_id} brandId={brand_id} />
+          ) : (
+            <>
+              <Sort />
+              <FiltersPanel
+                incomeFilters={[brand.name]}
+                categoryId={category_id}
+              />
+              <ProductList products={products} />
+            </>
+          )}
         </div>
       </Section>
-      <Section>
-        <div className=" mx-auto overflow-hidden">
-          <SectionTitle className="mb-4" title="Товари" />
-          <ProductList products={products} />
-        </div>
-      </Section>
+      {seriesData?.length ? (
+        <Section>
+          <div className=" mx-auto overflow-hidden">
+            <SectionTitle className="mb-4" title="Товари" />
+            <ProductList products={products} />
+          </div>
+        </Section>
+      ) : null}
     </>
   );
 }

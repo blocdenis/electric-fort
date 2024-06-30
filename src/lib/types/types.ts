@@ -27,6 +27,13 @@ export interface ProductSubSeries {
   add_date: string;
   series_id: number;
 }
+export interface ProductSubSubSeries {
+  id: number;
+  image: string[] | null;
+  name: string;
+  add_date: string;
+  subseries_id: number;
+}
 export interface Product {
   id: number;
   images: string[][] | null;
@@ -40,6 +47,7 @@ export interface Product {
   brand_id: number;
   series_id?: number | null;
   subseries_id?: number | null;
+  subsubseries_id?: number | null;
   updated_info_date?: string | null;
   add_date: string;
 }

@@ -7,11 +7,7 @@ import Partners from '@/components/Partners/Partners';
 import Container from '@/components/Container/Container';
 import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 import ContentContainer from '@/components/Container/ContentContainer';
-import {
-  getBrands,
-  getCategories,
-  getPopularProducts,
-} from '@/services/api/api';
+import { getPopularProducts } from '@/services/api/api';
 import hero from '../../public/Hero.jpg';
 import hero2 from '../../public/Hero2.jpg';
 import getQueryClient from '@/lib/utils/getQueryClient';
@@ -38,18 +34,6 @@ export default async function Home() {
   await queryClient.prefetchQuery({
     queryKey: ['popularProducts'],
     queryFn: () => getPopularProducts(),
-    staleTime: 10 * 1000,
-  });
-
-  await queryClient.prefetchQuery({
-    queryKey: ['categories'],
-    queryFn: () => getCategories(),
-    staleTime: 10 * 1000,
-  });
-
-  await queryClient.prefetchQuery({
-    queryKey: ['brands'],
-    queryFn: () => getBrands(),
     staleTime: 10 * 1000,
   });
 

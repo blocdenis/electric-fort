@@ -1,25 +1,16 @@
-'use client';
+// 'use client';
 // import { categories } from '@/lib/db/categories';
 import React from 'react';
 import CatalogItem from './CatalogItem';
 import { Brand, Category } from '@/lib/types/types';
 import { useQuery } from '@tanstack/react-query';
-import { getBrands, getCategories } from '@/services/api/api';
+import { getAllBrands, getAllCategories } from '@/services/api/api';
 import { categories } from '@/lib/db/categories';
 import { brands } from '@/lib/db/brands';
 
-function CatalogList() {
-  // const { data: categories } = useQuery({
-  //   queryKey: ['categories'],
-  //   queryFn: () => getCategories(),
-  //   staleTime: 10 * 1000,
-  // });
-
-  // const { data: brands } = useQuery({
-  //   queryKey: ['brands'],
-  //   queryFn: () => getBrands(),
-  //   staleTime: 10 * 1000,
-  // });
+async function CatalogList() {
+  const categories = await getAllCategories({ next: { revalidate: 3600 } });
+  const brands = await getAllBrands({ next: { revalidate: 3600 } });
 
   return (
     <ul className=" bg-backgroung">
