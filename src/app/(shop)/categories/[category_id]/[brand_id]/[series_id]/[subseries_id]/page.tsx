@@ -1,7 +1,6 @@
 import NotFound from '@/app/not-found';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import SubSubseriesList from '@/components/Categories/SubSubseriesList';
-import SubseriesList from '@/components/Categories/SubseriesList';
 import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
 import ProductList from '@/components/Products/ProductList/ProductList';
 import Section from '@/components/Section/Section';
@@ -12,6 +11,7 @@ import {
   getCategoryById,
   getProductsBySubSeria,
   getSeriaById,
+  getSortedProductsBySubSeria,
   getSubSeriaById,
   getSubSubSeriesBySubSeriesId,
 } from '@/services/api/api';
@@ -23,10 +23,12 @@ export interface PageProps {
     series_id: number;
     subseries_id: number;
   };
+  searchParams: { sort: string | undefined; page: number | undefined };
 }
 
-async function Page({ params }: PageProps) {
+async function Page({ params, searchParams }: PageProps) {
   const { category_id, brand_id, series_id, subseries_id } = params;
+  const { sort, page } = searchParams;
 
   const subSeriaProducts = (await getProductsBySubSeria(subseries_id, 1))?.data;
 
@@ -58,6 +60,37 @@ async function Page({ params }: PageProps) {
     },
   ];
 
+  if (sort) {
+    let sorter = sort;
+    if (!sort.includes('-')) {
+      sorter = `%2B` + sort;
+    }
+
+    const sortedProductsRes = await getSortedProductsBySubSeria(
+      subseries_id,
+      sorter,
+      page
+    );
+    const sortedProducts = sortedProductsRes?.data;
+
+    return (
+      <>
+        <Breadcrumbs items={breadcrumsItems} />
+        <Section>
+          <div className=" mx-auto overflow-hidden">
+            <SectionTitle className="mb-4" title={subSeries.name} />
+            <Sort isDisable={sortedProducts?.length === 0} />
+            <FiltersPanel
+              incomeFilters={[brand.name]}
+              categoryId={category_id}
+            />
+            <ProductList products={sortedProducts} />
+          </div>
+        </Section>
+      </>
+    );
+  }
+
   return (
     <>
       <Breadcrumbs items={breadcrumsItems} />
@@ -73,7 +106,7 @@ async function Page({ params }: PageProps) {
             />
           ) : (
             <>
-              <Sort />
+              <Sort isDisable={subSeriaProducts?.length === 0} />
               <FiltersPanel
                 incomeFilters={[brand.name]}
                 categoryId={category_id}

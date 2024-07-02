@@ -1,20 +1,14 @@
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
-import styles from '@/components/Categories/CategoriesList.module.scss';
-import CategoryCard from '@/components/Categories/CategoryCard';
-import { categories } from '@/lib/db/categories';
-import { brands } from '@/lib/db/brands';
-import { products } from '@/lib/db/products';
-import { series } from '@/lib/db/productSeries';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import {
   getBrandById,
   getCategoryById,
   getProductsByBrand,
   getSeriesByBrandId,
+  getSortedProductsByBrand,
 } from '@/services/api/api';
 import ProductList from '@/components/Products/ProductList/ProductList';
-import getQueryClient from '@/lib/utils/getQueryClient';
 import NotFound from '@/app/not-found';
 import SeriesList from '@/components/Categories/SeriesList';
 import Sort from '@/components/Sort/Sort';
@@ -22,10 +16,12 @@ import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
 
 export interface PageProps {
   params: { category_id: number; brand_id: number };
+  searchParams: { sort: string | undefined; page: number | undefined };
 }
 
-async function Page({ params }: PageProps) {
+async function Page({ params, searchParams }: PageProps) {
   const { category_id, brand_id } = params;
+  const { sort, page } = searchParams;
 
   const categoryData = await getCategoryById(category_id);
   const brandData = await getBrandById(brand_id);
@@ -46,6 +42,37 @@ async function Page({ params }: PageProps) {
     { name: brand.name },
   ];
 
+  if (sort) {
+    let sorter = sort;
+    if (!sort.includes('-')) {
+      sorter = `%2B` + sort;
+    }
+
+    const sortedProductsRes = await getSortedProductsByBrand(
+      brand_id,
+      sorter,
+      page
+    );
+    const sortedProducts = sortedProductsRes?.data;
+
+    return (
+      <>
+        <Breadcrumbs items={breadcrumsItems} />
+        <Section>
+          <div className=" mx-auto overflow-hidden">
+            <SectionTitle className="mb-4" title={brand.name} />
+            <Sort isDisable={sortedProducts?.length === 0} />
+            <FiltersPanel
+              incomeFilters={[brand.name]}
+              categoryId={category_id}
+            />
+            <ProductList products={sortedProducts} />
+          </div>
+        </Section>
+      </>
+    );
+  }
+
   return (
     <>
       <Breadcrumbs items={breadcrumsItems} />
@@ -56,7 +83,7 @@ async function Page({ params }: PageProps) {
             <SeriesList categoryId={category_id} brandId={brand_id} />
           ) : (
             <>
-              <Sort />
+              <Sort isDisable={products?.length === 0} />
               <FiltersPanel
                 incomeFilters={[brand.name]}
                 categoryId={category_id}

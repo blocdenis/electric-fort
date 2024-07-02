@@ -3,16 +3,18 @@ import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import SubseriesList from '@/components/Categories/SubseriesList';
 import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
 import ProductList from '@/components/Products/ProductList/ProductList';
+import SortedProductList from '@/components/Products/ProductList/SortedProductList';
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
 import Sort from '@/components/Sort/Sort';
+import getQueryClient from '@/lib/utils/getQueryClient';
 
 import {
   getBrandById,
   getCategoryById,
-  getProductsBySubBubSeria,
-  getProductsBySubSeria,
+  getProductsBySubSubSeria,
   getSeriaById,
+  getSortedProductsBySubSubSeria,
   getSubSeriaById,
   getSubSubSeriaById,
   getSubSubSeriesBySubSeriesId,
@@ -26,13 +28,15 @@ export interface PageProps {
     subseries_id: number;
     subsubseries_id: number;
   };
+  searchParams: { sort: string | undefined; page: number | undefined };
 }
 
-async function Page({ params }: PageProps) {
+async function Page({ params, searchParams }: PageProps) {
   const { category_id, brand_id, series_id, subseries_id, subsubseries_id } =
     params;
+  const { sort, page } = searchParams;
 
-  const products = (await getProductsBySubBubSeria(subseries_id, 1))?.data;
+  const products = (await getProductsBySubSubSeria(subseries_id, 1))?.data;
 
   const categoryData = await getCategoryById(category_id);
   const brandData = await getBrandById(brand_id);
@@ -73,13 +77,43 @@ async function Page({ params }: PageProps) {
     },
   ];
 
+  if (sort) {
+    let sorter = sort;
+    if (!sort.includes('-')) {
+      sorter = `%2B` + sort;
+    }
+
+    const sortedProductsRes = await getSortedProductsBySubSubSeria(
+      subseries_id,
+      page,
+      sorter
+    );
+    const sortedProducts = sortedProductsRes?.data;
+
+    return (
+      <>
+        <Breadcrumbs items={breadcrumsItems} />
+        <Section>
+          <div className=" mx-auto overflow-hidden">
+            <SectionTitle className="mb-4" title={subSubSeries.name} />
+            <Sort isDisable={sortedProducts?.length === 0} />
+            <FiltersPanel
+              incomeFilters={[brand.name]}
+              categoryId={category_id}
+            />
+            <ProductList products={sortedProducts} />
+          </div>
+        </Section>
+      </>
+    );
+  }
   return (
     <>
       <Breadcrumbs items={breadcrumsItems} />
       <Section>
         <div className=" mx-auto overflow-hidden">
           <SectionTitle className="mb-4" title={subSubSeries.name} />
-          <Sort />
+          <Sort isDisable={products?.length === 0} />
           <FiltersPanel incomeFilters={[brand.name]} categoryId={category_id} />
           <ProductList products={products} />
         </div>
