@@ -332,6 +332,29 @@ export const getProductsByCategory = async (
   );
 };
 
+export const getSortedProductsByCategory = async (
+  //   params: Record<string, string> = {},
+  category_id: number,
+  ordered_by: string,
+  page: number | undefined = 1,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<getProducts>(
+    `${buildUrl(
+      'get',
+      'Product'
+    )}?all_data=true&field=category_id&search=${category_id}&equal=true&pagination=true&page_size=6&page=${page}&order_by=${ordered_by}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
 export const getProductsByBrand = async (
   //   params: Record<string, string> = {},
   brand_id: number,
@@ -343,6 +366,29 @@ export const getProductsByBrand = async (
       'get',
       'Product'
     )}?all_data=true&field=brand_id&search=${brand_id}&equal=true&pagination=true&page_size=6&page=${page}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getSortedProductsByBrand = async (
+  //   params: Record<string, string> = {},
+  series_id: number,
+  ordered_by: string,
+  page: number | undefined = 1,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<getProducts>(
+    `${buildUrl(
+      'get',
+      'Product'
+    )}?all_data=true&field=series_id&search=${series_id}&equal=true&pagination=true&page_size=6&page=${page}&order_by=${ordered_by}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -376,6 +422,29 @@ export const getProductsBySeria = async (
   );
 };
 
+export const getSortedProductsBySeria = async (
+  //   params: Record<string, string> = {},
+  series_id: number,
+  ordered_by: string,
+  page: number | undefined = 1,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<getProducts>(
+    `${buildUrl(
+      'get',
+      'Product'
+    )}?all_data=true&field=series_id&search=${series_id}&equal=true&pagination=true&page_size=6&page=${page}&order_by=${ordered_by}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
 export const getProductsBySubSeria = async (
   //   params: Record<string, string> = {},
   subseries_id: number,
@@ -398,7 +467,30 @@ export const getProductsBySubSeria = async (
   );
 };
 
-export const getProductsBySubBubSeria = async (
+export const getSortedProductsBySubSeria = async (
+  //   params: Record<string, string> = {},
+  subseries_id: number,
+  ordered_by: string,
+  page: number | undefined = 1,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<getProducts>(
+    `${buildUrl(
+      'get',
+      'Product'
+    )}?all_data=true&field=subseries_id&search=${subseries_id}&equal=true&pagination=true&page_size=6&page=${page}&order_by=${ordered_by}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getProductsBySubSubSeria = async (
   //   params: Record<string, string> = {},
   subsubseries_id: number,
   page: number,
@@ -409,6 +501,29 @@ export const getProductsBySubBubSeria = async (
       'get',
       'Product'
     )}?all_data=true&field=subsubseries_id&search=${subsubseries_id}&equal=true&pagination=true&page_size=6&page=${page}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getSortedProductsBySubSubSeria = async (
+  //   params: Record<string, string> = {},
+  subsubseries_id: number,
+  page: number | undefined,
+  ordered_by: string | undefined,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<getProducts>(
+    `${buildUrl(
+      'get',
+      'Product'
+    )}?all_data=true&field=subsubseries_id&search=${subsubseries_id}&equal=true&pagination=true&page_size=6&page=${page}&order_by=${ordered_by}`,
     {
       method: 'GET',
       credentials: 'include',
