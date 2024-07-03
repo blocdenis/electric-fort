@@ -6,7 +6,7 @@ const ArrowSortIcon = (props: SVGProps<SVGSVGElement>) => (
     width="16"
     height="15"
     viewBox="0 0 16 15"
-    fill="none"
+    // fill="none"
     {...props}
   >
     <path

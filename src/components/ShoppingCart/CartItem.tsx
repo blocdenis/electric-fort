@@ -37,7 +37,6 @@ export function CartItem({ id, quantity, close }: CartItemProps) {
         exact: true,
         refetchType: 'active',
       });
-      console.log('added');
     },
   });
   const deleteFromFavorites = useMutation({

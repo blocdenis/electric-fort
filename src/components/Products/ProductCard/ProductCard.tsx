@@ -28,7 +28,9 @@ function ProductCard({
   images,
   series_id,
   subseries_id,
+  subsubseries_id,
   brand_id,
+  category_id,
   updated_info_date,
   add_date,
   article,
@@ -50,26 +52,9 @@ function ProductCard({
 
   const handleFavoriteIconClick = () => {
     if (isFavorite(id)) {
-      // deleteFromFavorites.mutateAsync(id);
-      deleteFromFavorites(id);
+      deleteFromFavorites.mutateAsync(id);
     } else {
-      // addToFavorites.mutateAsync(id);
-      addToFavorites({
-        id,
-        name,
-        unit_of_measurement,
-        price,
-        description,
-        in_stock,
-        popular,
-        images,
-        series_id,
-        subseries_id,
-        brand_id,
-        updated_info_date,
-        add_date,
-        article,
-      });
+      addToFavorites.mutateAsync(id);
     }
   };
 
@@ -120,7 +105,7 @@ function ProductCard({
               onClick={handleFavoriteIconClick}
               width={32}
               height={30}
-              className=" fill-yellow hover:scale-[128%] transition-transform duration-300"
+              className=" hover:scale-[128%] transition-transform duration-300"
             />
           ) : (
             <HeartWithShadowIcon

@@ -1,106 +1,106 @@
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
-import styles from '@/components/Categories/CategoriesList.module.scss';
-import CategoryCard from '@/components/Categories/CategoryCard';
-import { categories } from '@/lib/db/categories';
-import { brands } from '@/lib/db/brands';
-import { products } from '@/lib/db/products';
-import { series } from '@/lib/db/productSeries';
-import ProductCard from '@/components/Products/ProductCard/ProductCard';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
-import { getProductsByBrand } from '@/services/api/api';
+import {
+  getBrandById,
+  getCategoryById,
+  getProductsByBrand,
+  getSeriesByBrandId,
+  getSortedProductsByBrand,
+} from '@/services/api/api';
+import ProductList from '@/components/Products/ProductList/ProductList';
+import NotFound from '@/app/not-found';
+import SeriesList from '@/components/Categories/SeriesList';
+import Sort from '@/components/Sort/Sort';
+import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
 
 export interface PageProps {
   params: { category_id: number; brand_id: number };
+  searchParams: { sort: string | undefined; page: number | undefined };
 }
 
-async function Page({ params }: PageProps) {
+async function Page({ params, searchParams }: PageProps) {
   const { category_id, brand_id } = params;
+  const { sort, page } = searchParams;
 
-  // const products = (await getProductsByBrand(Number(brand_id), 1)).data;
+  const categoryData = await getCategoryById(category_id);
+  const brandData = await getBrandById(brand_id);
+  const seriesData = await getSeriesByBrandId(brand_id);
 
-  // console.log(products);
+  if (!categoryData || !brandData) {
+    return NotFound();
+  }
 
-  const categoryName = categories.find(
-    (category) => category.id === Number(category_id)
-  )?.name;
-  const brandName = brands.find((brand) => brand.id === Number(brand_id))?.name;
+  const [category] = categoryData;
+  const [brand] = brandData;
+
+  const products = (await getProductsByBrand(brand_id, 1))?.data;
 
   const breadcrumsItems = [
     { name: 'Категорії', href: '/categories' },
-    { name: categoryName, href: `/categories/${category_id}` },
-    { name: brandName },
+    { name: category.name, href: `/categories/${category_id}` },
+    { name: brand.name },
   ];
+
+  if (sort) {
+    let sorter = sort;
+    if (!sort.includes('-')) {
+      sorter = `%2B` + sort;
+    }
+
+    const sortedProductsRes = await getSortedProductsByBrand(
+      brand_id,
+      sorter,
+      page
+    );
+    const sortedProducts = sortedProductsRes?.data;
+
+    return (
+      <>
+        <Breadcrumbs items={breadcrumsItems} />
+        <Section>
+          <div className=" mx-auto overflow-hidden">
+            <SectionTitle className="mb-4" title={brand.name} />
+            <Sort isDisable={sortedProducts?.length === 0} />
+            <FiltersPanel
+              incomeFilters={[brand.name]}
+              categoryId={category_id}
+            />
+            <ProductList products={sortedProducts} />
+          </div>
+        </Section>
+      </>
+    );
+  }
 
   return (
     <>
       <Breadcrumbs items={breadcrumsItems} />
       <Section>
-        <div className=" pr-[64px] mx-auto overflow-hidden">
-          <SectionTitle
-            className="mb-4"
-            title={brands.find((brand) => brand.id === Number(brand_id))?.name}
-          />
-          <ul className={styles.categories_list}>
-            {series
-              .filter((item) => item.brand_id === Number(brand_id))
-              .map((seria) => (
-                <li key={seria.id} className="w-[220px] h-[228px]">
-                  <CategoryCard
-                    category_id={category_id}
-                    brand_id={brand_id}
-                    series_id={seria.id}
-                    name={seria.name}
-                    image={seria.image}
-                  />
-                </li>
-              ))}
-          </ul>
+        <div className=" mx-auto overflow-hidden">
+          <SectionTitle className="mb-4" title={brand.name} />
+          {seriesData?.length ? (
+            <SeriesList categoryId={category_id} brandId={brand_id} />
+          ) : (
+            <>
+              <Sort isDisable={products?.length === 0} />
+              <FiltersPanel
+                incomeFilters={[brand.name]}
+                categoryId={category_id}
+              />
+              <ProductList products={products} />
+            </>
+          )}
         </div>
       </Section>
-      <Section>
-        <div className=" pr-[64px] mx-auto overflow-hidden">
-          <SectionTitle className="mb-4" title="Товари" />
-          <ul className=" pl-6 grid laptop:grid-cols-2 desktop:grid-cols-3 gap-x-[45px] gap-y-8">
-            {products.map(
-              ({
-                id,
-                name,
-                unit_of_measurement,
-                price,
-                description,
-                in_stock,
-                popular,
-                images,
-                series_id,
-                subseries_id,
-                brand_id,
-                updated_info_date,
-                add_date,
-                article,
-              }) => (
-                <ProductCard
-                  key={id}
-                  id={id}
-                  name={name}
-                  unit_of_measurement={unit_of_measurement}
-                  price={price}
-                  description={description}
-                  in_stock={in_stock}
-                  popular={popular}
-                  images={images}
-                  series_id={series_id}
-                  subseries_id={subseries_id}
-                  brand_id={brand_id}
-                  updated_info_date={updated_info_date}
-                  add_date={add_date}
-                  article={article}
-                />
-              )
-            )}
-          </ul>
-        </div>
-      </Section>
+      {seriesData?.length ? (
+        <Section>
+          <div className=" mx-auto overflow-hidden">
+            <SectionTitle className="mb-4" title="Товари" />
+            <ProductList products={products} />
+          </div>
+        </Section>
+      ) : null}
     </>
   );
 }

@@ -26,11 +26,11 @@ const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
   title,
   // products,
 }) => {
-  // const { data: products } = useQuery({
-  //   queryKey: ['popularProducts'],
-  //   queryFn: () => getPopularProducts(),
-  //   staleTime: 10 * 1000,
-  // });
+  const { data: products } = useQuery({
+    queryKey: ['popularProducts'],
+    queryFn: () => getPopularProducts(),
+    staleTime: 10 * 1000,
+  });
   return (
     <Section>
       <div className={styles.container}>

@@ -1,0 +1,56 @@
+@use '../../scss/abstracts/' as *;
+
+.sort {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  &:hover {
+    color: $accent-primary;
+    & svg > path {
+      fill: $accent-primary;
+    }
+  }
+  &:active {
+    color: $accent-primary-strong;
+    & svg > path {
+      fill: $accent-primary-strong;
+    }
+  }
+  &:disabled {
+    color: $gray-dark;
+    & svg > path {
+      fill: $gray-dark;
+    }
+  }
+}
+
+@keyframes animUp {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(180deg);
+  }
+}
+@keyframes animDown {
+  0% {
+    transform: rotateX(180deg);
+  }
+  100% {
+    transform: rotateX(0deg);
+  }
+}
+
+.up_sort {
+  & > span {
+    animation: animUp 1.1s linear;
+    transform: rotateX(180deg);
+  }
+}
+
+.down_sort {
+  & span {
+    animation: animDown 1.1s linear;
+    transform: rotateX(0deg);
+  }
+}
