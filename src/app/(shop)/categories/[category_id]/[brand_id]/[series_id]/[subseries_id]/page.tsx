@@ -1,7 +1,6 @@
 import NotFound from '@/app/not-found';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
-import SeriesList from '@/components/Categories/SeriesList';
-import SubseriesList from '@/components/Categories/SubseriesList';
+import SubSubseriesList from '@/components/Categories/SubSubseriesList';
 import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
 import ProductList from '@/components/Products/ProductList/ProductList';
 import Section from '@/components/Section/Section';
@@ -10,41 +9,55 @@ import Sort from '@/components/Sort/Sort';
 import {
   getBrandById,
   getCategoryById,
-  getProductsBySeria,
+  getProductsBySubSeria,
   getSeriaById,
-  getSortedProductsBySeria,
-  getSubSeriesBySeriesId,
+  getSortedProductsBySubSeria,
+  getSubSeriaById,
+  getSubSubSeriesBySubSeriesId,
 } from '@/services/api/api';
 
 export interface PageProps {
-  params: { category_id: number; brand_id: number; series_id: number };
+  params: {
+    category_id: number;
+    brand_id: number;
+    series_id: number;
+    subseries_id: number;
+  };
   searchParams: { sort: string | undefined; page: number | undefined };
 }
 
 async function Page({ params, searchParams }: PageProps) {
-  const { category_id, brand_id, series_id } = params;
+  const { category_id, brand_id, series_id, subseries_id } = params;
   const { sort, page } = searchParams;
 
-  const products = (await getProductsBySeria(Number(series_id), 1))?.data;
+  const subSeriaProducts = (await getProductsBySubSeria(subseries_id, 1))?.data;
 
   const categoryData = await getCategoryById(category_id);
   const brandData = await getBrandById(brand_id);
   const seriesData = await getSeriaById(series_id);
-  const subSeriesData = await getSubSeriesBySeriesId(series_id);
+  const subSeriesData = await getSubSeriaById(subseries_id);
+  const subSubSeriesData = await getSubSubSeriesBySubSeriesId(subseries_id);
 
-  if (!categoryData || !brandData || !seriesData) {
+  if (!categoryData || !brandData || !seriesData || !subSeriesData) {
     return NotFound();
   }
 
   const [category] = categoryData;
   const [brand] = brandData;
   const [series] = seriesData;
+  const [subSeries] = subSeriesData;
 
   const breadcrumsItems = [
     { name: 'Категорії', href: '/categories' },
     { name: category.name, href: `/categories/${category_id}` },
     { name: brand.name, href: `/categories/${category_id}/${brand_id}` },
-    { name: series.name },
+    {
+      name: series.name,
+      href: `/categories/${category_id}/${brand_id}/${series_id}`,
+    },
+    {
+      name: subSeries.name,
+    },
   ];
 
   if (sort) {
@@ -53,8 +66,8 @@ async function Page({ params, searchParams }: PageProps) {
       sorter = `%2B` + sort;
     }
 
-    const sortedProductsRes = await getSortedProductsBySeria(
-      series_id,
+    const sortedProductsRes = await getSortedProductsBySubSeria(
+      subseries_id,
       sorter,
       page
     );
@@ -65,7 +78,7 @@ async function Page({ params, searchParams }: PageProps) {
         <Breadcrumbs items={breadcrumsItems} />
         <Section>
           <div className=" mx-auto overflow-hidden">
-            <SectionTitle className="mb-4" title={series.name} />
+            <SectionTitle className="mb-4" title={subSeries.name} />
             <Sort isDisable={sortedProducts?.length === 0} />
             <FiltersPanel
               incomeFilters={[brand.name]}
@@ -83,32 +96,28 @@ async function Page({ params, searchParams }: PageProps) {
       <Breadcrumbs items={breadcrumsItems} />
       <Section>
         <div className=" mx-auto overflow-hidden">
-          <SectionTitle className="mb-4" title={series.name} />
-          {subSeriesData?.length ? (
-            <SubseriesList
-              categoryId={category.id}
-              brandId={brand.id}
-              seriesId={series.id}
+          <SectionTitle className="mb-4" title={subSeries.name} />
+          {subSubSeriesData?.length ? (
+            <SubSubseriesList
+              categoryId={category_id}
+              brandId={brand_id}
+              seriesId={series_id}
+              subSeriesId={subseries_id}
             />
           ) : (
             <>
-              <Sort isDisable={products?.length === 0} />
+              <Sort isDisable={subSeriaProducts?.length === 0} />
               <FiltersPanel
                 incomeFilters={[brand.name]}
                 categoryId={category_id}
               />
-              <ProductList products={products} />
+              <ProductList products={subSeriaProducts} />
             </>
           )}
         </div>
       </Section>
-      {subSeriesData?.length ? (
-        <Section>
-          <div className=" mx-auto overflow-hidden">
-            <SectionTitle className="mb-4" title="Товари" />
-            <ProductList products={products} />
-          </div>
-        </Section>
+      {subSubSeriesData?.length ? (
+        <ProductList products={subSeriaProducts} />
       ) : null}
     </>
   );

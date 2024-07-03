@@ -4,9 +4,6 @@ import CatalogList from '../Navigation/CatalogList';
 import ContactText from '../Contact/ContactText/ContactText';
 import ContactContent from '../Contact/ContactContent/ContactContent';
 import Map from '../Map/Map';
-import { categories } from '@/lib/db/categories';
-import { brands } from '@/lib/db/brands';
-import { getBrands, getCategories } from '@/services/api/api';
 import Filters from '../Filters/Filters';
 
 async function SidebarWithAttachments({

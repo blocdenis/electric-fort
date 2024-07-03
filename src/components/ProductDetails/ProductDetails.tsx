@@ -6,22 +6,27 @@ import PopularProductsSection from '@/components/Products/PopularProductSection/
 import Section from '@/components/Section/Section';
 import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 import SingleProduct from '@/components/SingleProduct/SingleProduct';
-import { Product } from '@/lib/types/Product.type';
+// import { Product } from '@/lib/types/Product.type';
+
 import Breadcrumbs from '../Breadcrumb/Breadcrumbs';
-import { getBrands, getCategories } from '@/services/api/api';
+import { getBrandById, getCategoryById } from '@/services/api/api';
+import { Product } from '@/lib/types/types';
+import NotFound from '@/app/not-found';
 
 interface ProductDetailsProps {
   product: Product;
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = async ({ product }) => {
-  const brandsServer = await getBrands();
-  const categoriesServer = await getCategories();
+  const categoryData = await getCategoryById(product.category_id);
+  const brandData = await getBrandById(product.brand_id);
 
-  const brand = brandsServer?.find((brand) => brand.id === product.brand_id);
-  const category = categoriesServer?.find(
-    (category) => category.id === brand?.category_id
-  );
+  if (!categoryData || !brandData) {
+    return NotFound();
+  }
+
+  const [category] = categoryData;
+  const [brand] = brandData;
 
   const breadcrumbsItens = [
     { name: 'Категорії', href: '/categories' },
@@ -41,6 +46,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = async ({ product }) => {
         <PopularProductsSection title="Нещодавно переглянуті" />
       </ContentContainer>
     </Container>
+ 
   );
 };
 

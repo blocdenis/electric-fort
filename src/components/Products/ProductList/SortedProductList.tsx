@@ -1,11 +1,30 @@
-import React from 'react';
+'use client';
+import React, { useEffect } from 'react';
 import ProductCard from '../ProductCard/ProductCard';
 import { Product } from '@/lib/types/types';
+import { getSortedProductsBySubSeria } from '@/services/api/api';
+import { useQuery } from '@tanstack/react-query';
 
-interface ProductListProps {
-  products: Product[] | undefined;
+interface SortedProductListProps {
+  sorted_by: string;
+  id: number;
+  page: number | undefined;
 }
-function ProductList({ products }: ProductListProps) {
+function SortedProductList({
+  sorted_by,
+  id,
+  page = 1,
+}: SortedProductListProps) {
+  const { data } = useQuery({
+    queryKey: ['products', id, sorted_by, page],
+    queryFn: () =>
+      getSortedProductsBySubSeria(id, sorted_by, page, {
+        cache: 'no-store',
+      }),
+    staleTime: 10 * 1000,
+  });
+
+  const products = data?.data;
   return (
     <ul className=" pl-6 grid laptop:grid-cols-2 desktop:grid-cols-3 gap-x-[45px] gap-y-8">
       {products?.length ? (
@@ -56,4 +75,4 @@ function ProductList({ products }: ProductListProps) {
   );
 }
 
-export default ProductList;
+export default SortedProductList;

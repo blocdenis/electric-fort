@@ -18,9 +18,9 @@ export function SearchResult({ isLoading, data, onProductClick }: Props) {
   const handleFavoriteIconClick = (e: React.MouseEvent, item: Product) => {
     e.stopPropagation();
     if (isFavorite(item.id)) {
-      deleteFromFavorites(item.id);
+      deleteFromFavorites.mutateAsync(item.id);
     } else {
-      addToFavorites(item);
+      addToFavorites.mutateAsync(item.id);
     }
   };
 
