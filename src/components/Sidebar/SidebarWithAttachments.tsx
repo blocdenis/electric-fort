@@ -6,10 +6,14 @@ import ContactContent from '../Contact/ContactContent/ContactContent';
 import Map from '../Map/Map';
 import Filters from '../Filters/Filters';
 
-async function SidebarWithAttachments() {
+async function SidebarWithAttachments({
+  showFilters,
+}: {
+  showFilters: boolean;
+}) {
   return (
     <Sidebar>
-      {/* <Filters /> */}
+      {showFilters && <Filters />}
       <CatalogList />
       <div className="flex flex-col gap-4  mt-8">
         <h3 className=" mb-4">Контакти</h3>

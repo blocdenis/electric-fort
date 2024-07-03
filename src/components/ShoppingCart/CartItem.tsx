@@ -77,7 +77,7 @@ export function CartItem({ id, quantity, close }: CartItemProps) {
   return (
     <div key={item.id} className="cart-item">
       <div className="product-info">
-        <Link href={`/products/${item.id}`} replace onClick={close}>
+        <Link href={`/${item.id}`} replace onClick={close}>
           <Image
             className="image"
             src={
@@ -92,7 +92,7 @@ export function CartItem({ id, quantity, close }: CartItemProps) {
           />
         </Link>
         <span className="product-name">
-          <Link href={`/products/${item.id}`} replace onClick={close}>
+          <Link href={`/${item.id}`} replace onClick={close}>
             {item.name}
           </Link>
         </span>

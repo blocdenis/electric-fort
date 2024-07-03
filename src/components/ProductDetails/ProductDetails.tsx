@@ -35,19 +35,18 @@ const ProductDetails: React.FC<ProductDetailsProps> = async ({ product }) => {
     { name: product.name },
   ];
   return (
-    <>
-      {/* <Container className="flex"> */}
-      {/* <SidebarWithAttachments /> */}
-      {/* <ContentContainer> */}
-      <Breadcrumbs items={breadcrumbsItens} />
-      <Section>
-        <SingleProduct product={product} />
-      </Section>
-      <PopularProductsSection title="Також вас можуть зацікавити" />
-      <PopularProductsSection title="Нещодавно переглянуті" />
-      {/* </ContentContainer> */}
-      {/* </Container> */}
-    </>
+    <Container className="flex">
+      <SidebarWithAttachments showFilters={false} />
+      <ContentContainer>
+        <Breadcrumbs items={breadcrumbsItens} />
+        <Section>
+          <SingleProduct product={product} />
+        </Section>
+        <PopularProductsSection title="Також вас можуть зацікавити" />
+        <PopularProductsSection title="Нещодавно переглянуті" />
+      </ContentContainer>
+    </Container>
+ 
   );
 };
 

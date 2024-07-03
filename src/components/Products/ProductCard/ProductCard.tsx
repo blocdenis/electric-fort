@@ -36,7 +36,7 @@ function ProductCard({
   article,
   onCardClick,
 }: ProductCardProps) {
-  const productPageLink = `/products/${id}`;
+  const productPageLink = `/${id}`;
   const {
     cartItems,
     getItemQuantity,
