@@ -1,8 +1,8 @@
 'use client';
 
 import ArrowSortIcon from '@/components/icons/ArrowSortIcon';
-import { usePathname, useRouter } from 'next/navigation';
-import { MouseEventHandler, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { MouseEventHandler, useCallback, useState } from 'react';
 import styles from './Sort.module.scss';
 import classNames from 'classnames';
 
@@ -13,12 +13,22 @@ interface SortProps {
 function Sort({ isDisable }: SortProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [priceSort, setPriceSort] = useState('price');
   const [dateSort, setDateSort] = useState('add_date');
 
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
   const handleSortClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     const btn = event.currentTarget;
-    console.log(event.currentTarget.textContent);
 
     switch (event.currentTarget.textContent) {
       case 'за датою додавання':
@@ -26,12 +36,16 @@ function Sort({ isDisable }: SortProps) {
           setDateSort('add_date');
           event.currentTarget.classList.remove(styles.down_sort);
           event.currentTarget.classList.add(styles.up_sort);
-          router.push(`${pathname}?sort=${dateSort}`);
+          router.push(
+            pathname + '?' + createQueryString('sort', `${dateSort}`)
+          );
         } else {
           setDateSort('-add_date');
           event.currentTarget.classList.remove(styles.up_sort);
           event.currentTarget.classList.add(styles.down_sort);
-          router.push(`${pathname}?sort=${dateSort}`);
+          router.push(
+            pathname + '?' + createQueryString('sort', `${dateSort}`)
+          );
         }
 
         break;
@@ -40,12 +54,16 @@ function Sort({ isDisable }: SortProps) {
           setPriceSort('price');
           event.currentTarget.classList.remove(styles.down_sort);
           event.currentTarget.classList.add(styles.up_sort);
-          router.push(`${pathname}?sort=${priceSort}`);
+          router.push(
+            pathname + '?' + createQueryString('sort', `${priceSort}`)
+          );
         } else {
           setPriceSort('-price');
           event.currentTarget.classList.remove(styles.up_sort);
           event.currentTarget.classList.add(styles.down_sort);
-          router.push(`${pathname}?sort=${priceSort}`);
+          router.push(
+            pathname + '?' + createQueryString('sort', `${priceSort}`)
+          );
         }
 
         break;
