@@ -6,7 +6,7 @@ import React from 'react';
 function Layout({ children }: { children: React.ReactNode }) {
   return (
     <Container className="flex">
-      <SidebarWithAttachments />
+      <SidebarWithAttachments showFilters={true} />
       <ContentContainer>{children}</ContentContainer>
     </Container>
   );

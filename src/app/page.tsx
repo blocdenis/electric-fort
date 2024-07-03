@@ -58,7 +58,7 @@ export default async function Home() {
   return (
     <HydrationBoundary state={dehydratedState}>
       <Container className="flex">
-        <SidebarWithAttachments />
+        <SidebarWithAttachments showFilters={false} />
         <ContentContainer>
           <HeroSlider data={slides} />
           <CategoriesSection />

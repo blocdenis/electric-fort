@@ -31,7 +31,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = async ({ product }) => {
   ];
   return (
     <Container className="flex">
-      <SidebarWithAttachments />
+      <SidebarWithAttachments showFilters={false} />
       <ContentContainer>
         <Breadcrumbs items={breadcrumbsItens} />
         <Section>

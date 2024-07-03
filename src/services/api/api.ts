@@ -1,6 +1,6 @@
 import { Brand, Category, Product } from '@/lib/types/types';
 
-export const BASE_URL = 'https://2qtsbt2v-80.euw.devtunnels.ms/api';
+export const BASE_URL = 'https://electrychnafortecia.com/api';
 
 const buildUrl = (...paths: string[]) => `${BASE_URL}/${paths.join('/')}`;
 

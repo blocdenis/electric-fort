@@ -29,3 +29,10 @@ class ProductService {
 }
 
 export const productService = new ProductService();
+
+export const fetchProducts = async (query: string) => {
+  const { data } = await axios.get(
+    `https://electrychnafortecia.com/api/get/Product?all_data=true&field=name&search=${query}&equal=false&pagination=true&page_size=25&page=1`
+  );
+  return data;
+};
