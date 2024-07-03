@@ -11,7 +11,7 @@ function Page() {
   const links = [{ name: 'Доставка і оплата' }];
   return (
     <Container className="flex">
-      <SidebarWithAttachments />
+      <SidebarWithAttachments showFilters={false} />
       <ContentContainer>
         <Breadcrumbs items={links} />
         <div className=" ">

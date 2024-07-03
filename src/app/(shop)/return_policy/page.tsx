@@ -10,7 +10,7 @@ function Page() {
   const breadcrambsItens = [{ name: 'Умови повернення та обміну' }];
   return (
     <Container className="flex">
-      <SidebarWithAttachments />
+      <SidebarWithAttachments showFilters={false} />
       <ContentContainer>
         <Breadcrumbs items={breadcrambsItens} />
         <Section>

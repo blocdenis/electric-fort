@@ -14,7 +14,7 @@ function Page() {
   const links = [{ name: 'Торгові марки' }];
   return (
     <Container className="flex">
-      <SidebarWithAttachments />
+      <SidebarWithAttachments showFilters={false} />
       <ContentContainer>
         <Breadcrumbs items={links} />
         <Section>
