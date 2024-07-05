@@ -1,11 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
 import CategoryCard from './CategoryCard';
 import styles from '@/components/Categories/CategoriesList.module.scss';
-import {
-  getSeriesByBrandId,
-  getSubSeriesBySeriesId,
-  getSubSubSeriesBySubSeriesId,
-} from '@/services/api/api';
+import { getSubSubSeriesBySubSeriesId } from '@/services/api/api';
 
 interface SeriesListProps {
   categoryId: number;

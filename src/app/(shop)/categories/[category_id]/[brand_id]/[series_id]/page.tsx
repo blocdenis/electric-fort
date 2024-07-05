@@ -1,12 +1,15 @@
 import NotFound from '@/app/not-found';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
-import SeriesList from '@/components/Categories/SeriesList';
+import ShowMoreButton from '@/components/Buttons/ShowMoreButton/ShowMoreButton';
+import CategoriesProductsList from '@/components/Categories/CategoriesProductsList';
 import SubseriesList from '@/components/Categories/SubseriesList';
 import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
 import ProductList from '@/components/Products/ProductList/ProductList';
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
 import Sort from '@/components/Sort/Sort';
+import { Product } from '@/lib/types/types';
+import getQueryClient from '@/lib/utils/getQueryClient';
 import {
   getBrandById,
   getCategoryById,
@@ -15,17 +18,49 @@ import {
   getSortedProductsBySeria,
   getSubSeriesBySeriesId,
 } from '@/services/api/api';
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 
 export interface PageProps {
   params: { category_id: number; brand_id: number; series_id: number };
-  searchParams: { sort: string | undefined; page: number | undefined };
+  searchParams: { sort: string | undefined };
 }
 
 async function Page({ params, searchParams }: PageProps) {
   const { category_id, brand_id, series_id } = params;
-  const { sort, page } = searchParams;
+  const { sort } = searchParams;
 
-  const products = (await getProductsBySeria(Number(series_id), 1))?.data;
+  let sorter = '';
+  if (sort) {
+    if (!sort.includes('-')) {
+      sorter = `%2B` + sort;
+    } else {
+      sorter = sort;
+    }
+  }
+
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['products', series_id],
+    queryFn: () => getProductsBySeria(series_id, 1, 6, { cache: 'no-store' }),
+    staleTime: 10 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['productsSorted', series_id, sorter],
+    queryFn: () =>
+      getSortedProductsBySeria(series_id, sorter, 1, 6, {
+        cache: 'no-store',
+      }),
+    staleTime: 10 * 1000,
+  });
+
+  const products = queryClient.getQueryData([
+    'products',
+    series_id,
+  ]) as Product[];
+
+  const dehydratedState = dehydrate(queryClient);
 
   const categoryData = await getCategoryById(category_id);
   const brandData = await getBrandById(brand_id);
@@ -47,42 +82,11 @@ async function Page({ params, searchParams }: PageProps) {
     { name: series.name },
   ];
 
-  if (sort) {
-    let sorter = sort;
-    if (!sort.includes('-')) {
-      sorter = `%2B` + sort;
-    }
-
-    const sortedProductsRes = await getSortedProductsBySeria(
-      series_id,
-      sorter,
-      page
-    );
-    const sortedProducts = sortedProductsRes?.data;
-
-    return (
-      <>
-        <Breadcrumbs items={breadcrumsItems} />
-        <Section>
-          <div className=" mx-auto overflow-hidden">
-            <SectionTitle className="mb-4" title={series.name} />
-            <Sort isDisable={sortedProducts?.length === 0} />
-            <FiltersPanel
-              incomeFilters={[brand.name]}
-              categoryId={category_id}
-            />
-            <ProductList products={sortedProducts} />
-          </div>
-        </Section>
-      </>
-    );
-  }
-
   return (
-    <>
+    <HydrationBoundary state={dehydratedState}>
       <Breadcrumbs items={breadcrumsItems} />
       <Section>
-        <div className=" mx-auto overflow-hidden">
+        <div className=" mx-auto overflow-hidden text-center">
           <SectionTitle className="mb-4" title={series.name} />
           {subSeriesData?.length ? (
             <SubseriesList
@@ -92,25 +96,33 @@ async function Page({ params, searchParams }: PageProps) {
             />
           ) : (
             <>
-              <Sort isDisable={products?.length === 0} />
+              <Sort isDisable={!products?.length} />
               <FiltersPanel
                 incomeFilters={[brand.name]}
                 categoryId={category_id}
               />
-              <ProductList products={products} />
+              <CategoriesProductsList
+                productGroup="seria"
+                groupId={series_id}
+                sort={sorter}
+              />
             </>
           )}
         </div>
       </Section>
       {subSeriesData?.length ? (
         <Section>
-          <div className=" mx-auto overflow-hidden">
+          <div className=" mx-auto overflow-hidde text-center">
             <SectionTitle className="mb-4" title="Товари" />
-            <ProductList products={products} />
+            <CategoriesProductsList
+              productGroup="seria"
+              groupId={series_id}
+              sort={sorter}
+            />
           </div>
         </Section>
       ) : null}
-    </>
+    </HydrationBoundary>
   );
 }
 
