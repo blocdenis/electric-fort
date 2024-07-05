@@ -1,10 +1,7 @@
 import NotFound from '@/app/not-found';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import CategoriesProductsList from '@/components/Categories/CategoriesProductsList';
-import SubseriesList from '@/components/Categories/SubseriesList';
 import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
-import ProductList from '@/components/Products/ProductList/ProductList';
-import SortedProductList from '@/components/Products/ProductList/SortedProductList';
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
 import Sort from '@/components/Sort/Sort';
@@ -19,7 +16,6 @@ import {
   getSortedProductsBySubSubSeria,
   getSubSeriaById,
   getSubSubSeriaById,
-  getSubSubSeriesBySubSeriesId,
 } from '@/services/api/api';
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 
