@@ -1,12 +1,11 @@
 import NotFound from '@/app/not-found';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
-import SubseriesList from '@/components/Categories/SubseriesList';
+import CategoriesProductsList from '@/components/Categories/CategoriesProductsList';
 import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
-import ProductList from '@/components/Products/ProductList/ProductList';
-import SortedProductList from '@/components/Products/ProductList/SortedProductList';
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
 import Sort from '@/components/Sort/Sort';
+import { Product } from '@/lib/types/types';
 import getQueryClient from '@/lib/utils/getQueryClient';
 
 import {
@@ -17,8 +16,8 @@ import {
   getSortedProductsBySubSubSeria,
   getSubSeriaById,
   getSubSubSeriaById,
-  getSubSubSeriesBySubSeriesId,
 } from '@/services/api/api';
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 
 export interface PageProps {
   params: {
@@ -28,15 +27,47 @@ export interface PageProps {
     subseries_id: number;
     subsubseries_id: number;
   };
-  searchParams: { sort: string | undefined; page: number | undefined };
+  searchParams: { sort: string | undefined };
 }
 
 async function Page({ params, searchParams }: PageProps) {
   const { category_id, brand_id, series_id, subseries_id, subsubseries_id } =
     params;
-  const { sort, page } = searchParams;
+  const { sort } = searchParams;
 
-  const products = (await getProductsBySubSubSeria(subseries_id, 1))?.data;
+  let sorter = '';
+  if (sort) {
+    if (!sort.includes('-')) {
+      sorter = `%2B` + sort;
+    } else {
+      sorter = sort;
+    }
+  }
+
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['products', subsubseries_id],
+    queryFn: () =>
+      getProductsBySubSubSeria(subsubseries_id, 1, 6, { cache: 'no-store' }),
+    staleTime: 10 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['productsSorted', subsubseries_id, sorter],
+    queryFn: () =>
+      getSortedProductsBySubSubSeria(subsubseries_id, sorter, 1, 6, {
+        cache: 'no-store',
+      }),
+    staleTime: 10 * 1000,
+  });
+
+  const products = queryClient.getQueryData([
+    'products',
+    subsubseries_id,
+  ]) as Product[];
+
+  const dehydratedState = dehydrate(queryClient);
 
   const categoryData = await getCategoryById(category_id);
   const brandData = await getBrandById(brand_id);
@@ -77,48 +108,22 @@ async function Page({ params, searchParams }: PageProps) {
     },
   ];
 
-  if (sort) {
-    let sorter = sort;
-    if (!sort.includes('-')) {
-      sorter = `%2B` + sort;
-    }
-
-    const sortedProductsRes = await getSortedProductsBySubSubSeria(
-      subseries_id,
-      page,
-      sorter
-    );
-    const sortedProducts = sortedProductsRes?.data;
-
-    return (
-      <>
-        <Breadcrumbs items={breadcrumsItems} />
-        <Section>
-          <div className=" mx-auto overflow-hidden">
-            <SectionTitle className="mb-4" title={subSubSeries.name} />
-            <Sort isDisable={sortedProducts?.length === 0} />
-            <FiltersPanel
-              incomeFilters={[brand.name]}
-              categoryId={category_id}
-            />
-            <ProductList products={sortedProducts} />
-          </div>
-        </Section>
-      </>
-    );
-  }
   return (
-    <>
+    <HydrationBoundary state={dehydratedState}>
       <Breadcrumbs items={breadcrumsItems} />
       <Section>
-        <div className=" mx-auto overflow-hidden">
+        <div className=" mx-auto overflow-hidden text-center">
           <SectionTitle className="mb-4" title={subSubSeries.name} />
-          <Sort isDisable={products?.length === 0} />
+          <Sort isDisable={!products?.length} />
           <FiltersPanel incomeFilters={[brand.name]} categoryId={category_id} />
-          <ProductList products={products} />
+          <CategoriesProductsList
+            productGroup="subsubseria"
+            groupId={subsubseries_id}
+            sort={sorter}
+          />
         </div>
       </Section>
-    </>
+    </HydrationBoundary>
   );
 }
 

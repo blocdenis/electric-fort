@@ -2,7 +2,6 @@ import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
 import React from 'react';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
-import ProductList from '@/components/Products/ProductList/ProductList';
 import {
   getBrandsByCategoryId,
   getCategoryById,
@@ -12,17 +11,54 @@ import {
 import NotFound from '@/app/not-found';
 import BrandsList from '@/components/Categories/BrandsList';
 import Sort from '@/components/Sort/Sort';
+import getQueryClient from '@/lib/utils/getQueryClient';
+import { Product } from '@/lib/types/types';
+import { dehydrate } from '@tanstack/react-query';
+import CategoriesProductsList from '@/components/Categories/CategoriesProductsList';
 
 export interface PageProps {
   params: { category_id: number };
-  searchParams: { sort: string | undefined; page: number | undefined };
+  searchParams: { sort: string | undefined };
 }
 
 async function Page({ params, searchParams }: PageProps) {
   const { category_id } = params;
-  const { sort, page } = searchParams;
+  const { sort } = searchParams;
 
-  const products = (await getProductsByCategory(category_id, 1))?.data;
+  let sorter = '';
+  if (sort) {
+    if (!sort.includes('-')) {
+      sorter = `%2B` + sort;
+    } else {
+      sorter = sort;
+    }
+  }
+
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['products', category_id],
+    queryFn: () =>
+      getProductsByCategory(category_id, 1, 6, { cache: 'no-store' }),
+    staleTime: 10 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['productsSorted', category_id, sorter],
+    queryFn: () =>
+      getSortedProductsByCategory(category_id, sorter, 1, 6, {
+        cache: 'no-store',
+      }),
+    staleTime: 10 * 1000,
+  });
+
+  const products = queryClient.getQueryData([
+    'products',
+    category_id,
+  ]) as Product[];
+
+  const dehydratedState = dehydrate(queryClient);
+
   const brandData = await getBrandsByCategoryId(category_id);
 
   const data = await getCategoryById(category_id);
@@ -36,58 +72,39 @@ async function Page({ params, searchParams }: PageProps) {
     { name: category.name },
   ];
 
-  if (sort) {
-    let sorter = sort;
-    if (!sort.includes('-')) {
-      sorter = `%2B` + sort;
-    }
-
-    const sortedProductsRes = await getSortedProductsByCategory(
-      category_id,
-      sorter,
-      page
-    );
-    const sortedProducts = sortedProductsRes?.data;
-
-    return (
-      <>
-        <Breadcrumbs items={breadcrumsItems} />
-        <Section>
-          <div className=" mx-auto overflow-hidden">
-            <SectionTitle className="mb-4" title={category.name} />
-            <Sort isDisable={sortedProducts?.length === 0} />
-            <ProductList products={sortedProducts} />
-          </div>
-        </Section>
-      </>
-    );
-  }
-
   return (
     <>
       <Breadcrumbs items={breadcrumsItems} />
       <Section>
-        <div className=" mx-auto overflow-hidden">
+        <div className=" mx-auto overflow-hidden text-center">
           <SectionTitle className="mb-4" title={category.name} />
           {brandData?.length ? (
             <BrandsList categoryId={category_id} />
           ) : (
             <>
-              <Sort isDisable={products?.length === 0} />
+              <Sort isDisable={!products?.length} />
               {/* <FiltersPanel
                 incomeFilters={[brand.name]}
                 categoryId={category_id}
               /> */}
-              <ProductList products={products} />
+              <CategoriesProductsList
+                productGroup="category"
+                groupId={category_id}
+                sort={sorter}
+              />
             </>
           )}
         </div>
       </Section>
       {brandData?.length ? (
         <Section>
-          <div className=" mx-auto overflow-hidden">
+          <div className=" mx-auto overflow-hidden text-center">
             <SectionTitle className="mb-4" title="Товари" />
-            <ProductList products={products} />
+            <CategoriesProductsList
+              productGroup="category"
+              groupId={category_id}
+              sort={sorter}
+            />
           </div>
         </Section>
       ) : null}

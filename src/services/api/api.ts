@@ -313,14 +313,15 @@ export const getProducts = async (
 export const getProductsByCategory = async (
   //   params: Record<string, string> = {},
   category_id: number,
-  page: number,
+  page: number | undefined = 1,
+  page_size: number = 6,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
     `${buildUrl(
       'get',
       'Product'
-    )}?all_data=true&field=category_id&search=${category_id}&equal=true&pagination=true&page_size=6&page=${page}`,
+    )}?all_data=true&field=category_id&search=${category_id}&equal=true&pagination=true&page_size=${page_size}&page=${page}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -337,13 +338,14 @@ export const getSortedProductsByCategory = async (
   category_id: number,
   ordered_by: string,
   page: number | undefined = 1,
+  page_size: number = 6,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
     `${buildUrl(
       'get',
       'Product'
-    )}?all_data=true&field=category_id&search=${category_id}&equal=true&pagination=true&page_size=6&page=${page}&order_by=${ordered_by}`,
+    )}?all_data=true&field=category_id&search=${category_id}&equal=true&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -358,14 +360,15 @@ export const getSortedProductsByCategory = async (
 export const getProductsByBrand = async (
   //   params: Record<string, string> = {},
   brand_id: number,
-  page: number,
+  page: number | undefined = 1,
+  page_size: number = 6,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
     `${buildUrl(
       'get',
       'Product'
-    )}?all_data=true&field=brand_id&search=${brand_id}&equal=true&pagination=true&page_size=6&page=${page}`,
+    )}?all_data=true&field=brand_id&search=${brand_id}&equal=true&pagination=true&page_size=${page_size}&page=${page}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -382,13 +385,14 @@ export const getSortedProductsByBrand = async (
   series_id: number,
   ordered_by: string,
   page: number | undefined = 1,
+  page_size: number = 6,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
     `${buildUrl(
       'get',
       'Product'
-    )}?all_data=true&field=series_id&search=${series_id}&equal=true&pagination=true&page_size=6&page=${page}&order_by=${ordered_by}`,
+    )}?all_data=true&field=series_id&search=${series_id}&equal=true&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -403,14 +407,15 @@ export const getSortedProductsByBrand = async (
 export const getProductsBySeria = async (
   //   params: Record<string, string> = {},
   series_id: number,
-  page: number,
+  page: number | undefined = 1,
+  page_size: number = 6,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
     `${buildUrl(
       'get',
       'Product'
-    )}?all_data=true&field=series_id&search=${series_id}&equal=true&pagination=true&page_size=6&page=${page}`,
+    )}?all_data=true&field=series_id&search=${series_id}&equal=true&pagination=true&page_size=${page_size}&page=${page}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -427,13 +432,14 @@ export const getSortedProductsBySeria = async (
   series_id: number,
   ordered_by: string,
   page: number | undefined = 1,
+  page_size: number = 6,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
     `${buildUrl(
       'get',
       'Product'
-    )}?all_data=true&field=series_id&search=${series_id}&equal=true&pagination=true&page_size=6&page=${page}&order_by=${ordered_by}`,
+    )}?all_data=true&field=series_id&search=${series_id}&equal=true&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -448,14 +454,15 @@ export const getSortedProductsBySeria = async (
 export const getProductsBySubSeria = async (
   //   params: Record<string, string> = {},
   subseries_id: number,
-  page: number,
+  page: number | undefined = 1,
+  page_size: number = 6,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
     `${buildUrl(
       'get',
       'Product'
-    )}?all_data=true&field=subseries_id&search=${subseries_id}&equal=true&pagination=true&page_size=6&page=${page}`,
+    )}?all_data=true&field=subseries_id&search=${subseries_id}&equal=true&pagination=true&page_size=${page_size}&page=${page}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -472,13 +479,14 @@ export const getSortedProductsBySubSeria = async (
   subseries_id: number,
   ordered_by: string,
   page: number | undefined = 1,
+  page_size: number = 6,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
     `${buildUrl(
       'get',
       'Product'
-    )}?all_data=true&field=subseries_id&search=${subseries_id}&equal=true&pagination=true&page_size=6&page=${page}&order_by=${ordered_by}`,
+    )}?all_data=true&field=subseries_id&search=${subseries_id}&equal=true&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -493,14 +501,15 @@ export const getSortedProductsBySubSeria = async (
 export const getProductsBySubSubSeria = async (
   //   params: Record<string, string> = {},
   subsubseries_id: number,
-  page: number,
+  page: number | undefined = 1,
+  page_size: number = 6,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
     `${buildUrl(
       'get',
       'Product'
-    )}?all_data=true&field=subsubseries_id&search=${subsubseries_id}&equal=true&pagination=true&page_size=6&page=${page}`,
+    )}?all_data=true&field=subsubseries_id&search=${subsubseries_id}&equal=true&pagination=true&page_size=${page_size}&page=${page}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -515,15 +524,16 @@ export const getProductsBySubSubSeria = async (
 export const getSortedProductsBySubSubSeria = async (
   //   params: Record<string, string> = {},
   subsubseries_id: number,
-  page: number | undefined,
-  ordered_by: string | undefined,
+  ordered_by: string,
+  page: number | undefined = 1,
+  page_size: number = 6,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
     `${buildUrl(
       'get',
       'Product'
-    )}?all_data=true&field=subsubseries_id&search=${subsubseries_id}&equal=true&pagination=true&page_size=6&page=${page}&order_by=${ordered_by}`,
+    )}?all_data=true&field=subsubseries_id&search=${subsubseries_id}&equal=true&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
     {
       method: 'GET',
       credentials: 'include',
