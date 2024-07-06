@@ -22,6 +22,7 @@ export interface Product {
   subsubseries_id: number | null;
   updated_info_date: string | null;
   add_date: string;
+  number?: number;
 }
 
 export interface ProductApiResponse {

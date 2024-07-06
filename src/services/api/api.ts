@@ -652,3 +652,79 @@ export const isAuth = async (
     },
   });
 };
+
+// CART
+
+export const addCartItem = async (
+  id: number,
+
+  init?: RequestInit
+) => {
+  return sendRequest<string>(
+    `${buildUrl('add', 'basket')}?product_id=${id}&operation=%2B`,
+    {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+export const decreaseCartItem = async (
+  id: number,
+
+  init?: RequestInit
+) => {
+  return sendRequest<string>(
+    `${buildUrl('add', 'basket')}?product_id=${id}&operation=-`,
+    {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getCartItems = async (init?: RequestInit) => {
+  return sendRequestJSON<Product[]>(buildUrl('get', 'user/basket'), {
+    method: 'GET',
+    credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
+};
+
+export const deleteCartItem = async (id: number, init?: RequestInit) => {
+  return sendRequest<string>(
+    `${buildUrl('delete', 'basket')}?product_id=${id}`,
+    {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getCartItemByID = async (id: number, init?: RequestInit) => {
+  return sendRequestJSON<Product[]>(
+    `${buildUrl('get', 'user/basket')}?product_id=${id}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
