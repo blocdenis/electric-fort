@@ -14,7 +14,10 @@ const ShoppingCart = () => {
   const calculateTotal = () => {
     const total = cartItems?.reduce((total, cartItem) => {
       const item = products.find((i) => i.id === cartItem.id);
-      return total + (item?.price || 0) * cartItem.number;
+      const itemPrice = item?.price || 0;
+      const itemQuantity = cartItem.number || 0; // Ensure cartItem.number is defined
+
+      return total + itemPrice * itemQuantity;
     }, 0);
 
     return total !== undefined ? total.toFixed(2) : '0.00';
