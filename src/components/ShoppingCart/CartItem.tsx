@@ -86,7 +86,17 @@ export function CartItem({ id, close }: CartItemProps) {
 
   const cartItem = cartItems?.find((item) => item.id === id);
   const quantity = cartItem ? cartItem.number : 1;
-  const total = cartItem?.price * quantity;
+
+  const total = (price: number | undefined, quantity: number): number => {
+    if (price === undefined) {
+      return 0; // Если цена не определена, вернем 0
+    }
+    return price * quantity;
+  };
+  const cartItemPrice = cartItem?.price;
+  const quantitys = cartItem?.number ?? 1;
+  console.log(total(cartItemPrice, quantitys));
+
   return (
     <div key={cartItem?.id} className="cart-item">
       <div className="product-info">
@@ -131,7 +141,7 @@ export function CartItem({ id, close }: CartItemProps) {
           </div>
           <div className="product-description">
             <p>Сума</p>
-            <span>{formatPriceUAH(total)}</span>
+            <span>{formatPriceUAH(total(cartItemPrice, quantitys))}</span>
           </div>
         </div>
         <div className="icon-container">
