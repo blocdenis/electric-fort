@@ -15,7 +15,7 @@ const ShoppingCart = () => {
     const total = cartItems?.reduce((total, cartItem) => {
       const item = products.find((i) => i.id === cartItem.id);
       const itemPrice = item?.price || 0;
-      const itemQuantity = cartItem.number || 0; // Ensure cartItem.number is defined
+      const itemQuantity = cartItem.number || 0;
 
       return total + itemPrice * itemQuantity;
     }, 0);
@@ -42,11 +42,8 @@ const ShoppingCart = () => {
               <p>До сплати</p>{' '}
               <span>{formatPriceUAH(applyDiscount(totalAmount))}</span>
             </div>
-            <button
-              className="checkout-btn"
-              onClick={() => console.log(cartItems)}
-            >
-              Оформити замовлення
+            <button className="checkout-btn" onClick={closeCart}>
+              <Link href={'/order'}>Оформити замовлення</Link>
             </button>
           </div>
         </>

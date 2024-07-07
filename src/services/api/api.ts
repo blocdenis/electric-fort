@@ -728,3 +728,15 @@ export const getCartItemByID = async (id: number, init?: RequestInit) => {
     }
   );
 };
+// ORDER
+
+export const createOrder = async (init?: RequestInit) => {
+  return sendRequest<string>(`${buildUrl('order', 'register')}`, {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
+};
