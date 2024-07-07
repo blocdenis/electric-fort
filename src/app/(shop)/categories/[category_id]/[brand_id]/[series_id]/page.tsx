@@ -11,6 +11,7 @@ import getQueryClient from '@/lib/utils/getQueryClient';
 import {
   getBrandById,
   getCategoryById,
+  getProducts,
   getProductsBySeria,
   getSeriaById,
   getSortedProductsBySeria,
@@ -56,7 +57,7 @@ async function Page({ params, searchParams }: PageProps) {
   const products = queryClient.getQueryData([
     'products',
     series_id,
-  ]) as Product[];
+  ]) as getProducts;
 
   const dehydratedState = dehydrate(queryClient);
 
@@ -94,7 +95,7 @@ async function Page({ params, searchParams }: PageProps) {
             />
           ) : (
             <>
-              <Sort isDisable={!products?.length} />
+              <Sort isDisable={!products?.data.length} />
               <FiltersPanel
                 incomeFilters={[brand.name]}
                 categoryId={category_id}

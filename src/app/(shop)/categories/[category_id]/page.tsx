@@ -5,6 +5,7 @@ import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import {
   getBrandsByCategoryId,
   getCategoryById,
+  getProducts,
   getProductsByCategory,
   getSortedProductsByCategory,
 } from '@/services/api/api';
@@ -55,7 +56,7 @@ async function Page({ params, searchParams }: PageProps) {
   const products = queryClient.getQueryData([
     'products',
     category_id,
-  ]) as Product[];
+  ]) as getProducts;
 
   const dehydratedState = dehydrate(queryClient);
 
@@ -82,7 +83,7 @@ async function Page({ params, searchParams }: PageProps) {
             <BrandsList categoryId={category_id} />
           ) : (
             <>
-              <Sort isDisable={!products?.length} />
+              <Sort isDisable={!products?.data.length} />
               {/* <FiltersPanel
                 incomeFilters={[brand.name]}
                 categoryId={category_id}
