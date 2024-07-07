@@ -1,6 +1,6 @@
 'use client';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
-import { createOrder, isAuth } from '@/services/api/api';
+// import { createOrder, isAuth } from '@/services/api/api';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import './OrderForm.scss';
@@ -48,6 +48,7 @@ const OrderForm = () => {
     formState: { errors },
     watch,
     setValue,
+    reset,
   } = useForm<IForm>({
     defaultValues: {
       dilivery: DeliveryMethods.PICKUP,
@@ -101,6 +102,8 @@ const OrderForm = () => {
       });
 
       console.log('Order created successfully:', response);
+      reset();
+      alert('order success');
     } catch (error: any) {
       console.error('Error creating order:', error);
     }
@@ -153,15 +156,17 @@ const OrderForm = () => {
             </div>
           )}
         </div>
+
         <div className="form-field">
-          <label htmlFor="firstName">Ім'я*</label>
+          <label htmlFor="firstName">Ім&apos;я*</label>
           <input
             id="firstName"
             placeholder="Ім'я"
             {...register('firstName', { required: true })}
           />
-          {errors.firstName && <span>Обов'язкове поле</span>}
+          {errors.firstName && <span>Обов&apos;язкове поле</span>}
         </div>
+
         <div className="form-field">
           <label htmlFor="lastName">Прізвище*</label>
           <input
@@ -169,8 +174,9 @@ const OrderForm = () => {
             placeholder="Прізвище"
             {...register('lastName', { required: true })}
           />
-          {errors.lastName && <span>Обов'язкове поле</span>}
+          {errors.lastName && <span>Обов&apos;язкове поле</span>}
         </div>
+
         <div className="form-field">
           <label htmlFor="email">Електронна пошта*</label>
           <input
@@ -179,8 +185,9 @@ const OrderForm = () => {
             type="email"
             {...register('email', { required: true })}
           />
-          {errors.email && <span>Обов'язкове поле</span>}
+          {errors.email && <span>Обов&apos;язкове поле</span>}
         </div>
+
         <div className="form-field">
           <label htmlFor="phone">Номер телефону*</label>
           <input
@@ -189,7 +196,7 @@ const OrderForm = () => {
             placeholder="+380 (__)___-__-__"
             {...register('phone', { required: true })}
           />
-          {errors.phone && <span>Обов'язкове поле</span>}
+          {errors.phone && <span>Обов&apos;язкове поле</span>}
         </div>
       </div>
 
@@ -206,9 +213,10 @@ const OrderForm = () => {
               {method}
             </label>
           ))}
-          {errors.dilivery && <span>Обов'язкове поле</span>}
+          {errors.dilivery && <span>Обов&apos;язкове поле</span>}
         </div>
       </div>
+
       {showCityInput && (
         <div className="form-field">
           <label htmlFor="city">Місто*</label>
@@ -217,9 +225,10 @@ const OrderForm = () => {
             placeholder="Місто"
             {...register('city_dilivery', { required: true })}
           />
-          {errors.city_dilivery && <span>Обов'язкове поле</span>}
+          {errors.city_dilivery && <span>Обов&apos;язкове поле</span>}
         </div>
       )}
+
       {showHouseInput && (
         <div className="form-field">
           <label htmlFor="house">Будинок*</label>
@@ -228,9 +237,10 @@ const OrderForm = () => {
             placeholder="Будинок"
             {...register('house', { required: true })}
           />
-          {errors.house && <span>Обов'язкове поле</span>}
+          {errors.house && <span>Обов&apos;язкове поле</span>}
         </div>
       )}
+
       {showStreetInput && (
         <div className="form-field">
           <label htmlFor="street">Вулиця*</label>
@@ -239,9 +249,10 @@ const OrderForm = () => {
             placeholder="Вулиця"
             {...register('street', { required: true })}
           />
-          {errors.street && <span>Обов'язкове поле</span>}
+          {errors.street && <span>Обов&apos;язкове поле</span>}
         </div>
       )}
+
       {showApartmentInput && (
         <div className="form-field">
           <label htmlFor="apartment">Квартира*</label>
@@ -250,7 +261,7 @@ const OrderForm = () => {
             placeholder="Квартира"
             {...register('apartment', { required: true })}
           />
-          {errors.apartment && <span>Обов'язкове поле</span>}
+          {errors.apartment && <span>Обов&apos;язкове поле</span>}
         </div>
       )}
 
@@ -262,7 +273,7 @@ const OrderForm = () => {
             placeholder="Відділення"
             {...register('department', { required: true })}
           />
-          {errors.department && <span>Обов'язкове поле</span>}
+          {errors.department && <span>Обов&apos;язкове поле</span>}
         </div>
       )}
 
@@ -279,7 +290,7 @@ const OrderForm = () => {
               {method}
             </label>
           ))}
-          {errors.payment && <span>Обов'язкове поле</span>}
+          {errors.payment && <span>Обов&apos;язкове поле</span>}
         </div>
       </div>
 
@@ -289,6 +300,7 @@ const OrderForm = () => {
           <textarea {...register('comment')} placeholder="Введіть ваш текст" />
         </div>
       </div>
+
       <div className="button-container">
         <button type="submit" className="submit-button">
           Підтвердити замовлення
