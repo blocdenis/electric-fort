@@ -545,6 +545,31 @@ export const getSortedProductsBySubSubSeria = async (
   );
 };
 
+export const getFilteredProducts = async (
+  //   params: Record<string, string> = {},
+  // price: string,
+  brand_id: string,
+  ordered_by: string,
+  page: number | undefined = 1,
+  page_size: number = 6,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<getProducts>(
+    `${buildUrl(
+      'filtered',
+      'Product'
+    )}?&brand_id=["${brand_id}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
 export const getPopularProducts = async (
   //   params: Record<string, string> = {},
   init?: RequestInit

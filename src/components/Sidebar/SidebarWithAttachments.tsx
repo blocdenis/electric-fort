@@ -5,15 +5,18 @@ import ContactText from '../Contact/ContactText/ContactText';
 import ContactContent from '../Contact/ContactContent/ContactContent';
 import Map from '../Map/Map';
 import Filters from '../Filters/Filters';
+import { Brand } from '@/lib/types/types';
 
 async function SidebarWithAttachments({
   showFilters,
+  brands,
 }: {
   showFilters: boolean;
+  brands?: Brand[];
 }) {
   return (
     <Sidebar>
-      {showFilters && <Filters />}
+      {showFilters && <Filters brands={brands} />}
       <CatalogList />
       <div className="flex flex-col gap-4  mt-8">
         <h3 className=" mb-4">Контакти</h3>
