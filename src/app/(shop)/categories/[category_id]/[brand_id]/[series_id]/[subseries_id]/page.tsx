@@ -2,15 +2,19 @@ import NotFound from '@/app/not-found';
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import CategoriesProductsList from '@/components/Categories/CategoriesProductsList';
 import SubSubseriesList from '@/components/Categories/SubSubseriesList';
+import Container from '@/components/Container/Container';
+import ContentContainer from '@/components/Container/ContentContainer';
 import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
+import FilteredProductsList from '@/components/Products/ProductList/FilteredProductsList';
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
+import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 import Sort from '@/components/Sort/Sort';
-import { Product } from '@/lib/types/types';
 import getQueryClient from '@/lib/utils/getQueryClient';
 import {
   getBrandById,
   getCategoryById,
+  getFilteredProductsBySubSeria,
   getProducts,
   getProductsBySubSeria,
   getSeriaById,
@@ -27,12 +31,16 @@ export interface PageProps {
     series_id: number;
     subseries_id: number;
   };
-  searchParams: { sort: string | undefined };
+  searchParams: {
+    sort: string | undefined;
+    price: string | undefined;
+    brand_id: string | undefined;
+  };
 }
 
 async function Page({ params, searchParams }: PageProps) {
   const { category_id, brand_id, series_id, subseries_id } = params;
-  const { sort } = searchParams;
+  const { sort, price, brand_id: brandParam } = searchParams;
 
   let sorter = '';
   if (sort) {
@@ -41,6 +49,16 @@ async function Page({ params, searchParams }: PageProps) {
     } else {
       sorter = sort;
     }
+  }
+
+  let brandId = '';
+  if (brandParam) {
+    brandId = brandParam;
+  }
+
+  let filterPrice = ' >= ';
+  if (price) {
+    filterPrice = price;
   }
 
   const queryClient = getQueryClient();
@@ -61,9 +79,25 @@ async function Page({ params, searchParams }: PageProps) {
     staleTime: 10 * 1000,
   });
 
+  await queryClient.prefetchQuery({
+    queryKey: ['productsFilteredSorted', subseries_id, filterPrice, sorter],
+    queryFn: () =>
+      getFilteredProductsBySubSeria(subseries_id, filterPrice, sorter, 1, 6, {
+        cache: 'no-store',
+      }),
+    staleTime: 10,
+  });
+
   const subSeriaProducts = queryClient.getQueryData([
     'products',
     subseries_id,
+  ]) as getProducts;
+
+  const filteredProducts = queryClient.getQueryData([
+    'productsFilteredSorted',
+    subseries_id,
+    filterPrice,
+    sorter,
   ]) as getProducts;
 
   const dehydratedState = dehydrate(queryClient);
@@ -96,49 +130,92 @@ async function Page({ params, searchParams }: PageProps) {
     },
   ];
 
-  return (
-    <HydrationBoundary state={dehydratedState}>
-      <Breadcrumbs items={breadcrumsItems} />
-      <Section>
-        <div className=" mx-auto overflow-hidden text-center">
-          <SectionTitle className="mb-4" title={subSeries.name} />
-          {subSubSeriesData?.length ? (
-            <SubSubseriesList
-              categoryId={category_id}
-              brandId={brand_id}
-              seriesId={series_id}
-              subSeriesId={subseries_id}
-            />
-          ) : (
-            <>
-              <Sort isDisable={!subSeriaProducts?.data.length} />
-              <FiltersPanel
-                incomeFilters={[brand.name]}
-                categoryId={category_id}
-              />
+  if ((brandParam && brandData) || (price && brandData)) {
+    const brandsNames = brandData;
+    return (
+      <Container className="flex">
+        <SidebarWithAttachments
+          showFilters={true}
+          brands={brandData}
+          price={filterPrice}
+        />
+        <ContentContainer>
+          <HydrationBoundary state={dehydratedState}>
+            <Breadcrumbs items={breadcrumsItems} />
+            <Section>
+              <div className=" mx-auto overflow-hidden text-center">
+                <SectionTitle className="mb-4" title={subSeries.name} />
+                <Sort isDisable={!filteredProducts?.data.length} />
+                <FiltersPanel
+                  incomeFilters={brandsNames}
+                  categoryId={category.id}
+                />
+                <FilteredProductsList
+                  productGroup="seria"
+                  ids={brandId}
+                  sort={sorter}
+                  price={filterPrice}
+                />
+              </div>
+            </Section>
+          </HydrationBoundary>
+        </ContentContainer>
+      </Container>
+    );
+  }
 
-              <CategoriesProductsList
-                productGroup={'subseria'}
-                groupId={subseries_id}
-                sort={sorter}
-              />
-            </>
-          )}
-        </div>
-      </Section>
-      {subSubSeriesData?.length ? (
-        <Section>
-          <div className=" mx-auto overflow-hidde text-center">
-            <SectionTitle className="mb-4" title="Товари" />
-            <CategoriesProductsList
-              productGroup={'subseria'}
-              groupId={subseries_id}
-              sort={sorter}
-            />
-          </div>
-        </Section>
-      ) : null}
-    </HydrationBoundary>
+  return (
+    <Container className="flex">
+      <SidebarWithAttachments
+        showFilters={true}
+        brands={brandData}
+        price={filterPrice}
+      />
+      <ContentContainer>
+        <HydrationBoundary state={dehydratedState}>
+          <Breadcrumbs items={breadcrumsItems} />
+          <Section>
+            <div className=" mx-auto overflow-hidden text-center">
+              <SectionTitle className="mb-4" title={subSeries.name} />
+              {subSubSeriesData?.length ? (
+                <SubSubseriesList
+                  categoryId={category_id}
+                  brandId={brand_id}
+                  seriesId={series_id}
+                  subSeriesId={subseries_id}
+                />
+              ) : (
+                <>
+                  <Sort isDisable={!subSubSeriesData?.length} />
+                  <FiltersPanel
+                    incomeFilters={[brand]}
+                    categoryId={category_id}
+                  />
+
+                  <CategoriesProductsList
+                    productGroup={'subseria'}
+                    groupId={subseries_id}
+                    sort={sorter}
+                  />
+                </>
+              )}
+            </div>
+          </Section>
+          {subSubSeriesData?.length ? (
+            <Section>
+              <div className=" mx-auto overflow-hidde text-center">
+                <SectionTitle className="mb-4" title="Товари" />
+                <CategoriesProductsList
+                  productGroup={'subseria'}
+                  groupId={subseries_id}
+                  sort={sorter}
+                />
+              </div>
+            </Section>
+          ) : null}
+        </HydrationBoundary>
+      </ContentContainer>
+    </Container>
   );
 }
 

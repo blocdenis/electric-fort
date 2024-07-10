@@ -27,13 +27,13 @@ export interface PageProps {
   searchParams: {
     sort: string | undefined;
     brand_id: string | undefined;
-    // price: string | undefined;
+    price: string | undefined;
   };
 }
 
 async function Page({ params, searchParams }: PageProps) {
   const { category_id } = params;
-  const { sort, brand_id } = searchParams;
+  const { sort, brand_id, price } = searchParams;
 
   let sorter = '%2Bprice';
   if (sort) {
@@ -46,6 +46,10 @@ async function Page({ params, searchParams }: PageProps) {
   let brandId = '';
   if (brand_id) {
     brandId = brand_id;
+  }
+  let filterPrice = ' >= ';
+  if (price) {
+    filterPrice = price;
   }
 
   const queryClient = getQueryClient();
@@ -66,9 +70,9 @@ async function Page({ params, searchParams }: PageProps) {
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['productsFilteredSorted', brandId, sorter],
+    queryKey: ['productsFilteredSorted', brandId, filterPrice, sorter],
     queryFn: () =>
-      getFilteredProducts(brandId, sorter, 1, 6, {
+      getFilteredProducts(brandId, filterPrice, sorter, 1, 6, {
         cache: 'no-store',
       }),
     staleTime: 10,
@@ -82,6 +86,7 @@ async function Page({ params, searchParams }: PageProps) {
   const filteredProducts = queryClient.getQueryData([
     'productsFilteredSorted',
     brandId,
+    filterPrice,
     sorter,
   ]) as getProducts;
 
@@ -100,30 +105,41 @@ async function Page({ params, searchParams }: PageProps) {
     { name: category.name },
   ];
 
-  if (brand_id && brandData) {
-    const brandsNames = brandData?.filter((brand) => {
-      return brandId.split(',').indexOf(brand.id.toString()) !== -1;
-    });
+  if ((brand_id && brandData) || (price && brandData)) {
+    const brandsNames = brand_id
+      ? brandData.filter((brand) => {
+          return brandId.split(',').indexOf(brand.id.toString()) !== -1;
+        })
+      : brandData.filter((brand) => {
+          return (
+            filteredProducts.data
+              .map((item) => item.brand_id)
+              .indexOf(brand.id) !== -1
+          );
+        });
     return (
       <Container className="flex">
-        <SidebarWithAttachments showFilters={true} brands={brandData} />
+        <SidebarWithAttachments
+          showFilters={true}
+          brands={brandData}
+          price={filterPrice}
+        />
         <ContentContainer>
           <HydrationBoundary state={dehydratedState}>
             <Breadcrumbs items={breadcrumsItems} />
             <Section>
               <div className=" mx-auto overflow-hidden text-center">
                 <SectionTitle className="mb-4" title={category.name} />
-                <Sort isDisable={!filteredProducts.data.length} />
+                <Sort isDisable={!filteredProducts?.data.length} />
                 <FiltersPanel
                   incomeFilters={brandsNames}
                   categoryId={category.id}
                 />
                 <FilteredProductsList
-                  categoryId={category.id}
-                  brandIds={brandId}
-                  brandNames={brandsNames}
+                  productGroup="brand"
+                  ids={brandId}
                   sort={sorter}
-                  // price={}
+                  price={filterPrice}
                 />
               </div>
             </Section>
@@ -135,7 +151,11 @@ async function Page({ params, searchParams }: PageProps) {
 
   return (
     <Container className="flex">
-      <SidebarWithAttachments showFilters={true} brands={brandData} />
+      <SidebarWithAttachments
+        showFilters={true}
+        brands={brandData}
+        price={filterPrice}
+      />
       <ContentContainer>
         <HydrationBoundary state={dehydratedState}>
           <Breadcrumbs items={breadcrumsItems} />

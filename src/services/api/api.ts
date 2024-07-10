@@ -547,8 +547,8 @@ export const getSortedProductsBySubSubSeria = async (
 
 export const getFilteredProducts = async (
   //   params: Record<string, string> = {},
-  // price: string,
   brand_id: string,
+  price: string,
   ordered_by: string,
   page: number | undefined = 1,
   page_size: number = 6,
@@ -558,7 +558,82 @@ export const getFilteredProducts = async (
     `${buildUrl(
       'filtered',
       'Product'
-    )}?&brand_id=["${brand_id}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
+    )}?brand_id=["${brand_id}"]&price=["${price}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getFilteredProductsBySeria = async (
+  //   params: Record<string, string> = {},
+  seria_id: number,
+  price: string,
+  ordered_by: string,
+  page: number | undefined = 1,
+  page_size: number = 6,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<getProducts>(
+    `${buildUrl(
+      'filtered',
+      'Product'
+    )}?series_id=["${seria_id}"]&price=["${price}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getFilteredProductsBySubSeria = async (
+  //   params: Record<string, string> = {},
+  subseria_id: number,
+  price: string,
+  ordered_by: string,
+  page: number | undefined = 1,
+  page_size: number = 6,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<getProducts>(
+    `${buildUrl(
+      'filtered',
+      'Product'
+    )}?subseries_id=["${subseria_id}"]&price=["${price}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getFilteredProductsBySubSubSeria = async (
+  //   params: Record<string, string> = {},
+  subsubseria_id: number,
+  price: string,
+  ordered_by: string,
+  page: number | undefined = 1,
+  page_size: number = 6,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<getProducts>(
+    `${buildUrl(
+      'filtered',
+      'Product'
+    )}?subsubseries_id=["${subsubseria_id}"]&price=["${price}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
     {
       method: 'GET',
       credentials: 'include',

@@ -10,13 +10,15 @@ import { Brand } from '@/lib/types/types';
 async function SidebarWithAttachments({
   showFilters,
   brands,
+  price,
 }: {
   showFilters: boolean;
   brands?: Brand[];
+  price: string;
 }) {
   return (
     <Sidebar>
-      {showFilters && <Filters brands={brands} />}
+      {showFilters && <Filters brands={brands} price={price} />}
       <CatalogList />
       <div className="flex flex-col gap-4  mt-8">
         <h3 className=" mb-4">Контакти</h3>

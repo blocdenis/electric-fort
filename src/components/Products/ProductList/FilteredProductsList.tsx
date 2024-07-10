@@ -2,34 +2,71 @@
 import { useState } from 'react';
 import ShowMoreButton from '@/components/Buttons/ShowMoreButton/ShowMoreButton';
 import ProductList from '@/components/Products/ProductList/ProductList';
-import { getFilteredProducts } from '@/services/api/api';
+import {
+  getFilteredProducts,
+  getFilteredProductsBySeria,
+  getFilteredProductsBySubSeria,
+  getFilteredProductsBySubSubSeria,
+} from '@/services/api/api';
 import { useQuery } from '@tanstack/react-query';
-import Sort from '@/components/Sort/Sort';
-import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
 import { Brand } from '@/lib/types/types';
 
 interface CategoriesProductsListProps {
-  categoryId: number;
-  brandIds: string;
-  brandNames: Brand[];
+  productGroup: 'brand' | 'seria' | 'subseria' | 'subsubseria';
+  ids: string;
   sort: string;
-  // price: string;
+  price: string;
 }
 
 function FilteredProductsList({
-  categoryId,
-  brandIds,
-  brandNames,
+  productGroup,
+  ids,
   sort = '%2Bprice',
-}: // price,
-CategoriesProductsListProps) {
+  price,
+}: CategoriesProductsListProps) {
   const [page, setPage] = useState(1);
   const itemsPerPage = 6;
   const pageSize = page * itemsPerPage;
 
+  const queryFn = (
+    key: string,
+    id: string,
+    price: string,
+    pageSize: number,
+    sort: string
+  ) => {
+    if (id) {
+      switch (key) {
+        case 'brand':
+          return () => getFilteredProducts(id, price, sort, 1, pageSize);
+
+        case 'seria':
+          return () =>
+            getFilteredProductsBySeria(Number(id), price, sort, 1, pageSize);
+
+        case 'subseria':
+          return () =>
+            getFilteredProductsBySubSeria(Number(id), price, sort, 1, pageSize);
+
+        case 'subsubseria':
+          return () =>
+            getFilteredProductsBySubSubSeria(
+              Number(id),
+              price,
+              sort,
+              1,
+              pageSize
+            );
+
+        default:
+          break;
+      }
+    }
+  };
+
   const { data, isPending } = useQuery({
-    queryKey: ['products', brandIds, pageSize, sort],
-    queryFn: () => getFilteredProducts(brandIds, sort, 1, pageSize),
+    queryKey: ['products', ids, price, pageSize, sort],
+    queryFn: queryFn(productGroup, ids, price, pageSize, sort),
     staleTime: 10,
   });
 
@@ -47,8 +84,6 @@ CategoriesProductsListProps) {
         <div>Lading</div>
       ) : (
         <>
-          {/* <Sort isDisable={!data.data.length} />
-          <FiltersPanel incomeFilters={brandNames} categoryId={categoryId} /> */}
           <ProductList products={data.data} />
         </>
       )}
