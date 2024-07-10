@@ -2,7 +2,6 @@ import { useShoppingCart } from '@/context/ShoppingCartContext';
 import React from 'react';
 import './ShoppingCart.scss';
 import { CartItem } from './CartItem';
-// import { products } from '@/lib/db/products';
 import { applyDiscount, discounts } from '@/services/applyDiscount';
 import { formatPriceUAH } from '@/services/formatCurrency';
 import { EmptyCart } from '../icons';
@@ -12,39 +11,39 @@ import { useProducts } from '@/hooks/useProducts';
 const ShoppingCart = () => {
   const { cartItems, cartQuantity, closeCart } = useShoppingCart();
   const { products } = useProducts();
-
   const calculateTotal = () => {
-    const total = cartItems.reduce((total, cartItem) => {
+    const total = cartItems?.reduce((total, cartItem) => {
       const item = products.find((i) => i.id === cartItem.id);
-      return total + (item?.price || 0) * cartItem.quantity;
+      const itemPrice = item?.price || 0;
+      const itemQuantity = cartItem.number || 0;
+
+      return total + itemPrice * itemQuantity;
     }, 0);
 
-    return parseFloat(total.toFixed(2));
+    return total !== undefined ? total.toFixed(2) : '0.00';
   };
+  const totalAmount = parseFloat(calculateTotal());
   return (
     <div className="cart-modal-content">
       {cartQuantity > 0 ? (
         <>
           <h2 className="cart-hero">Кошик</h2>
-          {cartItems.map((item) => (
+          {cartItems?.map((item) => (
             <CartItem key={item.id} {...item} close={closeCart} />
           ))}
           <div className="checkout-container">
             <div className="checkout-info">
-              <p>Сума</p> <span>{formatPriceUAH(calculateTotal())}</span>
+              <p>Сума</p> <span>{calculateTotal()}</span>
             </div>
             <div className="checkout-info">
-              <p>Знижка</p> <span>{discounts(calculateTotal())} %</span>
+              <p>Знижка</p> <span>{discounts(totalAmount)} %</span>
             </div>
             <div className="checkout-info">
               <p>До сплати</p>{' '}
-              <span>{formatPriceUAH(applyDiscount(calculateTotal()))}</span>
+              <span>{formatPriceUAH(applyDiscount(totalAmount))}</span>
             </div>
-            <button
-              className="checkout-btn"
-              onClick={() => console.log(cartItems)}
-            >
-              Оформити замовлення
+            <button className="checkout-btn" onClick={closeCart}>
+              <Link href={'/order'}>Оформити замовлення</Link>
             </button>
           </div>
         </>

@@ -9,20 +9,19 @@ import { formatPriceUAH } from '@/services/formatCurrency';
 import {
   addFavorites,
   deleteFavorites,
+  getCartItemByID,
   getFavorites,
 } from '@/services/api/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { useProducts } from '@/hooks/useProducts';
 import ConfirmationModal from './ConfirmationalModal';
 import { useState, useRef } from 'react';
 type CartItemProps = {
   id: number;
-  quantity: number;
   close: any;
 };
 
-export function CartItem({ id, quantity, close }: CartItemProps) {
+export function CartItem({ id, close }: CartItemProps) {
   const { data: favoritesItems, isPending } = useQuery({
     queryKey: ['favorites'],
     queryFn: getFavorites,
@@ -57,43 +56,67 @@ export function CartItem({ id, quantity, close }: CartItemProps) {
 
   const {
     removeFromCart,
-    decreaseCartQuantity,
-    increaseCartQuantity,
-    getItemQuantity,
+    addToCart,
+    cartQuantity,
+    cartItems,
+    decreaseFromCart,
   } = useShoppingCart();
-  const { products } = useProducts();
-  const item = products?.find((i) => i.id === id);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const trashButtonRef = useRef(null);
+  const { data: item } = useQuery({
+    queryKey: ['cartItem', id],
+    queryFn: () => getCartItemByID(id),
+    staleTime: 10 * 1000,
+  });
   if (item == null) return null;
   const handleRemoveClick = () => {
     setIsModalOpen(true);
+  };
+  const handleDecrease = () => {
+    decreaseFromCart(id);
   };
 
   const handleConfirmRemove = () => {
     removeFromCart(id);
     setIsModalOpen(false);
   };
+  const increaseCartQuantity = () => {
+    addToCart(id);
+  };
+
+  const cartItem = cartItems?.find((item) => item.id === id);
+  const quantity = cartItem ? cartItem.number : 1;
+
+  const total = (price: number | undefined, quantity: number): number => {
+    if (price === undefined) {
+      return 0; // Если цена не определена, вернем 0
+    }
+    return price * quantity;
+  };
+  const cartItemPrice = cartItem?.price;
+  const quantitys = cartItem?.number ?? 1;
+  console.log(total(cartItemPrice, quantitys));
+
   return (
-    <div key={item.id} className="cart-item">
+    <div key={cartItem?.id} className="cart-item">
       <div className="product-info">
-        <Link href={`/${item.id}`} replace onClick={close}>
+        <Link href={`/${cartItem?.id}`} replace onClick={close}>
           <Image
             className="image"
             src={
-              item.images
-                ? `data:${item.images[0][0]}; base64, ${item.images[0][1]}`
+              cartItem?.images
+                ? `data:${cartItem?.images[0][0]}; base64, ${cartItem?.images[0][1]}`
                 : notFoundImage
             }
-            alt={`${item.name} image`}
+            alt={`${cartItem?.name} image`}
             width={80}
             height={98}
             priority
           />
         </Link>
         <span className="product-name">
-          <Link href={`/${item.id}`} replace onClick={close}>
-            {item.name}
+          <Link href={`/${cartItem?.id}`} replace onClick={close}>
+            {cartItem?.name}
           </Link>
         </span>
       </div>
@@ -101,24 +124,24 @@ export function CartItem({ id, quantity, close }: CartItemProps) {
         <div className="items-info">
           <div className="product-description">
             <p>Ціна</p>
-            <span>{formatPriceUAH(item.price)}</span>
+            <span>{formatPriceUAH(cartItem?.price)}</span>
           </div>
           <div className="product-description">
             <p>Кількість</p>
             <div className="quantity-controls">
               <button
-                onClick={() => decreaseCartQuantity(item.id)}
-                disabled={getItemQuantity(item.id) === 1}
+                onClick={() => handleDecrease()}
+                // disabled={cartQuantity === 1}
               >
                 -
               </button>
-              <span>{getItemQuantity(item.id)}</span>
-              <button onClick={() => increaseCartQuantity(item.id)}>+</button>
+              <span>{quantity}</span>
+              <button onClick={() => increaseCartQuantity()}>+</button>
             </div>
           </div>
           <div className="product-description">
             <p>Сума</p>
-            <span>{formatPriceUAH(getItemQuantity(item.id) * item.price)}</span>
+            <span>{formatPriceUAH(total(cartItemPrice, quantitys))}</span>
           </div>
         </div>
         <div className="icon-container">

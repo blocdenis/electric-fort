@@ -1,0 +1,97 @@
+@use '../../scss/abstracts/' as *;
+
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 20px;
+}
+
+.form-section {
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #9cec25;
+  align-items: center;
+
+  span {
+    color: #3c3c3c;
+    font-size: 12px;
+  }
+}
+
+.form-section h3 {
+  padding: 12px;
+  background-color: #9cec25;
+  color: #3c3c3c;
+}
+
+.form-section h2 {
+  padding: 12px;
+  color: white;
+  font-size: 24px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.form-field input,
+.form-field textarea {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-field span {
+  color: red;
+  font-size: 0.75rem;
+}
+
+.form-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.button-container {
+  display: flex;
+  justify-content: flex-end;
+}
+.submit-button {
+  padding: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #9cec25;
+  color: #000000;
+  cursor: pointer;
+  width: 413px;
+}
+
+.cart-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.cart-hero {
+  padding: 1rem;
+  color: #3c3c3c;
+}
+
+.checkout-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.checkout-info {
+  display: flex;
+  justify-content: space-between;
+}
