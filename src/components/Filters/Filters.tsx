@@ -8,7 +8,7 @@ import { Brand } from '@/lib/types/types';
 
 interface FiltersProps {
   brands?: Brand[];
-  price: string;
+  price?: string;
 }
 
 const Filters: React.FC<FiltersProps> = ({ brands, price }) => {

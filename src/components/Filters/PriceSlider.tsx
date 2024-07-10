@@ -3,7 +3,7 @@ import styles from './Filters.module.scss';
 import useDebounce from '@/hooks/useDebounce';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-const PriceSlider: React.FC<{ price: string }> = ({ price }) => {
+const PriceSlider: React.FC<{ price?: string }> = ({ price }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();

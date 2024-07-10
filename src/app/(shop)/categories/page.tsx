@@ -12,7 +12,7 @@ async function Page() {
 
   return (
     <Container className="flex">
-      <SidebarWithAttachments showFilters={false} />
+      <SidebarWithAttachments showFilters={false} price="" />
       <ContentContainer>
         <Breadcrumbs items={links} />
         <Section>

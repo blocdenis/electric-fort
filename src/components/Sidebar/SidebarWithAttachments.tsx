@@ -14,7 +14,7 @@ async function SidebarWithAttachments({
 }: {
   showFilters: boolean;
   brands?: Brand[];
-  price: string;
+  price?: string;
 }) {
   return (
     <Sidebar>
