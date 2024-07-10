@@ -145,8 +145,8 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
           </div>
         </div>
         <div className="flex flex-col gap-4 text-white mb-8">
-          <ContactText color="#69AF00" />
-          <ContactText color="#69AF00" />
+          <ContactText textToCopy="+38(066) 459-88-87" color="#69AF00" />
+          <ContactText textToCopy="+38(068) 459-88-87" color="#69AF00" />
         </div>
         <div className="flex items-center justify-center">
           <div className=" flex gap-3">

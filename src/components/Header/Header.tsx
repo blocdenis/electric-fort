@@ -123,8 +123,8 @@ const Header = () => {
             </Link>
             <div className={styles.container_search}>
               <div className={styles.container_contact}>
-                <ContactText />
-                <ContactText />
+                <ContactText textToCopy="+38(066) 459-88-87" />
+                <ContactText textToCopy="+38(068) 459-88-87" />
               </div>
               <SearchInput placeholder="Пошук" />
             </div>
