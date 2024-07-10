@@ -35,16 +35,18 @@
 
 .inputs input {
   width: 136px;
-  padding: 8px 54px 8px 54px;
+  padding: 8px 20px 8px 20px;
   margin-bottom: 10px;
   border: 1px solid #ffffff;
   border-radius: 10px;
   background-color: transparent;
   font: $regular16;
   color: #acacac;
+  text-align: center;
 }
 .inputNumber {
-  -moz-appearance: textfield;
+  // -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .inputNumber::-webkit-outer-spin-button,

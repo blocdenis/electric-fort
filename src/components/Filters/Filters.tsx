@@ -4,8 +4,14 @@ import PriceSlider from './PriceSlider';
 import BrandsFilter from './BrandsFilter';
 import styles from './Filters.module.scss';
 import { ArrowCatalogIcon, ArrowCategoriesIcon } from '../icons';
+import { Brand } from '@/lib/types/types';
 
-const Filters: React.FC = () => {
+interface FiltersProps {
+  brands?: Brand[];
+  price?: string;
+}
+
+const Filters: React.FC<FiltersProps> = ({ brands, price }) => {
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
   const [brandOpen, setBrandOpen] = useState<boolean>(true);
 
@@ -27,7 +33,7 @@ const Filters: React.FC = () => {
 
       {filtersOpen && (
         <div className={styles.filterItem}>
-          <PriceSlider />
+          <PriceSlider price={price} />
           <div className={styles.filterItem}>
             <div
               className={styles.filterHeader}
@@ -42,7 +48,7 @@ const Filters: React.FC = () => {
                 )}
               </span>
             </div>
-            {brandOpen && <BrandsFilter />}
+            {brandOpen && <BrandsFilter brands={brands} />}
           </div>
         </div>
       )}
