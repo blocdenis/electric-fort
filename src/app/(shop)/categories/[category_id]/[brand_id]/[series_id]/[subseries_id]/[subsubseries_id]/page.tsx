@@ -9,7 +9,6 @@ import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
 import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 import Sort from '@/components/Sort/Sort';
-import { Product } from '@/lib/types/types';
 import getQueryClient from '@/lib/utils/getQueryClient';
 
 import {
@@ -119,11 +118,11 @@ async function Page({ params, searchParams }: PageProps) {
   const subSubSeriesData = await getSubSubSeriaById(subsubseries_id);
 
   if (
-    !categoryData ||
-    !brandData ||
-    !seriesData ||
-    !subSeriesData ||
-    !subSubSeriesData
+    !categoryData?.length ||
+    !brandData?.length ||
+    !seriesData?.length ||
+    !subSeriesData?.length ||
+    !subSubSeriesData?.length
   ) {
     return NotFound();
   }
@@ -172,8 +171,8 @@ async function Page({ params, searchParams }: PageProps) {
                   categoryId={category.id}
                 />
                 <FilteredProductsList
-                  productGroup="seria"
-                  ids={brandId}
+                  productGroup="subsubseria"
+                  ids={String(subsubseries_id)}
                   sort={sorter}
                   price={filterPrice}
                 />

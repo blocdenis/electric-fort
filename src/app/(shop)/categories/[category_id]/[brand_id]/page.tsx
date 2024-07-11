@@ -45,7 +45,7 @@ async function Page({ params, searchParams }: PageProps) {
     }
   }
 
-  let brandId = '';
+  let brandId = String(brand_id);
   if (brandParam) {
     brandId = brandParam;
   }
@@ -99,7 +99,7 @@ async function Page({ params, searchParams }: PageProps) {
   const brandData = await getBrandById(brand_id);
   const seriesData = await getSeriesByBrandId(brand_id);
 
-  if (!categoryData || !brandData) {
+  if (!categoryData?.length || !brandData?.length) {
     return NotFound();
   }
 

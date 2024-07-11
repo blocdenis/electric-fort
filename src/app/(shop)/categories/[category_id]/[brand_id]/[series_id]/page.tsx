@@ -47,7 +47,7 @@ async function Page({ params, searchParams }: PageProps) {
     }
   }
 
-  let brandId = '';
+  let brandId = String(brand_id);
   if (brandParam) {
     brandId = brandParam;
   }
@@ -102,7 +102,7 @@ async function Page({ params, searchParams }: PageProps) {
   const seriesData = await getSeriaById(series_id);
   const subSeriesData = await getSubSeriesBySeriesId(series_id);
 
-  if (!categoryData || !brandData || !seriesData) {
+  if (!categoryData?.length || !brandData?.length || !seriesData?.length) {
     return NotFound();
   }
 
@@ -139,7 +139,7 @@ async function Page({ params, searchParams }: PageProps) {
                 />
                 <FilteredProductsList
                   productGroup="seria"
-                  ids={brandId}
+                  ids={String(series_id)}
                   sort={sorter}
                   price={filterPrice}
                 />
