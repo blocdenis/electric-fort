@@ -2,13 +2,7 @@
 import FilterButton from '@/components/Buttons/FilerButton/FilterButton';
 import { Brand } from '@/lib/types/types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import {
-  MouseEventHandler,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface FiltersPanelProps {
   incomeFilters: Brand[];
@@ -37,12 +31,12 @@ function FiltersPanel({ incomeFilters, categoryId }: FiltersPanelProps) {
 
   const handleCancelClick = () => {
     setFilters([]);
-    router.push(`/categories/${categoryId}`);
+    router.replace(`/categories/${categoryId}`);
   };
   const handleItemClick: React.MouseEventHandler<HTMLButtonElement> = (
     event
   ) => {
-    const filterName = (event.target as HTMLElement).textContent;
+    const filterName = (event.currentTarget as HTMLElement).textContent;
     setFilters((prevVal) => prevVal.filter((item) => item.name !== filterName));
 
     const filtersToUpdate = filters.filter((item) => item.name !== filterName);

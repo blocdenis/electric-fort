@@ -35,6 +35,8 @@ async function Page({ params, searchParams }: PageProps) {
   const { category_id } = params;
   const { sort, brand_id, price } = searchParams;
 
+  const brandData = await getBrandsByCategoryId(category_id);
+
   let sorter = '%2Bprice';
   if (sort) {
     if (!sort.includes('-')) {
@@ -43,11 +45,15 @@ async function Page({ params, searchParams }: PageProps) {
       sorter = sort;
     }
   }
+
   let brandId = '';
   if (brand_id) {
     brandId = brand_id;
+  } else if (brandData) {
+    brandId = brandData?.map((item) => item.id)?.toString();
   }
-  let filterPrice = ' >= ';
+
+  let filterPrice = '';
   if (price) {
     filterPrice = price;
   }
@@ -91,8 +97,6 @@ async function Page({ params, searchParams }: PageProps) {
   ]) as getProducts;
 
   const dehydratedState = dehydrate(queryClient);
-
-  const brandData = await getBrandsByCategoryId(category_id);
 
   const data = await getCategoryById(category_id);
   if (!data) {

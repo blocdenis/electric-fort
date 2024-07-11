@@ -10,9 +10,10 @@ import {
 } from '@/services/api/api';
 import { useQuery } from '@tanstack/react-query';
 import { Brand } from '@/lib/types/types';
+import { ProductGroup } from '@/components/Categories/CategoriesProductsList';
 
 interface CategoriesProductsListProps {
-  productGroup: 'brand' | 'seria' | 'subseria' | 'subsubseria';
+  productGroup: ProductGroup;
   ids: string;
   sort: string;
   price: string;
@@ -37,6 +38,8 @@ function FilteredProductsList({
   ) => {
     if (id) {
       switch (key) {
+        case 'category':
+          return () => getFilteredProducts(id, price, sort, 1, pageSize);
         case 'brand':
           return () => getFilteredProducts(id, price, sort, 1, pageSize);
 
