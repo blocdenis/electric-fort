@@ -1,9 +1,19 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import styles from './Filters.module.scss';
 import useDebounce from '@/hooks/useDebounce';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
-const PriceSlider: React.FC<{ price?: string }> = ({ price }) => {
+interface PriceSliderProps {
+  minPrice?: string;
+  maxPrice?: string;
+  onPriceChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const PriceSlider: React.FC<PriceSliderProps> = ({
+  minPrice,
+  maxPrice,
+  onPriceChange,
+}) => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -28,13 +38,18 @@ const PriceSlider: React.FC<{ price?: string }> = ({ price }) => {
     [searchParams]
   );
 
-  const [minPrice, setMinPrice] = useState<string>('');
-  const [maxPrice, setMaxPrice] = useState<string>('');
+  // const [minPrice, setMinPrice] = useState<string>('');
+  // const [maxPrice, setMaxPrice] = useState<string>('');
   const debounsedMinPrice = useDebounce(minPrice, 500);
   const debounsedMaxPrice = useDebounce(maxPrice, 500);
 
   useEffect(() => {
-    if (!!debounsedMinPrice && !!debounsedMaxPrice) {
+    if (
+      !!minPrice &&
+      !!maxPrice &&
+      !!debounsedMinPrice &&
+      !!debounsedMaxPrice
+    ) {
       router.push(
         pathname +
           '?' +
@@ -44,7 +59,12 @@ const PriceSlider: React.FC<{ price?: string }> = ({ price }) => {
           ),
         { scroll: false }
       );
-    } else if (!debounsedMinPrice && !debounsedMaxPrice) {
+    } else if (
+      !debounsedMinPrice &&
+      !debounsedMaxPrice &&
+      !minPrice &&
+      !maxPrice
+    ) {
       router.replace(pathname + '?' + deleteQueryString('price'), {
         scroll: false,
       });
@@ -54,34 +74,33 @@ const PriceSlider: React.FC<{ price?: string }> = ({ price }) => {
     debounsedMaxPrice,
     debounsedMinPrice,
     deleteQueryString,
+    maxPrice,
+    minPrice,
     pathname,
-    price,
     router,
   ]);
 
-  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name);
-    switch (e.target.name) {
-      case 'minPrice':
-        if (e.target.value.includes('-')) {
-          setMinPrice(e.target.value.replace('-', '').trim());
-        } else {
-          setMinPrice(e.target.value);
-        }
-        break;
-      case 'maxPrice':
-        if (e.target.value.includes('-')) {
-          setMaxPrice(e.target.value.replace('-', '').trim());
-        } else {
-          setMaxPrice(e.target.value);
-        }
-        break;
-      default:
-        console.log('some thing wrong');
-
-        break;
-    }
-  };
+  // const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   switch (e.target.name) {
+  //     case 'minPrice':
+  //       if (e.target.value.includes('-')) {
+  //         setMinPrice(e.target.value.replace('-', '').trim());
+  //       } else {
+  //         setMinPrice(e.target.value);
+  //       }
+  //       break;
+  //     case 'maxPrice':
+  //       if (e.target.value.includes('-')) {
+  //         setMaxPrice(e.target.value.replace('-', '').trim());
+  //       } else {
+  //         setMaxPrice(e.target.value);
+  //       }
+  //       break;
+  //     default:
+  //       console.log('wrong price name');
+  //       break;
+  //   }
+  // };
 
   return (
     <div className={styles.priceSlider}>
@@ -92,7 +111,7 @@ const PriceSlider: React.FC<{ price?: string }> = ({ price }) => {
           type="text"
           inputMode="numeric"
           value={minPrice}
-          onChange={handlePriceChange}
+          onChange={onPriceChange}
           placeholder="От"
           className={styles.inputNumber}
           min={0}
@@ -102,7 +121,7 @@ const PriceSlider: React.FC<{ price?: string }> = ({ price }) => {
           type="text"
           inputMode="numeric"
           value={maxPrice}
-          onChange={handlePriceChange}
+          onChange={onPriceChange}
           placeholder="До"
           className={styles.inputNumber}
           min={0}

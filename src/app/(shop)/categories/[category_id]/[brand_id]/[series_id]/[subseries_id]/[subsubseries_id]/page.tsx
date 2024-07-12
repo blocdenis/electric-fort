@@ -1,14 +1,5 @@
 import NotFound from '@/app/not-found';
-import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
-import CategoriesProductsList from '@/components/Categories/CategoriesProductsList';
-import Container from '@/components/Container/Container';
-import ContentContainer from '@/components/Container/ContentContainer';
-import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
-import FilteredProductsList from '@/components/Products/ProductList/FilteredProductsList';
-import Section from '@/components/Section/Section';
-import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
-import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
-import Sort from '@/components/Sort/Sort';
+import CategoriesProductGroupPage from '@/components/CategoriesProductGroupPage/CategoriesProductGroupPage';
 import getQueryClient from '@/lib/utils/getQueryClient';
 
 import {
@@ -58,7 +49,7 @@ async function Page({ params, searchParams }: PageProps) {
     brandId = brandParam;
   }
 
-  let filterPrice = ' >= ';
+  let filterPrice = '';
   if (price) {
     filterPrice = price;
   }
@@ -131,7 +122,7 @@ async function Page({ params, searchParams }: PageProps) {
   const [brand] = brandData;
   const [series] = seriesData;
   const [subSeries] = subSeriesData;
-  const [subSubSeries] = subSeriesData;
+  const [subSubSeries] = subSubSeriesData;
 
   const breadcrumsItems = [
     { name: 'Категорії', href: '/categories' },
@@ -150,65 +141,23 @@ async function Page({ params, searchParams }: PageProps) {
     },
   ];
 
-  if ((brandParam && brandData) || (price && brandData)) {
-    const brandsNames = brandData;
-    return (
-      <Container className="flex">
-        <SidebarWithAttachments
-          showFilters={true}
-          brands={brandData}
-          price={filterPrice}
-        />
-        <ContentContainer>
-          <HydrationBoundary state={dehydratedState}>
-            <Breadcrumbs items={breadcrumsItems} />
-            <Section>
-              <div className=" mx-auto overflow-hidden text-center">
-                <SectionTitle className="mb-4" title={subSeries.name} />
-                <Sort isDisable={!filteredProducts?.data.length} />
-                <FiltersPanel
-                  incomeFilters={brandsNames}
-                  categoryId={category.id}
-                />
-                <FilteredProductsList
-                  productGroup="subsubseria"
-                  ids={String(subsubseries_id)}
-                  sort={sorter}
-                  price={filterPrice}
-                />
-              </div>
-            </Section>
-          </HydrationBoundary>
-        </ContentContainer>
-      </Container>
-    );
-  }
-
   return (
-    <Container className="flex">
-      <SidebarWithAttachments
-        showFilters={true}
-        brands={brandData}
-        price={filterPrice}
+    <HydrationBoundary state={dehydratedState}>
+      <CategoriesProductGroupPage
+        productsGroup="subsubseria"
+        category={category}
+        brand={brand}
+        seria={series}
+        subseria={subSeries}
+        subsubseria={subSubSeries}
+        groupBrands={brandData}
+        groupSubSubSeries={subSubSeriesData}
+        breadcrumsItems={breadcrumsItems}
+        filterBrands={brandId}
+        sort={sorter}
+        filterPrice={filterPrice}
       />
-      <ContentContainer>
-        <HydrationBoundary state={dehydratedState}>
-          <Breadcrumbs items={breadcrumsItems} />
-          <Section>
-            <div className=" mx-auto overflow-hidden text-center">
-              <SectionTitle className="mb-4" title={subSubSeries.name} />
-              <Sort isDisable={!products?.data.length} />
-              <FiltersPanel incomeFilters={[brand]} categoryId={category_id} />
-              <CategoriesProductsList
-                productGroup="subsubseria"
-                groupId={subsubseries_id}
-                sort={sorter}
-              />
-            </div>
-          </Section>
-        </HydrationBoundary>
-      </ContentContainer>
-    </Container>
+    </HydrationBoundary>
   );
 }
 

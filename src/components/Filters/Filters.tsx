@@ -8,10 +8,21 @@ import { Brand } from '@/lib/types/types';
 
 interface FiltersProps {
   brands?: Brand[];
-  price?: string;
+  selectedBrands?: string[];
+  onBrandCheckboxChange?: (brandId: string) => void;
+  minPrice?: string;
+  maxPrice?: string;
+  onPriceChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Filters: React.FC<FiltersProps> = ({ brands, price }) => {
+const Filters: React.FC<FiltersProps> = ({
+  brands,
+  selectedBrands,
+  onBrandCheckboxChange,
+  minPrice,
+  maxPrice,
+  onPriceChange,
+}) => {
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
   const [brandOpen, setBrandOpen] = useState<boolean>(true);
 
@@ -33,7 +44,11 @@ const Filters: React.FC<FiltersProps> = ({ brands, price }) => {
 
       {filtersOpen && (
         <div className={styles.filterItem}>
-          <PriceSlider price={price} />
+          <PriceSlider
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+            onPriceChange={onPriceChange}
+          />
           <div className={styles.filterItem}>
             <div
               className={styles.filterHeader}
@@ -48,7 +63,13 @@ const Filters: React.FC<FiltersProps> = ({ brands, price }) => {
                 )}
               </span>
             </div>
-            {brandOpen && <BrandsFilter brands={brands} />}
+            {brandOpen && (
+              <BrandsFilter
+                brands={brands}
+                selectedBrands={selectedBrands}
+                onBrandCheckboxChange={onBrandCheckboxChange}
+              />
+            )}
           </div>
         </div>
       )}

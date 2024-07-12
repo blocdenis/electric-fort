@@ -1,6 +1,3 @@
-import Section from '@/components/Section/Section';
-import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
-import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import {
   getBrandById,
   getCategoryById,
@@ -11,17 +8,9 @@ import {
   getSortedProductsByBrand,
 } from '@/services/api/api';
 import NotFound from '@/app/not-found';
-import SeriesList from '@/components/Categories/SeriesList';
-import Sort from '@/components/Sort/Sort';
-import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
 import getQueryClient from '@/lib/utils/getQueryClient';
-import { Product } from '@/lib/types/types';
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
-import CategoriesProductsList from '@/components/Categories/CategoriesProductsList';
-import Container from '@/components/Container/Container';
-import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
-import ContentContainer from '@/components/Container/ContentContainer';
-import FilteredProductsList from '@/components/Products/ProductList/FilteredProductsList';
+import CategoriesProductGroupPage from '@/components/CategoriesProductGroupPage/CategoriesProductGroupPage';
 
 export interface PageProps {
   params: { category_id: number; brand_id: number };
@@ -45,12 +34,12 @@ async function Page({ params, searchParams }: PageProps) {
     }
   }
 
-  let brandId = String(brand_id);
+  let brandId = '';
   if (brandParam) {
     brandId = brandParam;
   }
 
-  let filterPrice = ' >= ';
+  let filterPrice = '';
   if (price) {
     filterPrice = price;
   }
@@ -60,6 +49,12 @@ async function Page({ params, searchParams }: PageProps) {
   await queryClient.prefetchQuery({
     queryKey: ['products', brand_id],
     queryFn: () => getProductsByBrand(brand_id, 1, 6, { cache: 'no-store' }),
+    staleTime: 10 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['brands_series', brand_id],
+    queryFn: () => getSeriesByBrandId(brand_id, { cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
@@ -112,86 +107,20 @@ async function Page({ params, searchParams }: PageProps) {
     { name: brand.name },
   ];
 
-  if ((brandParam && brandData) || (price && brandData)) {
-    const brandsNames = brandData;
-    return (
-      <Container className="flex">
-        <SidebarWithAttachments
-          showFilters={true}
-          brands={brandData}
-          price={filterPrice}
-        />
-        <ContentContainer>
-          <HydrationBoundary state={dehydratedState}>
-            <Breadcrumbs items={breadcrumsItems} />
-            <Section>
-              <div className=" mx-auto overflow-hidden text-center">
-                <SectionTitle className="mb-4" title={brand.name} />
-                <Sort isDisable={!filteredProducts?.data.length} />
-                <FiltersPanel
-                  incomeFilters={brandsNames}
-                  categoryId={category.id}
-                />
-                <FilteredProductsList
-                  productGroup="brand"
-                  ids={brandId}
-                  sort={sorter}
-                  price={filterPrice}
-                />
-              </div>
-            </Section>
-          </HydrationBoundary>
-        </ContentContainer>
-      </Container>
-    );
-  }
-
   return (
-    <Container className="flex">
-      <SidebarWithAttachments
-        showFilters={true}
-        brands={brandData}
-        price={filterPrice}
+    <HydrationBoundary state={dehydratedState}>
+      <CategoriesProductGroupPage
+        productsGroup="brand"
+        category={category}
+        brand={brand}
+        groupBrands={brandData}
+        groupSeries={seriesData}
+        breadcrumsItems={breadcrumsItems}
+        filterBrands={brandId}
+        sort={sorter}
+        filterPrice={filterPrice}
       />
-      <ContentContainer>
-        <HydrationBoundary state={dehydratedState}>
-          <Breadcrumbs items={breadcrumsItems} />
-          <Section>
-            <div className=" mx-auto overflow-hidden text-center">
-              <SectionTitle className="mb-4" title={brand.name} />
-              {seriesData?.length ? (
-                <SeriesList categoryId={category_id} brandId={brand_id} />
-              ) : (
-                <>
-                  <Sort isDisable={!products?.data.length} />
-                  <FiltersPanel
-                    incomeFilters={[brand]}
-                    categoryId={category_id}
-                  />
-                  <CategoriesProductsList
-                    productGroup="brand"
-                    groupId={brand_id}
-                    sort={sorter}
-                  />
-                </>
-              )}
-            </div>
-          </Section>
-          {seriesData?.length ? (
-            <Section>
-              <div className=" mx-auto overflow-hidden text-center">
-                <SectionTitle className="mb-4" title="Товари" />
-                <CategoriesProductsList
-                  productGroup="brand"
-                  groupId={brand_id}
-                  sort={sorter}
-                />
-              </div>
-            </Section>
-          ) : null}
-        </HydrationBoundary>
-      </ContentContainer>
-    </Container>
+    </HydrationBoundary>
   );
 }
 

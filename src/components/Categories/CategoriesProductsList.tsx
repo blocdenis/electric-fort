@@ -102,6 +102,8 @@ function CategoriesProductsList({
     ? Math.ceil(data.count / itemsPerPage)
     : 1;
 
+  console.log('Hello from categories Products List');
+
   return (
     <>
       {isPending ? <div>Lading</div> : <ProductList products={data.data} />}
