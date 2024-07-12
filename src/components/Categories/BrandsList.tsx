@@ -1,20 +1,29 @@
-// 'use client';
+'use client';
 import { useQuery } from '@tanstack/react-query';
 import CategoryCard from './CategoryCard';
 import styles from '@/components/Categories/CategoriesList.module.scss';
-import { getBrandsByCategoryId, getCategoryById } from '@/services/api/api';
+import { getBrandsByCategoryId } from '@/services/api/api';
 
 interface BrandsListProps {
   categoryId: number;
 }
 
-async function BrandsList({ categoryId }: BrandsListProps) {
-  const brands = await getBrandsByCategoryId(categoryId);
+function BrandsList({ categoryId }: BrandsListProps) {
+  // const brands = await getBrandsByCategoryId(categoryId);
+
+  const { data: brands } = useQuery({
+    queryKey: ['category_brands', categoryId],
+    queryFn: () => getBrandsByCategoryId(categoryId),
+    staleTime: 10 * 1000,
+  });
 
   return (
     <ul className={styles.categories_list}>
       {brands?.map((brand) => (
-        <li key={brand.id} className="w-[220px] h-[228px]">
+        <li
+          key={brand.id}
+          className=" w-[168px] h-[203px] tablet:w-[220px] tablet:h-[228px]"
+        >
           <CategoryCard
             category_id={categoryId}
             brand_id={brand.id}

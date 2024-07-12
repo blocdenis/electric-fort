@@ -6,6 +6,7 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   max-width: 972px;
   padding-left: 24px;
+  justify-items: center;
   @media (min-width: 1170px) and (max-width: 1400px) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -13,6 +14,8 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   @include breakpoint(tablet) {
-    display: flex;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 7px;
+    row-gap: 16px;
   }
 }

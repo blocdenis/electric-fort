@@ -1,10 +1,21 @@
+'use client';
 import React from 'react';
 import CatalogItem from './CatalogItem';
 import { getAllBrands, getAllCategories } from '@/services/api/api';
+import { useQuery } from '@tanstack/react-query';
 
-async function CatalogList() {
-  const categories = await getAllCategories({ next: { revalidate: 60 } });
-  const brands = await getAllBrands({ next: { revalidate: 60 } });
+function CatalogList() {
+  const { data: categories } = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => getAllCategories(),
+    staleTime: 100 * 1000,
+  });
+
+  const { data: brands } = useQuery({
+    queryKey: ['brands'],
+    queryFn: () => getAllBrands(),
+    staleTime: 100 * 1000,
+  });
 
   return (
     <ul className=" bg-backgroung">

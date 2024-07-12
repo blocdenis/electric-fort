@@ -1,21 +1,9 @@
 import NotFound from '@/app/not-found';
-import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
-import CategoriesProductsList from '@/components/Categories/CategoriesProductsList';
-import SubseriesList from '@/components/Categories/SubseriesList';
-import Container from '@/components/Container/Container';
-import ContentContainer from '@/components/Container/ContentContainer';
-import FiltersPanel from '@/components/Filters/FiltersPanel/FiltersPanel';
-import FilteredProductsList from '@/components/Products/ProductList/FilteredProductsList';
-import Section from '@/components/Section/Section';
-import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
-import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
-import Sort from '@/components/Sort/Sort';
-import { Product } from '@/lib/types/types';
+import CategoriesProductGroupPage from '@/components/CategoriesProductGroupPage/CategoriesProductGroupPage';
 import getQueryClient from '@/lib/utils/getQueryClient';
 import {
   getBrandById,
   getCategoryById,
-  getFilteredProducts,
   getFilteredProductsBySeria,
   getProducts,
   getProductsBySeria,
@@ -47,12 +35,12 @@ async function Page({ params, searchParams }: PageProps) {
     }
   }
 
-  let brandId = String(brand_id);
+  let brandId = '';
   if (brandParam) {
     brandId = brandParam;
   }
 
-  let filterPrice = ' >= ';
+  let filterPrice = '';
   if (price) {
     filterPrice = price;
   }
@@ -62,6 +50,12 @@ async function Page({ params, searchParams }: PageProps) {
   await queryClient.prefetchQuery({
     queryKey: ['products', series_id],
     queryFn: () => getProductsBySeria(series_id, 1, 6, { cache: 'no-store' }),
+    staleTime: 10 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['series_subseries', series_id],
+    queryFn: () => getSubSeriesBySeriesId(series_id, { cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
@@ -117,90 +111,21 @@ async function Page({ params, searchParams }: PageProps) {
     { name: series.name },
   ];
 
-  if ((brandParam && brandData) || (price && brandData)) {
-    const brandsNames = brandData;
-    return (
-      <Container className="flex">
-        <SidebarWithAttachments
-          showFilters={true}
-          brands={brandData}
-          price={filterPrice}
-        />
-        <ContentContainer>
-          <HydrationBoundary state={dehydratedState}>
-            <Breadcrumbs items={breadcrumsItems} />
-            <Section>
-              <div className=" mx-auto overflow-hidden text-center">
-                <SectionTitle className="mb-4" title={brand.name} />
-                <Sort isDisable={!filteredProducts?.data.length} />
-                <FiltersPanel
-                  incomeFilters={brandsNames}
-                  categoryId={category.id}
-                />
-                <FilteredProductsList
-                  productGroup="seria"
-                  ids={String(series_id)}
-                  sort={sorter}
-                  price={filterPrice}
-                />
-              </div>
-            </Section>
-          </HydrationBoundary>
-        </ContentContainer>
-      </Container>
-    );
-  }
-
   return (
-    <Container className="flex">
-      <SidebarWithAttachments
-        showFilters={true}
-        brands={brandData}
-        price={filterPrice}
+    <HydrationBoundary state={dehydratedState}>
+      <CategoriesProductGroupPage
+        productsGroup="seria"
+        category={category}
+        brand={brand}
+        seria={series}
+        groupBrands={brandData}
+        groupSubSeries={subSeriesData}
+        breadcrumsItems={breadcrumsItems}
+        filterBrands={brandId}
+        sort={sorter}
+        filterPrice={filterPrice}
       />
-      <ContentContainer>
-        <HydrationBoundary state={dehydratedState}>
-          <Breadcrumbs items={breadcrumsItems} />
-          <Section>
-            <div className=" mx-auto overflow-hidden text-center">
-              <SectionTitle className="mb-4" title={series.name} />
-              {subSeriesData?.length ? (
-                <SubseriesList
-                  categoryId={category.id}
-                  brandId={brand.id}
-                  seriesId={series.id}
-                />
-              ) : (
-                <>
-                  <Sort isDisable={!products?.data.length} />
-                  <FiltersPanel
-                    incomeFilters={[brand]}
-                    categoryId={category_id}
-                  />
-                  <CategoriesProductsList
-                    productGroup="seria"
-                    groupId={series_id}
-                    sort={sorter}
-                  />
-                </>
-              )}
-            </div>
-          </Section>
-          {subSeriesData?.length ? (
-            <Section>
-              <div className=" mx-auto overflow-hidde text-center">
-                <SectionTitle className="mb-4" title="Товари" />
-                <CategoriesProductsList
-                  productGroup="seria"
-                  groupId={series_id}
-                  sort={sorter}
-                />
-              </div>
-            </Section>
-          ) : null}
-        </HydrationBoundary>
-      </ContentContainer>
-    </Container>
+    </HydrationBoundary>
   );
 }
 

@@ -3,7 +3,6 @@ import CategoryCard from './CategoryCard';
 import styles from './CategoriesList.module.scss';
 import { getAllCategories } from '@/services/api/api';
 import { formatedString } from '@/lib/utils/formatString';
-import { categories } from '@/lib/db/categories';
 
 async function CategoriesList() {
   const categories = await getAllCategories();
@@ -11,7 +10,10 @@ async function CategoriesList() {
   return (
     <ul className={styles.categories_list}>
       {categories?.map((category) => (
-        <li key={category.id} className="w-[220px] h-[228px]">
+        <li
+          key={category.id}
+          className=" w-[168px] h-[203px] tablet:w-[220px] tablet:h-[228px]"
+        >
           <CategoryCard
             category_id={category.id}
             name={formatedString(category.name)}

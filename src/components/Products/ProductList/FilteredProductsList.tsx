@@ -14,14 +14,14 @@ import { ProductGroup } from '@/components/Categories/CategoriesProductsList';
 
 interface CategoriesProductsListProps {
   productGroup: ProductGroup;
-  ids: string;
+  groupIds: string;
   sort: string;
   price: string;
 }
 
 function FilteredProductsList({
   productGroup,
-  ids,
+  groupIds,
   sort = '%2Bprice',
   price,
 }: CategoriesProductsListProps) {
@@ -40,6 +40,7 @@ function FilteredProductsList({
       switch (key) {
         case 'category':
           return () => getFilteredProducts(id, price, sort, 1, pageSize);
+
         case 'brand':
           return () => getFilteredProducts(id, price, sort, 1, pageSize);
 
@@ -67,9 +68,9 @@ function FilteredProductsList({
     }
   };
 
-  const { data, isPending } = useQuery({
-    queryKey: ['products', ids, price, pageSize, sort],
-    queryFn: queryFn(productGroup, ids, price, pageSize, sort),
+  const { data, isLoading } = useQuery({
+    queryKey: ['products', groupIds, price, pageSize, sort],
+    queryFn: queryFn(productGroup, groupIds, price, pageSize, sort),
     staleTime: 10,
   });
 
@@ -81,9 +82,11 @@ function FilteredProductsList({
     ? Math.ceil(data.count / itemsPerPage)
     : 1;
 
+  console.log('Hello from filtered Product list');
+
   return (
     <>
-      {isPending ? (
+      {isLoading ? (
         <div>Lading</div>
       ) : (
         <>
