@@ -17,14 +17,24 @@ export interface PageProps {
     sort: string | undefined;
     brand_id: string | undefined;
     price: string | undefined;
+    page: string | undefined;
   };
 }
 
 async function Page({ params, searchParams }: PageProps) {
   const { category_id } = params;
-  const { sort, brand_id, price } = searchParams;
+  const { sort, brand_id, price, page: urlPage } = searchParams;
+  const page = 1;
+  const itemsPerPage = 6;
+  let pageSize = 6;
+  if (urlPage) {
+    pageSize = Number(urlPage) * itemsPerPage;
+  }
 
-  const brandData = await getBrandsByCategoryId(category_id);
+  const response = await getBrandsByCategoryId(category_id, {
+    cache: 'no-store',
+  });
+  const brandData = response?.data;
 
   let sorter = '%2Bprice';
   if (sort) {
@@ -47,9 +57,9 @@ async function Page({ params, searchParams }: PageProps) {
 
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery({
-    queryKey: ['products', category_id],
+    queryKey: ['products', category_id, page, pageSize],
     queryFn: () =>
-      getProductsByCategory(category_id, 1, 6, { cache: 'no-store' }),
+      getProductsByCategory(category_id, page, pageSize, { cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
@@ -60,20 +70,36 @@ async function Page({ params, searchParams }: PageProps) {
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['productsSorted', category_id, sorter],
+    queryKey: ['productsSorted', category_id, sorter, page, pageSize],
     queryFn: () =>
-      getSortedProductsByCategory(category_id, sorter, 1, 6, {
+      getSortedProductsByCategory(category_id, sorter, page, pageSize, {
         cache: 'no-store',
       }),
     staleTime: 10 * 1000,
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['productsFilteredSorted', brandId, filterPrice, sorter],
+    queryKey: [
+      'products',
+      category_id,
+      brandId,
+      filterPrice,
+      sorter,
+      page,
+      pageSize,
+    ],
     queryFn: () =>
-      getFilteredProducts(brandId, filterPrice, sorter, 1, 6, {
-        cache: 'no-store',
-      }),
+      getFilteredProducts(
+        category_id,
+        brandId,
+        filterPrice,
+        sorter,
+        page,
+        pageSize,
+        {
+          cache: 'no-store',
+        }
+      ),
     staleTime: 10,
   });
 
@@ -99,6 +125,8 @@ async function Page({ params, searchParams }: PageProps) {
         breadcrumsItems={breadcrumsItems}
         filterBrands={brandId}
         sort={sorter}
+        page={page}
+        pageSize={pageSize}
         filterPrice={filterPrice}
       />
     </HydrationBoundary>

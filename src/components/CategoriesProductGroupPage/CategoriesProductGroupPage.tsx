@@ -43,6 +43,8 @@ interface CategoriesProductGroupProps {
   filterPrice: string;
   filterBrands: string;
   sort: string;
+  page: number;
+  pageSize: number;
 }
 
 function CategoriesProductGroupPage({
@@ -60,17 +62,72 @@ function CategoriesProductGroupPage({
   filterPrice,
   filterBrands,
   sort,
+  page,
+  pageSize,
 }: CategoriesProductGroupProps) {
   const router = useRouter();
   const pathname = usePathname();
   const serchParams = useSearchParams();
+  // fetching data
+  // const page = 1;
+  // const pageSize = 6;
+  const { data: filteredProducts, isPending } = useQuery({
+    queryKey: [
+      'products',
+      category.id,
+      filterBrands,
+      filterPrice,
+      sort,
+      page,
+      pageSize,
+    ],
+    queryFn: () =>
+      getFilteredProducts(
+        category.id,
+        filterBrands,
+        filterPrice,
+        sort,
+        page,
+        pageSize
+      ),
+    staleTime: 10 * 1000,
+  });
+
+  console.log(filteredProducts);
+
+  // const { data: products } = useQuery({
+  //   queryKey: ['products', category.id],
+  //   queryFn: () => getProductsByCategory(category.id, 1, 6),
+  //   staleTime: 10 * 1000,
+  // });
+
+  // constants
+  const filteredBrandsArray: Brand[] | undefined = useMemo(() => {
+    return filterBrands !== ''
+      ? groupBrands?.filter((brand) => {
+          return filterBrands.split(',').indexOf(brand.id.toString()) !== -1;
+        })
+      : filterPrice !== ''
+      ? groupBrands?.filter((brand) => {
+          return (
+            filteredProducts?.data
+              .map((item) => item.brand_id)
+              .indexOf(brand.id) !== -1
+          );
+        })
+      : groupBrands;
+  }, [filterBrands, filterPrice, filteredProducts?.data, groupBrands]);
+
+  const filterBrandsIds = filteredBrandsArray?.map((brand) =>
+    brand.id.toString()
+  );
 
   const groupData = (productsGroup: ProductGroup) => {
     switch (productsGroup) {
       case 'category':
         return {
           groupId: category.id,
-          groupIds: String(filterBrandsIds),
+          groupIds: filterBrands,
           groupTitle: category.name,
           groupSubGroups: groupBrands,
         };
@@ -120,39 +177,19 @@ function CategoriesProductGroupPage({
     }
   };
 
-  // fetching data
-  const { data: filteredProducts } = useQuery({
-    queryKey: ['productsFilteredSorted', filterBrands, filterPrice, sort],
-    queryFn: () => getFilteredProducts(filterBrands, filterPrice, sort, 1, 6),
-    staleTime: 10 * 1000,
-  });
+  //ForShow more Btn (page params)
+  const [urlPage, setUrlPage] = useState(1);
+  const handleShowMoreBtnClick = () => {
+    setUrlPage((prevPage) => prevPage + 1);
+  };
 
-  // const { data: products } = useQuery({
-  //   queryKey: ['products', category.id],
-  //   queryFn: () => getProductsByCategory(category.id, 1, 6),
-  //   staleTime: 10 * 1000,
-  // });
+  const pageFromURL = serchParams.get('page');
 
-  // constants
-  const filteredBrandsArray: Brand[] | undefined = useMemo(() => {
-    return filterBrands !== ''
-      ? groupBrands?.filter((brand) => {
-          return filterBrands.split(',').indexOf(brand.id.toString()) !== -1;
-        })
-      : filterPrice !== ''
-      ? groupBrands?.filter((brand) => {
-          return (
-            filteredProducts?.data
-              .map((item) => item.brand_id)
-              .indexOf(brand.id) !== -1
-          );
-        })
-      : groupBrands;
-  }, [filterBrands, filterPrice, filteredProducts?.data, groupBrands]);
-
-  const filterBrandsIds = filteredBrandsArray?.map((brand) =>
-    brand.id.toString()
-  );
+  useEffect(() => {
+    if (pageFromURL) {
+      setUrlPage(Number(pageFromURL));
+    }
+  }, [pageFromURL]);
 
   //For price filter
   const [minPrice, setMinPrice] = useState<string>('');
@@ -223,6 +260,7 @@ function CategoriesProductGroupPage({
     if (productsGroup == 'category') {
       setMinPrice('');
       setMaxPrice('');
+      setUrlPage(1);
       setSelectedBrands([]);
       router.replace(pathname, { scroll: false });
     } else {
@@ -248,6 +286,8 @@ function CategoriesProductGroupPage({
   };
 
   const isSubGoupInGroup = !!groupData(productsGroup).groupSubGroups?.length;
+
+  // console.log(productsGroup);
 
   return (
     <Container className="flex">
@@ -316,13 +356,18 @@ function CategoriesProductGroupPage({
             ) : (
               <>
                 <Sort isDisable={false} />
-                <FiltersPanel
-                  filters={filters}
-                  onCancelClick={handleCancelClick}
-                  onItemClick={handleItemClick}
-                />
+                {!isPending ? (
+                  <FiltersPanel
+                    filters={filters}
+                    onCancelClick={handleCancelClick}
+                    onItemClick={handleItemClick}
+                  />
+                ) : null}
                 <FilteredProductsList
+                  urlPage={urlPage}
+                  onShowMoreClick={handleShowMoreBtnClick}
                   productGroup={productsGroup}
+                  categoryId={category.id}
                   groupIds={groupData(productsGroup).groupIds}
                   sort={sort}
                   price={filterPrice}
