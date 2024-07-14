@@ -27,13 +27,20 @@ export interface PageProps {
     sort: string | undefined;
     price: string | undefined;
     brand_id: string | undefined;
+    page: string | undefined;
   };
 }
 
 async function Page({ params, searchParams }: PageProps) {
   const { category_id, brand_id, series_id, subseries_id, subsubseries_id } =
     params;
-  const { sort, price, brand_id: brandParam } = searchParams;
+  const { sort, price, brand_id: brandParam, page: urlPage } = searchParams;
+  const page = 1;
+  const itemsPerPage = 6;
+  let pageSize = 6;
+  if (urlPage) {
+    pageSize = Number(urlPage) * itemsPerPage;
+  }
 
   let sorter = '';
   if (sort) {
@@ -57,48 +64,47 @@ async function Page({ params, searchParams }: PageProps) {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['products', subsubseries_id],
+    queryKey: ['products', subsubseries_id, page, pageSize],
     queryFn: () =>
-      getProductsBySubSubSeria(subsubseries_id, 1, 6, { cache: 'no-store' }),
-    staleTime: 10 * 1000,
-  });
-
-  await queryClient.prefetchQuery({
-    queryKey: ['productsSorted', subsubseries_id, sorter],
-    queryFn: () =>
-      getSortedProductsBySubSubSeria(subsubseries_id, sorter, 1, 6, {
+      getProductsBySubSubSeria(subsubseries_id, page, pageSize, {
         cache: 'no-store',
       }),
     staleTime: 10 * 1000,
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['productsFilteredSorted', subsubseries_id, filterPrice, sorter],
+    queryKey: ['productsSorted', subsubseries_id, sorter, page, pageSize],
+    queryFn: () =>
+      getSortedProductsBySubSubSeria(subsubseries_id, sorter, page, pageSize, {
+        cache: 'no-store',
+      }),
+    staleTime: 10 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: [
+      'products',
+      category_id,
+      subsubseries_id,
+      filterPrice,
+      sorter,
+      page,
+      pageSize,
+    ],
     queryFn: () =>
       getFilteredProductsBySubSubSeria(
+        category_id,
         subsubseries_id,
         filterPrice,
         sorter,
-        1,
-        6,
+        page,
+        pageSize,
         {
           cache: 'no-store',
         }
       ),
     staleTime: 10,
   });
-
-  const products = queryClient.getQueryData([
-    'products',
-    subsubseries_id,
-  ]) as getProducts;
-
-  const filteredProducts = queryClient.getQueryData([
-    'productsFilteredSorted',
-    subsubseries_id,
-    filterPrice,
-    sorter,
-  ]) as getProducts;
 
   const dehydratedState = dehydrate(queryClient);
 
@@ -156,6 +162,8 @@ async function Page({ params, searchParams }: PageProps) {
         filterBrands={brandId}
         sort={sorter}
         filterPrice={filterPrice}
+        page={page}
+        pageSize={pageSize}
       />
     </HydrationBoundary>
   );

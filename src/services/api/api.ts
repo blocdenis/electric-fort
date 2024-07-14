@@ -146,11 +146,11 @@ export const getBrandsByCategoryId = async (
   categoryId: number,
   init?: RequestInit
 ) => {
-  return sendRequestJSON<Brand[]>(
+  return sendRequestJSON<getBrands>(
     `${buildUrl(
       'get',
       'Brand'
-    )}?all_data=true&field=category_id&search=${categoryId}&equal=true&pagination=false`,
+    )}?all_data=true&field=category_id&search=${categoryId}&equal=true`,
     {
       method: 'GET',
       credentials: 'include',
@@ -382,7 +382,7 @@ export const getProductsByBrand = async (
 
 export const getSortedProductsByBrand = async (
   //   params: Record<string, string> = {},
-  series_id: number,
+  brand_id: number,
   ordered_by: string,
   page: number | undefined = 1,
   page_size: number = 6,
@@ -392,7 +392,7 @@ export const getSortedProductsByBrand = async (
     `${buildUrl(
       'get',
       'Product'
-    )}?all_data=true&field=series_id&search=${series_id}&equal=true&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
+    )}?all_data=true&field=brand_id&search=${brand_id}&equal=true&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -547,18 +547,19 @@ export const getSortedProductsBySubSubSeria = async (
 
 export const getFilteredProducts = async (
   //   params: Record<string, string> = {},
+  category_id: number,
   brand_id: string,
   price: string,
   ordered_by: string,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
     `${buildUrl(
       'filtered',
       'Product'
-    )}?brand_id=["${brand_id}"]&price=["${price}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
+    )}?category_id=["==${category_id}"]&brand_id=["${brand_id}"]&price=["${price}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -572,6 +573,7 @@ export const getFilteredProducts = async (
 
 export const getFilteredProductsBySeria = async (
   //   params: Record<string, string> = {},
+  category_id: number,
   seria_id: number,
   price: string,
   ordered_by: string,
@@ -583,7 +585,7 @@ export const getFilteredProductsBySeria = async (
     `${buildUrl(
       'filtered',
       'Product'
-    )}?series_id=["${seria_id}"]&price=["${price}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
+    )}?category_id=["==${category_id}"]&series_id=["${seria_id}"]&price=["${price}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -597,6 +599,7 @@ export const getFilteredProductsBySeria = async (
 
 export const getFilteredProductsBySubSeria = async (
   //   params: Record<string, string> = {},
+  category_id: number,
   subseria_id: number,
   price: string,
   ordered_by: string,
@@ -608,7 +611,7 @@ export const getFilteredProductsBySubSeria = async (
     `${buildUrl(
       'filtered',
       'Product'
-    )}?subseries_id=["${subseria_id}"]&price=["${price}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
+    )}?category_id=["==${category_id}"]&subseries_id=["${subseria_id}"]&price=["${price}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
     {
       method: 'GET',
       credentials: 'include',
@@ -622,6 +625,7 @@ export const getFilteredProductsBySubSeria = async (
 
 export const getFilteredProductsBySubSubSeria = async (
   //   params: Record<string, string> = {},
+  category_id: number,
   subsubseria_id: number,
   price: string,
   ordered_by: string,
@@ -633,7 +637,7 @@ export const getFilteredProductsBySubSubSeria = async (
     `${buildUrl(
       'filtered',
       'Product'
-    )}?subsubseries_id=["${subsubseria_id}"]&price=["${price}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
+    )}?category_id=[==${category_id}"]&subsubseries_id=["${subsubseria_id}"]&price=["${price}"]&pagination=true&page_size=${page_size}&page=${page}&order_by=${ordered_by}`,
     {
       method: 'GET',
       credentials: 'include',

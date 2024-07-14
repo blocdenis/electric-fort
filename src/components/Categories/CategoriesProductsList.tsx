@@ -38,6 +38,8 @@ function CategoriesProductsList({
   const itemsPerPage = 6;
   const pageSize = page * itemsPerPage;
 
+  console.log(productGroup);
+
   const queryFn = (
     key: string,
     id: number | undefined,

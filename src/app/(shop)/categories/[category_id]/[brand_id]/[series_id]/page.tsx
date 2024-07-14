@@ -19,12 +19,19 @@ export interface PageProps {
     sort: string | undefined;
     price: string | undefined;
     brand_id: string | undefined;
+    page: string | undefined;
   };
 }
 
 async function Page({ params, searchParams }: PageProps) {
   const { category_id, brand_id, series_id } = params;
-  const { sort, price, brand_id: brandParam } = searchParams;
+  const { sort, price, brand_id: brandParam, page: urlPage } = searchParams;
+  const page = 1;
+  const itemsPerPage = 6;
+  let pageSize = 6;
+  if (urlPage) {
+    pageSize = Number(urlPage) * itemsPerPage;
+  }
 
   let sorter = '';
   if (sort) {
@@ -48,8 +55,9 @@ async function Page({ params, searchParams }: PageProps) {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['products', series_id],
-    queryFn: () => getProductsBySeria(series_id, 1, 6, { cache: 'no-store' }),
+    queryKey: ['products', series_id, page, pageSize],
+    queryFn: () =>
+      getProductsBySeria(series_id, page, pageSize, { cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
@@ -60,34 +68,38 @@ async function Page({ params, searchParams }: PageProps) {
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['productsSorted', series_id, sorter],
+    queryKey: ['productsSorted', series_id, sorter, page, pageSize],
     queryFn: () =>
-      getSortedProductsBySeria(series_id, sorter, 1, 6, {
+      getSortedProductsBySeria(series_id, sorter, page, pageSize, {
         cache: 'no-store',
       }),
     staleTime: 10 * 1000,
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['productsFilteredSorted', series_id, filterPrice, sorter],
+    queryKey: [
+      'products',
+      category_id,
+      series_id,
+      filterPrice,
+      sorter,
+      page,
+      pageSize,
+    ],
     queryFn: () =>
-      getFilteredProductsBySeria(series_id, filterPrice, sorter, 1, 6, {
-        cache: 'no-store',
-      }),
+      getFilteredProductsBySeria(
+        category_id,
+        series_id,
+        filterPrice,
+        sorter,
+        page,
+        pageSize,
+        {
+          cache: 'no-store',
+        }
+      ),
     staleTime: 10,
   });
-
-  const products = queryClient.getQueryData([
-    'products',
-    series_id,
-  ]) as getProducts;
-
-  const filteredProducts = queryClient.getQueryData([
-    'productsFilteredSorted',
-    series_id,
-    filterPrice,
-    sorter,
-  ]) as getProducts;
 
   const dehydratedState = dehydrate(queryClient);
 
@@ -124,6 +136,8 @@ async function Page({ params, searchParams }: PageProps) {
         filterBrands={brandId}
         sort={sorter}
         filterPrice={filterPrice}
+        page={page}
+        pageSize={pageSize}
       />
     </HydrationBoundary>
   );

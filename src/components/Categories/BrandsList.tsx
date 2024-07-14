@@ -11,11 +11,13 @@ interface BrandsListProps {
 function BrandsList({ categoryId }: BrandsListProps) {
   // const brands = await getBrandsByCategoryId(categoryId);
 
-  const { data: brands } = useQuery({
+  const { data } = useQuery({
     queryKey: ['category_brands', categoryId],
     queryFn: () => getBrandsByCategoryId(categoryId),
     staleTime: 10 * 1000,
   });
+
+  const brands = data?.data;
 
   return (
     <ul className={styles.categories_list}>
