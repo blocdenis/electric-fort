@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ShowMoreButton from '../Buttons/ShowMoreButton/ShowMoreButton';
 import ProductList from '../Products/ProductList/ProductList';
 import {
@@ -15,6 +15,8 @@ import {
   getSortedProductsBySubSubSeria,
 } from '@/services/api/api';
 import { useQuery } from '@tanstack/react-query';
+import { useFilters } from '@/context/FiltersContext';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 export type ProductGroup =
   | 'category'
@@ -34,55 +36,79 @@ function CategoriesProductsList({
   groupId,
   sort,
 }: CategoriesProductsListProps) {
-  const [page, setPage] = useState(1);
+  const router = useRouter();
+  const pathname = usePathname();
+  const location = console.log(pathname);
+
+  const searchParams = useSearchParams();
+  const pageFromURL = searchParams.get('page');
+  const { urlPage } = useFilters();
+  const page = 1; //for fetching data
   const itemsPerPage = 6;
-  const pageSize = page * itemsPerPage;
+  const pageSize = Number(urlPage) * itemsPerPage; //for fetching data
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  const deleteQueryString = useCallback(
+    (name: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete(name);
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  useEffect(() => {
+    if (Number(urlPage) > 1) {
+      router.push(
+        pathname + '?' + createQueryString('page', `${urlPage.toString()}`),
+        { scroll: false }
+      );
+    } else {
+      router.replace(pathname + '?' + deleteQueryString('page'), {
+        scroll: false,
+      });
+    }
+  }, [createQueryString, urlPage, pathname, router, deleteQueryString]);
+
+  // useEffect(() => {
+  //   if (pageFromURL) {
+  //     changePage(pageFromURL);
+  //   }
+  // }, [pageFromURL, changePage]);
 
   console.log(productGroup);
 
   const queryFn = (
     key: string,
     id: number | undefined,
-    pageSize: number,
-    sort: string
+    sort: string,
+    page: number,
+    pageSize: number
   ) => {
     if (id) {
-      if (sort !== '') {
-        switch (key) {
-          case 'category':
-            return () => getSortedProductsByCategory(id, sort, 1, pageSize);
-
-          case 'brand':
-            return () => getSortedProductsByBrand(id, sort, 1, pageSize);
-
-          case 'seria':
-            return () => getSortedProductsBySeria(id, sort, 1, pageSize);
-
-          case 'subseria':
-            return () => getSortedProductsBySubSeria(id, sort, 1, pageSize);
-
-          case 'subsubseria':
-            return () => getSortedProductsBySubSubSeria(id, sort, 1, pageSize);
-
-          default:
-            break;
-        }
-      }
       switch (key) {
         case 'category':
-          return () => getProductsByCategory(id, 1, pageSize);
+          return () => getSortedProductsByCategory(id, sort, page, pageSize);
 
         case 'brand':
-          return () => getProductsByBrand(id, 1, pageSize);
+          return () => getSortedProductsByBrand(id, sort, page, pageSize);
 
         case 'seria':
-          return () => getProductsBySeria(id, 1, pageSize);
+          return () => getSortedProductsBySeria(id, sort, page, pageSize);
 
         case 'subseria':
-          return () => getProductsBySubSeria(id, 1, pageSize);
+          return () => getSortedProductsBySubSeria(id, sort, page, pageSize);
 
         case 'subsubseria':
-          return () => getProductsBySubSubSeria(id, 1, pageSize);
+          return () => getSortedProductsBySubSubSeria(id, sort, page, pageSize);
 
         default:
           break;
@@ -91,8 +117,8 @@ function CategoriesProductsList({
   };
 
   const { data, isPending } = useQuery({
-    queryKey: ['products', groupId, pageSize, sort],
-    queryFn: queryFn(productGroup, groupId, pageSize, sort),
+    queryKey: ['productsSorted', groupId, sort, page, pageSize],
+    queryFn: queryFn(productGroup, groupId, sort, page, pageSize),
     staleTime: 10 * 1000,
   });
 
@@ -109,11 +135,8 @@ function CategoriesProductsList({
   return (
     <>
       {isPending ? <div>Lading</div> : <ProductList products={data.data} />}
-      {estimatedNumberOfPages > page ? (
-        <ShowMoreButton
-          className="mt-6"
-          onClick={() => setPage((prevPage) => prevPage + 1)}
-        />
+      {estimatedNumberOfPages > Number(urlPage) ? (
+        <ShowMoreButton className="mt-6" />
       ) : null}
     </>
   );

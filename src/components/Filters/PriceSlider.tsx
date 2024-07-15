@@ -2,21 +2,15 @@ import React, { useCallback, useEffect } from 'react';
 import styles from './Filters.module.scss';
 import useDebounce from '@/hooks/useDebounce';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useFilters } from '@/context/FiltersContext';
 
-interface PriceSliderProps {
-  minPrice?: string;
-  maxPrice?: string;
-  onPriceChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-const PriceSlider: React.FC<PriceSliderProps> = ({
-  minPrice,
-  maxPrice,
-  onPriceChange,
-}) => {
+const PriceSlider: React.FC = () => {
+  const { minPrice, maxPrice, onPriceChange, setMinPrice, setMaxPrice } =
+    useFilters();
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+  const filterPriceFromURL = searchParams.get('price');
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -38,10 +32,15 @@ const PriceSlider: React.FC<PriceSliderProps> = ({
     [searchParams]
   );
 
-  // const [minPrice, setMinPrice] = useState<string>('');
-  // const [maxPrice, setMaxPrice] = useState<string>('');
   const debounsedMinPrice = useDebounce(minPrice, 500);
   const debounsedMaxPrice = useDebounce(maxPrice, 500);
+
+  useEffect(() => {
+    if (filterPriceFromURL) {
+      setMinPrice(filterPriceFromURL.split(' >= ')[0]);
+      setMaxPrice(filterPriceFromURL.split(' >= ')[1]);
+    }
+  }, [filterPriceFromURL, setMaxPrice, setMinPrice]);
 
   useEffect(() => {
     if (
@@ -80,28 +79,6 @@ const PriceSlider: React.FC<PriceSliderProps> = ({
     router,
   ]);
 
-  // const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   switch (e.target.name) {
-  //     case 'minPrice':
-  //       if (e.target.value.includes('-')) {
-  //         setMinPrice(e.target.value.replace('-', '').trim());
-  //       } else {
-  //         setMinPrice(e.target.value);
-  //       }
-  //       break;
-  //     case 'maxPrice':
-  //       if (e.target.value.includes('-')) {
-  //         setMaxPrice(e.target.value.replace('-', '').trim());
-  //       } else {
-  //         setMaxPrice(e.target.value);
-  //       }
-  //       break;
-  //     default:
-  //       console.log('wrong price name');
-  //       break;
-  //   }
-  // };
-
   return (
     <div className={styles.priceSlider}>
       <span>Ціна</span>
@@ -112,7 +89,7 @@ const PriceSlider: React.FC<PriceSliderProps> = ({
           inputMode="numeric"
           value={minPrice}
           onChange={onPriceChange}
-          placeholder="От"
+          placeholder="від"
           className={styles.inputNumber}
           min={0}
         />
@@ -122,7 +99,7 @@ const PriceSlider: React.FC<PriceSliderProps> = ({
           inputMode="numeric"
           value={maxPrice}
           onChange={onPriceChange}
-          placeholder="До"
+          placeholder="до"
           className={styles.inputNumber}
           min={0}
         />

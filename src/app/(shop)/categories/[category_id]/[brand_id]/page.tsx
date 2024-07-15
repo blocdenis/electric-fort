@@ -32,7 +32,7 @@ async function Page({ params, searchParams }: PageProps) {
     pageSize = Number(urlPage) * itemsPerPage;
   }
 
-  let sorter = '';
+  let sorter = '-add_date';
   if (sort) {
     if (!sort.includes('-')) {
       sorter = `%2B` + sort;
