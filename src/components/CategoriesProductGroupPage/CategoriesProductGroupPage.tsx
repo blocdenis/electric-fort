@@ -227,6 +227,13 @@ function CategoriesProductGroupPage({
                     groupId={groupData(productsGroup).groupId}
                     sort={sort}
                   />
+                  {/* <FilteredProductsList
+                    productGroup={productsGroup}
+                    categoryId={category.id}
+                    groupIds={groupData(productsGroup).groupIds}
+                    sort={sort}
+                    price={filterPrice}
+                  /> */}
                 </>
               )
             ) : (
@@ -236,8 +243,6 @@ function CategoriesProductGroupPage({
                   <FiltersPanel incomeFilters={filteredBrandsArray} />
                 ) : null}
                 <FilteredProductsList
-                  // urlPage={urlPage}
-                  // onShowMoreClick={handleShowMoreBtnClick}
                   productGroup={productsGroup}
                   categoryId={category.id}
                   groupIds={groupData(productsGroup).groupIds}

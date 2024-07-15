@@ -27,6 +27,10 @@ FiltersPanelProps) {
   const params = useParams();
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const price = searchParams.toString();
+  console.log(price);
+
   const { category_id, brand_id, series_id, subseries_id, subsubseries_id } =
     params;
   const { setMinPrice, setMaxPrice, setUrlPage, setSelectedBrands } =
@@ -40,12 +44,26 @@ FiltersPanelProps) {
   }, [incomeFilters]);
 
   const onCancelClick = () => {
-    if (!brand_id && !series_id && !subseries_id && !subsubseries_id) {
+    if (
+      !brand_id &&
+      !series_id &&
+      !subseries_id &&
+      !subsubseries_id &&
+      category_id
+    ) {
+      console.log('Hello from cancel btn');
+
       setMinPrice('');
       setMaxPrice('');
       setUrlPage('1');
       setSelectedBrands([]);
       router.replace(pathname, { scroll: false });
+    } else if (searchParams.toString()) {
+      console.log('Hello from cancel btn');
+      router.replace(`/categories/${category_id}`, { scroll: false });
+      setMinPrice('');
+      setMaxPrice('');
+      setSelectedBrands([]);
     } else {
       router.replace(`/categories/${category_id}`, { scroll: false });
     }

@@ -3,11 +3,6 @@ import { useCallback, useEffect, useState } from 'react';
 import ShowMoreButton from '../Buttons/ShowMoreButton/ShowMoreButton';
 import ProductList from '../Products/ProductList/ProductList';
 import {
-  getProductsByBrand,
-  getProductsByCategory,
-  getProductsBySeria,
-  getProductsBySubSeria,
-  getProductsBySubSubSeria,
   getSortedProductsByBrand,
   getSortedProductsByCategory,
   getSortedProductsBySeria,
@@ -44,7 +39,7 @@ function CategoriesProductsList({
   const pageFromURL = searchParams.get('page');
   const { urlPage } = useFilters();
   const page = 1; //for fetching data
-  const itemsPerPage = 6;
+  const itemsPerPage = 15;
   const pageSize = Number(urlPage) * itemsPerPage; //for fetching data
 
   const createQueryString = useCallback(
@@ -77,14 +72,6 @@ function CategoriesProductsList({
       });
     }
   }, [createQueryString, urlPage, pathname, router, deleteQueryString]);
-
-  // useEffect(() => {
-  //   if (pageFromURL) {
-  //     changePage(pageFromURL);
-  //   }
-  // }, [pageFromURL, changePage]);
-
-  console.log(productGroup);
 
   const queryFn = (
     key: string,

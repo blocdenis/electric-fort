@@ -15,8 +15,6 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useFilters } from '@/context/FiltersContext';
 
 interface CategoriesProductsListProps {
-  // urlPage: number;
-  // onShowMoreClick: () => void;
   productGroup: ProductGroup;
   categoryId: number;
   groupIds: string;
@@ -25,8 +23,6 @@ interface CategoriesProductsListProps {
 }
 
 function FilteredProductsList({
-  // urlPage,
-  // onShowMoreClick,
   productGroup,
   categoryId,
   groupIds,
@@ -39,7 +35,7 @@ function FilteredProductsList({
   const pathname = usePathname();
 
   const page = 1; //for fetching data
-  const itemsPerPage = 6; //for fetching data
+  const itemsPerPage = 15; //for fetching data
   const pageSize = Number(urlPage) * itemsPerPage; //for fetching data
 
   const createQueryString = useCallback(

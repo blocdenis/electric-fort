@@ -28,7 +28,7 @@ function SubSubseriesList({
       {subSubSeriesData?.map((subsubseria) => (
         <li
           key={subsubseria.id}
-          className="w-[168px] min-h-[203px] tablet:w-[220px] tablet:h-[228px]"
+          className="w-[168px] h-full tablet:w-[220px] tablet:h-[228px]"
         >
           <CategoryCard
             category_id={categoryId}
