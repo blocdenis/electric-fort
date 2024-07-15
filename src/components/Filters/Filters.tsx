@@ -7,28 +7,21 @@ import { ArrowCatalogIcon, ArrowCategoriesIcon } from '../icons';
 import { Brand } from '@/lib/types/types';
 
 interface FiltersProps {
-  brands?: Brand[];
-  selectedBrands?: string[];
-  onBrandCheckboxChange?: (brandId: string) => void;
-  minPrice?: string;
-  maxPrice?: string;
-  onPriceChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  //   brands?: Brand[];
+  //   selectedBrands?: string[];
+  //   onBrandCheckboxChange?: (brandId: string) => void;
+  //   minPrice?: string;
+  //   maxPrice?: string;
+  //   onPriceChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Filters: React.FC<FiltersProps> = ({
-  brands,
-  selectedBrands,
-  onBrandCheckboxChange,
-  minPrice,
-  maxPrice,
-  onPriceChange,
-}) => {
-  const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
+const Filters: React.FC = () => {
+  const [filtersOpen, setFiltersOpen] = useState<boolean>(true);
   const [brandOpen, setBrandOpen] = useState<boolean>(true);
 
   return (
     <div className={styles.filters}>
-      <div className="flex flex-row justify-between w-full ">
+      <div className="hidden laptop:flex laptop:flex-row laptop:justify-between laptop:w-full ">
         <p className={styles.hero}>Фільтри</p>
         <span
           className={styles.arrowIcon}
@@ -44,11 +37,7 @@ const Filters: React.FC<FiltersProps> = ({
 
       {filtersOpen && (
         <div className={styles.filterItem}>
-          <PriceSlider
-            minPrice={minPrice}
-            maxPrice={maxPrice}
-            onPriceChange={onPriceChange}
-          />
+          <PriceSlider />
           <div className={styles.filterItem}>
             <div
               className={styles.filterHeader}
@@ -63,13 +52,7 @@ const Filters: React.FC<FiltersProps> = ({
                 )}
               </span>
             </div>
-            {brandOpen && (
-              <BrandsFilter
-                brands={brands}
-                selectedBrands={selectedBrands}
-                onBrandCheckboxChange={onBrandCheckboxChange}
-              />
-            )}
+            {brandOpen && <BrandsFilter />}
           </div>
         </div>
       )}

@@ -36,7 +36,7 @@ async function Page({ params, searchParams }: PageProps) {
   });
   const brandData = response?.data;
 
-  let sorter = '%2Bprice';
+  let sorter = '-add_date';
   if (sort) {
     if (!sort.includes('-')) {
       sorter = `%2B` + sort;

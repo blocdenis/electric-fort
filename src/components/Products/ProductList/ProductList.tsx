@@ -15,7 +15,7 @@ function ProductList({ products }: ProductListProps) {
   }
 
   return (
-    <ul className=" pl-6 grid laptop:grid-cols-2 desktop:grid-cols-3 gap-x-[45px] gap-y-8">
+    <ul className=" justify-items-center justify-center grid laptop:pl-6 tablet:grid-cols-2 desktop:grid-cols-3 gap-x-[45px] gap-y-8">
       {products.map(
         ({
           id,

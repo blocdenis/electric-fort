@@ -12,10 +12,9 @@ import { useQuery } from '@tanstack/react-query';
 import { Brand } from '@/lib/types/types';
 import { ProductGroup } from '@/components/Categories/CategoriesProductsList';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useFilters } from '@/context/FiltersContext';
 
 interface CategoriesProductsListProps {
-  urlPage: number;
-  onShowMoreClick: () => void;
   productGroup: ProductGroup;
   categoryId: number;
   groupIds: string;
@@ -24,26 +23,25 @@ interface CategoriesProductsListProps {
 }
 
 function FilteredProductsList({
-  urlPage,
-  onShowMoreClick,
   productGroup,
   categoryId,
   groupIds,
-  sort = '%2Bprice',
+  sort,
   price,
 }: CategoriesProductsListProps) {
-  const page = 1; //for fetching data
-  const itemsPerPage = 6;
-  const pageSize = urlPage * itemsPerPage; //for fetching data
+  const { urlPage } = useFilters();
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
+
+  const page = 1; //for fetching data
+  const itemsPerPage = 15; //for fetching data
+  const pageSize = Number(urlPage) * itemsPerPage; //for fetching data
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString());
       params.set(name, value);
-
       return params.toString();
     },
     [searchParams]
@@ -53,14 +51,13 @@ function FilteredProductsList({
     (name: string) => {
       const params = new URLSearchParams(searchParams.toString());
       params.delete(name);
-
       return params.toString();
     },
     [searchParams]
   );
 
   useEffect(() => {
-    if (urlPage > 1) {
+    if (Number(urlPage) > 1) {
       router.push(
         pathname + '?' + createQueryString('page', `${urlPage.toString()}`),
         { scroll: false }
@@ -71,10 +68,6 @@ function FilteredProductsList({
       });
     }
   }, [createQueryString, urlPage, pathname, router, deleteQueryString]);
-
-  console.log(urlPage);
-
-  console.log(productGroup);
 
   const queryFn = (
     key: string,
@@ -147,7 +140,7 @@ function FilteredProductsList({
     }
   };
 
-  const { data, isLoading } = useQuery({
+  const { data, isPending, isLoading } = useQuery({
     queryKey: ['products', categoryId, groupIds, price, sort, page, pageSize],
     queryFn: queryFn(
       productGroup,
@@ -160,9 +153,12 @@ function FilteredProductsList({
     ),
     staleTime: 10,
   });
+  console.log(categoryId, groupIds, price, sort, page, pageSize);
+
+  console.log(data);
 
   if (!data) {
-    return null;
+    return isLoading && <div>Hello Loading</div>;
   }
 
   const estimatedNumberOfPages = data.count
@@ -174,15 +170,9 @@ function FilteredProductsList({
 
   return (
     <>
-      {isLoading ? (
-        <div>Lading</div>
-      ) : (
-        <>
-          <ProductList products={data.data} />
-        </>
-      )}
-      {estimatedNumberOfPages > urlPage ? (
-        <ShowMoreButton className="mt-6" onClick={onShowMoreClick} />
+      <ProductList products={data.data} />
+      {estimatedNumberOfPages > Number(urlPage) ? (
+        <ShowMoreButton className="mt-6" />
       ) : null}
     </>
   );

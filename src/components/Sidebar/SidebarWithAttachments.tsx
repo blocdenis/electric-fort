@@ -9,31 +9,31 @@ import { Brand } from '@/lib/types/types';
 
 function SidebarWithAttachments({
   showFilters,
-  brands,
-  selectedBrands,
-  onBrandCheckboxChange,
-  minPrice,
-  maxPrice,
-  onPriceChange,
-}: {
+}: // brands,
+// selectedBrands,
+// onBrandCheckboxChange,
+// minPrice,
+// maxPrice,
+// onPriceChange,
+{
   showFilters: boolean;
-  brands?: Brand[];
-  selectedBrands?: string[];
-  onBrandCheckboxChange?: (brandId: string) => void;
-  minPrice?: string;
-  maxPrice?: string;
-  onPriceChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  // brands?: Brand[];
+  // selectedBrands?: string[];
+  // onBrandCheckboxChange?: (brandId: string) => void;
+  // minPrice?: string;
+  // maxPrice?: string;
+  // onPriceChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
     <Sidebar>
       {showFilters && (
         <Filters
-          brands={brands}
-          selectedBrands={selectedBrands}
-          onBrandCheckboxChange={onBrandCheckboxChange}
-          minPrice={minPrice}
-          maxPrice={maxPrice}
-          onPriceChange={onPriceChange}
+        // brands={brands}
+        // selectedBrands={selectedBrands}
+        // onBrandCheckboxChange={onBrandCheckboxChange}
+        // minPrice={minPrice}
+        // maxPrice={maxPrice}
+        // onPriceChange={onPriceChange}
         />
       )}
       <CatalogList />

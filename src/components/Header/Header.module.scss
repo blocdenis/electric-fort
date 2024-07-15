@@ -81,6 +81,7 @@
   flex-direction: column;
   gap: 8px;
   @include breakpoint(mobile) {
+    margin-top: 8px;
   }
 }
 

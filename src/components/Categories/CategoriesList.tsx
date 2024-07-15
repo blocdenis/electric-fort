@@ -12,7 +12,7 @@ async function CategoriesList() {
       {categories?.map((category) => (
         <li
           key={category.id}
-          className=" w-[168px] h-[203px] tablet:w-[220px] tablet:h-[228px]"
+          className=" w-[168px] h-full tablet:w-[220px] tablet:h-[228px]"
         >
           <CategoryCard
             category_id={category.id}

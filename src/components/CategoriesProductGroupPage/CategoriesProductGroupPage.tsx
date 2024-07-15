@@ -27,6 +27,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import SeriesList from '../Categories/SeriesList';
 import SubSubseriesList from '../Categories/SubSubseriesList';
 import SubseriesList from '../Categories/SubseriesList';
+import { useFilters } from '@/context/FiltersContext';
 
 interface CategoriesProductGroupProps {
   productsGroup: ProductGroup;
@@ -68,9 +69,8 @@ function CategoriesProductGroupPage({
   const router = useRouter();
   const pathname = usePathname();
   const serchParams = useSearchParams();
-  // fetching data
-  // const page = 1;
-  // const pageSize = 6;
+  const { setShownBrands } = useFilters();
+
   const { data: filteredProducts, isPending } = useQuery({
     queryKey: [
       'products',
@@ -93,14 +93,6 @@ function CategoriesProductGroupPage({
     staleTime: 10 * 1000,
   });
 
-  console.log(filteredProducts);
-
-  // const { data: products } = useQuery({
-  //   queryKey: ['products', category.id],
-  //   queryFn: () => getProductsByCategory(category.id, 1, 6),
-  //   staleTime: 10 * 1000,
-  // });
-
   // constants
   const filteredBrandsArray: Brand[] | undefined = useMemo(() => {
     return filterBrands !== ''
@@ -117,10 +109,6 @@ function CategoriesProductGroupPage({
         })
       : groupBrands;
   }, [filterBrands, filterPrice, filteredProducts?.data, groupBrands]);
-
-  const filterBrandsIds = filteredBrandsArray?.map((brand) =>
-    brand.id.toString()
-  );
 
   const groupData = (productsGroup: ProductGroup) => {
     switch (productsGroup) {
@@ -177,57 +165,6 @@ function CategoriesProductGroupPage({
     }
   };
 
-  //ForShow more Btn (page params)
-  const [urlPage, setUrlPage] = useState(1);
-  const handleShowMoreBtnClick = () => {
-    setUrlPage((prevPage) => prevPage + 1);
-  };
-
-  const pageFromURL = serchParams.get('page');
-
-  useEffect(() => {
-    if (pageFromURL) {
-      setUrlPage(Number(pageFromURL));
-    }
-  }, [pageFromURL]);
-
-  //For price filter
-  const [minPrice, setMinPrice] = useState<string>('');
-  const [maxPrice, setMaxPrice] = useState<string>('');
-  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    switch (e.target.name) {
-      case 'minPrice':
-        if (e.target.value.includes('-')) {
-          setMinPrice(e.target.value.replace('-', '').trim());
-        } else {
-          setMinPrice(e.target.value);
-        }
-        break;
-      case 'maxPrice':
-        if (e.target.value.includes('-')) {
-          setMaxPrice(e.target.value.replace('-', '').trim());
-        } else {
-          setMaxPrice(e.target.value);
-        }
-        break;
-      default:
-        console.log('wrong price name');
-        break;
-    }
-  };
-  const filterPriceFromURL = serchParams.get('price');
-  useEffect(() => {
-    if (filterPriceFromURL) {
-      setMinPrice(filterPriceFromURL.split(' >= ')[0]);
-      setMaxPrice(filterPriceFromURL.split(' >= ')[1]);
-    }
-  }, [filterPriceFromURL]);
-  //For Brands filter
-  const [shownBrands, setShownBrands] = useState<Brand[] | undefined>(
-    groupBrands
-  );
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-
   useEffect(() => {
     if (filteredBrandsArray && groupBrands) {
       if (filterPrice === '') {
@@ -236,70 +173,13 @@ function CategoriesProductGroupPage({
         setShownBrands(filteredBrandsArray);
       }
     }
-  }, [filterPrice, filteredBrandsArray, groupBrands]);
-
-  const toggleBrand = (brand: string) => {
-    setSelectedBrands((prevSelectedBrands) =>
-      prevSelectedBrands.includes(brand)
-        ? prevSelectedBrands.filter((b) => b !== brand)
-        : prevSelectedBrands[0] !== ''
-        ? [...prevSelectedBrands, brand]
-        : [brand]
-    );
-  };
-
-  //For filter panel
-  const [filters, setFilters] = useState<Brand[]>([]);
-  useEffect(() => {
-    if (filteredBrandsArray) {
-      setFilters(filteredBrandsArray);
-    }
-  }, [filteredBrandsArray]);
-
-  const handleCancelClick = () => {
-    if (productsGroup == 'category') {
-      setMinPrice('');
-      setMaxPrice('');
-      setUrlPage(1);
-      setSelectedBrands([]);
-      router.replace(pathname, { scroll: false });
-    } else {
-      router.replace(`/categories/${category.id}`, { scroll: false });
-    }
-  };
-
-  const handleItemClick: React.MouseEventHandler<HTMLButtonElement> = (
-    event
-  ) => {
-    if (filters.length <= 1) {
-      handleCancelClick();
-    } else {
-      const filterName = (event.currentTarget as HTMLElement).textContent;
-      setFilters((prevFilters) =>
-        prevFilters.filter((item) => item.name !== filterName)
-      );
-      const filtersToUpdate = filters
-        .filter((item) => item.name !== filterName)
-        .map((item) => item.id.toString());
-      setSelectedBrands(filtersToUpdate);
-    }
-  };
+  }, [filterPrice, filteredBrandsArray, groupBrands, setShownBrands]);
 
   const isSubGoupInGroup = !!groupData(productsGroup).groupSubGroups?.length;
 
-  // console.log(productsGroup);
-
   return (
     <Container className="flex">
-      <SidebarWithAttachments
-        showFilters={true}
-        brands={shownBrands}
-        selectedBrands={selectedBrands}
-        onBrandCheckboxChange={toggleBrand}
-        minPrice={minPrice}
-        maxPrice={maxPrice}
-        onPriceChange={handlePriceChange}
-      />
+      <SidebarWithAttachments showFilters={true} />
       <ContentContainer>
         <Breadcrumbs items={breadcrumsItems} />
         <Section>
@@ -340,32 +220,29 @@ function CategoriesProductGroupPage({
                 <>
                   <Sort isDisable={false} />
                   {productsGroup !== 'category' ? (
-                    <FiltersPanel
-                      filters={filters}
-                      onCancelClick={handleCancelClick}
-                      onItemClick={handleItemClick}
-                    />
+                    <FiltersPanel incomeFilters={filteredBrandsArray} />
                   ) : null}
                   <CategoriesProductsList
                     productGroup={productsGroup}
                     groupId={groupData(productsGroup).groupId}
                     sort={sort}
                   />
+                  {/* <FilteredProductsList
+                    productGroup={productsGroup}
+                    categoryId={category.id}
+                    groupIds={groupData(productsGroup).groupIds}
+                    sort={sort}
+                    price={filterPrice}
+                  /> */}
                 </>
               )
             ) : (
               <>
                 <Sort isDisable={false} />
                 {!isPending ? (
-                  <FiltersPanel
-                    filters={filters}
-                    onCancelClick={handleCancelClick}
-                    onItemClick={handleItemClick}
-                  />
+                  <FiltersPanel incomeFilters={filteredBrandsArray} />
                 ) : null}
                 <FilteredProductsList
-                  urlPage={urlPage}
-                  onShowMoreClick={handleShowMoreBtnClick}
                   productGroup={productsGroup}
                   categoryId={category.id}
                   groupIds={groupData(productsGroup).groupIds}

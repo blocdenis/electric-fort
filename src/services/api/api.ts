@@ -313,8 +313,8 @@ export const getProducts = async (
 export const getProductsByCategory = async (
   //   params: Record<string, string> = {},
   category_id: number,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number | undefined,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
@@ -337,8 +337,8 @@ export const getSortedProductsByCategory = async (
   //   params: Record<string, string> = {},
   category_id: number,
   ordered_by: string,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number | undefined,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
@@ -360,8 +360,8 @@ export const getSortedProductsByCategory = async (
 export const getProductsByBrand = async (
   //   params: Record<string, string> = {},
   brand_id: number,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number | undefined,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
@@ -384,8 +384,8 @@ export const getSortedProductsByBrand = async (
   //   params: Record<string, string> = {},
   brand_id: number,
   ordered_by: string,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number | undefined,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
@@ -407,8 +407,8 @@ export const getSortedProductsByBrand = async (
 export const getProductsBySeria = async (
   //   params: Record<string, string> = {},
   series_id: number,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number | undefined,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
@@ -431,8 +431,8 @@ export const getSortedProductsBySeria = async (
   //   params: Record<string, string> = {},
   series_id: number,
   ordered_by: string,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number | undefined,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
@@ -454,8 +454,8 @@ export const getSortedProductsBySeria = async (
 export const getProductsBySubSeria = async (
   //   params: Record<string, string> = {},
   subseries_id: number,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number | undefined,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
@@ -478,8 +478,8 @@ export const getSortedProductsBySubSeria = async (
   //   params: Record<string, string> = {},
   subseries_id: number,
   ordered_by: string,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number | undefined,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
@@ -501,8 +501,8 @@ export const getSortedProductsBySubSeria = async (
 export const getProductsBySubSubSeria = async (
   //   params: Record<string, string> = {},
   subsubseries_id: number,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number | undefined,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
@@ -525,8 +525,8 @@ export const getSortedProductsBySubSubSeria = async (
   //   params: Record<string, string> = {},
   subsubseries_id: number,
   ordered_by: string,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number | undefined,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
@@ -577,8 +577,8 @@ export const getFilteredProductsBySeria = async (
   seria_id: number,
   price: string,
   ordered_by: string,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number | undefined,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
@@ -603,8 +603,8 @@ export const getFilteredProductsBySubSeria = async (
   subseria_id: number,
   price: string,
   ordered_by: string,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number | undefined,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
@@ -629,8 +629,8 @@ export const getFilteredProductsBySubSubSeria = async (
   subsubseria_id: number,
   price: string,
   ordered_by: string,
-  page: number | undefined = 1,
-  page_size: number = 6,
+  page: number | undefined,
+  page_size: number,
   init?: RequestInit
 ) => {
   return sendRequestJSON<getProducts>(
