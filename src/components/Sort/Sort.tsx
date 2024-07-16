@@ -74,28 +74,30 @@ function Sort({ isDisable }: SortProps) {
   };
 
   return (
-    <div className="flex items-center justify-end gap-6 text-grey text-sm mb-4">
+    <div className="flex flex-col items-start px-4 laptop:flex-row laptop:items-center laptop:justify-end gap-3 text-grey text-sm mb-4">
       <p className={classNames({ 'text-dark_grey': isDisable })}>Сортувати:</p>
-      <button
-        className={styles.sort}
-        onClick={handleSortClick}
-        disabled={isDisable}
-      >
-        за датою додавання
-        <span>
-          <ArrowSortIcon />
-        </span>
-      </button>
-      <button
-        className={styles.sort}
-        onClick={handleSortClick}
-        disabled={isDisable}
-      >
-        за ціною
-        <span>
-          <ArrowSortIcon />
-        </span>
-      </button>
+      <div className="flex justify-between w-full laptop:w-fit laptop:gap-3 laptop:justify-end">
+        <button
+          className={styles.sort}
+          onClick={handleSortClick}
+          disabled={isDisable}
+        >
+          за датою додавання
+          <span>
+            <ArrowSortIcon />
+          </span>
+        </button>
+        <button
+          className={styles.sort}
+          onClick={handleSortClick}
+          disabled={isDisable}
+        >
+          за ціною
+          <span>
+            <ArrowSortIcon />
+          </span>
+        </button>
+      </div>
     </div>
   );
 }

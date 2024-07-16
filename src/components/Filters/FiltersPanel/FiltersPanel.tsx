@@ -28,11 +28,25 @@ FiltersPanelProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const price = searchParams.toString();
-  console.log(price);
+  const price = searchParams.get('price');
+  const brand_id = searchParams.get('price');
 
-  const { category_id, brand_id, series_id, subseries_id, subsubseries_id } =
-    params;
+  const {
+    category_id,
+    brand_id: brandId,
+    series_id,
+    subseries_id,
+    subsubseries_id,
+  } = params;
+
+  console.log(
+    category_id,
+    brandId,
+    series_id,
+    subseries_id,
+    subseries_id,
+    subsubseries_id
+  );
   const { setMinPrice, setMaxPrice, setUrlPage, setSelectedBrands } =
     useFilters();
   const [filters, setFilters] = useState<Brand[]>([]);
@@ -43,7 +57,15 @@ FiltersPanelProps) {
     }
   }, [incomeFilters]);
 
-  const onCancelClick = () => {
+  const onCancelClick = (
+    category_id: string | string[] | undefined,
+    brandId: string | string[] | undefined,
+    series_id: string | string[] | undefined,
+    subseries_id: string | string[] | undefined,
+    subsubseries_id: string | string[] | undefined,
+    price: string | null,
+    brand_id: string | null
+  ) => {
     if (
       !brand_id &&
       !series_id &&
@@ -51,27 +73,34 @@ FiltersPanelProps) {
       !subsubseries_id &&
       category_id
     ) {
-      console.log('Hello from cancel btn');
+      console.log('Hello from cancel btn1');
 
       setMinPrice('');
       setMaxPrice('');
       setUrlPage('1');
       setSelectedBrands([]);
       router.replace(pathname, { scroll: false });
-    } else if (searchParams.toString()) {
-      console.log('Hello from cancel btn');
+    } else if (price) {
+      console.log(`Hello from cancel btn${searchParams.toString()}`);
       router.replace(`/categories/${category_id}`, { scroll: false });
       setMinPrice('');
       setMaxPrice('');
       setSelectedBrands([]);
-    } else {
-      router.replace(`/categories/${category_id}`, { scroll: false });
     }
+    router.replace(`/categories/${category_id}`, { scroll: false });
   };
 
   const onItemClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     if (filters.length <= 1) {
-      onCancelClick();
+      onCancelClick(
+        category_id,
+        brandId,
+        series_id,
+        subseries_id,
+        subseries_id,
+        price,
+        brand_id
+      );
     } else {
       const filterName = (event.currentTarget as HTMLElement).textContent;
       setFilters((prevFilters) =>
@@ -86,7 +115,21 @@ FiltersPanelProps) {
 
   return (
     <div className="flex gap-6 items-center mb-3 pl-6">
-      <FilterButton onClick={onCancelClick}>Скасувати</FilterButton>
+      <FilterButton
+        onClick={() =>
+          onCancelClick(
+            category_id,
+            brandId,
+            series_id,
+            subseries_id,
+            subseries_id,
+            price,
+            brand_id
+          )
+        }
+      >
+        Скасувати
+      </FilterButton>
       {filters?.map((filter) => (
         <FilterButton onClick={onItemClick} withCross={true} key={filter.id}>
           {filter.name}
