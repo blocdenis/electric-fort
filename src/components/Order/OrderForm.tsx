@@ -242,7 +242,7 @@ const OrderForm = () => {
               </label>
             </div>
           ))}
-          {errors.dilivery && <span>Обов'язкове поле</span>}
+          {errors.dilivery && <span>Обов&apos;язкове поле</span>}
         </div>
       </div>
 
@@ -324,7 +324,7 @@ const OrderForm = () => {
               </label>
             </div>
           ))}
-          {errors.payment && <span>Обов'язкове поле</span>}
+          {errors.payment && <span>Обов&apos;язкове поле</span>}
         </div>
       </div>
 
