@@ -6,7 +6,12 @@ function TextContainer({
   children,
 }: PropsWithChildren<{ className?: string }>) {
   return (
-    <div className={classNames('pt-0 pb-10 pl-6 pr-[42px]', className)}>
+    <div
+      className={classNames(
+        'pt-0 pb-6  pl-4 pr-4 laptop:pb-10 laptop:pl-6  laptop:pr-[42px]',
+        className
+      )}
+    >
       {children}
     </div>
   );

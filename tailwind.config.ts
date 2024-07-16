@@ -32,6 +32,7 @@ const config: Config = {
         base: ['16px', '1.4'],
         md: ['18px', '1.4'],
         lg: ['24px', '1.4'],
+        xl: ['36px', '1.4'],
       },
     },
   },
