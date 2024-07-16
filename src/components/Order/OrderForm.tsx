@@ -1,25 +1,30 @@
 'use client';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
-// import { createOrder, isAuth } from '@/services/api/api';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import './OrderForm.scss';
 import { useAuth } from '@/context/AuthContext';
 import axios from 'axios';
+import RadioFalse from '../icons/RadioFalse';
+import RadioTrue from '../icons/RadioTrue';
+import { useRouter } from 'next/navigation';
+
+import AuthModal from '../AuthModal/AuthModal';
+import Link from 'next/link';
 
 enum DeliveryMethods {
   PICKUP = 'Самовивіз',
   NOVA_POSHTA = 'Нова Пошта',
-  POSTOMAT_NP = 'Поштомат НП',
+  POSTOMAT_NP = 'Поштомат',
   UKRPOSHTA = 'Укрпошта',
-  COURIER_NP = 'Кур`єр НП',
+  COURIER_NP = "Кур'єр",
 }
 
 enum PaymentMethods {
-  ONLINE = 'Онлайн-оплата карткою, Google Pay або Apple Pay',
+  ONLINE = 'Онлайн-оплата карткою',
   CASHLESS = 'Безготівковий',
   CASH = 'Готівкою при отриманні',
-  COD = 'Накладенний платіж',
+  COD = 'Накладений платіж',
 }
 
 interface IForm {
@@ -40,7 +45,7 @@ interface IForm {
 
 const OrderForm = () => {
   const { isAuthenticated } = useAuth();
-  console.log(isAuthenticated);
+  const router = useRouter();
   const { cartItems } = useShoppingCart();
   const {
     register,
@@ -61,6 +66,15 @@ const OrderForm = () => {
   const [showHouseInput, setShowHouseInput] = useState(false);
   const [showApartmentInput, setShowApartmentInput] = useState(false);
   const [showDepartmentInput, setShowDepartmentInput] = useState(false);
+
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const openModal = () => {
+    setIsAuthOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsAuthOpen(false);
+  };
 
   const createOrder = async (data: {
     products: { product_id: number; number: number }[] | undefined;
@@ -103,7 +117,7 @@ const OrderForm = () => {
 
       console.log('Order created successfully:', response);
       reset();
-      alert('order success');
+      router.push('/success');
     } catch (error: any) {
       console.error('Error creating order:', error);
     }
@@ -128,11 +142,15 @@ const OrderForm = () => {
         setShowStreetInput(true);
         setShowHouseInput(true);
         setShowApartmentInput(true);
+        setShowDepartmentInput(false);
         break;
       case DeliveryMethods.NOVA_POSHTA:
       case DeliveryMethods.UKRPOSHTA:
       case DeliveryMethods.POSTOMAT_NP:
         setShowDepartmentInput(true);
+        setShowStreetInput(false);
+        setShowHouseInput(false);
+        setShowApartmentInput(false);
         break;
       default:
         setShowCityInput(false);
@@ -149,10 +167,18 @@ const OrderForm = () => {
 
         <div className="header">
           <h3>1. Особисті дані</h3>
-          {isAuthenticated && (
-            <div>
+          {!isAuthenticated && (
+            <div className="btn-block">
               <span>Вже маєш акаунт ? </span>
-              <button>Увійти</button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  openModal();
+                }}
+                className="btn"
+              >
+                Увійти
+              </button>
             </div>
           )}
         </div>
@@ -199,19 +225,22 @@ const OrderForm = () => {
           {errors.phone && <span>Обов&apos;язкове поле</span>}
         </div>
       </div>
-
       <div className="form-section">
         <h3>2. Доставка</h3>
-        <div className="form-radio-group">
+        <div className="form-grid">
           {Object.values(DeliveryMethods).map((method, index) => (
-            <label key={index}>
-              <input
-                type="radio"
-                value={method}
-                {...register('dilivery', { required: true })}
-              />
-              {method}
-            </label>
+            <div key={index} className="form-grid-item">
+              <label className="flex flex-row gap-4">
+                <input
+                  type="radio"
+                  value={method}
+                  {...register('dilivery', { required: true })}
+                />
+
+                {watch('dilivery') === method ? <RadioTrue /> : <RadioFalse />}
+                {method}
+              </label>
+            </div>
           ))}
           {errors.dilivery && <span>Обов&apos;язкове поле</span>}
         </div>
@@ -276,19 +305,24 @@ const OrderForm = () => {
           {errors.department && <span>Обов&apos;язкове поле</span>}
         </div>
       )}
-
       <div className="form-section">
         <h3>3. Оплата</h3>
-        <div className="form-radio-group">
+        <div className="fortm-grid">
           {Object.values(PaymentMethods).map((method, index) => (
-            <label key={index}>
-              <input
-                type="radio"
-                value={method}
-                {...register('payment', { required: true })}
-              />
-              {method}
-            </label>
+            <div key={index} className="form-grid-item">
+              <label className="flex flex-row gap-4">
+                <input
+                  type="radio"
+                  value={method}
+                  {...register('payment', { required: true })}
+                />
+                <div className="radio-icon">
+                  {watch('payment') === method ? <RadioTrue /> : <RadioFalse />}
+                </div>
+
+                {method}
+              </label>
+            </div>
           ))}
           {errors.payment && <span>Обов&apos;язкове поле</span>}
         </div>
@@ -305,7 +339,12 @@ const OrderForm = () => {
         <button type="submit" className="submit-button">
           Підтвердити замовлення
         </button>
+        <Link href="/oferta">
+          <p> Підтверджуючи замовлення, ви приймаєте умови угоди користувача</p>
+        </Link>
       </div>
+
+      {isAuthOpen && <AuthModal onClose={closeModal} />}
     </form>
   );
 };

@@ -6,6 +6,7 @@ import { useProducts } from '@/hooks/useProducts';
 import { CartItem } from '../ShoppingCart/CartItem';
 import { applyDiscount, discounts } from '@/services/applyDiscount';
 import { formatPriceUAH } from '@/services/formatCurrency';
+import { OrderItem } from './OrderItem';
 
 const OrderCart = () => {
   const { cartItems, closeCart } = useShoppingCart();
@@ -27,7 +28,7 @@ const OrderCart = () => {
       <>
         <h2 className="cart-hero">Ваше замовлення</h2>
         {cartItems?.map((item) => (
-          <CartItem key={item.id} {...item} close={closeCart} />
+          <OrderItem key={item.id} {...item} close={closeCart} />
         ))}
         <div className="checkout-container">
           <div className="checkout-info">

@@ -218,30 +218,27 @@ function CategoriesProductGroupPage({
                 </>
               ) : (
                 <>
-                  <Sort isDisable={false} />
-                  {productsGroup !== 'category' ? (
-                    <FiltersPanel incomeFilters={filteredBrandsArray} />
-                  ) : null}
+                  <div className="flex flex-col-reverse laptop:flex-col">
+                    <Sort isDisable={false} />
+                    {productsGroup !== 'category' ? (
+                      <FiltersPanel incomeFilters={filteredBrandsArray} />
+                    ) : null}
+                  </div>
                   <CategoriesProductsList
                     productGroup={productsGroup}
                     groupId={groupData(productsGroup).groupId}
                     sort={sort}
                   />
-                  {/* <FilteredProductsList
-                    productGroup={productsGroup}
-                    categoryId={category.id}
-                    groupIds={groupData(productsGroup).groupIds}
-                    sort={sort}
-                    price={filterPrice}
-                  /> */}
                 </>
               )
             ) : (
               <>
-                <Sort isDisable={false} />
-                {!isPending ? (
-                  <FiltersPanel incomeFilters={filteredBrandsArray} />
-                ) : null}
+                <div className="flex flex-col-reverse laptop:flex-col">
+                  <Sort isDisable={false} />
+                  {!isPending ? (
+                    <FiltersPanel incomeFilters={filteredBrandsArray} />
+                  ) : null}
+                </div>
                 <FilteredProductsList
                   productGroup={productsGroup}
                   categoryId={category.id}

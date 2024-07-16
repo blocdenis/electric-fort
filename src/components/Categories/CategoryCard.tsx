@@ -25,7 +25,7 @@ function CategoryCard({
   subsubseries_id,
 }: CategoryCardProps) {
   return (
-    <div className=" w-[168px] h-full tablet:w-[220px] tablet:h-[228px] desktop:w-[220px] bg-white border border-[#DEDEDE] py-4 ">
+    <div className=" w-full h-full tablet:w-[220px] tablet:h-[228px] desktop:w-[220px] desktop:h-[228px] bg-white border border-[#DEDEDE] py-4 ">
       <Link
         href={
           subsubseries_id
