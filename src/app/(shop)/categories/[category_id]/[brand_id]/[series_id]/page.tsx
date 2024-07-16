@@ -27,8 +27,8 @@ async function Page({ params, searchParams }: PageProps) {
   const { category_id, brand_id, series_id } = params;
   const { sort, price, brand_id: brandParam, page: urlPage } = searchParams;
   const page = 1;
-  const itemsPerPage = 6;
-  let pageSize = 6;
+  const itemsPerPage = 15;
+  let pageSize = 15;
   if (urlPage) {
     pageSize = Number(urlPage) * itemsPerPage;
   }

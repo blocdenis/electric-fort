@@ -37,9 +37,9 @@ function CategoriesSection() {
               nextEl: '#categories_btn_next',
               prevEl: '#categories_btn_prev',
             }}
-            autoplay={{
-              delay: 2500,
-            }}
+            // autoplay={{
+            //   delay: 2500,
+            // }}
             breakpoints={{
               375: {
                 slidesPerView: 1.55,
@@ -64,7 +64,11 @@ function CategoriesSection() {
             modules={[Navigation, Autoplay]}
           >
             {categories?.map(({ id, name, image }, index) => (
-              <SwiperSlide tag="li" key={id}>
+              <SwiperSlide
+                tag="li"
+                key={id}
+                style={{ width: '220px', height: '228px' }}
+              >
                 <CategoryCard
                   category_id={id}
                   name={formatedString(name)}

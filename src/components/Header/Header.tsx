@@ -141,12 +141,14 @@ const Header = () => {
               </div>
               <div className=" w-full flex gap-4">
                 <SearchInput placeholder="Пошук" />
-                <button
-                  onClick={handleFiltersOpen}
-                  className="w-[38px] h-[38px]"
-                >
-                  {isFiltersShown && <FilterIcon className=" laptop:hidden" />}
-                </button>
+                {isFiltersShown && (
+                  <button
+                    onClick={handleFiltersOpen}
+                    className="w-[38px] h-[38px]"
+                  >
+                    <FilterIcon className=" laptop:hidden" />
+                  </button>
+                )}
               </div>
             </div>
             <div className={styles.container_icons}>
@@ -179,7 +181,7 @@ const Header = () => {
           </div>
         </Container>
       </div>
-      {isFiltersOpen && <Filters />}
+      {isFiltersShown && isFiltersOpen && <Filters />}
       <Navigation />
       <Backdrop
         isOpen={isMenuOpen}
