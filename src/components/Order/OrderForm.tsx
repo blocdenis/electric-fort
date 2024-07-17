@@ -109,10 +109,18 @@ const OrderForm = () => {
         number: item.number || 1,
       }));
 
+      const deliveryMethod = data.dilivery;
+      const cityDilivery =
+        deliveryMethod === DeliveryMethods.PICKUP ? '' : data.city_dilivery;
+      const department =
+        deliveryMethod === DeliveryMethods.PICKUP ? '' : data.department;
+
       const response = await createOrder({
         ...data,
         products: transformedCartItems,
         activity: 'Не вказувати',
+        city_dilivery: cityDilivery,
+        department,
       });
 
       console.log('Order created successfully:', response);
