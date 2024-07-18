@@ -30,6 +30,7 @@ import classNames from 'classnames';
 const Header = () => {
   const params = useParams();
   const { category_id } = params;
+  const isFiltersShown = category_id ? true : false;
 
   const { openCart, cartQuantity } = useShoppingCart();
   const { openCloseFavorites, favoritesQuantity } = useFavorites();
@@ -38,13 +39,6 @@ const Header = () => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [activeLanguage, setActiveLanguage] = useState<'UA' | 'RU'>('UA');
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-  const [isFiltersShown, setIsFilterShown] = useState(false);
-
-  useEffect(() => {
-    if (category_id) {
-      setIsFilterShown(true);
-    }
-  }, [category_id]);
 
   const handleFiltersOpen = () => {
     setIsFiltersOpen(!isFiltersOpen);
