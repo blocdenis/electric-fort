@@ -4,16 +4,6 @@ import PriceSlider from './PriceSlider';
 import BrandsFilter from './BrandsFilter';
 import styles from './Filters.module.scss';
 import { ArrowCatalogIcon, ArrowCategoriesIcon } from '../icons';
-import { Brand } from '@/lib/types/types';
-
-interface FiltersProps {
-  //   brands?: Brand[];
-  //   selectedBrands?: string[];
-  //   onBrandCheckboxChange?: (brandId: string) => void;
-  //   minPrice?: string;
-  //   maxPrice?: string;
-  //   onPriceChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
 
 const Filters: React.FC = () => {
   const [filtersOpen, setFiltersOpen] = useState<boolean>(true);

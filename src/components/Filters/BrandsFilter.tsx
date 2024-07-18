@@ -2,9 +2,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './Filters.module.scss';
 import CustomCheckbox from './CustomCheckbox';
-import { Brand } from '@/lib/types/types';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useFilters } from '@/context/FiltersContext';
+import { ArrowCatalogIcon } from '../icons';
 
 const BrandsFilter: React.FC = () => {
   const {
@@ -13,6 +13,7 @@ const BrandsFilter: React.FC = () => {
     onBrandCheckboxChange,
   } = useFilters();
   const [search, setSearch] = useState<string>('');
+  const [isAllBrandsShown, setIsAllBrandsShown] = useState(false);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -80,6 +81,7 @@ const BrandsFilter: React.FC = () => {
           ?.filter((brand) =>
             brand.name.toLowerCase().includes(search.toLowerCase())
           )
+          .slice(0, 5)
           .map((brand) => (
             <label key={brand.id} className={styles.brandItem}>
               <CustomCheckbox
@@ -89,6 +91,40 @@ const BrandsFilter: React.FC = () => {
               {brand.name}
             </label>
           ))}
+        {isAllBrandsShown &&
+          brands
+            ?.filter((brand) =>
+              brand.name.toLowerCase().includes(search.toLowerCase())
+            )
+            .slice(5)
+            .map((brand) => (
+              <label key={brand.id} className={styles.brandItem}>
+                <CustomCheckbox
+                  checked={selectedBrands.includes(brand.id.toString())}
+                  onChange={() => onBrandCheckboxChange(brand.id.toString())}
+                />
+                {brand.name}
+              </label>
+            ))}
+        {brands && brands.length > 5 && (
+          <div
+            className="flex justify-between items-center"
+            onClick={() => setIsAllBrandsShown(!isAllBrandsShown)}
+          >
+            {isAllBrandsShown ? (
+              <span>Сховати</span>
+            ) : (
+              <span>Показати всіх виробників</span>
+            )}
+            <span className={styles.arrowIcon}>
+              {isAllBrandsShown ? (
+                <ArrowCatalogIcon rotation={270} />
+              ) : (
+                <ArrowCatalogIcon rotation={90} />
+              )}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

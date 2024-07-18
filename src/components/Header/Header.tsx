@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   BurgerIcon,
   CartIcon,
@@ -25,10 +25,12 @@ import CircleWithQuantity from '../CircleWithQuantity/CircleWithQuantity';
 import FilterIcon from '../icons/FilterIcon';
 import Filters from '../Filters/Filters';
 import { useParams } from 'next/navigation';
+import classNames from 'classnames';
 
 const Header = () => {
   const params = useParams();
   const { category_id } = params;
+  const isFiltersShown = category_id ? true : false;
 
   const { openCart, cartQuantity } = useShoppingCart();
   const { openCloseFavorites, favoritesQuantity } = useFavorites();
@@ -37,8 +39,6 @@ const Header = () => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [activeLanguage, setActiveLanguage] = useState<'UA' | 'RU'>('UA');
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-
-  const isFiltersShown = category_id ? true : false;
 
   const handleFiltersOpen = () => {
     setIsFiltersOpen(!isFiltersOpen);
@@ -144,9 +144,16 @@ const Header = () => {
                 {isFiltersShown && (
                   <button
                     onClick={handleFiltersOpen}
-                    className="w-[38px] h-[38px]"
+                    className="w-[38px] h-[38px] laptop:hidden"
                   >
-                    <FilterIcon className=" laptop:hidden" />
+                    <FilterIcon
+                      className={classNames(
+                        {
+                          ' bg-primary_green': isFiltersOpen,
+                        },
+                        'transition-all'
+                      )}
+                    />
                   </button>
                 )}
               </div>
@@ -181,7 +188,11 @@ const Header = () => {
           </div>
         </Container>
       </div>
-      {isFiltersShown && isFiltersOpen && <Filters />}
+      {isFiltersShown && isFiltersOpen && (
+        <div className=" laptop:hidden">
+          <Filters />
+        </div>
+      )}
       <Navigation />
       <Backdrop
         isOpen={isMenuOpen}
