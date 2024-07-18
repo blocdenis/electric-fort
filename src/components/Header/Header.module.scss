@@ -58,6 +58,10 @@
   color: white;
   @include breakpoint(mobile) {
     flex-direction: column;
+    padding: 16px 16px;
+  }
+  @include breakpoint(tablet) {
+    padding: 16px 16px;
   }
 }
 .container_icons {
