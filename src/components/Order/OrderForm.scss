@@ -243,3 +243,27 @@
     }
   }
 }
+.np-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  width: 100%;
+  .np-select {
+    width: 100%;
+  }
+  .np-select__input {
+    color: #000000;
+  }
+  .np-select__box {
+    z-index: 100;
+  }
+}
+.np-select__button {
+  width: 100%;
+  z-index: 21;
+  overflow: hidden;
+}
+
+.np-warehouse {
+  z-index: 1;
+}

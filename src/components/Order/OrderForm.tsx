@@ -1,5 +1,6 @@
 'use client';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
+import { NpCitySelect, NpWarehouseSelect, utils } from 'np-select';
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import './OrderForm.scss';
@@ -11,6 +12,7 @@ import { useRouter } from 'next/navigation';
 
 import AuthModal from '../AuthModal/AuthModal';
 import Link from 'next/link';
+import CityWarehouseSelect from './CityWarehouseSelect';
 
 enum DeliveryMethods {
   PICKUP = 'Самовивіз',
@@ -102,6 +104,7 @@ const OrderForm = () => {
     );
     return response.data;
   };
+
   const onSubmit: SubmitHandler<IForm> = async (data) => {
     try {
       const transformedCartItems = cartItems?.map((item) => ({
@@ -144,6 +147,7 @@ const OrderForm = () => {
   useEffect(() => {
     setValue('pib', `${firstName || ''} ${lastName || ''}`.trim());
   }, [firstName, lastName, setValue]);
+
   useEffect(() => {
     switch (deliveryMethod) {
       case DeliveryMethods.COURIER_NP:
@@ -168,6 +172,35 @@ const OrderForm = () => {
         setShowDepartmentInput(false);
     }
   }, [deliveryMethod]);
+
+  const paymentMethods = {
+    [DeliveryMethods.PICKUP]: [
+      PaymentMethods.ONLINE,
+      PaymentMethods.CASHLESS,
+      PaymentMethods.CASH,
+    ],
+    [DeliveryMethods.NOVA_POSHTA]: [
+      PaymentMethods.ONLINE,
+      PaymentMethods.CASHLESS,
+      PaymentMethods.COD,
+    ],
+    [DeliveryMethods.POSTOMAT_NP]: [
+      PaymentMethods.ONLINE,
+      PaymentMethods.CASHLESS,
+      PaymentMethods.COD,
+    ],
+    [DeliveryMethods.UKRPOSHTA]: [
+      PaymentMethods.ONLINE,
+      PaymentMethods.CASHLESS,
+      PaymentMethods.COD,
+    ],
+    [DeliveryMethods.COURIER_NP]: [
+      PaymentMethods.ONLINE,
+      PaymentMethods.CASHLESS,
+      PaymentMethods.COD,
+    ],
+  };
+
   return (
     <form className="order-form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-section">
@@ -244,7 +277,6 @@ const OrderForm = () => {
                   value={method}
                   {...register('dilivery', { required: true })}
                 />
-
                 {watch('dilivery') === method ? <RadioTrue /> : <RadioFalse />}
                 {method}
               </label>
@@ -255,15 +287,14 @@ const OrderForm = () => {
       </div>
 
       {showCityInput && (
-        <div className="form-field">
-          <label htmlFor="city">Місто*</label>
-          <input
-            id="city"
-            placeholder="Місто"
-            {...register('city_dilivery', { required: true })}
-          />
-          {errors.city_dilivery && <span>Обов&apos;язкове поле</span>}
-        </div>
+        <CityWarehouseSelect
+          onSelectCity={(city: string | undefined) =>
+            setValue('city_dilivery', city)
+          }
+          onSelectWarehouse={(warehouse: string | undefined) =>
+            setValue('department', warehouse)
+          }
+        />
       )}
 
       {showHouseInput && (
@@ -302,21 +333,10 @@ const OrderForm = () => {
         </div>
       )}
 
-      {showDepartmentInput && (
-        <div className="form-field">
-          <label htmlFor="department">Відділення*</label>
-          <input
-            id="department"
-            placeholder="Відділення"
-            {...register('department', { required: true })}
-          />
-          {errors.department && <span>Обов&apos;язкове поле</span>}
-        </div>
-      )}
       <div className="form-section">
         <h3>3. Оплата</h3>
         <div className="fortm-grid">
-          {Object.values(PaymentMethods).map((method, index) => (
+          {paymentMethods[deliveryMethod].map((method, index) => (
             <div key={index} className="form-grid-item">
               <label className="flex flex-row gap-4">
                 <input
