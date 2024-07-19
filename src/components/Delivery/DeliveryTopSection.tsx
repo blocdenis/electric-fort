@@ -30,9 +30,9 @@ function DeliveryTopSection() {
         </div>
         <ul className={styles.delivery_options_list}>
           <li>Нова Пошта</li>
+          <li>Поштомат НП</li>
+          <li>Кур&apos;єр НП</li>
           <li>Укрпошта</li>
-          <li>Поштомат</li>
-          <li>Курьєр</li>
           <li>Самовивіз</li>
         </ul>
       </div>
