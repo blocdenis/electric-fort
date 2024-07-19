@@ -33,10 +33,7 @@ function CategoriesProductsList({
 }: CategoriesProductsListProps) {
   const router = useRouter();
   const pathname = usePathname();
-  const location = console.log(pathname);
-
   const searchParams = useSearchParams();
-  const pageFromURL = searchParams.get('page');
   const { urlPage } = useFilters();
   const page = 1; //for fetching data
   const itemsPerPage = 15;
