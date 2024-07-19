@@ -39,14 +39,6 @@ FiltersPanelProps) {
     subsubseries_id,
   } = params;
 
-  console.log(
-    category_id,
-    brandId,
-    series_id,
-    subseries_id,
-    subseries_id,
-    subsubseries_id
-  );
   const { setMinPrice, setMaxPrice, setUrlPage, setSelectedBrands } =
     useFilters();
   const [filters, setFilters] = useState<Brand[]>([]);
@@ -67,7 +59,7 @@ FiltersPanelProps) {
     brand_id: string | null
   ) => {
     if (
-      !brand_id &&
+      !brandId &&
       !series_id &&
       !subseries_id &&
       !subsubseries_id &&
@@ -80,14 +72,15 @@ FiltersPanelProps) {
       setUrlPage('1');
       setSelectedBrands([]);
       router.replace(pathname, { scroll: false });
-    } else if (price) {
+    } else if (price || brand_id) {
       console.log(`Hello from cancel btn${searchParams.toString()}`);
       router.replace(`/categories/${category_id}`, { scroll: false });
       setMinPrice('');
       setMaxPrice('');
       setSelectedBrands([]);
+    } else {
+      router.replace(`/categories/${category_id}`, { scroll: false });
     }
-    router.replace(`/categories/${category_id}`, { scroll: false });
   };
 
   const onItemClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {

@@ -9,7 +9,6 @@ import {
   getFilteredProductsBySubSubSeria,
 } from '@/services/api/api';
 import { useQuery } from '@tanstack/react-query';
-import { Brand } from '@/lib/types/types';
 import { ProductGroup } from '@/components/Categories/CategoriesProductsList';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useFilters } from '@/context/FiltersContext';
@@ -153,9 +152,6 @@ function FilteredProductsList({
     ),
     staleTime: 10,
   });
-  console.log(categoryId, groupIds, price, sort, page, pageSize);
-
-  console.log(data);
 
   if (!data) {
     return isLoading && <div>Hello Loading</div>;
@@ -166,7 +162,7 @@ function FilteredProductsList({
     : 1;
 
   console.log('Hello from filtered Product list');
-  console.log(data);
+  // console.log(data);
 
   return (
     <>
