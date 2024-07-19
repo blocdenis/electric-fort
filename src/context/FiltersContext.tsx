@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import {
   createContext,
   Dispatch,
+  MouseEventHandler,
   ReactNode,
   SetStateAction,
   useContext,
@@ -31,6 +32,8 @@ type FiltersContext = {
   //   changePage: (newPage: string) => void;
   setUrlPage: Dispatch<SetStateAction<string>>;
   onShowMoreClick: () => void;
+  sort: string;
+  setSort: Dispatch<SetStateAction<string>>;
 };
 
 const FiltersContext = createContext({} as FiltersContext);
@@ -90,6 +93,9 @@ export function FiltersProvider({ children }: FiltersProviderProps) {
     );
   };
 
+  //For sort
+  const [sort, setSort] = useState('');
+
   return (
     <FiltersContext.Provider
       value={{
@@ -106,6 +112,8 @@ export function FiltersProvider({ children }: FiltersProviderProps) {
         urlPage,
         setUrlPage,
         onShowMoreClick: handleShowMoreBtnClick,
+        sort,
+        setSort,
       }}
     >
       {children}

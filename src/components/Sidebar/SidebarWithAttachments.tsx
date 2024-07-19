@@ -7,35 +7,10 @@ import Map from '../Map/Map';
 import Filters from '../Filters/Filters';
 import { Brand } from '@/lib/types/types';
 
-function SidebarWithAttachments({
-  showFilters,
-}: // brands,
-// selectedBrands,
-// onBrandCheckboxChange,
-// minPrice,
-// maxPrice,
-// onPriceChange,
-{
-  showFilters: boolean;
-  // brands?: Brand[];
-  // selectedBrands?: string[];
-  // onBrandCheckboxChange?: (brandId: string) => void;
-  // minPrice?: string;
-  // maxPrice?: string;
-  // onPriceChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}) {
+function SidebarWithAttachments({ showFilters }: { showFilters: boolean }) {
   return (
     <Sidebar>
-      {showFilters && (
-        <Filters
-        // brands={brands}
-        // selectedBrands={selectedBrands}
-        // onBrandCheckboxChange={onBrandCheckboxChange}
-        // minPrice={minPrice}
-        // maxPrice={maxPrice}
-        // onPriceChange={onPriceChange}
-        />
-      )}
+      {showFilters && <Filters />}
       <CatalogList />
       <div className="flex flex-col gap-4  mt-8">
         <h3 className=" mb-4">Контакти</h3>
