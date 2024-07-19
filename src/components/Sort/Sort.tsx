@@ -2,9 +2,10 @@
 
 import ArrowSortIcon from '@/components/icons/ArrowSortIcon';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { MouseEventHandler, useCallback, useState } from 'react';
+import { MouseEventHandler, useCallback, useEffect } from 'react';
 import styles from './Sort.module.scss';
 import classNames from 'classnames';
+import { useFilters } from '@/context/FiltersContext';
 
 interface SortProps {
   isDisable?: boolean;
@@ -14,8 +15,9 @@ function Sort({ isDisable }: SortProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [priceSort, setPriceSort] = useState('price');
-  const [dateSort, setDateSort] = useState('add_date');
+  const { sort, setSort } = useFilters();
+  // const [priceSort, setPriceSort] = useState('price');
+  // const [dateSort, setDateSort] = useState('add_date');
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -27,47 +29,54 @@ function Sort({ isDisable }: SortProps) {
     [searchParams]
   );
 
+  const deleteQueryString = useCallback(
+    (name: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete(name);
+
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  useEffect(() => {
+    if (!!sort) {
+      router.push(pathname + '?' + createQueryString('sort', `${sort}`), {
+        scroll: false,
+      });
+    } else if (!sort) {
+      router.push(pathname + '?' + deleteQueryString('sort'), {
+        scroll: false,
+      });
+    }
+  }, [createQueryString, deleteQueryString, pathname, router, sort]);
+
   const handleSortClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     const btn = event.currentTarget;
 
     switch (event.currentTarget.textContent) {
       case 'за датою додавання':
-        if (dateSort !== 'add_date') {
-          setDateSort('add_date');
+        if (sort !== 'add_date') {
+          setSort('add_date');
           event.currentTarget.classList.remove(styles.down_sort);
           event.currentTarget.classList.add(styles.up_sort);
-          router.push(
-            pathname + '?' + createQueryString('sort', `${dateSort}`)
-          );
         } else {
-          setDateSort('-add_date');
+          setSort('-add_date');
           event.currentTarget.classList.remove(styles.up_sort);
           event.currentTarget.classList.add(styles.down_sort);
-          router.push(
-            pathname + '?' + createQueryString('sort', `${dateSort}`)
-          );
         }
-
         break;
       case 'за ціною':
-        if (priceSort !== 'price') {
-          setPriceSort('price');
+        if (sort !== 'price') {
+          setSort('price');
           event.currentTarget.classList.remove(styles.down_sort);
           event.currentTarget.classList.add(styles.up_sort);
-          router.push(
-            pathname + '?' + createQueryString('sort', `${priceSort}`)
-          );
         } else {
-          setPriceSort('-price');
+          setSort('-price');
           event.currentTarget.classList.remove(styles.up_sort);
           event.currentTarget.classList.add(styles.down_sort);
-          router.push(
-            pathname + '?' + createQueryString('sort', `${priceSort}`)
-          );
         }
-
         break;
-
       default:
         break;
     }
