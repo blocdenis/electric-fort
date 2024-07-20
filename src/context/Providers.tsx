@@ -4,7 +4,7 @@ import { ReactNode, useState } from 'react';
 import { AuthProvider } from './AuthContext';
 import { ShoppingCartProvider } from './ShoppingCartContext';
 import { FavoritesProvider } from './FavoritesContext';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 export default function Provider({ children }: { children: ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
@@ -15,7 +15,6 @@ export default function Provider({ children }: { children: ReactNode }) {
           <FavoritesProvider>{children}</FavoritesProvider>
         </ShoppingCartProvider>
       </AuthProvider>
-      <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   );
 }
