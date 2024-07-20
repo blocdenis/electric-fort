@@ -4,12 +4,10 @@ import { usePathname } from 'next/navigation';
 import {
   createContext,
   Dispatch,
-  MouseEventHandler,
   ReactNode,
   SetStateAction,
   useContext,
   useEffect,
-  useMemo,
   useState,
 } from 'react';
 
@@ -29,7 +27,6 @@ type FiltersContext = {
   setMinPrice: Dispatch<SetStateAction<string>>;
   setMaxPrice: Dispatch<SetStateAction<string>>;
   urlPage: string;
-  //   changePage: (newPage: string) => void;
   setUrlPage: Dispatch<SetStateAction<string>>;
   onShowMoreClick: () => void;
   sort: string;
@@ -79,6 +76,12 @@ export function FiltersProvider({ children }: FiltersProviderProps) {
     }
   };
 
+  //For sort
+  const [sort, setSort] = useState('');
+  useEffect(() => {
+    setSort('');
+  }, [pathname]);
+
   //For Brands filter
   const [shownBrands, setShownBrands] = useState<Brand[] | undefined>([]);
   const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
@@ -92,9 +95,6 @@ export function FiltersProvider({ children }: FiltersProviderProps) {
         : [brand]
     );
   };
-
-  //For sort
-  const [sort, setSort] = useState('');
 
   return (
     <FiltersContext.Provider
