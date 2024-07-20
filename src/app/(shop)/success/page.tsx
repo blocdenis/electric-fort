@@ -9,7 +9,7 @@ import styles from './styles.module.scss';
 function Page() {
   const breadcrambsItens = [{ name: 'Оформлення замовлення' }];
   return (
-    <Container className="flex">
+    <Container className="flex flex-col">
       <Breadcrumbs items={breadcrambsItens} />
       <Section>
         <div className={styles.container}>
