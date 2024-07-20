@@ -11,7 +11,7 @@ import FiltersPanel from '../Filters/FiltersPanel/FiltersPanel';
 import FilteredProductsList from '../Products/ProductList/FilteredProductsList';
 import { BreadcrambsItemProps } from '../Breadcrumb/BreadcrumbsItem';
 import { useQuery } from '@tanstack/react-query';
-import { getFilteredProducts, getProductsByCategory } from '@/services/api/api';
+import { getFilteredProducts } from '@/services/api/api';
 import CategoriesProductsList, {
   ProductGroup,
 } from '../Categories/CategoriesProductsList';
@@ -23,7 +23,6 @@ import {
   ProductSubSubSeries,
 } from '@/lib/types/types';
 import BrandsList from '../Categories/BrandsList';
-// import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import SeriesList from '../Categories/SeriesList';
 import SubSubseriesList from '../Categories/SubSubseriesList';
 import SubseriesList from '../Categories/SubseriesList';
@@ -66,9 +65,6 @@ function CategoriesProductGroupPage({
   page,
   pageSize,
 }: CategoriesProductGroupProps) {
-  // const router = useRouter();
-  // const pathname = usePathname();
-  // const serchParams = useSearchParams();
   const { setShownBrands } = useFilters();
 
   const { data: filteredProducts, isPending } = useQuery({

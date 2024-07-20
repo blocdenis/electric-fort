@@ -15,9 +15,7 @@ function Sort({ isDisable }: SortProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { sort, setSort } = useFilters();
-  // const [priceSort, setPriceSort] = useState('price');
-  // const [dateSort, setDateSort] = useState('add_date');
+  const { sort, setSort, maxPrice, minPrice, shownBrands } = useFilters();
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -40,11 +38,13 @@ function Sort({ isDisable }: SortProps) {
   );
 
   useEffect(() => {
-    if (!!sort) {
+    if (sort !== '') {
+      console.log('sort use effect add');
       router.push(pathname + '?' + createQueryString('sort', `${sort}`), {
         scroll: false,
       });
-    } else if (!sort) {
+    } else {
+      console.log('sort use effect delete');
       router.push(pathname + '?' + deleteQueryString('sort'), {
         scroll: false,
       });

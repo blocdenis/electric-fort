@@ -17,20 +17,9 @@ interface FiltersPanelProps {
 function FiltersPanel({ incomeFilters }: FiltersPanelProps) {
   const params = useParams();
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const price = searchParams.get('price');
-  const brand_id = searchParams.get('brand_id');
-  const page = searchParams.get('page');
-  const sort = searchParams.get('sort');
 
-  const {
-    category_id,
-    brand_id: brandId,
-    series_id,
-    subseries_id,
-    subsubseries_id,
-  } = params;
+  const { category_id } = params;
 
   const { setMinPrice, setMaxPrice, setUrlPage, setSelectedBrands, setSort } =
     useFilters();
@@ -42,74 +31,29 @@ function FiltersPanel({ incomeFilters }: FiltersPanelProps) {
     }
   }, [incomeFilters]);
 
-  // const onCancelClick = (
-  //   category_id: string | string[] | undefined,
-  //   brandId: string | string[] | undefined,
-  //   series_id: string | string[] | undefined,
-  //   subseries_id: string | string[] | undefined,
-  //   subsubseries_id: string | string[] | undefined,
-  //   price: string | null,
-  //   brand_id: string | null
-  // ) => {
-  //   if (
-  //     !brandId &&
-  //     !series_id &&
-  //     !subseries_id &&
-  //     !subsubseries_id &&
-  //     category_id
-  //   ) {
-  //     console.log('Hello from cancel btn1');
-
-  //     setMinPrice('');
-  //     setMaxPrice('');
-  //     setUrlPage('1');
-  //     setSelectedBrands([]);
-  //     router.replace(pathname, { scroll: false });
-  //   } else if (price || brand_id) {
-  //     console.log(`Hello from cancel btn${searchParams.toString()}`);
-  //     router.replace(`/categories/${category_id}`, { scroll: false });
-  //     setMinPrice('');
-  //     setMaxPrice('');
-  //     setUrlPage('1');
-  //     setSelectedBrands([]);
-  //   } else {
-  //     router.replace(`/categories/${category_id}`, { scroll: false });
-  //   }
-  // };
-
   const onCancelClick = () => {
-    router.push(`/categories/${category_id}`);
-
     setSelectedBrands([]);
+    setMinPrice('');
+    setMaxPrice('');
+    setSort('');
+    setUrlPage('1');
 
-    if (price) {
-      setMinPrice('');
-      setMaxPrice('');
-    }
-    if (page) {
-      setUrlPage('1');
-    }
-    if (sort) {
-      setSort('');
-    }
+    setTimeout(() => {
+      router.replace(`/categories/${category_id}`, { scroll: false });
+    }, 300);
   };
 
   const onItemClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     if (filters.length <= 1) {
-      router.push(`/categories/${category_id}`);
-
       setSelectedBrands([]);
+      setMinPrice('');
+      setMaxPrice('');
+      setSort('');
+      setUrlPage('1');
 
-      if (price) {
-        setMinPrice('');
-        setMaxPrice('');
-      }
-      if (page) {
-        setUrlPage('1');
-      }
-      if (sort) {
-        setSort('');
-      }
+      setTimeout(() => {
+        router.replace(`/categories/${category_id}`, { scroll: false });
+      }, 300);
     } else {
       const filterName = (event.currentTarget as HTMLElement).textContent;
       setFilters((prevFilters) =>
@@ -124,20 +68,7 @@ function FiltersPanel({ incomeFilters }: FiltersPanelProps) {
 
   return (
     <div className="flex gap-6 items-center mb-3 pl-6">
-      <FilterButton
-        onClick={
-          () => onCancelClick()
-          // category_id,
-          // brandId,
-          // series_id,
-          // subseries_id,
-          // subseries_id,
-          // price,
-          // brand_id
-        }
-      >
-        Скасувати
-      </FilterButton>
+      <FilterButton onClick={onCancelClick}>Скасувати</FilterButton>
       {filters?.map((filter) => (
         <FilterButton onClick={onItemClick} withCross={true} key={filter.id}>
           {filter.name}

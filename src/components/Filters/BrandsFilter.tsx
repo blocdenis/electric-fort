@@ -18,7 +18,6 @@ const BrandsFilter: React.FC = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
-  const brandsFromURL = searchParams.get('brand_id') ?? '';
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -41,31 +40,23 @@ const BrandsFilter: React.FC = () => {
   );
 
   useEffect(() => {
-    // if (brandsFromURL.charAt(0) === ',') {
-    //   setSelectedBrands(brandsFromURL.slice(1).split(','));
-    // } else {
-    //   setSelectedBrands(brandsFromURL.split(','));
-    // }
-    if (selectedBrands?.length) {
+    if (selectedBrands?.length === 0) {
+      console.log('brand filter delete string');
+      router.push(pathname + '?' + deleteQueryString('brand_id'), {
+        scroll: false,
+      });
+      return;
+    } else {
+      console.log('brand filter create string');
+
       router.push(
         pathname +
           '?' +
           createQueryString('brand_id', `${selectedBrands.toString()}`),
         { scroll: false }
       );
-    } else {
-      router.replace(pathname + '?' + deleteQueryString('brand_id'), {
-        scroll: false,
-      });
     }
-  }, [
-    brandsFromURL,
-    createQueryString,
-    deleteQueryString,
-    pathname,
-    router,
-    selectedBrands,
-  ]);
+  }, [createQueryString, deleteQueryString, pathname, router, selectedBrands]);
 
   return (
     <div className={styles.brandsFilter}>
