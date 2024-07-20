@@ -68,6 +68,7 @@ const OrderForm = () => {
   const [showHouseInput, setShowHouseInput] = useState(false);
   const [showApartmentInput, setShowApartmentInput] = useState(false);
   const [showDepartmentInput, setShowDepartmentInput] = useState(false);
+  const [showTownInput, setShowTownInput] = useState(false);
 
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const openModal = () => {
@@ -114,9 +115,15 @@ const OrderForm = () => {
 
       const deliveryMethod = data.dilivery;
       const cityDilivery =
-        deliveryMethod === DeliveryMethods.PICKUP ? '' : data.city_dilivery;
+        deliveryMethod === DeliveryMethods.PICKUP ||
+        deliveryMethod === DeliveryMethods.COURIER_NP
+          ? ''
+          : data.city_dilivery;
       const department =
-        deliveryMethod === DeliveryMethods.PICKUP ? '' : data.department;
+        deliveryMethod === DeliveryMethods.PICKUP ||
+        deliveryMethod === DeliveryMethods.COURIER_NP
+          ? ''
+          : data.department;
 
       const response = await createOrder({
         ...data,
@@ -139,6 +146,7 @@ const OrderForm = () => {
   const lastName = watch('lastName');
   const house = watch('house');
   const apartment = watch('apartment');
+  const paymentMethod = watch('payment');
 
   useEffect(() => {
     setShowCityInput(deliveryMethod !== DeliveryMethods.PICKUP);
@@ -155,14 +163,23 @@ const OrderForm = () => {
         setShowHouseInput(true);
         setShowApartmentInput(true);
         setShowDepartmentInput(false);
+        setShowTownInput(true);
+        setShowCityInput(false);
         break;
       case DeliveryMethods.NOVA_POSHTA:
-      case DeliveryMethods.UKRPOSHTA:
       case DeliveryMethods.POSTOMAT_NP:
-        setShowDepartmentInput(true);
         setShowStreetInput(false);
         setShowHouseInput(false);
         setShowApartmentInput(false);
+        setShowTownInput(false);
+        break;
+      case DeliveryMethods.UKRPOSHTA:
+        setShowTownInput(true);
+        setShowStreetInput(false);
+        setShowHouseInput(false);
+        setShowApartmentInput(false);
+        setShowDepartmentInput(true);
+        setShowCityInput(false);
         break;
       default:
         setShowCityInput(false);
@@ -170,6 +187,7 @@ const OrderForm = () => {
         setShowHouseInput(false);
         setShowApartmentInput(false);
         setShowDepartmentInput(false);
+        setShowTownInput(false);
     }
   }, [deliveryMethod]);
 
@@ -296,16 +314,26 @@ const OrderForm = () => {
           }
         />
       )}
-
-      {showHouseInput && (
+      {showTownInput && (
         <div className="form-field">
-          <label htmlFor="house">Будинок*</label>
+          <label htmlFor="street">misto</label>
           <input
-            id="house"
-            placeholder="Будинок"
-            {...register('house', { required: true })}
+            id="city_dilivery"
+            placeholder="misto"
+            {...register('city_dilivery', { required: true })}
           />
-          {errors.house && <span>Обов&apos;язкове поле</span>}
+          {errors.city_dilivery && <span>Обов&apos;язкове поле</span>}
+        </div>
+      )}
+      {showDepartmentInput && (
+        <div className="form-field">
+          <label htmlFor="deartment">viddilenia</label>
+          <input
+            id="apartment"
+            placeholder="Квартира"
+            {...register('department', { required: true })}
+          />
+          {errors.department && <span>Обов&apos;язкове поле</span>}
         </div>
       )}
 
@@ -318,6 +346,17 @@ const OrderForm = () => {
             {...register('street', { required: true })}
           />
           {errors.street && <span>Обов&apos;язкове поле</span>}
+        </div>
+      )}
+      {showHouseInput && (
+        <div className="form-field">
+          <label htmlFor="house">Будинок*</label>
+          <input
+            id="house"
+            placeholder="Будинок"
+            {...register('house', { required: true })}
+          />
+          {errors.house && <span>Обов&apos;язкове поле</span>}
         </div>
       )}
 
@@ -354,6 +393,13 @@ const OrderForm = () => {
           ))}
           {errors.payment && <span>Обов&apos;язкове поле</span>}
         </div>
+        {paymentMethod === PaymentMethods.COD && (
+          <p className="cod-info">
+            Важливо! Якщо оплачувати готівкою при отриманні - до суми замовлення
+            буде додано 2% + 20 грн від суми замовлення (післяплата) згідно
+            тарифів Нової Пошти
+          </p>
+        )}
       </div>
 
       <div className="form-section">
