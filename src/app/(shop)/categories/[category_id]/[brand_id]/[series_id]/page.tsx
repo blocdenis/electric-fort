@@ -1,49 +1,145 @@
-import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
-import ProductCard from '@/components/Products/ProductCard/ProductCard';
-import ProductList from '@/components/Products/ProductList/ProductList';
-import Section from '@/components/Section/Section';
-import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
-import Sort from '@/components/Sort/Sort';
-import { brands } from '@/lib/db/brands';
-import { categories } from '@/lib/db/categories';
-import { products } from '@/lib/db/products';
-import { series } from '@/lib/db/productSeries';
-// import { getProductsBySeria } from '@/services/api/api';
+import NotFound from '@/app/not-found';
+import CategoriesProductGroupPage from '@/components/CategoriesProductGroupPage/CategoriesProductGroupPage';
+import getQueryClient from '@/lib/utils/getQueryClient';
+import {
+  getBrandById,
+  getCategoryById,
+  getFilteredProductsBySeria,
+  getProducts,
+  getProductsBySeria,
+  getSeriaById,
+  getSortedProductsBySeria,
+  getSubSeriesBySeriesId,
+} from '@/services/api/api';
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 
 export interface PageProps {
   params: { category_id: number; brand_id: number; series_id: number };
+  searchParams: {
+    sort: string | undefined;
+    price: string | undefined;
+    brand_id: string | undefined;
+    page: string | undefined;
+  };
 }
 
-async function Page({ params }: PageProps) {
+async function Page({ params, searchParams }: PageProps) {
   const { category_id, brand_id, series_id } = params;
+  const { sort, price, brand_id: brandParam, page: urlPage } = searchParams;
+  const page = 1;
+  const itemsPerPage = 15;
+  let pageSize = 15;
+  if (urlPage) {
+    pageSize = Number(urlPage) * itemsPerPage;
+  }
 
-  // const products = (await getProductsBySeria(Number(series_id), 1)).data;
+  let sorter = '-add_date';
+  if (sort) {
+    if (!sort.includes('-')) {
+      sorter = `%2B` + sort;
+    } else {
+      sorter = sort;
+    }
+  }
 
-  const categoryName = categories.find(
-    (category) => category.id === Number(category_id)
-  )?.name;
-  const brandName = brands.find((brand) => brand.id === Number(brand_id))?.name;
-  const seriesName = series.find(
-    (seria) => seria.id === Number(series_id)
-  )?.name;
+  let brandId = '';
+  if (brandParam) {
+    brandId = brandParam;
+  }
+
+  let filterPrice = '';
+  if (price) {
+    filterPrice = price;
+  }
+
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['products', series_id, page, pageSize],
+    queryFn: () =>
+      getProductsBySeria(series_id, page, pageSize, { cache: 'no-store' }),
+    staleTime: 10 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['series_subseries', series_id],
+    queryFn: () => getSubSeriesBySeriesId(series_id, { cache: 'no-store' }),
+    staleTime: 10 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['productsSorted', series_id, sorter, page, pageSize],
+    queryFn: () =>
+      getSortedProductsBySeria(series_id, sorter, page, pageSize, {
+        cache: 'no-store',
+      }),
+    staleTime: 10 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: [
+      'products',
+      category_id,
+      series_id,
+      filterPrice,
+      sorter,
+      page,
+      pageSize,
+    ],
+    queryFn: () =>
+      getFilteredProductsBySeria(
+        category_id,
+        series_id,
+        filterPrice,
+        sorter,
+        page,
+        pageSize,
+        {
+          cache: 'no-store',
+        }
+      ),
+    staleTime: 10,
+  });
+
+  const dehydratedState = dehydrate(queryClient);
+
+  const categoryData = await getCategoryById(category_id);
+  const brandData = await getBrandById(brand_id);
+  const seriesData = await getSeriaById(series_id);
+  const subSeriesData = await getSubSeriesBySeriesId(series_id);
+
+  if (!categoryData?.length || !brandData?.length || !seriesData?.length) {
+    return NotFound();
+  }
+
+  const [category] = categoryData;
+  const [brand] = brandData;
+  const [series] = seriesData;
 
   const breadcrumsItems = [
     { name: 'Категорії', href: '/categories' },
-    { name: categoryName, href: `/categories/${category_id}` },
-    { name: brandName, href: `/categories/${category_id}/${brand_id}` },
-    { name: seriesName },
+    { name: category.name, href: `/categories/${category_id}` },
+    { name: brand.name, href: `/categories/${category_id}/${brand_id}` },
+    { name: series.name },
   ];
+
   return (
-    <>
-      <Breadcrumbs items={breadcrumsItems} />
-      <Section>
-        <div className=" mx-auto overflow-hidden">
-          <SectionTitle className="mb-4" title={seriesName} />
-          <Sort />
-          <ProductList products={products} />
-        </div>
-      </Section>
-    </>
+    <HydrationBoundary state={dehydratedState}>
+      <CategoriesProductGroupPage
+        productsGroup="seria"
+        category={category}
+        brand={brand}
+        seria={series}
+        groupBrands={brandData}
+        groupSubSeries={subSeriesData}
+        breadcrumsItems={breadcrumsItems}
+        filterBrands={brandId}
+        sort={sorter}
+        filterPrice={filterPrice}
+        page={page}
+        pageSize={pageSize}
+      />
+    </HydrationBoundary>
   );
 }
 

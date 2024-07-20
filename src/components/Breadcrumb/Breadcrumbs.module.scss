@@ -1,12 +1,29 @@
 @use '../../scss/abstracts/' as *;
 .container {
-  width: 100%;
+  width: fit-content;
   display: flex;
   color: #acacac;
   font: $regular14;
   margin-top: 12px;
-  overflow: hidden;
+  margin-right: 50px;
 }
+
+.outer_container {
+  width: 100%;
+  @include breakpoint(tablet) {
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    &::-webkit-scrollbar {
+      width: 0 !important;
+      height: 0;
+      display: none !important;
+      background: transparent;
+    }
+  }
+}
+
 .item {
   padding: 0 12px;
   width: fit-content;

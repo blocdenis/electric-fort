@@ -1,14 +1,14 @@
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
 import React from 'react';
-import { categories } from '@/lib/db/categories';
-import CategoryCard from '@/components/Categories/CategoryCard';
-
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
-import getQueryClient from '@/lib/utils/getQueryClient';
-import { getCategories } from '@/services/api/api';
 import CategoriesList from '@/components/Categories/CategoriesList';
-import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
+import Container from '@/components/Container/Container';
+import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
+import ContentContainer from '@/components/Container/ContentContainer';
+import getQueryClient from '@/lib/utils/getQueryClient';
+import { getAllBrands, getAllCategories } from '@/services/api/api';
+import { dehydrate } from '@tanstack/react-query';
 
 async function Page() {
   const links = [{ name: 'Категорії' }];
@@ -16,22 +16,31 @@ async function Page() {
 
   await queryClient.prefetchQuery({
     queryKey: ['categories'],
-    queryFn: () => getCategories(),
-    staleTime: 10 * 1000,
+    queryFn: () => getAllCategories(),
+    staleTime: 100 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['brands'],
+    queryFn: () => getAllBrands(),
+    staleTime: 100 * 1000,
   });
 
   const dehydratedState = dehydrate(queryClient);
 
   return (
-    <HydrationBoundary state={dehydratedState}>
-      <Breadcrumbs items={links} />
-      <Section>
-        <div className=" pr-[64px] mx-auto overflow-hidden">
-          <SectionTitle className="mb-4" title="Категорії товарів" />
-          <CategoriesList />
-        </div>
-      </Section>
-    </HydrationBoundary>
+    <Container className="flex">
+      <SidebarWithAttachments showFilters={false} />
+      <ContentContainer>
+        <Breadcrumbs items={links} />
+        <Section>
+          <div className=" mx-auto overflow-hidden">
+            <SectionTitle className="mb-4" title="Категорії товарів" />
+            <CategoriesList />
+          </div>
+        </Section>
+      </ContentContainer>
+    </Container>
   );
 }
 

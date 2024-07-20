@@ -28,49 +28,28 @@ function ProductCard({
   images,
   series_id,
   subseries_id,
+  subsubseries_id,
   brand_id,
+  category_id,
   updated_info_date,
   add_date,
   article,
   onCardClick,
 }: ProductCardProps) {
-  const productPageLink = `/products/${id}`;
-  const {
-    cartItems,
-    getItemQuantity,
-    increaseCartQuantity,
-    decreaseCartQuantity,
-    removeFromCart,
-    cartQuantity,
-  } = useShoppingCart();
-
-  const quantity = getItemQuantity(id);
+  const productPageLink = `/${id}`;
+  const { addToCart, removeFromCart } = useShoppingCart();
 
   const { addToFavorites, deleteFromFavorites, isFavorite } = useFavorites();
 
   const handleFavoriteIconClick = () => {
     if (isFavorite(id)) {
-      // deleteFromFavorites.mutateAsync(id);
-      deleteFromFavorites(id);
+      deleteFromFavorites.mutateAsync(id);
     } else {
-      // addToFavorites.mutateAsync(id);
-      addToFavorites({
-        id,
-        name,
-        unit_of_measurement,
-        price,
-        description,
-        in_stock,
-        popular,
-        images,
-        series_id,
-        subseries_id,
-        brand_id,
-        updated_info_date,
-        add_date,
-        article,
-      });
+      addToFavorites.mutateAsync(id);
     }
+  };
+  const increaseCartQuantity = () => {
+    addToCart(id);
   };
 
   return (
@@ -108,10 +87,7 @@ function ProductCard({
         </div>
       </div>
       <div className=" flex justify-between items-center">
-        {/* <button onClick={() => increaseCartQuantity(id)}>
-          Купити {quantity}
-        </button> */}
-        <SecondaryButton type="button" onClick={() => increaseCartQuantity(id)}>
+        <SecondaryButton type="button" onClick={() => increaseCartQuantity()}>
           Купити
         </SecondaryButton>
         <div className=" flex justify-center items-center w-[41px] h-[41px] cursor-pointer">
@@ -120,7 +96,7 @@ function ProductCard({
               onClick={handleFavoriteIconClick}
               width={32}
               height={30}
-              className=" fill-yellow hover:scale-[128%] transition-transform duration-300"
+              className=" hover:scale-[128%] transition-transform duration-300"
             />
           ) : (
             <HeartWithShadowIcon

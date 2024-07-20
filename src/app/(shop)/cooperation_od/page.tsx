@@ -14,7 +14,7 @@ function Page() {
   const links = [{ name: 'Офіційне дилерство' }];
   return (
     <Container className="flex">
-      <SidebarWithAttachments />
+      <SidebarWithAttachments showFilters={false} />
       <ContentContainer>
         <Breadcrumbs items={links} />
         <Section>

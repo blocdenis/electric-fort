@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   BurgerIcon,
   CartIcon,
@@ -22,14 +22,27 @@ import { useShoppingCart } from '@/context/ShoppingCartContext';
 import Container from '../Container/Container';
 import { useFavorites } from '@/context/FavoritesContext';
 import CircleWithQuantity from '../CircleWithQuantity/CircleWithQuantity';
+import FilterIcon from '../icons/FilterIcon';
+import Filters from '../Filters/Filters';
+import { useParams } from 'next/navigation';
+import classNames from 'classnames';
 
 const Header = () => {
+  const params = useParams();
+  const { category_id } = params;
+  const isFiltersShown = category_id ? true : false;
+
   const { openCart, cartQuantity } = useShoppingCart();
   const { openCloseFavorites, favoritesQuantity } = useFavorites();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [activeLanguage, setActiveLanguage] = useState<'UA' | 'RU'>('UA');
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
+  const handleFiltersOpen = () => {
+    setIsFiltersOpen(!isFiltersOpen);
+  };
 
   const handleToggle = (language: 'UA' | 'RU') => {
     setActiveLanguage(language);
@@ -123,10 +136,27 @@ const Header = () => {
             </Link>
             <div className={styles.container_search}>
               <div className={styles.container_contact}>
-                <ContactText />
-                <ContactText />
+                <ContactText textToCopy="+38(066) 459-88-87" />
+                <ContactText textToCopy="+38(068) 459-88-87" />
               </div>
-              <SearchInput placeholder="Пошук" />
+              <div className=" w-full flex gap-4">
+                <SearchInput placeholder="Пошук" />
+                {isFiltersShown && (
+                  <button
+                    onClick={handleFiltersOpen}
+                    className="w-[38px] h-[38px] laptop:hidden"
+                  >
+                    <FilterIcon
+                      className={classNames(
+                        {
+                          ' bg-primary_green': isFiltersOpen,
+                        },
+                        'transition-all'
+                      )}
+                    />
+                  </button>
+                )}
+              </div>
             </div>
             <div className={styles.container_icons}>
               <button onClick={openCloseFavorites} className=" relative">
@@ -158,6 +188,11 @@ const Header = () => {
           </div>
         </Container>
       </div>
+      {isFiltersShown && isFiltersOpen && (
+        <div className=" laptop:hidden">
+          <Filters />
+        </div>
+      )}
       <Navigation />
       <Backdrop
         isOpen={isMenuOpen}

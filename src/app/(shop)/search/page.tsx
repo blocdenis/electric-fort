@@ -7,7 +7,6 @@ const page = () => {
   return (
     <div>
       <Sidebar />
-      <SidebarWithAttachments />
     </div>
   );
 };

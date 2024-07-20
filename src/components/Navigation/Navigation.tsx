@@ -5,8 +5,7 @@ import NavigationItem from './NavigationItem';
 import { useState } from 'react';
 import CatalogList from './CatalogList';
 import Container from '../Container/Container';
-import { categories } from '@/lib/db/categories';
-import { brands } from '@/lib/db/brands';
+import Link from 'next/link';
 
 export const navigationItems = [
   { id: '1', title: 'Про нас', href: '/about_us' },
@@ -32,7 +31,12 @@ function Navigation() {
   return (
     <div className={styles.navigation_catalog_container}>
       <Container className=" relative">
-        <Catalog onClick={handleOpenCloseMenu} />
+        <div className="laptop:hidden">
+          <Catalog onClick={handleOpenCloseMenu} />
+        </div>
+        <Link className=" hidden laptop:block" href="/categories">
+          <Catalog />
+        </Link>
         <div className={styles.navigation}>
           <div className={styles.navigation_container}>
             <nav className={styles.menu}>

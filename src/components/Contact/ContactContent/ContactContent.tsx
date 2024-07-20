@@ -14,12 +14,14 @@ const ContactContent: React.FC<ContactContentProps> = ({ color }) => {
           className="flex flex-row gap-2.5"
         >
           <EnvelopeIcon color={color} />
-          <p>electricalfortress@gmail.com</p>
+          <span>electricalfortress@gmail.com</span>
         </a>
       </div>
       <div className={styles.container}>
-        <LocationIcon color={color} />
-        <p>м.Харків вул.Аааааааа, 46</p>
+        <a className="flex gap-2" href="">
+          <LocationIcon width={22} height={25} color={color} />
+          <span>61206, м. Харків, вул. Академіка Павлова, буд. 156-Б</span>
+        </a>
       </div>
     </div>
   );

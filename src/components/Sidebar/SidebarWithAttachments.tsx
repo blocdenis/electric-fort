@@ -4,20 +4,18 @@ import CatalogList from '../Navigation/CatalogList';
 import ContactText from '../Contact/ContactText/ContactText';
 import ContactContent from '../Contact/ContactContent/ContactContent';
 import Map from '../Map/Map';
-import { categories } from '@/lib/db/categories';
-import { brands } from '@/lib/db/brands';
-import { getBrands, getCategories } from '@/services/api/api';
 import Filters from '../Filters/Filters';
+import { Brand } from '@/lib/types/types';
 
-async function SidebarWithAttachments() {
+function SidebarWithAttachments({ showFilters }: { showFilters: boolean }) {
   return (
     <Sidebar>
-      {/* <Filters /> */}
+      {showFilters && <Filters />}
       <CatalogList />
       <div className="flex flex-col gap-4  mt-8">
         <h3 className=" mb-4">Контакти</h3>
-        <ContactText color="white" />
-        <ContactText color="white" />
+        <ContactText textToCopy="+38(066) 459-88-87" color="white" />
+        <ContactText textToCopy="+38(068) 459-88-87" color="white" />
         <ContactContent color="white" />
       </div>
       <Map className=" mt-6" />

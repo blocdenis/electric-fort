@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './SearchInput.module.scss';
-import { SearchIcon } from '../icons';
+import { CrossIcon, SearchIcon } from '../icons';
 import { useQuery } from '@tanstack/react-query';
 import useDebounce from '@/hooks/useDebounce';
 import { SearchResult } from './SearchResult';
@@ -14,21 +14,26 @@ const SearchInput: React.FC<SearchInputProps> = ({
   placeholder = 'Search...',
 }) => {
   const [search, setSearch] = useState('');
+  const [isSearchVisible, setIsSearchVisible] = useState(true);
   const router = useRouter();
 
   const debouncedSearchTerm = useDebounce(search, 200);
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      setIsSearchVisible(true);
+    }
+  }, [debouncedSearchTerm]);
 
   const { data, isLoading } = useQuery({
     queryKey: ['search', debouncedSearchTerm],
     queryFn: async () => {
       if (debouncedSearchTerm) {
         const response = await fetch(
-          `https://2qtsbt2v-80.euw.devtunnels.ms/api/get/Product?all_data=true&field=name&search=${debouncedSearchTerm}&equal=false&pagination=true&page_size=25&page=1
+          `https://electrychnafortecia.com/api/get/Product?all_data=true&field=name&search=${debouncedSearchTerm}&equal=false&pagination=true&page_size=25&page=1
           `
         );
 
-        const result = response.json();
-        console.log(result);
+        const result = await response.json();
         return result;
       }
       return { products: [] };
@@ -36,12 +41,23 @@ const SearchInput: React.FC<SearchInputProps> = ({
 
     enabled: !!debouncedSearchTerm,
   });
+
   const handleSearch = (e: any) => {
     e.preventDefault();
     if (debouncedSearchTerm) {
-      router.replace(`/products?q=${debouncedSearchTerm}`);
+      router.replace(`/products/?q=${debouncedSearchTerm}`);
+      setSearch('');
+      setIsSearchVisible(true);
     }
   };
+  const handleProductClick = () => {
+    setIsSearchVisible(false);
+  };
+
+  const handleClear = () => {
+    setSearch('');
+  };
+
   return (
     <div className={styles.search}>
       <input
@@ -51,12 +67,26 @@ const SearchInput: React.FC<SearchInputProps> = ({
         placeholder={placeholder}
         className={styles.input}
       />
+      {search && (
+        <button className={styles.closeButton} onClick={handleClear}>
+          <CrossIcon />
+        </button>
+      )}
+      <div className={styles.line}></div>
       <button className={styles.icon} onClick={handleSearch}>
         <SearchIcon />
       </button>
-      <div className={styles.results}>
-        {data?.data && <SearchResult isLoading={isLoading} data={data.data} />}
-      </div>
+      {isSearchVisible && (
+        <div className={styles.results}>
+          {data?.data && (
+            <SearchResult
+              isLoading={isLoading}
+              data={data.data}
+              onProductClick={handleProductClick}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 };
