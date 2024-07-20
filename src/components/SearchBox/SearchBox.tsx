@@ -15,7 +15,7 @@ export default function SearchBox() {
     queryFn: async () => {
       if (debouncedSearchTerm) {
         const response = await fetch(
-          `https://2qtsbt2v-80.euw.devtunnels.ms/api/get/Product?all_data=true&field=name&search=${debouncedSearchTerm}&equal=false&pagination=true&page_size=25&page=1
+          `https://electrychnafortecia.com/api/get/Product?all_data=true&field=name&search=${debouncedSearchTerm}&equal=false&pagination=true&page_size=25&page=1
           `
         );
 
@@ -46,7 +46,7 @@ export default function SearchBox() {
       >
         Search
       </button>
-      {data?.data && <SearchResult isLoading={isLoading} data={data.data} />}
+      {/* {data?.data && <SearchResult isLoading={isLoading} data={data.data} />} */}
     </div>
   );
 }

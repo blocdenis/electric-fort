@@ -14,8 +14,16 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { ArrowCategoriesIcon } from '../icons';
+import { useQuery } from '@tanstack/react-query';
+import { getAllCategories } from '@/services/api/api';
+import { formatedString } from '@/lib/utils/formatString';
 
 function CategoriesSection() {
+  const { data: categories } = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => getAllCategories(),
+    staleTime: 10 * 1000,
+  });
   return (
     <Section>
       <div className={styles.container}>
@@ -29,9 +37,9 @@ function CategoriesSection() {
               nextEl: '#categories_btn_next',
               prevEl: '#categories_btn_prev',
             }}
-            autoplay={{
-              delay: 2500,
-            }}
+            // autoplay={{
+            //   delay: 2500,
+            // }}
             breakpoints={{
               375: {
                 slidesPerView: 1.55,
@@ -55,9 +63,17 @@ function CategoriesSection() {
             }}
             modules={[Navigation, Autoplay]}
           >
-            {categories.map(({ id, name, image }, index) => (
-              <SwiperSlide tag="li" key={id}>
-                <CategoryCard category_id={id} name={name} image={image} />
+            {categories?.map(({ id, name, image }, index) => (
+              <SwiperSlide
+                tag="li"
+                key={id}
+                style={{ width: '220px', height: '228px' }}
+              >
+                <CategoryCard
+                  category_id={id}
+                  name={formatedString(name)}
+                  image={image}
+                />
               </SwiperSlide>
             ))}
           </Swiper>

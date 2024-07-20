@@ -1,7 +1,6 @@
 import React from 'react';
 import ProductDetails from '@/components/ProductDetails/ProductDetails';
 import { productService } from '@/services/products';
-import { products } from '@/lib/db/products';
 
 interface ProductDetailsPageProps {
   params: { productId: string };

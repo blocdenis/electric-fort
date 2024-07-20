@@ -6,12 +6,12 @@ import styles from './Filters.module.scss';
 import { ArrowCatalogIcon, ArrowCategoriesIcon } from '../icons';
 
 const Filters: React.FC = () => {
-  const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
+  const [filtersOpen, setFiltersOpen] = useState<boolean>(true);
   const [brandOpen, setBrandOpen] = useState<boolean>(true);
 
   return (
     <div className={styles.filters}>
-      <div className="flex flex-row justify-between w-full ">
+      <div className="hidden laptop:flex laptop:flex-row laptop:justify-between laptop:w-full ">
         <p className={styles.hero}>Фільтри</p>
         <span
           className={styles.arrowIcon}

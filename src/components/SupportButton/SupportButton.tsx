@@ -11,7 +11,7 @@ function SupportButton() {
       </div>
       <a
         className={styles.chat_viber}
-        href="viber://chat?number=%2B380501234567"
+        href="viber://chat?number=%2B380664598887"
       >
         <Image src={viber} width={40} height={40} alt="viberIcon" />
         <p className=" text-black">Чат у Viber</p>

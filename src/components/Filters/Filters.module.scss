@@ -6,12 +6,19 @@
   width: 100%;
   padding: 16px;
   border-bottom: 3px solid #69af00;
+  @include breakpoint(tablet) {
+    padding-right: 0px;
+  }
 }
 .hero {
   font: $bold24;
 }
 .filterItem {
   margin-bottom: 10px;
+
+  @include breakpoint(tablet) {
+    padding-right: 16px;
+  }
 }
 
 .filterHeader {
@@ -27,24 +34,37 @@
   flex-direction: column;
   gap: 8px;
   padding-bottom: 24px;
+  @include breakpoint(tablet) {
+    padding-right: 16px;
+  }
 }
 .inputs {
   display: flex;
   justify-content: space-between;
+  @include breakpoint(tablet) {
+    justify-content: flex-start;
+    gap: 50px;
+  }
+  @include breakpoint(mobile) {
+    justify-content: space-between;
+    gap: 0;
+  }
 }
 
 .inputs input {
   width: 136px;
-  padding: 8px 54px 8px 54px;
+  padding: 8px 20px 8px 20px;
   margin-bottom: 10px;
   border: 1px solid #ffffff;
   border-radius: 10px;
   background-color: transparent;
   font: $regular16;
   color: #acacac;
+  text-align: center;
 }
 .inputNumber {
-  -moz-appearance: textfield;
+  // -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .inputNumber::-webkit-outer-spin-button,
@@ -75,6 +95,7 @@
   gap: 10px;
 }
 .arrowIcon {
+  cursor: pointer;
   padding-right: 12px;
   svg {
     fill: white;

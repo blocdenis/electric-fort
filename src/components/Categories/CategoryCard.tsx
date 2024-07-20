@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
 import categotyImg from '../../../public/category-img.jpg';
-import { Category } from '@/lib/types/types';
 import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './CategoryCard.module.scss';
@@ -12,6 +11,8 @@ interface CategoryCardProps {
   image: string[] | null;
   brand_id?: number;
   series_id?: number;
+  subseries_id?: number;
+  subsubseries_id?: number;
 }
 
 function CategoryCard({
@@ -20,12 +21,18 @@ function CategoryCard({
   image,
   brand_id,
   series_id,
+  subseries_id,
+  subsubseries_id,
 }: CategoryCardProps) {
   return (
-    <div className=" w-[220px] h-[228px] laptop:w-[100%] desktop:w-[220px] bg-white border border-[#DEDEDE] py-4 ">
+    <div className=" w-full h-full tablet:w-[220px] tablet:h-[228px] desktop:w-[220px] desktop:h-[228px] bg-white border border-[#DEDEDE] py-4 ">
       <Link
         href={
-          series_id
+          subsubseries_id
+            ? `/categories/${category_id}/${brand_id}/${series_id}/${subseries_id}/${subsubseries_id}`
+            : subseries_id
+            ? `/categories/${category_id}/${brand_id}/${series_id}/${subseries_id}`
+            : series_id
             ? `/categories/${category_id}/${brand_id}/${series_id}`
             : brand_id
             ? `/categories/${category_id}/${brand_id}/`

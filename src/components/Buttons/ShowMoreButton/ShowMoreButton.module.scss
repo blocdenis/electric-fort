@@ -1,0 +1,22 @@
+@use '/src/scss/abstracts/' as *;
+
+.show_more {
+  padding: 8.5px 60px 7.5px 60px;
+  background-color: $white;
+  border: 1px solid $accent-primary;
+  color: black;
+  transition: all 300ms linear;
+
+  &:hover {
+    border: 1px solid $accent-primary-strong;
+    background-color: $accent-primary-strong;
+    color: $white;
+    transition: all 300ms linear;
+  }
+
+  &:disabled {
+    border: 1px solid #e8e8e8;
+    background-color: $white;
+    color: $gray;
+  }
+}

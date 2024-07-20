@@ -34,8 +34,8 @@ const Footer: React.FC = () => {
           </div>
           <div className={styles.block}>
             <h3 id="contacts">Контакти</h3>
-            <ContactText color="black" />
-            <ContactText color="black" />
+            <ContactText textToCopy="+38(066) 459-88-87" color="black" />
+            <ContactText textToCopy="+38(068) 459-88-87" color="black" />
             <ContactContent color="black" />
             <div className={styles.container_icons}>
               <TikTokIcon

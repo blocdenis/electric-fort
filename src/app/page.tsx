@@ -8,8 +8,8 @@ import Container from '@/components/Container/Container';
 import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 import ContentContainer from '@/components/Container/ContentContainer';
 import {
-  getBrands,
-  getCategories,
+  getAllBrands,
+  getAllCategories,
   getPopularProducts,
 } from '@/services/api/api';
 import hero from '../../public/Hero.jpg';
@@ -43,13 +43,13 @@ export default async function Home() {
 
   await queryClient.prefetchQuery({
     queryKey: ['categories'],
-    queryFn: () => getCategories(),
+    queryFn: () => getAllCategories(),
     staleTime: 10 * 1000,
   });
 
   await queryClient.prefetchQuery({
     queryKey: ['brands'],
-    queryFn: () => getBrands(),
+    queryFn: () => getAllBrands(),
     staleTime: 10 * 1000,
   });
 
@@ -58,7 +58,7 @@ export default async function Home() {
   return (
     <HydrationBoundary state={dehydratedState}>
       <Container className="flex">
-        <SidebarWithAttachments />
+        <SidebarWithAttachments showFilters={false} />
         <ContentContainer>
           <HeroSlider data={slides} />
           <CategoriesSection />

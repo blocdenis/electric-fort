@@ -16,7 +16,7 @@ function Breadcrumbs({
   items,
 }: BreadCrumbProps) {
   return (
-    <div>
+    <div className={styles.outer_container}>
       <ul className={styles.container}>
         <li className={styles.item}>
           <Link className={styles.link} href={'/'}>
