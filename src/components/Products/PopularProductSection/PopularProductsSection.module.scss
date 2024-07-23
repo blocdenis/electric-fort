@@ -3,7 +3,7 @@
 .container {
   // padding-right: 64px;
   @include breakpoint(tablet) {
-    // padding-right: 0;
+    padding-bottom: 24px;
   }
 }
 

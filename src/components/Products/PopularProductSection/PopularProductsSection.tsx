@@ -5,16 +5,18 @@ import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
 import styles from './PopularProductsSection.module.scss';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import ProductCard from '../ProductCard/ProductCard';
 import { ArrowCategoriesIcon } from '@/components/icons';
 import { useQuery } from '@tanstack/react-query';
 import { getPopularProducts } from '@/services/api/api';
 import ProductCardPlaceholder from '../ProductCard/ProductCardPlaceholder';
+import classNames from 'classnames';
 
 interface PopularProductsSectionProps {
   title: string;
@@ -35,19 +37,29 @@ const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
     staleTime: 10,
   });
 
-  isError && <div>Error</div>;
-
   return (
     <Section>
-      <div className={styles.container}>
+      <div
+        className={classNames(
+          styles.container,
+          '[&_.swiper-pagination-bullets.swiper-pagination-horizontal]:bottom-[-40px] xl:[&_.swiper-pagination-bullets.swiper-pagination-horizontal]:bottom-8 '
+        )}
+      >
         <SectionTitle title={title} className=" mb-4" />
-        <div className={styles.swiper_container}>
+        <div className={classNames(styles.swiper_container)}>
           <Swiper
             wrapperTag="ul"
             wrapperClass=" items-center"
             className={styles.swiper_}
             spaceBetween={45}
             slidesPerView={1}
+            pagination={{
+              type: 'bullets',
+              clickable: true,
+              el: '#containerForBullets',
+              dynamicBullets: true,
+              // dynamicMainBullets: 1,
+            }}
             navigation={{
               nextEl: '#products_btn_next',
               prevEl: '#products_btn_prev',
@@ -66,7 +78,7 @@ const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
                 slidesPerView: 3,
               },
             }}
-            modules={[Navigation]}
+            modules={[Navigation, Pagination]}
             loop
           >
             {isRefetching ? (
@@ -103,6 +115,11 @@ const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
               <ArrowCategoriesIcon className=" [&_path]:stroke-yellow rotate-180" />
             </div>
           </div>
+          <div
+            id="containerForBullets"
+            className="absolute text-center transition-opacity z-10 w-[108px] left-1/2 translate-x-[-50%] whitespace-nowrap overflow-hidden laptop:hidden [&>.swiper-pagination-bullet]:w-3 [&>.swiper-pagination-bullet]:h-3 [&>.swiper-pagination-bullet]:border [&>.swiper-pagination-bullet]:border-yellow [&>.swiper-pagination-bullet]:opacity-100 [&>.swiper-pagination-bullet.swiper-pagination-bullet-active-main]:bg-yellow "
+            style={{ width: '108px' }}
+          ></div>
         </div>
       </div>
     </Section>
