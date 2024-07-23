@@ -38,7 +38,7 @@ export default async function Home() {
   await queryClient.prefetchQuery({
     queryKey: ['popularProducts'],
     queryFn: () => getPopularProducts(),
-    staleTime: 10 * 1000,
+    staleTime: 0,
   });
 
   await queryClient.prefetchQuery({

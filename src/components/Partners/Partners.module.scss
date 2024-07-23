@@ -1,20 +1,22 @@
 @use '/src/scss/abstracts/' as *;
 
-.container {
-  // padding-right: 64px;
-  @include breakpoint(tablet) {
-    // padding-right: 0;
-  }
-}
-
 .swiper_container {
   position: relative;
+  height: 231px;
   width: 100%;
   padding-left: 24px;
   background: $white;
   @include breakpoint(tablet) {
     padding-left: 16px;
+    height: 167px;
     width: 100vw;
+  }
+}
+
+.container {
+  // padding-right: 64px;
+  @include breakpoint(tablet) {
+    // padding-right: 0;
   }
 }
 

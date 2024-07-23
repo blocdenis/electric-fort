@@ -657,7 +657,7 @@ export const getPopularProducts = async (
     `${buildUrl(
       'get',
       'Product'
-    )}?all_data=true&field=popular&search=true&equal=false&pagination=false`,
+    )}?all_data=true&field=popular&search=true&equal=true&pagination=false`,
     {
       method: 'GET',
       credentials: 'include',

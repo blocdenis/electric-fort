@@ -30,6 +30,10 @@
 .button_container {
   display: flex;
   justify-content: flex-end;
+  // @include breakpoint(tablet) {
+  //   padding-right: 16px;
+  // }
+
   @include breakpoint(tablet) {
     justify-content: center;
   }
