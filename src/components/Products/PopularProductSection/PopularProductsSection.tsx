@@ -2,7 +2,6 @@
 
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
-import { products } from '@/lib/db/products';
 import styles from './PopularProductsSection.module.scss';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -13,9 +12,9 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import ProductCard from '../ProductCard/ProductCard';
 import { ArrowCategoriesIcon } from '@/components/icons';
-import { Product } from '@/lib/types/types';
 import { useQuery } from '@tanstack/react-query';
 import { getPopularProducts } from '@/services/api/api';
+import ProductCardPlaceholder from '../ProductCard/ProductCardPlaceholder';
 
 interface PopularProductsSectionProps {
   title: string;
@@ -26,11 +25,18 @@ const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
   title,
   // products,
 }) => {
-  const { data: products } = useQuery({
+  const {
+    data: products,
+    isRefetching,
+    isError,
+  } = useQuery({
     queryKey: ['popularProducts'],
     queryFn: () => getPopularProducts(),
-    staleTime: 10 * 1000,
+    staleTime: 10,
   });
+
+  isError && <div>Error</div>;
+
   return (
     <Section>
       <div className={styles.container}>
@@ -50,6 +56,12 @@ const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
               640: {
                 slidesPerView: 2,
               },
+              970: {
+                slidesPerView: 3,
+              },
+              1024: {
+                slidesPerView: 2,
+              },
               1330: {
                 slidesPerView: 3,
               },
@@ -57,11 +69,25 @@ const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
             modules={[Navigation]}
             loop
           >
-            {products?.map((product) => (
-              <SwiperSlide tag="li" className="" key={product.id}>
-                <ProductCard {...product} />
-              </SwiperSlide>
-            ))}
+            {isRefetching ? (
+              <ul className="flex w-full overflow-hidden  ">
+                <li className="w-full mr-[45px] min-[640px]:min-w-[calc(50%-(45px/2))] min-[970px]:min-w-[calc(33.33%-(45px*2/3))] laptop:min-w-[calc(50%-(45px/2))] min-[1330px]:min-w-[calc(33.33%-(45px*2/3))]">
+                  <ProductCardPlaceholder />
+                </li>
+                <li className="w-full mr-[45px] min-[640px]:min-w-[calc(50%-(45px/2))] min-[970px]:min-w-[calc(33.33%-(45px*2/3))] laptop:min-w-[calc(50%-(45px/2))] min-[1330px]:min-w-[calc(33.33%-(45px*2/3))]">
+                  <ProductCardPlaceholder />
+                </li>
+                <li className="w-full mr-[45px] min-[640px]:min-w-[calc(50%-(45px/2))] min-[970px]:min-w-[calc(33.33%-(45px*2/3))] laptop:min-w-[calc(50%-(45px/2))] min-[1330px]:min-w-[calc(33.33%-(45px*2/3))]">
+                  <ProductCardPlaceholder />
+                </li>
+              </ul>
+            ) : (
+              products?.map((product) => (
+                <SwiperSlide tag="li" key={product.id}>
+                  <ProductCard {...product} />
+                </SwiperSlide>
+              ))
+            )}
           </Swiper>
           <div className={styles.navigation_buttons_container}>
             <div

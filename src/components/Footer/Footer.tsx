@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
                 <LogoIcon className="[&_path]:fill-black" />
               </Link>
             </div>
-            <Map />
+            <Map className="h-[183px] w-[304px] bg-gray-100" />
           </div>
           <div className={styles.block}>
             <h3 id="contacts">Контакти</h3>

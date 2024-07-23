@@ -2,7 +2,7 @@
 import React from 'react';
 import Section from '../Section/Section';
 import CategoryCard from './CategoryCard';
-import { categories } from '@/lib/db/categories';
+// import { categories } from '@/lib/db/categories';
 import SectionTitle from '../Section/SectionTitle/SectionTitle';
 import ButtonLink from '../Buttons/ButtonLink/ButtonLink';
 import styles from './CategoriesSection.module.scss';
@@ -13,85 +13,42 @@ import { Navigation, Autoplay } from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { ArrowCategoriesIcon } from '../icons';
-import { useQuery } from '@tanstack/react-query';
 import { getAllCategories } from '@/services/api/api';
-import { formatedString } from '@/lib/utils/formatString';
+import CategoriesSectionList from './CategoriesSectionList';
+import { useQuery } from '@tanstack/react-query';
+import CategoryCardPlaceholder from './CategoryCardPlaceholder';
 
 function CategoriesSection() {
-  const { data: categories } = useQuery({
+  const { data: categories, isRefetching } = useQuery({
     queryKey: ['categories'],
     queryFn: () => getAllCategories(),
-    staleTime: 10 * 1000,
+    staleTime: 10,
   });
+
+  // const categories = await getAllCategories({ next: { revalidate: 0 } });
+
   return (
     <Section>
       <div className={styles.container}>
         <SectionTitle title="Категорії товарів" className=" mb-4" />
-        <div className={styles.swiper_container}>
-          <Swiper
-            wrapperTag="ul"
-            spaceBetween={16}
-            slidesPerView={1.3}
-            navigation={{
-              nextEl: '#categories_btn_next',
-              prevEl: '#categories_btn_prev',
-            }}
-            // autoplay={{
-            //   delay: 2500,
-            // }}
-            breakpoints={{
-              375: {
-                slidesPerView: 1.55,
-              },
-              425: {
-                slidesPerView: 1.8,
-              },
-              472: {
-                slidesPerView: 2,
-              },
-              598: {
-                slidesPerView: 2.5,
-              },
-              708: {
-                slidesPerView: 3,
-              },
-              1240: {
-                spaceBetween: 23,
-                slidesPerView: 4,
-              },
-            }}
-            modules={[Navigation, Autoplay]}
-          >
-            {categories?.map(({ id, name, image }, index) => (
-              <SwiperSlide
-                tag="li"
-                key={id}
-                style={{ width: '220px', height: '228px' }}
-              >
-                <CategoryCard
-                  category_id={id}
-                  name={formatedString(name)}
-                  image={image}
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <div className={styles.navigation_buttons_container}>
-            <div
-              id="categories_btn_prev"
-              className=" flex justify-center items-center w-[46px] h-[46px] rounded-full border border-secondary_green"
-            >
-              <ArrowCategoriesIcon className=" [&_path]:stroke-yellow" />
-            </div>
-            <div
-              id="categories_btn_next"
-              className=" flex justify-center items-center w-[46px] h-[46px] rounded-full border border-secondary_green"
-            >
-              <ArrowCategoriesIcon className=" [&_path]:stroke-yellow rotate-180" />
-            </div>
-          </div>
-        </div>
+        {isRefetching ? (
+          <ul className="flex pl-4 laptop:pl-6 h-[228px] w-full overflow-hidden">
+            <li className="min-w-[calc(62.5%-(8px*1/2))] mr-[8px] laptop:mr-[23px] min-[425px]:min-w-[calc(55.56%-(8px*1/2))] min-[472px]:min-w-[calc(50%-(8px*1/2))] min-[598px]:min-w-[calc(40%-(8px*2/3))] min-[708px]:min-w-[calc(33.33%-(8px*2/3))] min-[940px]:min-w-[calc(28.57%-(8px*3/4))] laptop:min-w-[calc(50%-(23px*1/2))] min-[1100px]:min-w-[calc(33.33%-(23px*2/3))] min-[1300px]:min-w-[calc(25%-(23px*3/4))]">
+              <CategoryCardPlaceholder />
+            </li>
+            <li className="min-w-[calc(62.5%-(8px*1/2))] mr-[8px] laptop:mr-[23px] min-[425px]:min-w-[calc(55.56%-(8px*1/2))] min-[472px]:min-w-[calc(50%-(8px*1/2))] min-[598px]:min-w-[calc(40%-(8px*2/3))] min-[708px]:min-w-[calc(33.33%-(8px*2/3))] min-[940px]:min-w-[calc(28.57%-(8px*3/4))] laptop:min-w-[calc(50%-(23px*1/2))] min-[1100px]:min-w-[calc(33.33%-(23px*2/3))] min-[1300px]:min-w-[calc(25%-(23px*3/4))]">
+              <CategoryCardPlaceholder />
+            </li>
+            <li className="min-w-[calc(62.5%-(8px*1/2))] mr-[8px] laptop:mr-[23px] min-[425px]:min-w-[calc(55.56%-(8px*1/2))] min-[472px]:min-w-[calc(50%-(8px*1/2))] min-[598px]:min-w-[calc(40%-(8px*2/3))] min-[708px]:min-w-[calc(33.33%-(8px*2/3))] min-[940px]:min-w-[calc(28.57%-(8px*3/4))] laptop:min-w-[calc(50%-(23px*1/2))] min-[1100px]:min-w-[calc(33.33%-(23px*2/3))] min-[1300px]:min-w-[calc(25%-(23px*3/4))]">
+              <CategoryCardPlaceholder />
+            </li>
+            <li className="min-w-[calc(62.5%-(8px*1/2))] mr-[8px] laptop:mr-[23px] min-[425px]:min-w-[calc(55.56%-(8px*1/2))] min-[472px]:min-w-[calc(50%-(8px*1/2))] min-[598px]:min-w-[calc(40%-(8px*2/3))] min-[708px]:min-w-[calc(33.33%-(8px*2/3))] min-[940px]:min-w-[calc(28.57%-(8px*3/4))] laptop:min-w-[calc(50%-(23px*1/2))] min-[1100px]:min-w-[calc(33.33%-(23px*2/3))] min-[1300px]:min-w-[calc(25%-(23px*3/4))]">
+              <CategoryCardPlaceholder />
+            </li>
+          </ul>
+        ) : (
+          <CategoriesSectionList categories={categories} />
+        )}
         <div className={styles.button_container}>
           <ButtonLink
             className=" mt-6"

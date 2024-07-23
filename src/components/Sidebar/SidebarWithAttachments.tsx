@@ -18,7 +18,7 @@ function SidebarWithAttachments({ showFilters }: { showFilters: boolean }) {
         <ContactText textToCopy="+38(068) 459-88-87" color="white" />
         <ContactContent color="white" />
       </div>
-      <Map className=" mt-6" />
+      <Map className=" mt-6 h-[183px] w-[304px] bg-gray-100" />
     </Sidebar>
   );
 }
