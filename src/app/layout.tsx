@@ -7,7 +7,7 @@ import Provider from '@/context/Providers';
 import SupportButton from '@/components/SupportButton/SupportButton';
 
 export const metadata: Metadata = {
-  title: 'Elektrychna fortecia',
+  title: 'Electrychna fortecia',
   description: 'E-commerce electric  goods',
 };
 

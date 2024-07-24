@@ -1,0 +1,27 @@
+@use '/src/scss/abstracts/' as *;
+
+.arrow_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid $accent-primary-strong;
+}
+
+.arrow_prev_button {
+  &::before {
+    content: url('/arrow-icon.svg');
+    align-self: center;
+    height: 24px;
+  }
+}
+.arrow_next_button {
+  &::before {
+    content: url('/arrow-icon.svg');
+    transform: rotate(180deg);
+    align-self: center;
+    height: 24px;
+  }
+}
