@@ -1,18 +1,9 @@
 'use client';
 import React from 'react';
 import Section from '../Section/Section';
-import CategoryCard from './CategoryCard';
-// import { categories } from '@/lib/db/categories';
 import SectionTitle from '../Section/SectionTitle/SectionTitle';
 import ButtonLink from '../Buttons/ButtonLink/ButtonLink';
 import styles from './CategoriesSection.module.scss';
-
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay } from 'swiper/modules';
-
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
 import { getAllCategories } from '@/services/api/api';
 import CategoriesSectionList from './CategoriesSectionList';
 import { useQuery } from '@tanstack/react-query';

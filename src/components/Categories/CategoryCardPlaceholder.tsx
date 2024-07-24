@@ -16,7 +16,7 @@ function CategoryCardPlaceholder() {
           alt="product-category-image"
         ></Image>
       </div>
-      <div className="bg-gray-100 w-[195px] h-10"></div>
+      <div className="bg-gray-50 w-[195px] h-10"></div>
     </div>
   );
 }

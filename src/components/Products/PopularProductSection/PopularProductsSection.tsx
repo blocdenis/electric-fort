@@ -3,20 +3,20 @@
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
 import styles from './PopularProductsSection.module.scss';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
+import ProductCard from '../ProductCard/ProductCard';
+import { useQuery } from '@tanstack/react-query';
+import { getPopularProducts } from '@/services/api/api';
+import ProductCardPlaceholder from '../ProductCard/ProductCardPlaceholder';
+import classNames from 'classnames';
+import ArrowPrevButton from '@/components/Buttons/ArrowButton/ArrowPrevButton';
+import ArrowNextButton from '@/components/Buttons/ArrowButton/ArrowNextButton';
 
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import ProductCard from '../ProductCard/ProductCard';
-import { ArrowCategoriesIcon } from '@/components/icons';
-import { useQuery } from '@tanstack/react-query';
-import { getPopularProducts } from '@/services/api/api';
-import ProductCardPlaceholder from '../ProductCard/ProductCardPlaceholder';
-import classNames from 'classnames';
 
 interface PopularProductsSectionProps {
   title: string;
@@ -102,18 +102,8 @@ const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
             )}
           </Swiper>
           <div className={styles.navigation_buttons_container}>
-            <div
-              id="products_btn_prev"
-              className=" flex justify-center items-center w-[46px] h-[46px] rounded-full border border-secondary_green"
-            >
-              <ArrowCategoriesIcon className=" [&_path]:stroke-yellow" />
-            </div>
-            <div
-              id="products_btn_next"
-              className=" flex justify-center items-center w-[46px] h-[46px] rounded-full border border-secondary_green"
-            >
-              <ArrowCategoriesIcon className=" [&_path]:stroke-yellow rotate-180" />
-            </div>
+            <ArrowPrevButton id="products_btn_prev" />
+            <ArrowNextButton id="products_btn_next" />
           </div>
           <div
             id="containerForBullets"
