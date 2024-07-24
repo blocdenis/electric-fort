@@ -8,15 +8,21 @@ import WalletIcon from '../icons/WalletIcon';
 import CarIcon from '../icons/CarIcon';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import { Product } from '@/lib/types/Product.type';
+import { useShoppingCart } from '@/context/ShoppingCartContext';
 
 const ProductDescription = ({ product }: { product: Product }) => {
   const { isFavorite, addToFavorites, deleteFromFavorites } = useFavorites();
+  const { addToCart } = useShoppingCart();
+
   const handleFavoriteIconClick = () => {
     if (isFavorite(product.id)) {
       deleteFromFavorites.mutateAsync(product.id);
     } else {
       addToFavorites.mutateAsync(product.id);
     }
+  };
+  const increaseCartQuantity = () => {
+    addToCart(product.id);
   };
   const productImages = [
     `data:${product.images[0][0]};base64,${product.images[0][1]}`,
@@ -39,7 +45,9 @@ const ProductDescription = ({ product }: { product: Product }) => {
           </div>
           <div className=" flex justify-between items-center ">
             <div className="btn">
-              <SecondaryButton>Купити</SecondaryButton>
+              <SecondaryButton onClick={() => increaseCartQuantity()}>
+                Купити
+              </SecondaryButton>
             </div>
 
             <div className=" flex justify-center items-center w-[41px] h-[41px]  ">
