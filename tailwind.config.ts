@@ -34,6 +34,7 @@ const config: Config = {
         mid: ['20px', '1.4'],
         lg: ['24px', '1.4'],
         xl: ['36px', '1.4'],
+        xxl: ['48px', '1.4'],
       },
     },
   },

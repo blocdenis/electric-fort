@@ -1,0 +1,8 @@
+@use '/src/scss/abstracts/' as *;
+
+.switcher_item {
+  width: 100%;
+  border: 1px solid $accent-primary;
+  border-right: 0px;
+  padding: 12px 24px;
+}

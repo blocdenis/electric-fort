@@ -7,6 +7,7 @@ import {
   InstagramIcon,
   MainLogo,
   PhoneIcon,
+  ProfileIcon,
   TikTokIcon,
 } from '../icons';
 import styles from './Header.module.scss';
@@ -26,6 +27,7 @@ import FilterIcon from '../icons/FilterIcon';
 import Filters from '../Filters/Filters';
 import { useParams } from 'next/navigation';
 import classNames from 'classnames';
+import { useAuth } from '@/context/AuthContext';
 
 const Header = () => {
   const params = useParams();
@@ -34,6 +36,7 @@ const Header = () => {
 
   const { openCart, cartQuantity } = useShoppingCart();
   const { openCloseFavorites, favoritesQuantity } = useFavorites();
+  const { isAuthenticated } = useAuth();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -121,9 +124,18 @@ const Header = () => {
                   </button>
                 </div>
                 <div>
-                  <button onClick={openModal}>
-                    <h1>Увійти</h1>
-                  </button>
+                  {isAuthenticated ? (
+                    <Link
+                      href={'/user_profile'}
+                      className=" hidden laptop:block"
+                    >
+                      <ProfileIcon className="w-[34px] h-[34px]" />
+                    </Link>
+                  ) : (
+                    <button onClick={openModal}>
+                      <p>Увійти</p>
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
