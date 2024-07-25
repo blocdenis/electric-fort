@@ -2,10 +2,10 @@
 import ProfileInfo from './ProfileInfo';
 import classNames from 'classnames';
 import styles from './Profile.module.scss';
-import { MouseEventHandler, useState } from 'react';
-import OrdersHistory from './OrdersHistory';
+import { useState } from 'react';
 import ProfileReviews from './ProfileReviews';
 import Link from 'next/link';
+import ProfileOrdersHistory from './ProfileOrdersHistory';
 
 function Profile() {
   const PROFILE_TABS = {
@@ -41,7 +41,8 @@ function Profile() {
             onClick={handleTabClick}
             className={classNames(
               styles.switcher_item,
-              'mb-[42px] cursor-pointer '
+              'mb-[42px] cursor-pointer ',
+              tab === PROFILE_TABS.PROFILE_INFO && styles.switcher_item__active
             )}
           >
             <Link href={'/user_profile/#personal_info'}>
@@ -52,27 +53,33 @@ function Profile() {
             onClick={handleTabClick}
             className={classNames(
               styles.switcher_item,
-              'mb-[42px] cursor-pointer '
+              'mb-[42px] cursor-pointer ',
+              tab === PROFILE_TABS.ORDERS_HISTORY &&
+                styles.switcher_item__active
             )}
           >
             <Link href={'/user_profile/#history_order'}>Історія замовлень</Link>
           </li>
           <li
             onClick={handleTabClick}
-            className={classNames(styles.switcher_item, 'cursor-pointer')}
+            className={classNames(
+              styles.switcher_item,
+              'cursor-pointer',
+              tab === PROFILE_TABS.REVIEWS && styles.switcher_item__active
+            )}
           >
             <Link href={'/user_profile/#reviews'}>Відгуки</Link>
           </li>
         </ul>
         <p className="mb-4">За програмою лояльності ви маєте діючу знижку:</p>
-        <div className="w-full h-[152px] bg-primary_green text-black py-6 pr-6 pl-[30px] ">
-          <p className="text-base font-bold mb-6">Ваша знижка становить:</p>
+        <div className="flex flex-col justify-between w-full h-[152px] bg-primary_green text-black py-6 pr-6 pl-[30px] ">
+          <p className="text-base font-bold">Ваша знижка становить:</p>
           <p className="text-xxl font-bold text-right">5%</p>
         </div>
       </div>
       <div className="w-[77%] border border-primary_green py-10 pr-8 pl-12">
         {tab === PROFILE_TABS.PROFILE_INFO && <ProfileInfo />}
-        {tab === PROFILE_TABS.ORDERS_HISTORY && <OrdersHistory />}
+        {tab === PROFILE_TABS.ORDERS_HISTORY && <ProfileOrdersHistory />}
         {tab === PROFILE_TABS.REVIEWS && <ProfileReviews />}
       </div>
     </div>

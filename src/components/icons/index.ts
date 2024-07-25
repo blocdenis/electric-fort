@@ -26,3 +26,4 @@ export { default as ProfileIcon } from './ProfileIcon';
 export { default as BackButton } from './BackButton';
 export { default as BurgerIcon } from './BurgerIcon';
 export { default as EmptyCart } from './EmptyCart';
+export { default as EditIcon } from './EditIcon';
