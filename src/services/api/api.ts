@@ -58,9 +58,26 @@ export type getProducts = {
   data: Product[];
 };
 
-type User = {
+type BaseAuth = {
   email: string;
   password: string;
+};
+
+type User = {
+  first_name: string | null;
+  last_name: string | null;
+  email: string;
+  phone: string | null;
+  activity:
+    | 'Не вказувати'
+    | 'Електрик'
+    | 'Дизайнер'
+    | 'Виконроб'
+    | 'Будівельна організація';
+  verified_email: boolean;
+  status: 'Активний' | 'Неактивний' | 'Заблокований';
+  updated_info_date: string | null;
+  add_date: string;
 };
 
 //Categories, brands, series, subseries, subsubseries
@@ -728,7 +745,7 @@ export const deleteFavorites = async (
 
 export const registrationUser = async (
   // params: Record<string, number>,
-  data: User,
+  data: BaseAuth,
   init?: RequestInit
 ) => {
   return sendRequest<string>(`${buildUrl('user', 'register')}`, {
@@ -742,12 +759,23 @@ export const registrationUser = async (
   });
 };
 
-export const isAuth = async (
-  // params: Record<string, number>,
-  data: User,
-  init?: RequestInit
-) => {
-  return sendRequest<string>(`${buildUrl('jwt', 'user')}`, {
+// export const isAuth = async (
+//   // params: Record<string, number>,
+//   data: User,
+//   init?: RequestInit
+// ) => {
+//   return sendRequest<string>(`${buildUrl('jwt', 'user')}`, {
+//     method: 'GET',
+//     credentials: 'include',
+//     headers: {
+//       ...(init && init.headers),
+//       'content-type': 'application/json',
+//     },
+//   });
+// };
+
+export const getUserInfo = async (init?: RequestInit) => {
+  return sendRequestJSON<User>(`${buildUrl('jwt', 'user')}`, {
     method: 'GET',
     credentials: 'include',
     headers: {

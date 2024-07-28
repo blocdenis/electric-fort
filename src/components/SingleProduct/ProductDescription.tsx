@@ -39,7 +39,7 @@ const ProductDescription = ({ product }: { product: Product }) => {
           </div>
           <div className=" flex justify-between items-center ">
             <div className="btn">
-              <SecondaryButton>Купити</SecondaryButton>
+              <SecondaryButton className="px-[60px]">Купити</SecondaryButton>
             </div>
 
             <div className=" flex justify-center items-center w-[41px] h-[41px]  ">

@@ -87,7 +87,11 @@ function ProductCard({
         </div>
       </div>
       <div className=" flex justify-between items-center">
-        <SecondaryButton type="button" onClick={() => increaseCartQuantity()}>
+        <SecondaryButton
+          className=" px-[60px]"
+          type="button"
+          onClick={() => increaseCartQuantity()}
+        >
           Купити
         </SecondaryButton>
         <div className=" flex justify-center items-center w-[41px] h-[41px] cursor-pointer">
