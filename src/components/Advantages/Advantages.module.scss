@@ -21,6 +21,7 @@
   align-items: center;
   // width: 48vw;
   margin-left: 270px;
+
   :nth-child(3n + 1) {
     border-top-left-radius: 16px;
     border-bottom-left-radius: 16px;
@@ -28,6 +29,10 @@
   :nth-child(3n) {
     border-top-right-radius: 16px;
     border-bottom-right-radius: 16px;
+  }
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    padding: 0px 32px;
+    margin-left: 240px;
   }
   @include breakpoint(tablet) {
     grid-template-columns: 1fr 1fr;

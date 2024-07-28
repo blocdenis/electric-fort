@@ -1,31 +1,128 @@
 @use '../../scss/abstracts/' as *;
 
 .footer {
-  // width: 100%;
-  // background-color: #9cec25;
   color: $black;
   padding: 40px 0px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 80px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) 248px;
+  column-gap: 80px;
 
+  @media (min-width: 1200px) and (max-width: 1265px) {
+    column-gap: 30px;
+  }
+  @media (min-width: 1024px) and (max-width: 1199px) {
+    column-gap: 80px;
+    row-gap: 40px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: max-content;
+  }
   @include breakpoint(tablet) {
-    flex-direction: column;
-    gap: 24px;
-    padding: 24px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: max-content;
+    row-gap: 40px;
   }
   @include breakpoint(mobile) {
+    display: flex;
     flex-direction: column;
     gap: 16px;
-    padding: 16px;
+    max-width: 100%;
+    padding: 40px 16px;
+    // margin: 0 auto;
   }
 }
 
-.block {
+.block1 {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  max-width: 304px;
+  grid-column: 1/2;
+  grid-row: 1/2;
+  @media (min-width: 1200px) and (max-width: 1265px) {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+  @media (min-width: 1024px) and (max-width: 1199px) {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+  @include breakpoint(tablet) {
+    grid-column: 1/2;
+    grid-row: 1/2;
+  }
+  @include breakpoint(mobile) {
+    max-width: 100%;
+  }
+}
+.block2 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 304px;
+  grid-column: 2/3;
+  grid-row: 1/2;
+  @media (min-width: 1200px) and (max-width: 1265px) {
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
+  @media (min-width: 1024px) and (max-width: 1199px) {
+    grid-column: 2/3;
+    grid-row: 1/2;
+  }
+  @include breakpoint(tablet) {
+    grid-column: 1/2;
+    grid-row: 2/2;
+  }
+  @include breakpoint(mobile) {
+    max-width: 100%;
+  }
+}
+.block3 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 304px;
+  grid-column: 3/4;
+  grid-row: 1/2;
+  @media (min-width: 1200px) and (max-width: 1265px) {
+    grid-column: 3/4;
+    grid-row: 1/2;
+  }
+  @media (min-width: 1024px) and (max-width: 1199px) {
+    grid-column: 3/4;
+    grid-row: 1/2;
+  }
+  @include breakpoint(tablet) {
+    grid-column: 2/2;
+    grid-row: 1/2;
+  }
+  @include breakpoint(mobile) {
+    max-width: 100%;
+  }
+}
+.block4 {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 304px;
+  grid-column: 4;
+  grid-row: 1/2;
+  @media (min-width: 1200px) and (max-width: 1265px) {
+    grid-column: 4;
+    grid-row: 1/2;
+  }
+  @media (min-width: 1024px) and (max-width: 1199px) {
+    grid-column: 1/2;
+    grid-row: 2/2;
+  }
+  @include breakpoint(tablet) {
+    grid-column: 2/2;
+    grid-row: 2/2;
+  }
+  @include breakpoint(mobile) {
+    margin-top: 8px;
+    max-width: 343px;
+  }
 }
 
 .logo_wrapper {
@@ -43,10 +140,21 @@
   font: $regular16;
 }
 
-.block h3 {
+.block1 h3,
+.block3 h3,
+.block4 h3 {
   font-size: 24px;
   line-height: 33.6px;
   font: $bold24;
+}
+
+.block2 h3 {
+  font-size: 24px;
+  line-height: 33.6px;
+  font: $bold24;
+  @include breakpoint(mobile) {
+    font-size: 18px;
+  }
 }
 .container_icons {
   display: flex;
@@ -59,7 +167,7 @@
 @include breakpoint(mobile) {
   .menu_toggle {
     display: block;
-    font-size: 24px;
+    font-size: 18px;
   }
   .nav {
     display: none;

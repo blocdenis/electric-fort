@@ -23,16 +23,16 @@ const Footer: React.FC = () => {
     <footer className={styles.footer_wrapper}>
       <Container>
         <div className={styles.footer}>
-          <div className={styles.block}>
+          <div className={styles.block1}>
             <div className={styles.logo_wrapper}>
               {/* <Brand /> */}
               <Link href="/">
                 <LogoIcon className="[&_path]:fill-black" />
               </Link>
             </div>
-            <Map className="h-[183px] w-[304px] bg-gray-100" />
+            <Map className="h-[157px] w-[343px] tablet:h-[183px] tablet:w-[304px] bg-gray-100" />
           </div>
-          <div className={styles.block}>
+          <div className={styles.block2}>
             <h3 id="contacts">Контакти</h3>
             <ContactText textToCopy="+38(066) 459-88-87" color="black" />
             <ContactText textToCopy="+38(068) 459-88-87" color="black" />
@@ -50,7 +50,7 @@ const Footer: React.FC = () => {
               />
             </div>
           </div>
-          <div className={styles.block}>
+          <div className={styles.block3}>
             <div className={styles.s}>
               <h3>Клієнтам</h3>
               <button className={styles.menu_toggle} onClick={toggleMenu}>
@@ -76,7 +76,7 @@ const Footer: React.FC = () => {
               </ul>
             </nav>
           </div>
-          <div className={styles.block}>
+          <div className={styles.block4}>
             <h3>Способи оплати:</h3>
             <PaymentMethods />
           </div>

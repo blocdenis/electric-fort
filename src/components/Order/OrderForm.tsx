@@ -1,7 +1,7 @@
 'use client';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
 import { NpCitySelect, NpWarehouseSelect, utils } from 'np-select';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import './OrderForm.scss';
 import { useAuth } from '@/context/AuthContext';
@@ -9,7 +9,6 @@ import axios from 'axios';
 import RadioFalse from '../icons/RadioFalse';
 import RadioTrue from '../icons/RadioTrue';
 import { useRouter } from 'next/navigation';
-
 import AuthModal from '../AuthModal/AuthModal';
 import Link from 'next/link';
 import CityWarehouseSelect from './CityWarehouseSelect';
@@ -48,7 +47,7 @@ interface IForm {
 const OrderForm = () => {
   const { isAuthenticated } = useAuth();
   const router = useRouter();
-  const { cartItems } = useShoppingCart();
+  const { cartItems, clearCart } = useShoppingCart();
   const {
     register,
     handleSubmit,
@@ -135,6 +134,7 @@ const OrderForm = () => {
 
       console.log('Order created successfully:', response);
       reset();
+      await clearCart();
       router.push('/success');
     } catch (error: any) {
       console.error('Error creating order:', error);
@@ -218,6 +218,21 @@ const OrderForm = () => {
       PaymentMethods.COD,
     ],
   };
+
+  // useCallback to memoize the handlers
+  const handleSelectCity = useCallback(
+    (city: string | undefined) => {
+      setValue('city_dilivery', city);
+    },
+    [setValue]
+  );
+
+  const handleSelectWarehouse = useCallback(
+    (warehouse: string | undefined) => {
+      setValue('department', warehouse);
+    },
+    [setValue]
+  );
 
   return (
     <form className="order-form" onSubmit={handleSubmit(onSubmit)}>
@@ -306,12 +321,8 @@ const OrderForm = () => {
 
       {showCityInput && (
         <CityWarehouseSelect
-          onSelectCity={(city: string | undefined) =>
-            setValue('city_dilivery', city)
-          }
-          onSelectWarehouse={(warehouse: string | undefined) =>
-            setValue('department', warehouse)
-          }
+          onSelectCity={handleSelectCity}
+          onSelectWarehouse={handleSelectWarehouse}
         />
       )}
       {showTownInput && (

@@ -28,6 +28,7 @@ type ShoppingCartContext = {
   addToCart: (id: number) => void;
   removeFromCart: (id: number) => void;
   decreaseFromCart: (id: number) => void;
+  clearCart: () => void;
 };
 
 const ShoppingCartContext = createContext({} as ShoppingCartContext);
@@ -78,6 +79,13 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const handleRemoveFromCart = (id: number) => {
     removeFromCart.mutate(id);
   };
+  const clearCart = async () => {
+    if (cartItems && cartItems.length > 0) {
+      for (const item of cartItems) {
+        await removeFromCart.mutateAsync(item.id);
+      }
+    }
+  };
 
   const cartQuantity = cartItems?.length ? cartItems.length : 0;
   const openCloseShopCart = () => setIsOpen((prevVal) => !prevVal);
@@ -94,6 +102,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         cartItems,
         cartQuantity,
         removeFromCart: handleRemoveFromCart,
+        clearCart,
       }}
     >
       {children}

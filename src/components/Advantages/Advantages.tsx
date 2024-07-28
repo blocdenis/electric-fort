@@ -49,22 +49,6 @@ const Advantages: React.FC = () => {
           </div>
         </AdvantagesSection>
       </div>
-      {/* {isAboveMediumScreeens && (
-        <section className={styles.wrapper_desktop}>
-          <AdvantagesSection title="Наші переваги">
-            <AdvantagesList>
-              {advantagesData.slice(0, 3).map(({ icon, text }) => (
-                <AdvantageCard icon={icon} text={text} key={text} />
-              ))}
-            </AdvantagesList>
-            <AdvantagesList>
-              {advantagesData.slice(3).map(({ icon, text }) => (
-                <AdvantageCard icon={icon} text={text} key={text} />
-              ))}
-            </AdvantagesList>
-          </AdvantagesSection>
-        </section>
-      )} */}
     </div>
   );
 };
