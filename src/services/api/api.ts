@@ -862,4 +862,4 @@ const checkAuth = async () => {
   const authenticated = await isUserAuthenticated();
   console.log('User authenticated:', authenticated);
 };
-checkAuth();
+// checkAuth();
