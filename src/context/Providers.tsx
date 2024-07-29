@@ -18,7 +18,6 @@ export default function Provider({ children }: { children: ReactNode }) {
           </FavoritesProvider>
         </ShoppingCartProvider>
       </AuthProvider>
-      <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   );
 }
