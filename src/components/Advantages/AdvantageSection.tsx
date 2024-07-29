@@ -13,9 +13,11 @@ const AdvantagesSection: React.FC<AdvantagesSectionProps> = ({
   title,
 }) => {
   return (
-    <div className={styles.section_desktop_wrapper}>
+    <div className={styles.section_wrapper}>
       <div className={styles.advantages}>{title}</div>
-      <SectionTitle title={title} />
+      <div className=" laptop:hidden">
+        <SectionTitle title={title} />
+      </div>
       {children}
     </div>
   );

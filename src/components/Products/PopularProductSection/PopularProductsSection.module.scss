@@ -3,19 +3,23 @@
 .container {
   // padding-right: 64px;
   @include breakpoint(tablet) {
-    // padding-right: 0;
+    padding-bottom: 24px;
   }
 }
 
 .swiper_ {
   max-width: 286px;
   @media (min-width: 640px) {
+    max-width: 630px;
+  }
+  @media (min-width: 1024px) {
     max-width: 100%;
   }
 }
 
 .swiper_container {
   position: relative;
+  height: 400px;
   width: 100%;
   padding-left: 24px;
   @include breakpoint(tablet) {

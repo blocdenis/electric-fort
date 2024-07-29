@@ -18,10 +18,10 @@ import { advantagesData } from '@/lib/db/advantagesData';
 import useMediaQuery from '@/hooks/useMediaQuery';
 
 const Advantages: React.FC = () => {
-  const isAboveMediumScreeens = useMediaQuery('(min-width:769px)');
+  const isAboveMediumScreeens = useMediaQuery('(min-width:768px)');
   return (
     <div>
-      <div className={styles.wrapper_mobile}>
+      <div className={styles.wrapper_desktop}>
         <AdvantagesSection title={'Нашi переваги'}>
           <div className={styles.cards_wrapper}>
             <AdvantageCard
@@ -49,22 +49,6 @@ const Advantages: React.FC = () => {
           </div>
         </AdvantagesSection>
       </div>
-      {isAboveMediumScreeens && (
-        <section className={styles.wrapper_desktop}>
-          <AdvantagesSection title="Наші переваги">
-            <AdvantagesList>
-              {advantagesData.slice(0, 3).map(({ icon, text }) => (
-                <AdvantageCard icon={icon} text={text} key={text} />
-              ))}
-            </AdvantagesList>
-            <AdvantagesList>
-              {advantagesData.slice(3).map(({ icon, text }) => (
-                <AdvantageCard icon={icon} text={text} key={text} />
-              ))}
-            </AdvantagesList>
-          </AdvantagesSection>
-        </section>
-      )}
     </div>
   );
 };

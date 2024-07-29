@@ -4,6 +4,7 @@ const AdvantagesIconOfficial = (props: SVGProps<SVGSVGElement>) => (
     xmlns="http://www.w3.org/2000/svg"
     width={94}
     height={98}
+    viewBox="0 0 94 98"
     fill="none"
     {...props}
   >
