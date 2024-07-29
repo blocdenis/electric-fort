@@ -48,7 +48,7 @@ const CityWarehouseSelect = ({ onSelectCity, onSelectWarehouse }: any) => {
         },
       });
     }
-  }, []);
+  }, [onSelectCity, onSelectWarehouse]);
 
   return (
     <div className="np-container">
