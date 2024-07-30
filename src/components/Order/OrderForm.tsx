@@ -22,7 +22,7 @@ enum DeliveryMethods {
 }
 
 enum PaymentMethods {
-  ONLINE = 'Онлайн-оплата карткою',
+  ONLINE = 'Онлайн-оплата, Google Pay або Apple Pay',
   CASHLESS = 'Безготівковий',
   CASH = 'Готівкою при отриманні',
   COD = 'Накладений платіж',
@@ -102,6 +102,15 @@ const OrderForm = () => {
         withCredentials: true,
       }
     );
+
+    if (response.status === 244) {
+      const redirectUrl = response.data;
+      console.log(response.data);
+      if (redirectUrl) {
+        window.location.href = redirectUrl;
+      }
+    }
+
     return response.data;
   };
 
@@ -398,7 +407,7 @@ const OrderForm = () => {
                   {watch('payment') === method ? <RadioTrue /> : <RadioFalse />}
                 </div>
 
-                {method}
+                <span className="payment-method-text">{method}</span>
               </label>
             </div>
           ))}
