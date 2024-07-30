@@ -3,8 +3,8 @@
 .container {
   position: fixed;
   z-index: 20;
-  top: 472px;
-  right: 32px;
+  bottom: 15px;
+  right: 80px;
   @include breakpoint(tablet) {
     right: 16px;
     top: 516px;
