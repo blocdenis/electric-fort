@@ -77,7 +77,12 @@ function Profile() {
           <p className="text-xxl font-bold text-right">5%</p>
         </div>
       </div>
-      <div className="w-[77%] border border-primary_green py-10 pr-8 pl-12">
+      <div
+        className={classNames('w-[77%]', {
+          'border border-primary_green py-10 pr-8 pl-12':
+            tab !== PROFILE_TABS.PROFILE_INFO,
+        })}
+      >
         {tab === PROFILE_TABS.PROFILE_INFO && <ProfileInfo />}
         {tab === PROFILE_TABS.ORDERS_HISTORY && <ProfileOrdersHistory />}
         {tab === PROFILE_TABS.REVIEWS && <ProfileReviews />}
