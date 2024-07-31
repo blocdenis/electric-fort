@@ -63,21 +63,48 @@ type BaseAuth = {
   password: string;
 };
 
+export type UserAddress = {
+  city: string;
+  street: string;
+  house: string;
+  apartment: string;
+};
+
+export type UserActivities =
+  | 'Не вказувати'
+  | 'Електрик'
+  | 'Дизайнер'
+  | 'Виконроб'
+  | 'Будівельна організація';
+
 type User = {
   first_name: string | null;
   last_name: string | null;
   email: string;
   phone: string | null;
-  activity:
-    | 'Не вказувати'
-    | 'Електрик'
-    | 'Дизайнер'
-    | 'Виконроб'
-    | 'Будівельна організація';
+  activity: UserActivities;
   verified_email: boolean;
   status: 'Активний' | 'Неактивний' | 'Заблокований';
   updated_info_date: string | null;
   add_date: string;
+  delivery_address: UserAddress | null;
+  discount: number;
+};
+
+export type ChangePassword = {
+  old_password: string;
+  new_password: string;
+  repeat_new_password: string;
+};
+
+type UpdateUser = {
+  first_name?: string | null;
+  last_name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  activity?: UserActivities | null;
+  password?: ChangePassword | null;
+  delivery_address?: UserAddress | null;
 };
 
 //Categories, brands, series, subseries, subsubseries
@@ -759,6 +786,20 @@ export const registrationUser = async (
   });
 };
 
+export const logOutUser = async (
+  // params: Record<string, number>,
+  init?: RequestInit
+) => {
+  return sendRequest<string>(`${buildUrl('jwt', 'exit')}`, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
+};
+
 // export const isAuth = async (
 //   // params: Record<string, number>,
 //   data: User,
@@ -777,6 +818,22 @@ export const registrationUser = async (
 export const getUserInfo = async (init?: RequestInit) => {
   return sendRequestJSON<User>(`${buildUrl('jwt', 'user')}`, {
     method: 'GET',
+    credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
+};
+
+export const updateUser = async (
+  // params: Record<string, number>,
+  updatedUserData: UpdateUser,
+  init?: RequestInit
+) => {
+  return sendRequest<string>(`${buildUrl('jwt', 'update')}`, {
+    method: 'PUT',
+    body: JSON.stringify(updatedUserData),
     credentials: 'include',
     headers: {
       ...(init && init.headers),

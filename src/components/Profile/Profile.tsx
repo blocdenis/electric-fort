@@ -6,6 +6,8 @@ import { useState } from 'react';
 import ProfileReviews from './ProfileReviews';
 import Link from 'next/link';
 import ProfileOrdersHistory from './ProfileOrdersHistory';
+import { useQuery } from '@tanstack/react-query';
+import { getUserInfo } from '@/services/api/api';
 
 function Profile() {
   const PROFILE_TABS = {
@@ -32,6 +34,12 @@ function Profile() {
         break;
     }
   };
+
+  const { data: user, isFetching } = useQuery({
+    queryKey: ['user'],
+    queryFn: () => getUserInfo(),
+    staleTime: 10 * 1000,
+  });
 
   return (
     <div className="flex w-full">
@@ -74,7 +82,7 @@ function Profile() {
         <p className="mb-4">За програмою лояльності ви маєте діючу знижку:</p>
         <div className="flex flex-col justify-between w-full h-[152px] bg-primary_green text-black py-6 pr-6 pl-[30px] ">
           <p className="text-base font-bold">Ваша знижка становить:</p>
-          <p className="text-xxl font-bold text-right">5%</p>
+          <p className="text-xxl font-bold text-right">{user?.discount}%</p>
         </div>
       </div>
       <div

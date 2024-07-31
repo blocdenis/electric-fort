@@ -1,33 +1,137 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SecondaryButton from '../Buttons/SecondaryButton';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import {
+  UserActivities,
+  UserAddress,
+  getUserInfo,
+  updateUser,
+} from '@/services/api/api';
+import { FormSubmitHandler } from 'react-hook-form';
 
 interface ProfileInfoFormProps {
   handleCancelClick: () => void;
 }
 
+type DeliveryAddress = {
+  city: string;
+  street: string;
+  house: string;
+  apartment: string;
+};
+
+interface ProfileInfoFormState {
+  first_name?: string | null;
+  last_name?: string | null;
+  email?: string;
+  phone?: string | null;
+  activity?: UserActivities;
+  delivery_address?: DeliveryAddress | null;
+}
+
 function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
+  const { data: user, isFetching } = useQuery({
+    queryKey: ['user'],
+    queryFn: () => getUserInfo(),
+    staleTime: 10 * 1000,
+  });
+
+  const queryClient = useQueryClient();
+
+  const updateUserData = useMutation({
+    mutationFn: updateUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['user'],
+        exact: true,
+        refetchType: 'active',
+      });
+    },
+  });
+
+  const [address, setAddress] = useState<DeliveryAddress>({
+    city: user?.delivery_address?.city ?? '',
+    street: user?.delivery_address?.street ?? '',
+    house: user?.delivery_address?.house ?? '',
+    apartment: user?.delivery_address?.apartment ?? '',
+  });
+
+  const [formData, setFormData] = useState<ProfileInfoFormState>({
+    first_name: user?.first_name,
+    last_name: user?.last_name,
+    email: user?.email,
+    phone: user?.phone,
+    activity: user?.activity,
+    delivery_address: user?.delivery_address ? address : null,
+  });
+
+  const [updatedUserData, setUpdatedUserData] = useState<ProfileInfoFormState>(
+    {}
+  );
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    if (
+      name == 'city' ||
+      name == 'street' ||
+      name == 'house' ||
+      name == 'apartment'
+    ) {
+      setAddress((prevAddress) => ({ ...prevAddress, [name]: value }));
+    } else {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+      setUpdatedUserData((prevUserData) => ({
+        ...prevUserData,
+        [name]: value,
+      }));
+    }
+  };
+  const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value, name } = e.currentTarget;
+
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    setUpdatedUserData((prevUserData) => ({
+      ...prevUserData,
+      [name]: value,
+    }));
+  };
+
+  function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    console.log({ ...updatedUserData, delivery_address: address });
+    updateUserData.mutateAsync({
+      ...updatedUserData,
+      delivery_address: address,
+    });
+    handleCancelClick();
+  }
+
   return (
-    <form>
+    <form onSubmit={handleFormSubmit}>
       <div className="h-10 mb-6 flex">
-        <label htmlFor="last-name" className="w-[228px]">
+        <label htmlFor="last_name" className="w-[228px]">
           Прізвище
         </label>
         <input
           className=" bg-backgroung border border-white w-[360px]"
           type="text"
-          name="last-name"
-          id="last-name"
+          name="last_name"
+          id="last_name"
+          onChange={handleChange}
+          value={formData.last_name ?? ''}
         />
       </div>
       <div className="h-10 mb-6 flex">
-        <label htmlFor="name" className="w-[228px]">
+        <label htmlFor="first_name" className="w-[228px]">
           Ім’я
         </label>
         <input
           className=" bg-backgroung border border-white w-[360px]"
           type="text"
-          name="name"
-          id="name"
+          name="first_name"
+          id="first_name"
+          onChange={handleChange}
+          value={formData.first_name ?? ''}
         />
       </div>
       <div className="h-10 mb-6 flex">
@@ -36,9 +140,13 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
         </label>
         <input
           className=" bg-backgroung border border-white w-[360px]"
-          type="phone"
+          type="tel"
           name="phone"
           id="phone"
+          onChange={handleChange}
+          value={formData.phone ?? ''}
+          // pattern="[\+]\d{3}[\(]\d{2}[\)]\d{3}[\-]\d{2}[\-]\d{2}"
+          // placeholder="+38(000)123-45-67"
         />
       </div>
       <div className="h-10 mb-6 flex">
@@ -50,6 +158,8 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
           type="email"
           name="email"
           id="email"
+          onChange={handleChange}
+          value={formData.email}
         />
       </div>
       <div className="mb-6 flex">
@@ -64,6 +174,8 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
               type="text"
               name="city"
               id="city"
+              onChange={handleChange}
+              value={address.city}
             />
           </div>
           <div className="flex justify-center items-center h-[40px]">
@@ -75,6 +187,8 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
               type="text"
               name="street"
               id="street"
+              onChange={handleChange}
+              value={address.street}
             />
           </div>
           <div className="flex justify-center items-center h-[40px]">
@@ -86,6 +200,8 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
               type="text"
               name="house"
               id="house"
+              onChange={handleChange}
+              value={address.house}
             />
           </div>
           <div className="flex justify-center items-center h-[40px]">
@@ -97,6 +213,8 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
               type="text"
               name="apartment"
               id="apartment"
+              onChange={handleChange}
+              value={address.apartment}
             />
           </div>
         </div>
@@ -109,6 +227,8 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
           className=" bg-backgroung border border-white w-[360px]"
           name="activity"
           id="activity"
+          onChange={handleOptionChange}
+          value={formData.activity}
         >
           <option>Не вказувати</option>
           <option>Електрик</option>

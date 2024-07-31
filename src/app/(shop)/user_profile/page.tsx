@@ -1,4 +1,5 @@
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
+import LogOutButton from '@/components/Buttons/LogOutButton/LogOutButton';
 import Container from '@/components/Container/Container';
 import Profile from '@/components/Profile/Profile';
 import Section from '@/components/Section/Section';
@@ -17,12 +18,13 @@ function Page() {
             title="Особистий кабінет"
             className="before:content-['']"
           />
-          <Link
+          {/* <Link
             className=" bg-primary_green flex justify-center items-center text-black px-[65.5px] py-[7.5px]"
             href="/"
           >
             Вийти
-          </Link>
+          </Link> */}
+          <LogOutButton />
         </div>
         <Profile />
       </Section>

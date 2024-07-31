@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { EditIcon } from '../icons';
 import styles from './Profile.module.scss';
-import { getUserInfo } from '@/services/api/api';
+import { getUserInfo, updateUser } from '@/services/api/api';
 import SecondaryButton from '../Buttons/SecondaryButton';
 import { useState } from 'react';
 import ProfileInfoForm from './ProfileInfoForm';
@@ -13,6 +13,19 @@ function ProfileInfo() {
     queryKey: ['user'],
     queryFn: () => getUserInfo(),
     staleTime: 10 * 1000,
+  });
+
+  const queryClient = useQueryClient();
+
+  const updateUserData = useMutation({
+    mutationFn: updateUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['user'],
+        exact: true,
+        refetchType: 'active',
+      });
+    },
   });
 
   const [isEditProfile, setIsEditProfile] = useState(false);
@@ -31,13 +44,21 @@ function ProfileInfo() {
       </div>
     );
   }
-  const { first_name, last_name, phone, email, activity } = user;
+  const {
+    first_name,
+    last_name,
+    phone,
+    email,
+    activity,
+    delivery_address,
+    discount,
+  } = user;
 
   return (
     <div
       className={classNames(
-        ' border border-primary_green py-10 pr-8 pl-12 relative',
-        { 'mb-16': isEditProfile },
+        ' h-full border border-primary_green py-10 pr-8 pl-12 relative',
+        { ' h-fit mb-16': isEditProfile },
         'relative'
       )}
     >
@@ -61,8 +82,9 @@ function ProfileInfo() {
           </div>
           <div className="h-10 mb-6 flex">
             <div className="w-[228px]">Адреса доставки</div>
-            {/* delivery address from order ? */}
-            <span>м. Вінниця, вул.Ааааааааааааа, буд.1, кв.1</span>
+            {delivery_address ? (
+              <span>{`${delivery_address?.city}, ${delivery_address?.street},буд.${delivery_address?.house},кв.${delivery_address?.apartment}`}</span>
+            ) : null}
           </div>
           <div className="h-10 mb-6 flex">
             <div className="w-[228px]">Вид діяльності</div>
