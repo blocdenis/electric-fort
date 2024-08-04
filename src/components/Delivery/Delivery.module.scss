@@ -85,7 +85,7 @@
 }
 
 .delivery_stages {
-  padding: 40px 0px 40px 24px;
+  padding: 30px 0px 30px 24px;
 
   @include breakpoint(tablet) {
     padding-bottom: 24px;
@@ -133,4 +133,25 @@
   font: $bold24;
   text-align: center;
   margin-bottom: 12px;
+}
+
+.delivery_bottom {
+  padding: 30px 0px 30px 24px;
+
+  @include breakpoint(tablet) {
+    display: none;
+  }
+}
+
+.delivery_bottom_img {
+  padding: 43px 8px 13px 48px;
+  background-image: url(/Delivery-bottom-img.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 40vw;
+  @media screen and (min-width: 1024px) and (max-width: 1439px) {
+    padding: 0px 32px;
+    padding: 73px 40px 43px 72px;
+  }
 }
