@@ -1,6 +1,7 @@
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import Container from '@/components/Container/Container';
 import ContentContainer from '@/components/Container/ContentContainer';
+import DeliveryBottomSection from '@/components/Delivery/DeliveryBottomSection';
 import DeliveryStagesSection from '@/components/Delivery/DeliveryStagesSection';
 import DeliveryTopSection from '@/components/Delivery/DeliveryTopSection';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
@@ -18,6 +19,7 @@ function Page() {
         </div>
         <DeliveryTopSection />
         <DeliveryStagesSection />
+        <DeliveryBottomSection />
       </ContentContainer>
     </Container>
   );
