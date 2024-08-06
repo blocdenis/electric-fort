@@ -11,6 +11,7 @@ import Link from 'next/link';
 import ScrollToTopButton from '../ScrollToTopButton/ScrollToTopButton';
 import LogoIcon from '../icons/LogoIcon';
 import Container from '../Container/Container';
+import SupportButton from '../SupportButton/SupportButton';
 
 const Footer: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -89,6 +90,7 @@ const Footer: React.FC = () => {
         </h4>
         <ScrollToTopButton />
       </div>
+      <SupportButton />
     </footer>
   );
 };

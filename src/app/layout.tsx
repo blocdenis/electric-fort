@@ -4,7 +4,6 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 
 import Provider from '@/context/Providers';
-import SupportButton from '@/components/SupportButton/SupportButton';
 
 export const metadata: Metadata = {
   title: 'Electrychna fortecia',
@@ -21,7 +20,6 @@ export default function RootLayout({
       <body>
         <Provider>
           <Header />
-          <SupportButton />
           <main>{children}</main>
           <Footer />
         </Provider>
