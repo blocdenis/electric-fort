@@ -87,8 +87,7 @@ function Profile() {
       </div>
       <div
         className={classNames('w-[77%]', {
-          'border border-primary_green py-10 pr-8 pl-12':
-            tab !== PROFILE_TABS.PROFILE_INFO,
+          'border border-primary_green': tab !== PROFILE_TABS.PROFILE_INFO,
         })}
       >
         {tab === PROFILE_TABS.PROFILE_INFO && <ProfileInfo />}

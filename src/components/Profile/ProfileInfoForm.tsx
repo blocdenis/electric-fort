@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
 import SecondaryButton from '../Buttons/SecondaryButton';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  UserActivities,
-  UserAddress,
-  getUserInfo,
-  updateUser,
-} from '@/services/api/api';
-import { FormSubmitHandler } from 'react-hook-form';
+import { UserActivities, getUserInfo, updateUser } from '@/services/api/api';
 
 interface ProfileInfoFormProps {
   handleCancelClick: () => void;

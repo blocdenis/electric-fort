@@ -107,6 +107,63 @@ type UpdateUser = {
   delivery_address?: UserAddress | null;
 };
 
+export type UserDeliveryVariants =
+  | 'Самовивіз'
+  | 'Нова Пошта'
+  | 'Укрпошта'
+  | "Кур'єр НП"
+  | 'Поштомат НП';
+
+export type UserPaymentMethods =
+  | 'Безготівковий'
+  | 'Готівкою при отриманні'
+  | 'Накладений платіж'
+  | 'Онлайн-оплата, Google Pay або Apple Pay'
+  | 'Поштомат НП';
+
+export type UserOrderStatus =
+  | 'Новий'
+  | 'В обробці'
+  | 'Відправлено'
+  | 'Доставлено'
+  | 'Відмінено'
+  | 'Виконано';
+
+type OrderProductItem = {
+  name: string;
+  article: string;
+  price: number;
+  number: number;
+  unit_of_measurement: 'шт';
+};
+
+interface UserOrder {
+  pib: string;
+  phone: string;
+  email: string;
+  activity: UserActivities;
+  dilivery: UserDeliveryVariants;
+  discount: number | null;
+  discount_in_cash: number | null;
+  sum: number;
+  city_dilivery: string;
+  department: string;
+  payment: UserPaymentMethods;
+  status: UserOrderStatus;
+  status_payment: string | null;
+  comment: string | null;
+  add_date: string;
+  id: string;
+  products: OrderProductItem[];
+}
+
+type getUserOrders = {
+  count: number;
+  total_pages: number;
+  page: number;
+  data: UserOrder[];
+};
+
 //Categories, brands, series, subseries, subsubseries
 
 export const getAllCategories = async (
@@ -840,6 +897,24 @@ export const updateUser = async (
       'content-type': 'application/json',
     },
   });
+};
+
+export const getUserOrders = async (page: number, init?: RequestInit) => {
+  return sendRequestJSON<getUserOrders>(
+    `${buildUrl(
+      'jwt',
+      'user',
+      'Order'
+    )}?all_data=true&equal=false&pagination=true&page_size=5&page=${page}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
 };
 
 // CART

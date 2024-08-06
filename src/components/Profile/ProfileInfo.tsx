@@ -57,7 +57,8 @@ function ProfileInfo() {
   return (
     <div
       className={classNames(
-        ' h-full border border-primary_green py-10 pr-8 pl-12 relative',
+        '  border border-primary_green py-10 pr-8 pl-12 relative',
+        { 'h-full': !isEditProfile },
         { ' h-fit mb-16': isEditProfile },
         'relative'
       )}
