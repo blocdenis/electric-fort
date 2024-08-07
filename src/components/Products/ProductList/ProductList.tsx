@@ -11,7 +11,11 @@ interface ProductListProps {
 }
 function ProductList({ products }: ProductListProps) {
   if (!products?.length) {
-    return <div className="pl-6">Тут поки нема товарів</div>;
+    return (
+      <div className=" flex justify-center w-full items-center font-bold">
+        По вашому запиту нічого не знайдено
+      </div>
+    );
   }
 
   return (

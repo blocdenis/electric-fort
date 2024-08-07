@@ -29,6 +29,7 @@ type ShoppingCartContext = {
   removeFromCart: (id: number) => void;
   decreaseFromCart: (id: number) => void;
   clearCart: () => void;
+  isInCart: (id: number) => boolean;
 };
 
 const ShoppingCartContext = createContext({} as ShoppingCartContext);
@@ -68,7 +69,9 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
   const decreaseCartQuantity = (id: number) => {
     decreaseFromCart.mutate(id);
   };
-
+  const isInCart = (id: number) => {
+    return cartItems?.some((item) => item.id === id) || false;
+  };
   const removeFromCart = useMutation({
     mutationFn: deleteCartItem,
     onSuccess: () => {
@@ -103,6 +106,7 @@ export function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
         cartQuantity,
         removeFromCart: handleRemoveFromCart,
         clearCart,
+        isInCart,
       }}
     >
       {children}

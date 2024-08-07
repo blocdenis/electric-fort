@@ -46,7 +46,6 @@ const ProductDetails: React.FC<ProductDetailsProps> = async ({ product }) => {
         <PopularProductsSection title="Нещодавно переглянуті" />
       </ContentContainer>
     </Container>
- 
   );
 };
 
