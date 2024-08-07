@@ -129,15 +129,15 @@ export type UserOrderStatus =
   | 'Відмінено'
   | 'Виконано';
 
-type OrderProductItem = {
+export type OrderProductItem = {
   name: string;
   article: string;
   price: number;
   number: number;
-  unit_of_measurement: 'шт';
+  unit_of_measurement: string;
 };
 
-interface UserOrder {
+export interface UserOrder {
   pib: string;
   phone: string;
   email: string;
@@ -899,7 +899,7 @@ export const updateUser = async (
   });
 };
 
-export const getUserOrders = async (page: number, init?: RequestInit) => {
+export const getUserOrders = async (page: number = 1, init?: RequestInit) => {
   return sendRequestJSON<getUserOrders>(
     `${buildUrl(
       'jwt',

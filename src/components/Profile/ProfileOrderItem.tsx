@@ -3,8 +3,13 @@ import styles from './ProfileOrderItem.module.scss';
 import { ArrowCatalogIcon } from '../icons';
 import { useState } from 'react';
 import ProfileOrderDetails from './ProfileOrderDetails';
+import { UserOrder } from '@/services/api/api';
 
-function ProfileOrderItem({}) {
+interface ProfileOrderItemProps {
+  order: UserOrder;
+}
+
+function ProfileOrderItem({ order }: ProfileOrderItemProps) {
   const [isDetailsShown, setIsDetailsShown] = useState(false);
   const rotation = isDetailsShown ? -90 : 90;
   return (
@@ -13,32 +18,42 @@ function ProfileOrderItem({}) {
         <div className={styles.order_item}>
           <h3 className={styles.order_item_heading}>замовлення</h3>
           <p>
-            № 000001 <br /> від 01.01.2024
+            № {order.id} <br /> від {order.add_date.slice(0, 11)}
           </p>
           <p
             className={classNames(styles.order_status, {
-              [`${styles.order_status__new}`]: true,
-              [`${styles.order_status__processing}`]: true,
-              [`${styles.order_status__sent}`]: true,
-              [`${styles.order_status__done}`]: true,
+              [`${styles.order_status__new}`]: order.status === 'Новий',
+              [`${styles.order_status__processing}`]:
+                order.status === 'В обробці',
+              [`${styles.order_status__sent}`]: order.status === 'Відправлено',
+              [`${styles.order_status__done}`]: order.status === 'Доставлено',
+              [`${styles.order_status__done}`]: order.status === 'Відмінено',
+              [`${styles.order_status__done}`]: order.status === 'Виконано',
             })}
           >
-            Новий
+            {order.status}
           </p>
         </div>
         <div className={styles.order_item}>
           <h3 className={styles.order_item_heading}>вартість покупки</h3>
-          <p>2383 грн</p>
+          <p>{order.sum} грн</p>
         </div>
         <div className={styles.order_item}>
           <h3 className={styles.order_item_heading}>спосіб оплати</h3>
-          <p>Готівкою при отриманні</p>
+          <p>{order.payment}</p>
         </div>
         <div className={styles.order_item}>
           <h3 className={styles.order_item_heading}>спосіб доставки</h3>
-          <p>Нова Пошта</p>
-          <p>відділення №205</p>
-          <p>вул.Аааааааааааааааааааааа, 34</p>
+          <p>{order.dilivery}</p>
+          {order.dilivery === 'Нова Пошта' || order.dilivery === 'Укрпошта' ? (
+            <p>відділення {order.department.split(',')[0]}</p>
+          ) : null}
+
+          {order.dilivery === 'Нова Пошта' ? (
+            <p>{order.department.split(',').slice(1).join(',')}</p>
+          ) : null}
+
+          <p>{order.city_dilivery}</p>
           <div
             onClick={() => setIsDetailsShown((prevVal) => !prevVal)}
             className="flex items-center gap-[10px] text-grey justify-end mt-[13px]"
@@ -55,9 +70,11 @@ function ProfileOrderItem({}) {
       </div>
       {isDetailsShown && (
         <ul>
-          <li>
-            <ProfileOrderDetails />
-          </li>
+          {order.products.map((product) => (
+            <li key={product.article}>
+              <ProfileOrderDetails product={product} />
+            </li>
+          ))}
         </ul>
       )}
     </div>

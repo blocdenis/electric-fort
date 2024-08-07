@@ -1,0 +1,26 @@
+@use '/src/scss/abstracts/' as *;
+
+.title {
+  font: $bold24;
+  margin-bottom: 24px;
+}
+
+.product_name {
+  font: $regular18;
+  margin-bottom: 24px;
+}
+
+.review_label {
+  font: $bold18;
+  margin-bottom: 6px;
+}
+
+// className=" bg-black border border-white min-h-[210px] px-3 py-3"
+
+.review_textarea {
+  background-color: $black;
+  border: 1px solid $white;
+  min-height: 210px;
+  padding: 12px;
+  margin-bottom: 24px;
+}

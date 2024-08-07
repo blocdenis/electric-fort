@@ -1,8 +1,22 @@
 import Image from 'next/image';
 import styles from './ProfileOrderItem.module.scss';
 import Button from '../Buttons/Button/Button';
+import { OrderProductItem } from '@/services/api/api';
+import ReviewIcon from '../icons/ReviewIcon';
+import Backdrop from '../Backdrop/Backdrop';
+import Popup from '../Popup/Popup';
+import ReviewForm from './ReviewForm/ReviewForm';
+import { useState } from 'react';
 
-function ProfileOrderDetails() {
+interface ProfileOrderDetailsProps {
+  product: OrderProductItem;
+}
+
+function ProfileOrderDetails({ product }: ProfileOrderDetailsProps) {
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const onCloseOpenReview = () => {
+    setIsReviewOpen((prevVal) => !prevVal);
+  };
   return (
     <div className={styles.order_details}>
       <div className={styles.order_details_img}>
@@ -15,12 +29,21 @@ function ProfileOrderDetails() {
         />
       </div>
       <div className="w-full">
-        <p className="mb-[26px]">Назва товару</p>
+        <p className="mb-[26px]">{product.name}</p>
         <div className="w-full flex items-center justify-between">
-          <p>235 грн</p>
-          <Button onClick={() => console.log('Відгук')}>Залишити відгук</Button>
+          <p>{product.price} грн</p>
+          <Button
+            className="flex justify-center items-center gap-1 h-8"
+            onClick={onCloseOpenReview}
+          >
+            <ReviewIcon width={24} height={24} />
+            Залишити відгук
+          </Button>
         </div>
       </div>
+      <Popup isOpen={isReviewOpen} onClick={onCloseOpenReview}>
+        <ReviewForm productName={product.name} />
+      </Popup>
     </div>
   );
 }
