@@ -10,11 +10,14 @@ const ProductsPage = async ({ searchParams }: any) => {
     return <p>Please provide a search query</p>;
   }
   const productsData = await fetchProducts(query);
+
   return (
     <div>
       <Breadcrumbs items={[{ name: 'Результати пошуку' }]} />
       <Suspense fallback={<div>Loading...</div>}>
-        <ProductsList productsData={productsData} />
+        <div className="py-6 lg:py-10">
+          <ProductsList productsData={productsData} />
+        </div>
       </Suspense>
     </div>
   );

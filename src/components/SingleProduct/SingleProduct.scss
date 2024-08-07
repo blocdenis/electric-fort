@@ -123,6 +123,10 @@
   display: flex;
   flex-direction: row;
   // justify-content: space-between;
+  @include breakpoint(tablet) {
+    display: flex;
+    flex-direction: column-reverse;
+  }
   .specification-block {
     flex: 1;
     margin-top: 32px;
@@ -133,23 +137,42 @@
       .specification-image {
         width: 154px;
         height: 194px;
+        @include breakpoint(mobile) {
+          display: none;
+        }
       }
       .spesification-description {
         display: flex;
         flex-direction: column;
         gap: 24px;
-        width: 267px;
+        // width: 267px;
+        .specification-name-container {
+          @include breakpoint(tablet) {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+          }
+        }
         .specification-name {
           font: $semibold16;
         }
         .specification-article {
           font: $regular14;
         }
+        .specification-mesurement {
+          @include breakpoint(mobile) {
+            font: $semibold24;
+          }
+        }
         .specification-price {
           font: $semibold24;
+          @include breakpoint(mobile) {
+            font: $bold36;
+          }
         }
         .btn {
           width: 188px;
+          padding-top: 7px;
         }
       }
     }

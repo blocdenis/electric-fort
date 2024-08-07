@@ -4,9 +4,10 @@ import './ShoppingCart.scss';
 import { CartItem } from './CartItem';
 import { applyDiscount, discounts } from '@/services/applyDiscount';
 import { formatPriceUAH } from '@/services/formatCurrency';
-import { EmptyCart } from '../icons';
+import { ArrowCatalogIcon, EmptyCart } from '../icons';
 import Link from 'next/link';
 import { useProducts } from '@/hooks/useProducts';
+import ArrowCategoriesIcon from '../icons/BackButton';
 
 const ShoppingCart = () => {
   const { cartItems, cartQuantity, closeCart } = useShoppingCart();
@@ -32,20 +33,31 @@ const ShoppingCart = () => {
           {cartItems?.map((item) => (
             <CartItem key={item.id} {...item} close={closeCart} />
           ))}
-          <div className="checkout-container">
-            <div className="checkout-info">
-              <p>Сума</p> <span>{calculateTotal()}</span>
+          <div className="flex flex-col gap-4">
+            <div className="checkout-container">
+              <div className="checkout-info">
+                <p>Сума</p> <span>{calculateTotal()}</span>
+              </div>
+              <div className="checkout-info">
+                <p>Знижка</p> <span>{discounts(totalAmount)} %</span>
+              </div>
+              <div className="checkout-info">
+                <p>До сплати</p>{' '}
+                <span>{formatPriceUAH(applyDiscount(totalAmount))}</span>
+              </div>
             </div>
-            <div className="checkout-info">
-              <p>Знижка</p> <span>{discounts(totalAmount)} %</span>
+            <div className="flex flex-row justify-between content-start">
+              <button
+                onClick={closeCart}
+                className="flex flex-row gap-3 items-center "
+              >
+                <ArrowCatalogIcon rotation={180} fill="white" />
+                <Link href={'/'}>Продовжити покупки</Link>
+              </button>
+              <button className="checkout-btn" onClick={closeCart}>
+                <Link href={'/order'}>Оформити замовлення</Link>
+              </button>
             </div>
-            <div className="checkout-info">
-              <p>До сплати</p>{' '}
-              <span>{formatPriceUAH(applyDiscount(totalAmount))}</span>
-            </div>
-            <button className="checkout-btn" onClick={closeCart}>
-              <Link href={'/order'}>Оформити замовлення</Link>
-            </button>
           </div>
         </>
       ) : (

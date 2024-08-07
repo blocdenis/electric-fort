@@ -50,17 +50,19 @@ const ProductReview = ({ product }: { product: Product }) => {
           </div>
           <div className="spesification-description">
             <div className="specification-name">{product.name}</div>
-            <div className="specification-article">код:{product.article}</div>
-            <div>
-              <span className="specification-price">{product.price}</span>
-              грн/
-              {product.unit_of_measurement}
+            <div className="specification-name-container">
+              <div className="specification-article">код:{product.article}</div>
+              <div className="specification-mesurement">
+                <span className="specification-price">{product.price}</span>
+                грн/
+                <span>1{product.unit_of_measurement}</span>
+              </div>
             </div>
+
             <div className=" flex justify-between items-center ">
               <div className="btn">
                 <SecondaryButton className="btn">Купити</SecondaryButton>
               </div>
-
               <div className=" flex justify-center items-center w-[41px] h-[41px]  ">
                 <HeartWithShadowIcon
                   width={41}
