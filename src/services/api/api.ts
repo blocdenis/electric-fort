@@ -1,6 +1,7 @@
 import {
   Brand,
   Category,
+  Image,
   Product,
   ProductSeries,
   ProductSubSeries,
@@ -135,6 +136,8 @@ export type OrderProductItem = {
   price: number;
   number: number;
   unit_of_measurement: string;
+  id: number;
+  images: Image[] | null;
 };
 
 export interface UserOrder {

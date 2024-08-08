@@ -9,7 +9,7 @@ function ProfileOrdersHistory() {
     queryFn: () => getUserOrders(),
     staleTime: 10 * 1000,
   });
-  console.log(data?.data);
+
   const orders = data?.data;
 
   return (
@@ -21,10 +21,6 @@ function ProfileOrdersHistory() {
           </li>
         ))}
       </ul>
-
-      {/* <ProfileOrderItem />
-      <ProfileOrderItem />
-      <ProfileOrderItem /> */}
     </div>
   );
 }

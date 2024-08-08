@@ -3,7 +3,7 @@ import styles from './ProfileOrderItem.module.scss';
 import Button from '../Buttons/Button/Button';
 import { OrderProductItem } from '@/services/api/api';
 import ReviewIcon from '../icons/ReviewIcon';
-import Backdrop from '../Backdrop/Backdrop';
+import notFoundImage from '../../../public/notFound.jpg';
 import Popup from '../Popup/Popup';
 import ReviewForm from './ReviewForm/ReviewForm';
 import { useState } from 'react';
@@ -21,11 +21,14 @@ function ProfileOrderDetails({ product }: ProfileOrderDetailsProps) {
     <div className={styles.order_details}>
       <div className={styles.order_details_img}>
         <Image
-          src={'/notFound.jpg'}
+          src={
+            product.images
+              ? `data:${product.images[0][0]}; base64, ${product.images[0][1]}`
+              : notFoundImage
+          }
           alt="product image"
           className="w-full h-full"
-          width={80}
-          height={98}
+          fill={true}
         />
       </div>
       <div className="w-full">
@@ -42,7 +45,7 @@ function ProfileOrderDetails({ product }: ProfileOrderDetailsProps) {
         </div>
       </div>
       <Popup isOpen={isReviewOpen} onClick={onCloseOpenReview}>
-        <ReviewForm productName={product.name} />
+        <ReviewForm id={product.id} productName={product.name} />
       </Popup>
     </div>
   );

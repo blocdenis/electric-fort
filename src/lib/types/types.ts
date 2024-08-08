@@ -35,11 +35,11 @@ export interface ProductSubSubSeries {
   subseries_id: number;
 }
 
-type Image = [string, string]; // [MIME type, base64 data]
+export type Image = [string, string, string, number]; // [MIME type, base64 data]
 
 export interface Product {
   id: number;
-  images: Image[];
+  images: Image[] | null;
   name: string;
   article: string;
   unit_of_measurement: string;
