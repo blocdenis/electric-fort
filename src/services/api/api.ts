@@ -171,6 +171,18 @@ export interface UserRespond {
   product_id: number;
   respond: string;
 }
+export interface ProductRespond {
+  product_id: number;
+  respond: string;
+  add_date: string;
+}
+
+type getUserProductResponds = {
+  count: number;
+  total_pages: number;
+  page: number;
+  data: ProductRespond[];
+};
 
 //Categories, brands, series, subseries, subsubseries
 
@@ -778,6 +790,27 @@ export const getPopularProducts = async (
   );
 };
 
+export const getProductById = async (
+  //   params: Record<string, string> = {},
+  productId: number,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<Product[]>(
+    `${buildUrl(
+      'get',
+      'Product'
+    )}?all_data=true&field=id&search=${productId}&equal=true&pagination=false`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
 // Favorites
 
 export const getFavorites = async (
@@ -914,6 +947,24 @@ export const getUserOrders = async (page: number = 1, init?: RequestInit) => {
       'user',
       'Order'
     )}?all_data=true&equal=false&pagination=true&page_size=5&page=${page}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getUserReviews = async (page: number = 1, init?: RequestInit) => {
+  return sendRequestJSON<getUserProductResponds>(
+    `${buildUrl(
+      'jwt',
+      'user',
+      'ProductRespond'
+    )}?all_data=true&equal=false&pagination=true&page_size=4&page=${page}`,
     {
       method: 'GET',
       credentials: 'include',

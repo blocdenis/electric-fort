@@ -8,6 +8,7 @@ import Popup from '../Popup/Popup';
 import ReviewForm from './ReviewForm/ReviewForm';
 import { useState } from 'react';
 import AfterReviewSendInfo from './AfterReviewSendInfo';
+import Link from 'next/link';
 
 interface ProfileOrderDetailsProps {
   product: OrderProductItem;
@@ -30,7 +31,7 @@ function ProfileOrderDetails({ product }: ProfileOrderDetailsProps) {
   };
   return (
     <div className={styles.order_details}>
-      <div className={styles.order_details_img}>
+      <Link href={`/${product.id}`} className={styles.order_details_img}>
         <Image
           src={
             product.images
@@ -42,9 +43,11 @@ function ProfileOrderDetails({ product }: ProfileOrderDetailsProps) {
           fill={true}
           sizes="100%"
         />
-      </div>
+      </Link>
       <div className="w-full">
-        <p className="mb-[26px]">{product.name}</p>
+        <Link href={`/${product.id}`}>
+          <p className="mb-[26px]">{product.name}</p>
+        </Link>
         <div className="w-full flex items-center justify-between">
           <p>{product.price} грн</p>
           <Button

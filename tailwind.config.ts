@@ -28,6 +28,7 @@ const config: Config = {
         desktop: '1440px',
       },
       fontSize: {
+        xs: ['12px', '1.4'],
         sm: ['14px', '1.4'],
         base: ['16px', '1.4'],
         md: ['18px', '1.4'],

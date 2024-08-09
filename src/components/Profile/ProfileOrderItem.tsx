@@ -4,6 +4,7 @@ import { ArrowCatalogIcon } from '../icons';
 import { useState } from 'react';
 import ProfileOrderDetails from './ProfileOrderDetails';
 import { UserOrder } from '@/services/api/api';
+import { formatDate } from '@/lib/utils/formatDate';
 
 interface ProfileOrderItemProps {
   order: UserOrder;
@@ -18,7 +19,7 @@ function ProfileOrderItem({ order }: ProfileOrderItemProps) {
         <div className={styles.order_item}>
           <h3 className={styles.order_item_heading}>замовлення</h3>
           <p>
-            № {order.id} <br /> від {order.add_date.slice(0, 11)}
+            № {order.id} <br /> від {formatDate(order.add_date)}
           </p>
           <p
             className={classNames(styles.order_status, {
@@ -56,7 +57,7 @@ function ProfileOrderItem({ order }: ProfileOrderItemProps) {
           <p>{order.city_dilivery}</p>
           <div
             onClick={() => setIsDetailsShown((prevVal) => !prevVal)}
-            className="flex items-center gap-[10px] text-grey justify-end mt-[13px]"
+            className="flex items-center gap-[10px] text-grey justify-end mt-[13px] cursor-pointer"
           >
             <div>деталі замовлення</div>
             <div className="w-[16px] h-[11px]">
