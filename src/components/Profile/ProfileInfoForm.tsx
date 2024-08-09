@@ -92,7 +92,7 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
 
   function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log({ ...updatedUserData, delivery_address: address });
+    // console.log({ ...updatedUserData, delivery_address: address });
     updateUserData.mutateAsync({
       ...updatedUserData,
       delivery_address: address,

@@ -167,6 +167,11 @@ type getUserOrders = {
   data: UserOrder[];
 };
 
+export interface UserRespond {
+  product_id: number;
+  respond: string;
+}
+
 //Categories, brands, series, subseries, subsubseries
 
 export const getAllCategories = async (
@@ -918,6 +923,22 @@ export const getUserOrders = async (page: number = 1, init?: RequestInit) => {
       },
     }
   );
+};
+
+export const addUserReview = async (
+  // params: Record<string, number>,
+  userReview: UserRespond,
+  init?: RequestInit
+) => {
+  return sendRequest<string>(`${buildUrl('jwt', 'respond')}`, {
+    method: 'POST',
+    body: JSON.stringify(userReview),
+    credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
 };
 
 // CART

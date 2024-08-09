@@ -4,12 +4,14 @@ import Success from '../icons/Success';
 
 function AfterReviewSendInfo() {
   return (
-    <div>
-      <div>
+    <div className="flex flex-col items-center gap-[31px]">
+      <div className="w-[143px] h-[152px]">
         <Success />
       </div>
-      <h2>Дякуємо!</h2>
-      <p>Ваш відгук буде опубліковано після модерації. </p>
+      <h2 className=" text-lg font-bold">Дякуємо!</h2>
+      <p className=" text-mid font-normal">
+        Ваш відгук буде опубліковано після модерації.
+      </p>
     </div>
   );
 }

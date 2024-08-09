@@ -7,6 +7,7 @@ import notFoundImage from '../../../public/notFound.jpg';
 import Popup from '../Popup/Popup';
 import ReviewForm from './ReviewForm/ReviewForm';
 import { useState } from 'react';
+import AfterReviewSendInfo from './AfterReviewSendInfo';
 
 interface ProfileOrderDetailsProps {
   product: OrderProductItem;
@@ -14,8 +15,18 @@ interface ProfileOrderDetailsProps {
 
 function ProfileOrderDetails({ product }: ProfileOrderDetailsProps) {
   const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const [isOpenMessageAfterReview, setIsOpenMessageAfterReview] =
+    useState(false);
   const onCloseOpenReview = () => {
     setIsReviewOpen((prevVal) => !prevVal);
+  };
+  const onCloseOpenMessageAfterReview = () => {
+    setIsOpenMessageAfterReview((prevVal) => !prevVal);
+  };
+
+  const onReviewSend = () => {
+    onCloseOpenReview();
+    onCloseOpenMessageAfterReview();
   };
   return (
     <div className={styles.order_details}>
@@ -27,8 +38,9 @@ function ProfileOrderDetails({ product }: ProfileOrderDetailsProps) {
               : notFoundImage
           }
           alt="product image"
-          className="w-full h-full"
+          className="w-full h-full object-cover"
           fill={true}
+          sizes="100%"
         />
       </div>
       <div className="w-full">
@@ -45,7 +57,17 @@ function ProfileOrderDetails({ product }: ProfileOrderDetailsProps) {
         </div>
       </div>
       <Popup isOpen={isReviewOpen} onClick={onCloseOpenReview}>
-        <ReviewForm id={product.id} productName={product.name} />
+        <ReviewForm
+          id={product.id}
+          productName={product.name}
+          onClose={onReviewSend}
+        />
+      </Popup>
+      <Popup
+        isOpen={isOpenMessageAfterReview}
+        onClick={onCloseOpenMessageAfterReview}
+      >
+        <AfterReviewSendInfo />
       </Popup>
     </div>
   );
