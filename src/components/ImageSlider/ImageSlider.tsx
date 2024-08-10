@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from './ImageSlider.module.scss';
 import Image from 'next/image';
+import notFound from './../../../public/notFound.jpg';
 
 interface ImageSliderProps {
   images: string[];
@@ -13,7 +14,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
     <div className={styles['image-slider']}>
       <div className={styles['main-image']}>
         <Image
-          src={images[currentIndex]}
+          src={images[0] !== '' ? images[currentIndex] : notFound}
           width={252}
           height={316}
           alt={`Product ${currentIndex + 1} `}
@@ -29,7 +30,7 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
             onClick={() => setCurrentIndex(index)}
           >
             <Image
-              src={image}
+              src={image !== '' ? image : notFound}
               width={44}
               height={54}
               alt={`Thumbnail ${index + 1}`}
