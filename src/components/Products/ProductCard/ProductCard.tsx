@@ -12,6 +12,7 @@ import classNames from 'classnames';
 import SecondaryButton from '@/components/Buttons/SecondaryButton';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
 import { useFavorites } from '@/context/FavoritesContext';
+import { useEffect, useState } from 'react';
 
 interface ProductCardProps extends Product {
   onCardClick?: () => void;
@@ -37,7 +38,8 @@ function ProductCard({
   onCardClick,
 }: ProductCardProps) {
   const productPageLink = `/${id}`;
-  const { addToCart, removeFromCart } = useShoppingCart();
+  const [inCart, setInCart] = useState(false);
+  const { addToCart, openCart, isInCart } = useShoppingCart();
 
   const { addToFavorites, deleteFromFavorites, isFavorite } = useFavorites();
 
@@ -48,10 +50,15 @@ function ProductCard({
       addToFavorites.mutateAsync(id);
     }
   };
-  const increaseCartQuantity = () => {
-    addToCart(id);
-  };
+  useEffect(() => {
+    setInCart(isInCart(id));
+  }, [isInCart, id]);
 
+  const handleAddToCart = () => {
+    addToCart(id);
+    openCart();
+    setInCart(true);
+  };
   return (
     <div className=" inline-block bg-white w-[286px] h-[400px] px-4 pt-4 pb-6 shadow-[0_1px_1px_0_rgba(0,0,0,0.25)]">
       <div className=" flex justify-center w-[254px] h-[176px] overflow-hidden mb-4 ">
@@ -90,8 +97,10 @@ function ProductCard({
         <SecondaryButton
           className=" px-[60px]"
           type="button"
-          onClick={() => increaseCartQuantity()}
+          onClick={handleAddToCart}
+          disabled={inCart}
         >
+          {inCart ? 'В кошику' : 'Купити'}
           Купити
         </SecondaryButton>
         <div className=" flex justify-center items-center w-[41px] h-[41px] cursor-pointer">
