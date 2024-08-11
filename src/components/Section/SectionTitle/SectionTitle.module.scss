@@ -36,3 +36,11 @@
     margin-bottom: 24px;
   }
 }
+
+.section_heading_profile {
+  font: $bold24;
+
+  @include breakpoint(mobile) {
+    font: $bold18;
+  }
+}

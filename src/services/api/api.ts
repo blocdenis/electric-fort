@@ -958,13 +958,17 @@ export const getUserOrders = async (page: number = 1, init?: RequestInit) => {
   );
 };
 
-export const getUserReviews = async (page: number = 1, init?: RequestInit) => {
+export const getUserReviews = async (
+  page: number,
+  pageSize: number = 1,
+  init?: RequestInit
+) => {
   return sendRequestJSON<getUserProductResponds>(
     `${buildUrl(
       'jwt',
       'user',
       'ProductRespond'
-    )}?all_data=true&equal=false&pagination=true&page_size=4&page=${page}`,
+    )}?all_data=true&equal=false&pagination=true&page_size=${pageSize}&page=${page}`,
     {
       method: 'GET',
       credentials: 'include',
