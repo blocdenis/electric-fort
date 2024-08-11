@@ -53,7 +53,10 @@ function Profile() {
               tab === PROFILE_TABS.PROFILE_INFO && styles.switcher_item__active
             )}
           >
-            <Link href={'/user_profile/#personal_info'}>
+            <Link
+              href={'/user_profile/#personal_info'}
+              className=" inline-block w-full h-full"
+            >
               Персональна інформація
             </Link>
           </li>
@@ -66,7 +69,12 @@ function Profile() {
                 styles.switcher_item__active
             )}
           >
-            <Link href={'/user_profile/#history_order'}>Історія замовлень</Link>
+            <Link
+              href={'/user_profile/#history_order'}
+              className=" inline-block w-full h-full"
+            >
+              Історія замовлень
+            </Link>
           </li>
           <li
             onClick={handleTabClick}
@@ -76,7 +84,12 @@ function Profile() {
               tab === PROFILE_TABS.REVIEWS && styles.switcher_item__active
             )}
           >
-            <Link href={'/user_profile/#reviews'}>Відгуки</Link>
+            <Link
+              className=" inline-block w-full h-full"
+              href={'/user_profile/#reviews'}
+            >
+              Відгуки
+            </Link>
           </li>
         </ul>
         <p className="mb-4">За програмою лояльності ви маєте діючу знижку:</p>

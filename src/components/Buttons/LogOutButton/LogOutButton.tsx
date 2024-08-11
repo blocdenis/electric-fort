@@ -1,15 +1,24 @@
 'use client';
 import { logOutUser } from '@/services/api/api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 
 function LogOutButton() {
-  const handleLogOut = async () => {
-    try {
-      logOutUser().then(() => alert('User logout'));
-    } catch (error) {
-      alert(error);
-    }
-  };
+  const queryClient = useQueryClient();
+
+  const logedOutUser = useMutation({
+    mutationFn: logOutUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['user'],
+        exact: true,
+        refetchType: 'active',
+      });
+      console.log('user loged out');
+    },
+  });
+  const handleLogOut = () => logedOutUser.mutateAsync(undefined);
+
   return (
     <button
       type="button"

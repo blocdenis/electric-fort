@@ -4,8 +4,6 @@ import Container from '@/components/Container/Container';
 import Profile from '@/components/Profile/Profile';
 import Section from '@/components/Section/Section';
 import SectionTitle from '@/components/Section/SectionTitle/SectionTitle';
-import Link from 'next/link';
-import React from 'react';
 
 function Page() {
   const links = [{ name: 'Особистий кабінет' }];

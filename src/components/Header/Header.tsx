@@ -25,12 +25,14 @@ import { useFavorites } from '@/context/FavoritesContext';
 import CircleWithQuantity from '../CircleWithQuantity/CircleWithQuantity';
 import FilterIcon from '../icons/FilterIcon';
 import Filters from '../Filters/Filters';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import classNames from 'classnames';
 import { useAuth } from '@/context/AuthContext';
 
 const Header = () => {
   const params = useParams();
+  const pathname = usePathname();
+
   const { category_id } = params;
   const isFiltersShown = category_id ? true : false;
 
@@ -42,6 +44,13 @@ const Header = () => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [activeLanguage, setActiveLanguage] = useState<'UA' | 'RU'>('UA');
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash === '#auth') {
+      setIsAuthOpen(true);
+    }
+  }, [pathname]);
 
   const handleFiltersOpen = () => {
     setIsFiltersOpen(!isFiltersOpen);
@@ -213,7 +222,7 @@ const Header = () => {
       >
         <BurgerMenu isOpen={isMenuOpen} onCloseClick={handleMenuToggle} />
       </Backdrop>
-      {isAuthOpen && <AuthModal onClose={closeModal} />}
+      {isAuthOpen && <AuthModal id="auth" onClose={closeModal} />}
     </header>
   );
 };

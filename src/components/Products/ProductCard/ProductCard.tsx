@@ -101,7 +101,6 @@ function ProductCard({
           disabled={inCart}
         >
           {inCart ? 'В кошику' : 'Купити'}
-          Купити
         </SecondaryButton>
         <div className=" flex justify-center items-center w-[41px] h-[41px] cursor-pointer">
           {isFavorite(id) ? (

@@ -15,19 +15,6 @@ function ProfileInfo() {
     staleTime: 10 * 1000,
   });
 
-  const queryClient = useQueryClient();
-
-  const updateUserData = useMutation({
-    mutationFn: updateUser,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['user'],
-        exact: true,
-        refetchType: 'active',
-      });
-    },
-  });
-
   const [isEditProfile, setIsEditProfile] = useState(false);
   const [isEditPassword, setIsEditPassword] = useState(false);
   const onEditClick = () => {
