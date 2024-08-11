@@ -1,6 +1,7 @@
 import {
   Brand,
   Category,
+  Image,
   Product,
   ProductSeries,
   ProductSubSeries,
@@ -58,9 +59,129 @@ export type getProducts = {
   data: Product[];
 };
 
-type User = {
+type BaseAuth = {
   email: string;
   password: string;
+};
+
+export type UserAddress = {
+  city: string;
+  street: string;
+  house: string;
+  apartment: string;
+};
+
+export type UserActivities =
+  | 'Не вказувати'
+  | 'Електрик'
+  | 'Дизайнер'
+  | 'Виконроб'
+  | 'Будівельна організація';
+
+type User = {
+  first_name: string | null;
+  last_name: string | null;
+  email: string;
+  phone: string | null;
+  activity: UserActivities;
+  verified_email: boolean;
+  status: 'Активний' | 'Неактивний' | 'Заблокований';
+  updated_info_date: string | null;
+  add_date: string;
+  delivery_address: UserAddress | null;
+  discount: number;
+};
+
+export type ChangePassword = {
+  old_password: string;
+  new_password: string;
+  repeat_new_password: string;
+};
+
+type UpdateUser = {
+  first_name?: string | null;
+  last_name?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  activity?: UserActivities | null;
+  password?: ChangePassword | null;
+  delivery_address?: UserAddress | null;
+};
+
+export type UserDeliveryVariants =
+  | 'Самовивіз'
+  | 'Нова Пошта'
+  | 'Укрпошта'
+  | "Кур'єр НП"
+  | 'Поштомат НП';
+
+export type UserPaymentMethods =
+  | 'Безготівковий'
+  | 'Готівкою при отриманні'
+  | 'Накладений платіж'
+  | 'Онлайн-оплата, Google Pay або Apple Pay'
+  | 'Поштомат НП';
+
+export type UserOrderStatus =
+  | 'Новий'
+  | 'В обробці'
+  | 'Відправлено'
+  | 'Доставлено'
+  | 'Відмінено'
+  | 'Виконано';
+
+export type OrderProductItem = {
+  name: string;
+  article: string;
+  price: number;
+  number: number;
+  unit_of_measurement: string;
+  id: number;
+  images: Image[] | null;
+};
+
+export interface UserOrder {
+  pib: string;
+  phone: string;
+  email: string;
+  activity: UserActivities;
+  dilivery: UserDeliveryVariants;
+  discount: number | null;
+  discount_in_cash: number | null;
+  sum: number;
+  city_dilivery: string;
+  department: string;
+  payment: UserPaymentMethods;
+  status: UserOrderStatus;
+  status_payment: string | null;
+  comment: string | null;
+  add_date: string;
+  id: string;
+  products: OrderProductItem[];
+}
+
+type getUserOrders = {
+  count: number;
+  total_pages: number;
+  page: number;
+  data: UserOrder[];
+};
+
+export interface UserRespond {
+  product_id: number;
+  respond: string;
+}
+export interface ProductRespond {
+  product_id: number;
+  respond: string;
+  add_date: string;
+}
+
+type getUserProductResponds = {
+  count: number;
+  total_pages: number;
+  page: number;
+  data: ProductRespond[];
 };
 
 //Categories, brands, series, subseries, subsubseries
@@ -669,6 +790,27 @@ export const getPopularProducts = async (
   );
 };
 
+export const getProductById = async (
+  //   params: Record<string, string> = {},
+  productId: number,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<Product[]>(
+    `${buildUrl(
+      'get',
+      'Product'
+    )}?all_data=true&field=id&search=${productId}&equal=true&pagination=false`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
 // Favorites
 
 export const getFavorites = async (
@@ -728,7 +870,7 @@ export const deleteFavorites = async (
 
 export const registrationUser = async (
   // params: Record<string, number>,
-  data: User,
+  data: BaseAuth,
   init?: RequestInit
 ) => {
   return sendRequest<string>(`${buildUrl('user', 'register')}`, {
@@ -742,13 +884,110 @@ export const registrationUser = async (
   });
 };
 
-export const isAuth = async (
+export const logOutUser = async (
   // params: Record<string, number>,
-  data: User,
   init?: RequestInit
 ) => {
-  return sendRequest<string>(`${buildUrl('jwt', 'user')}`, {
+  return sendRequest<string>(`${buildUrl('jwt', 'exit')}`, {
+    method: 'DELETE',
+    credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
+};
+
+// export const isAuth = async (
+//   // params: Record<string, number>,
+//   data: User,
+//   init?: RequestInit
+// ) => {
+//   return sendRequest<string>(`${buildUrl('jwt', 'user')}`, {
+//     method: 'GET',
+//     credentials: 'include',
+//     headers: {
+//       ...(init && init.headers),
+//       'content-type': 'application/json',
+//     },
+//   });
+// };
+
+export const getUserInfo = async (init?: RequestInit) => {
+  return sendRequestJSON<User>(`${buildUrl('jwt', 'user')}`, {
     method: 'GET',
+    credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
+};
+
+export const updateUser = async (
+  // params: Record<string, number>,
+  updatedUserData: UpdateUser,
+  init?: RequestInit
+) => {
+  return sendRequest<string>(`${buildUrl('jwt', 'update')}`, {
+    method: 'PUT',
+    body: JSON.stringify(updatedUserData),
+    credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
+};
+
+export const getUserOrders = async (page: number = 1, init?: RequestInit) => {
+  return sendRequestJSON<getUserOrders>(
+    `${buildUrl(
+      'jwt',
+      'user',
+      'Order'
+    )}?all_data=true&equal=false&pagination=true&page_size=5&page=${page}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const getUserReviews = async (
+  page: number,
+  pageSize: number = 1,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<getUserProductResponds>(
+    `${buildUrl(
+      'jwt',
+      'user',
+      'ProductRespond'
+    )}?all_data=true&equal=false&pagination=true&page_size=${pageSize}&page=${page}`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
+export const addUserReview = async (
+  // params: Record<string, number>,
+  userReview: UserRespond,
+  init?: RequestInit
+) => {
+  return sendRequest<string>(`${buildUrl('jwt', 'respond')}`, {
+    method: 'POST',
+    body: JSON.stringify(userReview),
     credentials: 'include',
     headers: {
       ...(init && init.headers),

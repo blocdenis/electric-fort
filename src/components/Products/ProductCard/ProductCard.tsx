@@ -95,6 +95,7 @@ function ProductCard({
       </div>
       <div className=" flex justify-between items-center">
         <SecondaryButton
+          className=" px-[60px]"
           type="button"
           onClick={handleAddToCart}
           disabled={inCart}

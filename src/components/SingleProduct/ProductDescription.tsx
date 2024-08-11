@@ -1,5 +1,5 @@
 'use client';
-import { products } from '@/lib/db/products';
+// import { products } from '@/lib/db/products';
 import React from 'react';
 import SecondaryButton from '../Buttons/SecondaryButton';
 import { HeartWithShadowFilledIcon, HeartWithShadowIcon } from '../icons';
@@ -24,12 +24,15 @@ const ProductDescription = ({ product }: { product: Product }) => {
   const increaseCartQuantity = () => {
     addToCart(product.id);
   };
-  const productImages = [
-    `data:${product.images[0][0]};base64,${product.images[0][1]}`,
-    `data:${product.images[0][0]};base64,${product.images[0][1]}`,
-    `data:${product.images[0][0]};base64,${product.images[0][1]}`,
-    `data:${product.images[0][0]};base64,${product.images[0][1]}`,
-  ];
+
+  const productImages = product.images
+    ? [
+        `data:${product.images[0][0]};base64,${product.images[0][1]}`,
+        `data:${product.images[0][0]};base64,${product.images[0][1]}`,
+        `data:${product.images[0][0]};base64,${product.images[0][1]}`,
+        `data:${product.images[0][0]};base64,${product.images[0][1]}`,
+      ]
+    : [''];
   return (
     <div className="product-description-container">
       <div className="image-section">
@@ -45,7 +48,10 @@ const ProductDescription = ({ product }: { product: Product }) => {
           </div>
           <div className=" flex justify-between items-center ">
             <div className="btn">
-              <SecondaryButton onClick={() => increaseCartQuantity()}>
+              <SecondaryButton
+                className="px-[60px]"
+                onClick={() => increaseCartQuantity()}
+              >
                 Купити
               </SecondaryButton>
             </div>

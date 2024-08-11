@@ -1,0 +1,54 @@
+@use '/src/scss/abstracts/' as *;
+
+.order {
+  border: 1px solid #fbfbfb;
+  padding: 12px 12px 24px 12px;
+}
+
+.order_info {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  //   gap: 79px;
+  font: $regular14;
+}
+
+.order_item {
+  min-width: 104px;
+}
+
+.order_item_heading {
+  color: $gray;
+  margin-bottom: 6px;
+}
+
+.order_status {
+  margin-top: 12px;
+  font: $bold16;
+}
+
+.order_status__new {
+  color: $accent-secondary;
+}
+.order_status__processing {
+  color: $accent-primary;
+}
+.order_status__sent {
+  color: $accent-primary-strong;
+}
+.order_status__done {
+  color: $accent-primary-dark;
+}
+
+.order_details {
+  display: flex;
+  gap: 12px;
+  padding: 24px 0;
+}
+
+.order_details_img {
+  position: relative;
+  width: 80px;
+  // height: 98px;
+  height: auto;
+}

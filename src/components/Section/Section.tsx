@@ -1,7 +1,17 @@
+import classNames from 'classnames';
 import React, { PropsWithChildren } from 'react';
 
-function Section({ children }: PropsWithChildren) {
-  return <section className=" py-6 lg:py-10">{children}</section>;
+interface SectionProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+function Section({ children, className }: SectionProps) {
+  return (
+    <section className={classNames(' py-6 lg:py-10', className)}>
+      {children}
+    </section>
+  );
 }
 
 export default Section;

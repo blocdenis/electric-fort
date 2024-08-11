@@ -29,7 +29,9 @@ function ProductCardPlaceholder() {
         </div>
       </div>
       <div className=" flex justify-between items-center">
-        <SecondaryButton type="button">Купити</SecondaryButton>
+        <SecondaryButton className="px-[60px]" disabled type="button">
+          Купити
+        </SecondaryButton>
         <div className=" flex justify-center items-center w-[41px] h-[41px] cursor-pointer">
           <HeartWithShadowIcon
             width={32}

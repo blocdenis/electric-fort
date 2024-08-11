@@ -2,8 +2,6 @@
 import classNames from 'classnames';
 import styles from './ShowMoreButton.module.scss';
 import { useFilters } from '@/context/FiltersContext';
-import { useCallback, useEffect } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 interface ShowMoreButtonProps {
   className?: string;

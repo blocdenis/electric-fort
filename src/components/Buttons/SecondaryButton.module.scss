@@ -1,8 +1,10 @@
 @use '/src/scss/abstracts/' as *;
 
 .button {
-  padding: 8.5px 60px 7.5px 60px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   background-color: $accent-primary;
+  border: 1px solid $accent-primary;
   color: black;
 
   &:hover {
