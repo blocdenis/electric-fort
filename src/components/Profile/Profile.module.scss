@@ -2,44 +2,27 @@
 
 .switcher_item {
   width: 100%;
-  border: 1px solid $accent-primary;
-  border-right: 0px;
+  border-top: 1px solid $accent-primary;
+  border-bottom: 1px solid $accent-primary;
+  border-left: 1px solid $accent-primary;
+  border-right: 1px solid $accent-primary;
+  &:not(:last-child) {
+    margin-bottom: 32px;
+  }
   padding: 12px 24px;
+  cursor: pointer;
+
   &:hover {
     color: $accent-primary;
+  }
+  @include breakpoint(desktop) {
+    &:not(:last-child) {
+      margin-bottom: 42px;
+    }
+    border-right: 0px solid $accent-primary;
   }
 }
 
 .switcher_item__active {
   background-color: $accent-primary-dark;
-}
-
-.edit_btn {
-  cursor: pointer;
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 46px;
-  height: 46px;
-  border: 1px solid $accent-primary;
-  & svg > path {
-    fill: $white;
-  }
-  &:hover {
-    & svg > path {
-      fill: $accent-primary;
-    }
-  }
-  &:active {
-    background-color: $accent-primary-dark;
-  }
-  &:disabled {
-    border: 1px solid #dddddd;
-    & svg > path {
-      fill: $gray;
-    }
-  }
 }

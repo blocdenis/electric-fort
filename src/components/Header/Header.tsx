@@ -141,7 +141,7 @@ const Header = () => {
                       <ProfileIcon className="w-[34px] h-[34px]" />
                     </Link>
                   ) : (
-                    <button onClick={openModal}>
+                    <button className="hidden laptop:block" onClick={openModal}>
                       <p>Увійти</p>
                     </button>
                   )}

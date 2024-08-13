@@ -11,6 +11,8 @@ import { useAuth } from '@/context/AuthContext';
 function Page() {
   const links = [{ name: 'Особистий кабінет' }];
   const { isAuthenticated } = useAuth();
+  console.log(isAuthenticated);
+
   return (
     <PrivateRoute isAuth={isAuthenticated}>
       <Container>
@@ -20,7 +22,9 @@ function Page() {
             <h2 className={styles.section_heading_profile}>
               Особистий кабінет
             </h2>
-            <LogOutButton />
+            <div className=" hidden laptop:block">
+              <LogOutButton />
+            </div>
           </div>
           <Profile />
         </Section>

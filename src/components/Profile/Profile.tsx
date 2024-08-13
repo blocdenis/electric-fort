@@ -16,18 +16,30 @@ function Profile() {
     REVIEWS: 'Відгуки',
   };
 
+  const [isProfileInfoOpen, setIsProfileInfoOpen] = useState(false);
+  const [isOrdersHistoryOpen, setIsOrdersHistoryOpen] = useState(false);
+  const [isReviewsOpen, setIsReviewsOpen] = useState(false);
   const [tab, setTab] = useState(PROFILE_TABS.PROFILE_INFO);
 
-  const handleTabClick = (event: React.MouseEvent<HTMLLIElement>) => {
+  const handleTabClick = (event: React.MouseEvent<HTMLDivElement>) => {
     switch (event.currentTarget.innerText) {
       case 'Персональна інформація':
+        setIsProfileInfoOpen((prevVal) => !prevVal);
+        setIsOrdersHistoryOpen(false);
+        setIsReviewsOpen(false);
         setTab(PROFILE_TABS.PROFILE_INFO);
         break;
       case 'Історія замовлень':
         setTab(PROFILE_TABS.ORDERS_HISTORY);
+        setIsOrdersHistoryOpen((prevVal) => !prevVal);
+        setIsProfileInfoOpen(false);
+        setIsReviewsOpen(false);
         break;
       case 'Відгуки':
         setTab(PROFILE_TABS.REVIEWS);
+        setIsReviewsOpen((prevVal) => !prevVal);
+        setIsOrdersHistoryOpen(false);
+        setIsProfileInfoOpen(false);
         break;
 
       default:
@@ -43,13 +55,13 @@ function Profile() {
 
   return (
     <div className="flex w-full">
-      <div className="w-[23%]">
-        <ul className=" pt-6 mb-[42px]">
-          <li
+      <div className="w-full laptop:w-[23%]">
+        <div className=" pt-6 mb-[42px] w-full">
+          <div
             onClick={handleTabClick}
             className={classNames(
               styles.switcher_item,
-              'mb-[42px] cursor-pointer ',
+              // 'mb-[42px]',
               tab === PROFILE_TABS.PROFILE_INFO && styles.switcher_item__active
             )}
           >
@@ -59,12 +71,17 @@ function Profile() {
             >
               Персональна інформація
             </Link>
-          </li>
-          <li
+          </div>
+          {isProfileInfoOpen ? (
+            <div className="mb-8 laptop:hidden">
+              <ProfileInfo />
+            </div>
+          ) : null}
+          <div
             onClick={handleTabClick}
             className={classNames(
               styles.switcher_item,
-              'mb-[42px] cursor-pointer ',
+              // 'mb-[42px]',
               tab === PROFILE_TABS.ORDERS_HISTORY &&
                 styles.switcher_item__active
             )}
@@ -75,12 +92,16 @@ function Profile() {
             >
               Історія замовлень
             </Link>
-          </li>
-          <li
+          </div>
+          {isOrdersHistoryOpen ? (
+            <div className="mb-8 laptop:hidden">
+              <ProfileOrdersHistory />
+            </div>
+          ) : null}
+          <div
             onClick={handleTabClick}
             className={classNames(
               styles.switcher_item,
-              'cursor-pointer',
               tab === PROFILE_TABS.REVIEWS && styles.switcher_item__active
             )}
           >
@@ -90,8 +111,13 @@ function Profile() {
             >
               Відгуки
             </Link>
-          </li>
-        </ul>
+          </div>
+          {isReviewsOpen ? (
+            <div className="mb-8 laptop:hidden">
+              <ProfileReviews />
+            </div>
+          ) : null}
+        </div>
         <p className="mb-4">За програмою лояльності ви маєте діючу знижку:</p>
         <div className="flex flex-col justify-between w-full h-[152px] bg-primary_green text-black py-6 pr-6 pl-[30px] ">
           <p className="text-base font-bold">Ваша знижка становить:</p>
@@ -99,7 +125,7 @@ function Profile() {
         </div>
       </div>
       <div
-        className={classNames('w-[77%]', {
+        className={classNames('w-[77%] hidden laptop:block', {
           'border border-primary_green': tab !== PROFILE_TABS.PROFILE_INFO,
         })}
       >

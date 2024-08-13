@@ -102,12 +102,12 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
 
   return (
     <form onSubmit={handleFormSubmit}>
-      <div className="h-10 mb-6 flex">
-        <label htmlFor="last_name" className="w-[228px]">
+      <div className="laptop:h-10 mb-6 flex flex-col laptop:flex-row">
+        <label htmlFor="last_name" className="text-mid mb-3 laptop:w-[228px]">
           Прізвище
         </label>
         <input
-          className=" bg-backgroung border border-white w-[360px]"
+          className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]"
           type="text"
           name="last_name"
           id="last_name"
@@ -115,12 +115,12 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
           value={formData.last_name ?? ''}
         />
       </div>
-      <div className="h-10 mb-6 flex">
-        <label htmlFor="first_name" className="w-[228px]">
+      <div className="laptop:h-10 mb-6 flex flex-col laptop:flex-row">
+        <label htmlFor="first_name" className="text-mid mb-3 laptop:w-[228px]">
           Ім’я
         </label>
         <input
-          className=" bg-backgroung border border-white w-[360px]"
+          className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]"
           type="text"
           name="first_name"
           id="first_name"
@@ -128,12 +128,12 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
           value={formData.first_name ?? ''}
         />
       </div>
-      <div className="h-10 mb-6 flex">
-        <label htmlFor="phone" className="w-[228px]">
+      <div className="laptop:h-10 mb-6 flex flex-col laptop:flex-row">
+        <label htmlFor="phone" className="text-mid mb-3 laptop:w-[228px]">
           Номер телефону
         </label>
         <input
-          className=" bg-backgroung border border-white w-[360px]"
+          className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]"
           type="tel"
           name="phone"
           id="phone"
@@ -143,12 +143,12 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
           // placeholder="+38(000)123-45-67"
         />
       </div>
-      <div className="h-10 mb-6 flex">
-        <label htmlFor="email" className="w-[228px]">
+      <div className="laptop:h-10 mb-6 flex flex-col laptop:flex-row">
+        <label htmlFor="email" className="text-mid mb-3 laptop:w-[228px]">
           Пошта*
         </label>
         <input
-          className=" bg-backgroung border border-white w-[360px]"
+          className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]"
           type="email"
           name="email"
           id="email"
@@ -156,15 +156,15 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
           value={formData.email}
         />
       </div>
-      <div className="mb-6 flex">
-        <p className="w-[228px]">Адреса доставки</p>
+      <div className="mb-6 laptop:flex">
+        <p className="text-mid mb-3 laptop:w-[228px]">Адреса доставки</p>
         <div className="flex flex-col gap-2">
-          <div className="flex justify-center items-center h-10">
+          <div className="flex laptop:justify-center items-center h-10">
             <label htmlFor="city" className="w-[105px]">
               Місто
             </label>
             <input
-              className=" bg-backgroung border border-white w-[255px] h-full"
+              className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full"
               type="text"
               name="city"
               id="city"
@@ -172,12 +172,12 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
               value={address.city}
             />
           </div>
-          <div className="flex justify-center items-center h-[40px]">
+          <div className="flex laptop:justify-center items-center h-[40px]">
             <label htmlFor="street" className=" w-[105px]">
               Вулиця
             </label>
             <input
-              className=" bg-backgroung border border-white w-[255px] h-full"
+              className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full"
               type="text"
               name="street"
               id="street"
@@ -185,12 +185,12 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
               value={address.street}
             />
           </div>
-          <div className="flex justify-center items-center h-[40px]">
+          <div className="flex laptop:justify-center items-center h-[40px]">
             <label htmlFor="house" className=" w-[105px]">
               Будинок
             </label>
             <input
-              className=" bg-backgroung border border-white w-[255px] h-full"
+              className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full"
               type="text"
               name="house"
               id="house"
@@ -198,12 +198,12 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
               value={address.house}
             />
           </div>
-          <div className="flex justify-center items-center h-[40px]">
+          <div className="flex laptop:justify-center items-center h-[40px]">
             <label htmlFor="apartment" className=" w-[105px]">
               Квартира
             </label>
             <input
-              className=" bg-backgroung border border-white w-[255px] h-full"
+              className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full"
               type="text"
               name="apartment"
               id="apartment"
@@ -213,12 +213,12 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
           </div>
         </div>
       </div>
-      <div className="h-10 mb-6 flex">
-        <label htmlFor="activity" className="w-[228px]">
+      <div className="laptop:h-10 mb-6 flex flex-col laptop:flex-row">
+        <label htmlFor="activity" className="text-mid mb-3 laptop:w-[228px]">
           Вид діяльності
         </label>
         <select
-          className=" bg-backgroung border border-white w-[360px]"
+          className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]"
           name="activity"
           id="activity"
           onChange={handleOptionChange}
@@ -232,14 +232,14 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
         </select>
       </div>
 
-      <div className="text-right mt-6 absolute bottom-[-64px] right-0">
+      <div className="laptop:text-right laptop:mt-6 absolute bottom-[-120px] flex flex-col-reverse gap-4 w-full laptop:flex-row laptop:w-[390px] laptop:bottom-[-64px] laptop:right-0">
         <button
           onClick={handleCancelClick}
-          className="px-5 ml-[70px] bg-transparent"
+          className="laptop:px-5 laptop:w- bg-transparent h-[40px] py-[7px] w-full"
         >
           Відмінити
         </button>
-        <SecondaryButton type="submit" className="px-5 ml-[70px]">
+        <SecondaryButton type="submit" className="laptop:px-5 w-full">
           Зберегти
         </SecondaryButton>
       </div>

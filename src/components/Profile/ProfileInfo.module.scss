@@ -1,0 +1,77 @@
+@use '/src/scss/abstracts/' as *;
+// tablet:h-10 mb-6 tablet:flex
+
+.edit_btn {
+  @include breakpoint(desktop) {
+    cursor: pointer;
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 46px;
+    height: 46px;
+    border: 1px solid $accent-primary;
+    & svg > path {
+      fill: $white;
+    }
+    &:hover {
+      & svg > path {
+        fill: $accent-primary;
+      }
+    }
+    &:active {
+      background-color: $accent-primary-dark;
+    }
+    &:disabled {
+      border: 1px solid #dddddd;
+      & svg > path {
+        fill: $gray;
+      }
+    }
+  }
+}
+
+.edit_btn_mobile {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 187px;
+  height: 46px;
+  border: 1px solid $accent-primary;
+  & svg > path {
+    fill: $white;
+  }
+  &:hover {
+    & svg > path {
+      fill: $accent-primary;
+    }
+  }
+  &:active {
+    background-color: $accent-primary-dark;
+  }
+  &:disabled {
+    border: 1px solid #dddddd;
+    & svg > path {
+      fill: $gray;
+    }
+  }
+  @include breakpoint(desktop) {
+    display: none;
+  }
+}
+
+.profile_info_item {
+  margin-bottom: 24px;
+  font: $regular20;
+
+  @include breakpoint(desktop) {
+    height: 40px;
+    display: flex;
+  }
+}
