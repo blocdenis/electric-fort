@@ -10,6 +10,7 @@ import { URL } from '@/constants';
 import CloseEyeIcon from '../icons/CloseEyeIcon';
 import CheckboxTrue from '../icons/CheckboxTrue';
 import CheckboxFalse from '../icons/CheckboxFalse';
+import { useAuth } from '@/context/AuthContext';
 
 type Inputs = {
   email: string;
@@ -41,7 +42,8 @@ const loginUser = async (data: LoginData) => {
   return response.data;
 };
 
-export default function SignUpForm() {
+export default function SignUpForm({ closeModal }: { closeModal: () => void }) {
+  const { setIsAuthenticated } = useAuth();
   const [isRegistration, setIsRegistration] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -81,6 +83,7 @@ export default function SignUpForm() {
         });
         console.log('Login Success:', response);
         console.log('Cookies after login:', document.cookie);
+        setIsAuthenticated(true);
       }
       reset();
     } catch (error) {
@@ -88,6 +91,7 @@ export default function SignUpForm() {
       console.error('Error:', error);
     } finally {
       setLoading(false);
+      closeModal();
     }
   };
 

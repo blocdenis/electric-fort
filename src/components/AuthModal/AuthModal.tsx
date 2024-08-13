@@ -36,7 +36,7 @@ const AuthModal: FC<AuthModalProps> = ({ onClose, id }) => {
           <CrossIcon />
         </span>
         <LogoIcon />
-        <SignUpForm />
+        <SignUpForm closeModal={onClose} />
       </div>
     </div>
   );

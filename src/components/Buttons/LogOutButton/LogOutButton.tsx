@@ -1,9 +1,11 @@
 'use client';
+import { useAuth } from '@/context/AuthContext';
 import { logOutUser } from '@/services/api/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 
 function LogOutButton() {
+  const { setIsAuthenticated } = useAuth();
   const queryClient = useQueryClient();
 
   const logedOutUser = useMutation({
@@ -17,7 +19,10 @@ function LogOutButton() {
       console.log('user loged out');
     },
   });
-  const handleLogOut = () => logedOutUser.mutateAsync(undefined);
+  const handleLogOut = () => {
+    logedOutUser.mutateAsync(undefined);
+    setIsAuthenticated(false);
+  };
 
   return (
     <button
