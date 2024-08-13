@@ -7,9 +7,12 @@ import React, {
   useState,
 } from 'react';
 import { checkAuthStatus } from '@/services/checkAuth';
+import { useQuery } from '@tanstack/react-query';
+import { getUserInfo } from '@/services/api/api';
 
 interface AuthContextType {
   isAuthenticated: boolean;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   isLoading: boolean;
   isError: boolean;
 }
@@ -44,6 +47,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
 
   const value = {
     isAuthenticated,
+    setIsAuthenticated,
     isLoading,
     isError,
   };
