@@ -2,19 +2,45 @@
 
 .order {
   border: 1px solid #fbfbfb;
-  padding: 12px 12px 24px 12px;
+  padding: 8px 8px 12px 8px;
+  @include breakpoint(desktop) {
+    padding: 12px 12px 24px 12px;
+  }
 }
 
 .order_info {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: start;
-  //   gap: 79px;
+  gap: 12px;
   font: $regular14;
+  @include breakpoint(desktop) {
+    flex-direction: row;
+  }
 }
 
 .order_item {
   min-width: 104px;
+  @include breakpoint(desktop) {
+    max-width: 14%;
+    min-height: 123px;
+  }
+  &:first-child {
+    @include breakpoint(desktop) {
+      max-width: 20%;
+    }
+  }
+  &:last-child {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: inherit;
+    @include breakpoint(desktop) {
+      max-width: 30%;
+      min-height: 100%;
+    }
+  }
 }
 
 .order_item_heading {
@@ -42,13 +68,20 @@
 
 .order_details {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   padding: 24px 0;
+  @include breakpoint(desktop) {
+    gap: 12px;
+  }
 }
 
 .order_details_img {
   position: relative;
+  // flex-basis: 24%;
+  @include breakpoint(desktop) {
+    flex-basis: 24%;
+  }
   width: 80px;
-  // height: 98px;
-  height: auto;
+  height: 98px;
+  // height: auto;
 }

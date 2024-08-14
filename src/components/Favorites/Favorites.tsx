@@ -31,8 +31,18 @@ function Favorites() {
             були збережені увійдіть у свій обліковий запис або зареєструйтесь.
           </p>
           <div className={styles.warning_buttons_block}>
-            <Button onClick={handleEnterRegisterClick}>Увійти</Button>
-            <Button onClick={handleEnterRegisterClick}>Зареєструватися</Button>
+            <Button
+              className="w-[281px] py-[11px]"
+              onClick={handleEnterRegisterClick}
+            >
+              Увійти
+            </Button>
+            <Button
+              className="w-[281px] py-[11px]"
+              onClick={handleEnterRegisterClick}
+            >
+              Зареєструватися
+            </Button>
           </div>
         </div>
       ) : null}

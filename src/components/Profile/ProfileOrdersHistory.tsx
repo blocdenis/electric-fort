@@ -14,9 +14,9 @@ function ProfileOrdersHistory() {
   const orders = data?.data;
 
   return (
-    <div className="flex items-center px-5 py-5 h-full w-full">
+    <div className="flex items-center laptop:px-5 laptop:py-5 h-full w-full">
       {orders?.length !== 0 ? (
-        <ul className="w-full">
+        <ul className="w-full flex flex-col gap-[10px] laptop:gap-0">
           {orders?.map((order) => (
             <li key={order.id}>
               <ProfileOrderItem order={order} />

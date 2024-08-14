@@ -81,7 +81,9 @@ function Profile() {
             onClick={handleTabClick}
             className={classNames(
               styles.switcher_item,
-              // 'mb-[42px]',
+              {
+                [`${styles.switcher_item_opened_mobile}`]: isOrdersHistoryOpen,
+              },
               tab === PROFILE_TABS.ORDERS_HISTORY &&
                 styles.switcher_item__active
             )}
@@ -102,6 +104,9 @@ function Profile() {
             onClick={handleTabClick}
             className={classNames(
               styles.switcher_item,
+              {
+                [`${styles.switcher_item_opened_mobile}`]: isReviewsOpen,
+              },
               tab === PROFILE_TABS.REVIEWS && styles.switcher_item__active
             )}
           >
