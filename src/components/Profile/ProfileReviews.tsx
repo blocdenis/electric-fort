@@ -21,19 +21,19 @@ function ProfileReviews() {
 
   if (!data) {
     return (
-      <div className="h-full flex flex-col items-center justify-center gap-5 px-[20px] py-[20px]">
-        <p className="w-full text-center text-lg">Loading</p>
+      <div className="h-full flex flex-col items-center justify-center gap-5 laptop:px-[20px] laptop:py-[20px]">
+        <p className="w-full text-center text-lg">Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="h-full flex items-center px-[20px] py-[20px]">
+    <div className="h-full min-h-[167px] flex items-center laptop:px-[20px] laptop:py-[20px]">
       {userReviews?.length !== 0 ? (
         <div className="w-full self-start">
           <ul>
             {userReviews?.map((review) => (
-              <li key={review.product_id}>
+              <li key={review.add_date}>
                 <ProfileReviewItem review={review} />
               </li>
             ))}
@@ -46,7 +46,7 @@ function ProfileReviews() {
           ) : null}
         </div>
       ) : (
-        <p className="w-full text-center text-lg">
+        <p className="w-full text-center text-base laptop:text-lg">
           Ви ще не зробили жодного замовлення.
           <br />
           Ви маєте змогу залишати відгуки лише до товарів які ви придбали.

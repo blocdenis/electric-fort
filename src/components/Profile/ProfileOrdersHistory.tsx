@@ -14,7 +14,7 @@ function ProfileOrdersHistory() {
   const orders = data?.data;
 
   return (
-    <div className="flex items-center laptop:px-5 laptop:py-5 h-full w-full">
+    <div className="flex items-center laptop:px-5 laptop:py-5 h-full w-full min-h-[147px]">
       {orders?.length !== 0 ? (
         <ul className="w-full flex flex-col gap-[10px] laptop:gap-0">
           {orders?.map((order) => (
@@ -24,7 +24,7 @@ function ProfileOrdersHistory() {
           ))}
         </ul>
       ) : (
-        <p className=" text-lg text-center justify-self-center w-full">
+        <p className=" text-base laptop:text-lg text-center justify-self-center w-full">
           Ви ще не зробили жодного замовлення.
         </p>
       )}

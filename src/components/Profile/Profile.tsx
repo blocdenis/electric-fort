@@ -56,7 +56,7 @@ function Profile() {
   return (
     <div className="flex w-full">
       <div className="w-full laptop:w-[23%]">
-        <div className=" pt-6 mb-[42px] w-full">
+        <div className=" pt-6 mb-8 laptop:mb-[42px] w-full">
           <div
             onClick={handleTabClick}
             className={classNames(
@@ -124,7 +124,7 @@ function Profile() {
           ) : null}
         </div>
         <p className="mb-4">За програмою лояльності ви маєте діючу знижку:</p>
-        <div className="flex flex-col justify-between w-full h-[152px] bg-primary_green text-black py-6 pr-6 pl-[30px] ">
+        <div className="flex flex-col justify-between items-end w-full h-[152px] bg-primary_green text-black py-6 pr-6 pl-[30px] ">
           <p className="text-base font-bold">Ваша знижка становить:</p>
           <p className="text-xxl font-bold text-right">{user?.discount}%</p>
         </div>
