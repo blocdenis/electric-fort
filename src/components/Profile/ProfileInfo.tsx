@@ -7,6 +7,7 @@ import ProfileInfoForm from './ProfileInfoForm';
 import ChangePasswordForm from './ChangePasswordForm';
 import classNames from 'classnames';
 import styles from './ProfileInfo.module.scss';
+import ProfileInfoFormCopy from './ProfileInfoForm copy';
 
 function ProfileInfo() {
   const { data: user, isFetching } = useQuery({
@@ -81,7 +82,13 @@ function ProfileInfo() {
         </div>
       )}
       {isEditProfile && (
-        <ProfileInfoForm
+        // <ProfileInfoForm
+        //   handleCancelClick={() => {
+        //     onEditClick();
+        //     setIsEditPassword(false);
+        //   }}
+        // />
+        <ProfileInfoFormCopy
           handleCancelClick={() => {
             onEditClick();
             setIsEditPassword(false);
