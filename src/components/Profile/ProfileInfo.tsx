@@ -3,11 +3,10 @@ import { EditIcon } from '../icons';
 import { getUserInfo, updateUser } from '@/services/api/api';
 import SecondaryButton from '../Buttons/SecondaryButton';
 import { useState } from 'react';
-import ProfileInfoForm from './ProfileInfoForm';
 import ChangePasswordForm from './ChangePasswordForm';
 import classNames from 'classnames';
 import styles from './ProfileInfo.module.scss';
-import ProfileInfoFormCopy from './ProfileInfoForm copy';
+import ProfileInfoForm from './ProfileInfoForm';
 
 function ProfileInfo() {
   const { data: user, isFetching } = useQuery({
@@ -82,13 +81,7 @@ function ProfileInfo() {
         </div>
       )}
       {isEditProfile && (
-        // <ProfileInfoForm
-        //   handleCancelClick={() => {
-        //     onEditClick();
-        //     setIsEditPassword(false);
-        //   }}
-        // />
-        <ProfileInfoFormCopy
+        <ProfileInfoForm
           handleCancelClick={() => {
             onEditClick();
             setIsEditPassword(false);

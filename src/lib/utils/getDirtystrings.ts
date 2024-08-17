@@ -8,13 +8,13 @@ export function getDirtyFields<T, P>(dirtyFields: P, formValues: T): any {
     const value = formValues[key as keyof T];
 
     // If it's an object, apply the logic recursively
-    if (typeof isDirty === 'object' && isDirty !== null) {
-      // eslint-disable-next-line no-param-reassign
+    // if (typeof isDirty === 'object' && isDirty !== null) {
+    //   // eslint-disable-next-line no-param-reassign
 
-      let acc = (accumulator[key as keyof T] = getDirtyFields(isDirty, value));
-    }
+    //   let acc = (accumulator[key as keyof T] = getDirtyFields(isDirty, value));
+    // }
     // If it's a dirty field, get the value from formValues
-    else if (isDirty) {
+    if (isDirty) {
       // eslint-disable-next-line no-param-reassign
       accumulator[key as keyof T] = value;
     }
