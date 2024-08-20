@@ -61,10 +61,12 @@ function ReviewForm({ productName, id, onClose }: ReviewFormProps) {
             onChange={onChange}
           ></textarea>
           <Button
-            className="flex justify-center items-center gap-[22px] self-end"
+            className="flex justify-center items-center gap-[22px] self-end w-[281px] py-[4px]"
             type="submit"
           >
-            <ReviewIcon width={24} height={24} />
+            <div className="w-[39px] h-[39px] flex items-center justify-center">
+              <ReviewIcon width={24} height={24} className=" w-full h-full" />
+            </div>
             Залишити відгук
           </Button>
         </form>

@@ -24,7 +24,7 @@ function BurgerMenuItem({
       {href ? (
         <Link href={href} className="flex items-center justify-center">
           {children ? (
-            <div className="w-[40px] h-[40px] [&_svg]:w-full [&_path]:stroke-white flex items-center">
+            <div className="w-[40px] h-[40px] [&_svg]:w-full [&_path]:stroke-white flex items-center justify-center">
               {children}
             </div>
           ) : null}
@@ -33,7 +33,7 @@ function BurgerMenuItem({
       ) : (
         <div className="flex items-center justify-center">
           {children ? (
-            <div className="w-[40px] h-[40px] [&_svg]:w-full [&_path]:stroke-white flex items-center">
+            <div className="w-[40px] h-[40px] [&_svg]:w-full [&_path]:stroke-white flex items-center justify-center">
               {children}
             </div>
           ) : null}

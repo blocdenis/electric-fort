@@ -2,9 +2,10 @@
 import { useAuth } from '@/context/AuthContext';
 import { logOutUser } from '@/services/api/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import classNames from 'classnames';
 import React from 'react';
 
-function LogOutButton() {
+function LogOutButton({ className }: { className?: string }) {
   const { setIsAuthenticated } = useAuth();
   const queryClient = useQueryClient();
 
@@ -28,7 +29,10 @@ function LogOutButton() {
     <button
       type="button"
       onClick={handleLogOut}
-      className=" bg-primary_green flex justify-center items-center text-black px-[65.5px] py-[7.5px]"
+      className={classNames(
+        ' bg-primary_green flex justify-center items-center text-black px-[65.5px] py-[7.5px]',
+        className
+      )}
     >
       Вийти
     </button>

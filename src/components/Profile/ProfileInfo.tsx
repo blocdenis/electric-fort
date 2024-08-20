@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { EditIcon } from '../icons';
-import styles from './Profile.module.scss';
 import { getUserInfo, updateUser } from '@/services/api/api';
 import SecondaryButton from '../Buttons/SecondaryButton';
 import { useState } from 'react';
-import ProfileInfoForm from './ProfileInfoForm';
 import ChangePasswordForm from './ChangePasswordForm';
 import classNames from 'classnames';
+import styles from './ProfileInfo.module.scss';
+import ProfileInfoForm from './ProfileInfoForm';
 
 function ProfileInfo() {
   const { data: user, isFetching } = useQuery({
@@ -44,39 +44,39 @@ function ProfileInfo() {
   return (
     <div
       className={classNames(
-        '  border border-primary_green py-10 pr-8 pl-12 relative',
+        ' pt-[90px] laptop:border laptop:border-primary_green laptop:py-10 laptop:pr-8 laptop:pl-12 relative',
         { 'h-full': !isEditProfile },
-        { ' h-fit mb-16': isEditProfile },
+        { ' laptop:h-fit laptop:mb-16 mb-[152px]': isEditProfile },
         'relative'
       )}
     >
       {!isEditProfile && (
         <div>
-          <div className="h-10 mb-6 flex">
-            <div className="w-[228px]">Прізвище</div>
-            <span>{last_name}</span>
+          <div className={styles.profile_info_item}>
+            <div className="laptop:w-[228px] mb-3">Прізвище</div>
+            <span className="px-3 py-[9px] text-base">{last_name}</span>
           </div>
-          <div className="h-10 mb-6 flex">
-            <div className="w-[228px]">Ім’я</div>
-            <span>{first_name}</span>
+          <div className={styles.profile_info_item}>
+            <div className="laptop:w-[228px] mb-3">Ім’я</div>
+            <span className="px-3 py-[9px] text-base">{first_name}</span>
           </div>
-          <div className="h-10 mb-6 flex">
-            <div className="w-[228px]">Номер телефону</div>
-            <span>{phone}</span>
+          <div className={styles.profile_info_item}>
+            <div className="laptop:w-[228px] mb-3">Номер телефону</div>
+            <span className="px-3 py-[9px] text-base">{phone}</span>
           </div>
-          <div className="h-10 mb-6 flex">
-            <div className="w-[228px]">Пошта*</div>
-            <span>{email}</span>
+          <div className={styles.profile_info_item}>
+            <div className="laptop:w-[228px] mb-3">Пошта*</div>
+            <span className="px-3 py-[9px] text-base">{email}</span>
           </div>
-          <div className="h-10 mb-6 flex">
-            <div className="w-[228px]">Адреса доставки</div>
+          <div className={styles.profile_info_item}>
+            <div className="laptop:w-[228px] mb-3">Адреса доставки</div>
             {delivery_address ? (
-              <span>{`${delivery_address?.city}, ${delivery_address?.street},буд.${delivery_address?.house},кв.${delivery_address?.apartment}`}</span>
+              <span className="px-3 py-[9px] text-base">{`${delivery_address?.city}, ${delivery_address?.street},буд.${delivery_address?.house},кв.${delivery_address?.apartment}`}</span>
             ) : null}
           </div>
-          <div className="h-10 mb-6 flex">
-            <div className="w-[228px]">Вид діяльності</div>
-            <span>{activity}</span>
+          <div className={styles.profile_info_item}>
+            <div className="laptop:w-[228px] mb-3">Вид діяльності</div>
+            <span className="px-3 py-[9px] text-base">{activity}</span>
           </div>
         </div>
       )}
@@ -89,23 +89,32 @@ function ProfileInfo() {
         />
       )}
       {!isEditPassword && (
-        <div className="h-10 flex">
-          <p className="w-[228px]">Пароль*</p>
-          <span>*********</span>
+        <div className="laptop:h-10 flex flex-col gap-[12px] laptop:flex-row">
+          <div className="h-10 flex">
+            <p className="w-[228px] text-mid">Пароль*</p>
+            <span>*********</span>
+          </div>
           <SecondaryButton
             onClick={onPasswordEditClick}
-            className="px-5 ml-[70px]"
+            className="ml-auto w-[145px] laptop:ml-[70px]"
           >
             Змінити пароль
           </SecondaryButton>
         </div>
       )}
-      {isEditPassword && <ChangePasswordForm />}
+      {isEditPassword && (
+        <ChangePasswordForm
+          handleCancelClick={() => setIsEditPassword(false)}
+        />
+      )}
       {!isEditProfile && (
-        <div className={styles.edit_btn}>
+        <div className={classNames(styles.edit_btn)}>
           <EditIcon onClick={onEditClick} />
         </div>
       )}
+      <div className={classNames(styles.edit_btn_mobile)}>
+        <EditIcon onClick={onEditClick} />
+      </div>
     </div>
   );
 }

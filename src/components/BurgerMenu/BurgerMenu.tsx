@@ -18,6 +18,8 @@ import { useState } from 'react';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { useAuth } from '@/context/AuthContext';
+import Link from 'next/link';
+import LogOutButton from '../Buttons/LogOutButton/LogOutButton';
 
 export interface BurgerMenuProps {
   onCloseClick: () => void;
@@ -77,7 +79,6 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
     },
   ];
 
-  const [isLogIn, setIsLogIn] = useState(false);
   return (
     <div
       onClick={(e) => e.stopPropagation()}
@@ -86,12 +87,20 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
         isOpen ? 'translate-y-0' : 'translate-y-[-150%]'
       )}
     >
-      <div className=" flex h-[72px] items-center justify-start px-[20px] bg-secondary_green">
-        <CrossIcon onClick={onCloseClick} className="[&_rect]:fill-yellow" />
+      <div className=" flex items-center justify-end pt-3 pb-5 px-[16px] bg-secondary_green">
+        <div className="w-[40px] h-[40px] flex justify-center items-center">
+          <CrossIcon onClick={onCloseClick} className="[&_rect]:fill-yellow" />
+        </div>
       </div>
-      <div className="py-[26px] px-4 bg-primary_green">
+      <div
+        className={classNames('py-[26px] px-4 bg-primary_green', {
+          'py-[21px]': isAuthenticated,
+        })}
+      >
         {isAuthenticated ? (
-          <BurgerUserhNav onClick={() => setIsLogIn((prevVal) => !prevVal)} />
+          <Link onClick={onCloseClick} href={'/user_profile'}>
+            <BurgerUserhNav />
+          </Link>
         ) : (
           <BurgerAuthNav
             onClick={() => {
@@ -100,20 +109,23 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
           />
         )}
       </div>
-      <div className=" px-4 pt-4 pb-8 h-auto bg-black">
-        <ul className=" bg-black text-white pb-6 mb-6 border-b border-b-gray-ligthMax ">
-          {burgerMenuItems.map((item) => (
-            <BurgerMenuItem
-              onClick={item.onClick}
-              key={item.title}
-              title={item.title}
-              value={item.value}
-              href={item?.href}
-            >
-              {item.icon}
-            </BurgerMenuItem>
-          ))}
-        </ul>
+      <div className=" px-6 py-6 h-auto bg-black">
+        <div className=" bg-black text-white pb-6 mb-6 border-b border-b-gray-ligthMax ">
+          <ul className="mb-6  ">
+            {burgerMenuItems.map((item) => (
+              <BurgerMenuItem
+                onClick={item.onClick}
+                key={item.title}
+                title={item.title}
+                value={item.value}
+                href={item?.href}
+              >
+                {item.icon}
+              </BurgerMenuItem>
+            ))}
+          </ul>
+          {isAuthenticated ? <LogOutButton className="w-full" /> : null}
+        </div>
         <ul className={styles.menu_list}>
           {navigationItems.map((item) => {
             if (item.href !== '#') {
@@ -148,7 +160,7 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
           <ContactText textToCopy="+38(066) 459-88-87" color="#69AF00" />
           <ContactText textToCopy="+38(068) 459-88-87" color="#69AF00" />
         </div>
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center mb-8">
           <div className=" flex gap-3">
             <button className=" hover:text-yellow">
               <span>UA</span>

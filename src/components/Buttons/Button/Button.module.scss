@@ -1,12 +1,13 @@
 @use '/src/scss/abstracts/' as *;
 
 .button {
-  padding: 11px 0px;
+  // padding: 11px 0px;
   text-align: center;
   background-color: $accent-secondary;
   color: black;
   font: $regular18;
-  width: 281px;
+  // width: 281px;
+  // padding: 0 32px;
   border: 1px solid $accent-secondary;
 
   &:hover {

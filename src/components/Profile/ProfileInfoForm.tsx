@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import SecondaryButton from '../Buttons/SecondaryButton';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { UserActivities, getUserInfo, updateUser } from '@/services/api/api';
+import { useForm } from 'react-hook-form';
+import { getDirtyFields } from '@/lib/utils/getDirtystrings';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { userInfoZodSchema } from '@/lib/schemas/validationZodSchemas';
+import classNames from 'classnames';
 
 interface ProfileInfoFormProps {
   handleCancelClick: () => void;
@@ -14,14 +19,14 @@ type DeliveryAddress = {
   apartment: string;
 };
 
-interface ProfileInfoFormState {
-  first_name?: string | null;
-  last_name?: string | null;
-  email?: string;
-  phone?: string | null;
-  activity?: UserActivities;
-  delivery_address?: DeliveryAddress | null;
-}
+type FormFields = {
+  first_name: string | null;
+  last_name: string | null;
+  email: string;
+  phone: string | null;
+  activity: UserActivities;
+  delivery_address: DeliveryAddress | null;
+};
 
 function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
   const { data: user, isFetching } = useQuery({
@@ -43,186 +48,230 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
     },
   });
 
-  const [address, setAddress] = useState<DeliveryAddress>({
-    city: user?.delivery_address?.city ?? '',
-    street: user?.delivery_address?.street ?? '',
-    house: user?.delivery_address?.house ?? '',
-    apartment: user?.delivery_address?.apartment ?? '',
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, dirtyFields },
+    getValues,
+  } = useForm<FormFields>({
+    defaultValues: {
+      first_name: user?.first_name,
+      last_name: user?.last_name,
+      email: user?.email,
+      phone: user?.phone,
+      activity: user?.activity,
+      delivery_address: user?.delivery_address,
+    },
+    resolver: zodResolver(userInfoZodSchema),
   });
 
-  const [formData, setFormData] = useState<ProfileInfoFormState>({
-    first_name: user?.first_name,
-    last_name: user?.last_name,
-    email: user?.email,
-    phone: user?.phone,
-    activity: user?.activity,
-    delivery_address: user?.delivery_address ? address : null,
-  });
-
-  const [updatedUserData, setUpdatedUserData] = useState<ProfileInfoFormState>(
-    {}
-  );
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    if (
-      name == 'city' ||
-      name == 'street' ||
-      name == 'house' ||
-      name == 'apartment'
-    ) {
-      setAddress((prevAddress) => ({ ...prevAddress, [name]: value }));
-    } else {
-      setFormData((prevData) => ({ ...prevData, [name]: value }));
-      setUpdatedUserData((prevUserData) => ({
-        ...prevUserData,
-        [name]: value,
-      }));
-    }
-  };
-  const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value, name } = e.currentTarget;
-
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-    setUpdatedUserData((prevUserData) => ({
-      ...prevUserData,
-      [name]: value,
-    }));
-  };
-
-  function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    // console.log({ ...updatedUserData, delivery_address: address });
-    updateUserData.mutateAsync({
-      ...updatedUserData,
-      delivery_address: address,
-    });
+  function handleFormSubmit() {
+    const changedFilds = getDirtyFields(dirtyFields, getValues());
+    console.log(changedFilds);
+    updateUserData.mutateAsync(changedFilds);
     handleCancelClick();
   }
 
   return (
-    <form onSubmit={handleFormSubmit}>
-      <div className="h-10 mb-6 flex">
-        <label htmlFor="last_name" className="w-[228px]">
+    <form onSubmit={handleSubmit(handleFormSubmit)}>
+      <div className="laptop:h-10 mb-6 flex flex-col laptop:flex-row">
+        <label htmlFor="last_name" className="text-mid mb-3 laptop:w-[228px]">
           Прізвище
         </label>
-        <input
-          className=" bg-backgroung border border-white w-[360px]"
-          type="text"
-          name="last_name"
-          id="last_name"
-          onChange={handleChange}
-          value={formData.last_name ?? ''}
-        />
+        <div>
+          <input
+            className={classNames(
+              {
+                ' outline border border-error_red text-error_red':
+                  errors.last_name,
+              },
+              ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]'
+            )}
+            type="text"
+            id="last_name"
+            {...register('last_name')}
+          />
+          <p className=" text-error_red text-sm">
+            {errors.last_name && errors.last_name.message}
+          </p>
+        </div>
       </div>
-      <div className="h-10 mb-6 flex">
-        <label htmlFor="first_name" className="w-[228px]">
+      <div className="laptop:h-10 mb-6 flex flex-col laptop:flex-row">
+        <label htmlFor="first_name" className="text-mid mb-3 laptop:w-[228px]">
           Ім’я
         </label>
-        <input
-          className=" bg-backgroung border border-white w-[360px]"
-          type="text"
-          name="first_name"
-          id="first_name"
-          onChange={handleChange}
-          value={formData.first_name ?? ''}
-        />
+        <div>
+          <input
+            className={classNames(
+              {
+                ' outline border border-error_red text-error_red':
+                  errors.first_name,
+              },
+              ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]'
+            )}
+            type="text"
+            id="first_name"
+            {...register('first_name')}
+          />
+          <p className=" text-error_red text-sm">
+            {errors.first_name && errors.first_name.message}
+          </p>
+        </div>
       </div>
-      <div className="h-10 mb-6 flex">
-        <label htmlFor="phone" className="w-[228px]">
+      <div className="laptop:h-10 mb-6 flex flex-col laptop:flex-row">
+        <label htmlFor="phone" className="text-mid mb-3 laptop:w-[228px]">
           Номер телефону
         </label>
-        <input
-          className=" bg-backgroung border border-white w-[360px]"
-          type="tel"
-          name="phone"
-          id="phone"
-          onChange={handleChange}
-          value={formData.phone ?? ''}
-          // pattern="[\+]\d{3}[\(]\d{2}[\)]\d{3}[\-]\d{2}[\-]\d{2}"
-          // placeholder="+38(000)123-45-67"
-        />
+        <div>
+          <input
+            className={classNames(
+              {
+                ' outline border border-error_red text-error_red': errors.phone,
+              },
+              ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]'
+            )}
+            type="tel"
+            id="phone"
+            {...register('phone')}
+          />
+          <p className=" text-error_red text-sm">
+            {errors.phone && errors.phone.message}
+          </p>
+        </div>
       </div>
-      <div className="h-10 mb-6 flex">
-        <label htmlFor="email" className="w-[228px]">
+      <div className="laptop:h-10 mb-6 flex flex-col laptop:flex-row">
+        <label htmlFor="email" className="text-mid mb-3 laptop:w-[228px]">
           Пошта*
         </label>
-        <input
-          className=" bg-backgroung border border-white w-[360px]"
-          type="email"
-          name="email"
-          id="email"
-          onChange={handleChange}
-          value={formData.email}
-        />
+        <div>
+          <input
+            className={classNames(
+              {
+                ' outline border border-error_red text-error_red': errors.email,
+              },
+              ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]'
+            )}
+            type="email"
+            id="email"
+            {...register('email', { required: "Це поле обов'язвове" })}
+          />
+          <p className=" text-error_red text-sm">
+            {errors.email && errors.email.message}
+          </p>
+        </div>
       </div>
-      <div className="mb-6 flex">
-        <p className="w-[228px]">Адреса доставки</p>
+      <div className="mb-6 laptop:flex">
+        <p className="text-mid mb-3 laptop:w-[228px]">Адреса доставки</p>
         <div className="flex flex-col gap-2">
-          <div className="flex justify-center items-center h-10">
-            <label htmlFor="city" className="w-[105px]">
+          <div className="flex laptop:justify-center items-center h-10">
+            <label htmlFor="delivery_address.city" className="w-[105px]">
               Місто
             </label>
-            <input
-              className=" bg-backgroung border border-white w-[255px] h-full"
-              type="text"
-              name="city"
-              id="city"
-              onChange={handleChange}
-              value={address.city}
-            />
+            <div>
+              <input
+                className={classNames(
+                  {
+                    ' outline border border-error_red text-error_red':
+                      errors.delivery_address?.city,
+                  },
+                  ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full'
+                )}
+                type="text"
+                id="city"
+                {...register('delivery_address.city')}
+              />
+              {/* <p className=" text-error_red text-sm">
+                {errors.delivery_address?.city &&
+                  errors.delivery_address.city.message}
+              </p> */}
+            </div>
           </div>
-          <div className="flex justify-center items-center h-[40px]">
-            <label htmlFor="street" className=" w-[105px]">
+          <div className="flex laptop:justify-center items-center h-[40px]">
+            <label htmlFor="delivery_address.street" className=" w-[105px]">
               Вулиця
             </label>
-            <input
-              className=" bg-backgroung border border-white w-[255px] h-full"
-              type="text"
-              name="street"
-              id="street"
-              onChange={handleChange}
-              value={address.street}
-            />
+            <div>
+              <input
+                className={classNames(
+                  {
+                    ' outline border border-error_red text-error_red':
+                      errors.delivery_address?.street,
+                  },
+                  ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full'
+                )}
+                type="text"
+                id="street"
+                {...register('delivery_address.street')}
+              />
+              {/* <p className=" text-error_red text-sm">
+                {errors.delivery_address?.street &&
+                  errors.delivery_address.street.message}
+              </p> */}
+            </div>
           </div>
-          <div className="flex justify-center items-center h-[40px]">
-            <label htmlFor="house" className=" w-[105px]">
+          <div className="flex laptop:justify-center items-center h-[40px]">
+            <label htmlFor="delivery_address.house" className=" w-[105px]">
               Будинок
             </label>
-            <input
-              className=" bg-backgroung border border-white w-[255px] h-full"
-              type="text"
-              name="house"
-              id="house"
-              onChange={handleChange}
-              value={address.house}
-            />
+            <div>
+              <input
+                className={classNames(
+                  {
+                    ' outline border border-error_red text-error_red':
+                      errors.delivery_address?.house,
+                  },
+                  ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full'
+                )}
+                type="text"
+                id="house"
+                {...register('delivery_address.house')}
+              />
+              {/* <p className=" text-error_red text-sm">
+                {errors.delivery_address?.house &&
+                  errors.delivery_address.house.message}
+              </p> */}
+            </div>
           </div>
-          <div className="flex justify-center items-center h-[40px]">
+          <div className="flex laptop:justify-center items-center h-[40px]">
             <label htmlFor="apartment" className=" w-[105px]">
               Квартира
             </label>
-            <input
-              className=" bg-backgroung border border-white w-[255px] h-full"
-              type="text"
-              name="apartment"
-              id="apartment"
-              onChange={handleChange}
-              value={address.apartment}
-            />
+            <div>
+              <input
+                className={classNames(
+                  {
+                    ' outline border border-error_red text-error_red':
+                      errors.delivery_address?.apartment,
+                  },
+                  ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full'
+                )}
+                type="text"
+                id="apartment"
+                {...register('delivery_address.apartment')}
+              />
+              {/* <p className=" text-error_red text-sm">
+                {errors.delivery_address?.apartment &&
+                  errors.delivery_address.apartment.message}
+              </p> */}
+            </div>
           </div>
         </div>
       </div>
-      <div className="h-10 mb-6 flex">
-        <label htmlFor="activity" className="w-[228px]">
+      <div className="laptop:h-10 mb-6 flex flex-col laptop:flex-row">
+        <label htmlFor="activity" className="text-mid mb-3 laptop:w-[228px]">
           Вид діяльності
         </label>
         <select
-          className=" bg-backgroung border border-white w-[360px]"
-          name="activity"
+          className={classNames(
+            {
+              ' outline border border-error_red text-error_red':
+                errors.activity,
+            },
+            ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]'
+          )}
           id="activity"
-          onChange={handleOptionChange}
-          value={formData.activity}
+          {...register('activity')}
         >
           <option>Не вказувати</option>
           <option>Електрик</option>
@@ -230,16 +279,19 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
           <option>Виконроб</option>
           <option>Будівельна організація</option>
         </select>
+        <p className=" text-error_red text-sm">
+          {errors.activity && errors.activity.message}
+        </p>
       </div>
 
-      <div className="text-right mt-6 absolute bottom-[-64px] right-0">
+      <div className="laptop:text-right laptop:mt-6 absolute bottom-[-120px] flex flex-col-reverse gap-4 w-full laptop:flex-row laptop:w-[390px] laptop:bottom-[-64px] laptop:right-0">
         <button
           onClick={handleCancelClick}
-          className="px-5 ml-[70px] bg-transparent"
+          className="laptop:px-5 laptop:w- bg-transparent h-[40px] py-[7px] w-full"
         >
           Відмінити
         </button>
-        <SecondaryButton type="submit" className="px-5 ml-[70px]">
+        <SecondaryButton type="submit" className="laptop:px-5 w-full">
           Зберегти
         </SecondaryButton>
       </div>

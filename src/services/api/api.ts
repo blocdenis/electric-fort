@@ -1084,7 +1084,7 @@ export const createOrder = async (init?: RequestInit) => {
   });
 };
 const url = buildUrl('get', 'user/basket');
-console.log(url);
+// console.log(url);
 const isUserAuthenticated = async () => {
   const response = await fetch(`${BASE_URL}/jwt/user`, {
     method: 'GET',

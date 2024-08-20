@@ -44,17 +44,20 @@ function ProfileOrderItem({ order }: ProfileOrderItemProps) {
           <p>{order.payment}</p>
         </div>
         <div className={styles.order_item}>
-          <h3 className={styles.order_item_heading}>спосіб доставки</h3>
-          <p>{order.dilivery}</p>
-          {order.dilivery === 'Нова Пошта' || order.dilivery === 'Укрпошта' ? (
-            <p>відділення {order.department.split(',')[0]}</p>
-          ) : null}
+          <div>
+            <h3 className={styles.order_item_heading}>спосіб доставки</h3>
+            <p>{order.dilivery}</p>
+            {order.dilivery === 'Нова Пошта' ||
+            order.dilivery === 'Укрпошта' ? (
+              <p>відділення {order.department.split(',')[0]}</p>
+            ) : null}
 
-          {order.dilivery === 'Нова Пошта' ? (
-            <p>{order.department.split(',').slice(1).join(',')}</p>
-          ) : null}
+            {order.dilivery === 'Нова Пошта' ? (
+              <p>{order.department.split(',').slice(1).join(',')}</p>
+            ) : null}
 
-          <p>{order.city_dilivery}</p>
+            <p>{order.city_dilivery}</p>
+          </div>
           <div
             onClick={() => setIsDetailsShown((prevVal) => !prevVal)}
             className="flex items-center gap-[10px] text-grey justify-end mt-[13px] cursor-pointer"

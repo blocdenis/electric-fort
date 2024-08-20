@@ -11,7 +11,8 @@ const PrivateRoute = ({ children, isAuth }: PrivateRouteProps) => {
 
   useEffect(() => {
     if (!isAuth) {
-      router.push('/#auth'); // redirect to /#auth if user not authenticate
+      // router.push('/#auth'); // redirect to /#auth if user not authenticate
+      console.log(isAuth);
     }
   }, [isAuth, router]);
 

@@ -34,12 +34,8 @@ function ProfileReviewItem({ review }: ProfileReviewItemProps) {
 
   const [product] = data;
 
-  const formatedDate = new Date(review.add_date).getDate();
-
-  console.log(formatedDate);
-
   return (
-    <div className=" pb-8 border-b mb-6">
+    <div className=" mb-[10px] pb-8 border-b laptop:mb-6">
       <div className="flex justify-between items-start mb-4">
         {user?.first_name || user?.last_name ? (
           <p className=" text-md font-semibold">
@@ -50,22 +46,21 @@ function ProfileReviewItem({ review }: ProfileReviewItemProps) {
         )}
         <span className=" text-xs ">{formatDate(review.add_date)}</span>
       </div>
-      <div className="flex gap-3 items-center mb-4">
-        <Link
-          href={`/${review.product_id}`}
-          className=" relative w-[56px] h-[69px]"
-        >
-          <Image
-            src={
-              product.images
-                ? `data:${product.images[0][0]}; base64, ${product.images[0][1]}`
-                : notFoundImage
-            }
-            alt="product image"
-            fill
-            sizes="100%"
-            className=" object-cover"
-          />
+      <div className="flex gap-2 laptop:gap-3 items-center mb-4">
+        <Link href={`/${review.product_id}`} className="">
+          <div className=" relative w-[66px] h-[80px] laptop:w-[56px] laptop:h-[69px]">
+            <Image
+              src={
+                product.images
+                  ? `data:${product.images[0][0]}; base64, ${product.images[0][1]}`
+                  : notFoundImage
+              }
+              alt="product image"
+              fill
+              sizes="100%"
+              className=" object-cover"
+            />
+          </div>
         </Link>
         <Link href={`/${review.product_id}`}>
           <p>{product.name}</p>

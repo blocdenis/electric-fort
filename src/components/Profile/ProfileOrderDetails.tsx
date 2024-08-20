@@ -31,27 +31,30 @@ function ProfileOrderDetails({ product }: ProfileOrderDetailsProps) {
   };
   return (
     <div className={styles.order_details}>
-      <Link href={`/${product.id}`} className={styles.order_details_img}>
-        <Image
-          src={
-            product.images
-              ? `data:${product.images[0][0]}; base64, ${product.images[0][1]}`
-              : notFoundImage
-          }
-          alt="product image"
-          className="w-full h-full object-cover"
-          fill={true}
-          sizes="100%"
-        />
+      <Link href={`/${product.id}`}>
+        <div className={styles.order_details_img}>
+          <Image
+            src={
+              product.images
+                ? `data:${product.images[0][0]}; base64, ${product.images[0][1]}`
+                : notFoundImage
+            }
+            alt="product image"
+            className="w-full h-full object-cover"
+            fill={true}
+            sizes="100%"
+          />
+        </div>
       </Link>
-      <div className="w-full">
+
+      <div className="w-full flex flex-col justify-between laptop:basis-auto">
         <Link href={`/${product.id}`}>
           <p className="mb-[26px]">{product.name}</p>
         </Link>
-        <div className="w-full flex items-center justify-between">
+        <div className="w-full flex flex-col items-end gap-6 laptop:flex-row laptop:items-center justify-between">
           <p>{product.price} грн</p>
           <Button
-            className="flex justify-center items-center gap-1 h-8"
+            className="flex justify-center items-center gap-1 w-[231px] py-[5px]"
             onClick={onCloseOpenReview}
           >
             <ReviewIcon width={24} height={24} />

@@ -20,6 +20,7 @@ const config: Config = {
         backdrop_green: 'rgba(33, 89, 0, 0.9)',
         backdrop_black: 'rgba(17, 22, 22, 0.85)',
         backgroung: '#1e1e1e',
+        error_red: '#FF0000',
       },
       screens: {
         mobile: '425px',
