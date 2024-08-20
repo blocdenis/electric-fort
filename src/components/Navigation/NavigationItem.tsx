@@ -1,9 +1,10 @@
 'use client';
 import React from 'react';
 import styles from './Navigation.module.scss';
-import Link from 'next/link';
+// import Link from 'next/link';
 import classNames from 'classnames';
 import { usePathname } from 'next/navigation';
+import { Link } from '@/navigation';
 
 interface NavigationItemProps {
   title: string;

@@ -1,4 +1,6 @@
+import createNextIntlPlugin from 'next-intl/plugin';
 /** @type {import('next').NextConfig} */
+const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   experimental: {
     missingSuspenseWithCSRBailout: false,
@@ -15,4 +17,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

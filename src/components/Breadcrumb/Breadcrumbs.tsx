@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react';
-import Link, { LinkProps } from 'next/link';
+// import Link, { LinkProps } from 'next/link';
 import HomeIcon from '../icons/HomeIcon';
 import styles from './Breadcrumbs.module.scss';
 import BreadcrumbsItem, { BreadcrambsItemProps } from './BreadcrumbsItem';
+import { Link } from '@/navigation';
 
 interface BreadCrumbProps {
   homeElement?: ReactNode;

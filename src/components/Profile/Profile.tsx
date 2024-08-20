@@ -4,10 +4,11 @@ import classNames from 'classnames';
 import styles from './Profile.module.scss';
 import { useState } from 'react';
 import ProfileReviews from './ProfileReviews';
-import Link from 'next/link';
+// import Link from 'next/link';
 import ProfileOrdersHistory from './ProfileOrdersHistory';
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from '@/services/api/api';
+import { Link } from '@/navigation';
 
 function Profile() {
   const PROFILE_TABS = {

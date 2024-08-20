@@ -7,7 +7,6 @@ import {
   InstagramIcon,
   MainLogo,
   PhoneIcon,
-  ProfileIcon,
   TikTokIcon,
 } from '../icons';
 import styles from './Header.module.scss';
@@ -17,7 +16,7 @@ import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import Navigation from '../Navigation/Navigation';
 import Backdrop from '../Backdrop/Backdrop';
 import LogoIcon from '../icons/LogoIcon';
-import Link from 'next/link';
+// import Link from 'next/link';
 import AuthModal from '../AuthModal/AuthModal';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
 import Container from '../Container/Container';
@@ -25,38 +24,34 @@ import { useFavorites } from '@/context/FavoritesContext';
 import CircleWithQuantity from '../CircleWithQuantity/CircleWithQuantity';
 import FilterIcon from '../icons/FilterIcon';
 import Filters from '../Filters/Filters';
-import { useParams, usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import classNames from 'classnames';
-import { useAuth } from '@/context/AuthContext';
+import { useLocale } from 'next-intl';
+import { Link, usePathname, useRouter } from '@/navigation';
 
 const Header = () => {
   const params = useParams();
-  const pathname = usePathname();
-
   const { category_id } = params;
   const isFiltersShown = category_id ? true : false;
 
   const { openCart, cartQuantity } = useShoppingCart();
   const { openCloseFavorites, favoritesQuantity } = useFavorites();
-  const { isAuthenticated } = useAuth();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [activeLanguage, setActiveLanguage] = useState<'UA' | 'RU'>('UA');
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash === '#auth') {
-      setIsAuthOpen(true);
-    }
-  }, [pathname]);
-
   const handleFiltersOpen = () => {
     setIsFiltersOpen(!isFiltersOpen);
   };
+  const router = useRouter();
+  const locale = useLocale();
+  const path = usePathname();
 
   const handleToggle = (language: 'UA' | 'RU') => {
+    router.replace(path, { locale: language.toLocaleLowerCase() });
+
     setActiveLanguage(language);
   };
   const openModal = () => {
@@ -133,18 +128,9 @@ const Header = () => {
                   </button>
                 </div>
                 <div>
-                  {isAuthenticated ? (
-                    <Link
-                      href={'/user_profile'}
-                      className=" hidden laptop:block"
-                    >
-                      <ProfileIcon className="w-[34px] h-[34px]" />
-                    </Link>
-                  ) : (
-                    <button onClick={openModal}>
-                      <p>Увійти</p>
-                    </button>
-                  )}
+                  <button onClick={openModal}>
+                    <h1>Увійти</h1>
+                  </button>
                 </div>
               </div>
             </div>
@@ -222,7 +208,7 @@ const Header = () => {
       >
         <BurgerMenu isOpen={isMenuOpen} onCloseClick={handleMenuToggle} />
       </Backdrop>
-      {isAuthOpen && <AuthModal id="auth" onClose={closeModal} />}
+      {isAuthOpen && <AuthModal onClose={closeModal} />}
     </header>
   );
 };

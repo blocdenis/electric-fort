@@ -7,7 +7,8 @@ import {
   getUserInfo,
 } from '@/services/api/api';
 import { formatDate } from '@/lib/utils/formatDate';
-import Link from 'next/link';
+import { Link } from '@/navigation';
+// import Link from 'next/link';
 
 interface ProfileReviewItemProps {
   review: ProductRespond;

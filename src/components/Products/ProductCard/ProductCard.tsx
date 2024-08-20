@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import Link from 'next/link';
+// import Link from 'next/link';
 import {
   HeartWithShadowFilledIcon,
   HeartWithShadowIcon,
@@ -13,6 +13,7 @@ import SecondaryButton from '@/components/Buttons/SecondaryButton';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { useEffect, useState } from 'react';
+import { Link } from '@/navigation';
 
 interface ProductCardProps extends Product {
   onCardClick?: () => void;

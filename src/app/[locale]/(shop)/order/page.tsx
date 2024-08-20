@@ -1,7 +1,7 @@
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 
 import React from 'react';
-import OrderForm from '../../../components/Order/OrderForm';
+import OrderForm from '../../../../components/Order/OrderForm';
 import './styles.scss';
 import OrderCart from '@/components/Order/OrderCart';
 import Container from '@/components/Container/Container';

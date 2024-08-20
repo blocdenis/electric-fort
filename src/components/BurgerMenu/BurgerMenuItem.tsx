@@ -1,4 +1,5 @@
-import Link from 'next/link';
+// import Link from 'next/link';
+import { Link } from '@/navigation';
 import { ReactNode } from 'react';
 
 export interface BurgerMenuItemProps {

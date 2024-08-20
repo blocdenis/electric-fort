@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import deliveryImg from '../../../public/delivery_img-min.png';
 import CarIcon from '../icons/CarIcon';
@@ -5,35 +6,37 @@ import WalletIcon from '../icons/WalletIcon';
 import styles from './Delivery.module.scss';
 
 function DeliveryTopSection() {
+  const t = useTranslations('Delivery');
+
+  const paymentOptions = t('payment_options').split(';');
+  const deliveryOptions = t('delivery_options').split(';');
+
   return (
     <section className={styles.delivery_top}>
       <div className={styles.delivery_top_item}>
         <div className={styles.delivery_top_item_head}>
-          <div className=" mr-8">
+          <div className="mr-8">
             <WalletIcon width={59} height={59} />
           </div>
-          <p className=" text-[24px] font-bold">Оплата</p>
+          <p className="text-[24px] font-bold">{t('payment')}</p>
         </div>
         <ul className={styles.payment_options_list}>
-          <li>Онлайн-оплата карткою, Google Pay або Apple Pay</li>
-          <li>Безготівковий</li>
-          <li>Готівкою при отриманні</li>
-          <li>Накладений платіж</li>
+          {paymentOptions.map((option, index) => (
+            <li key={index}>{option}</li>
+          ))}
         </ul>
       </div>
       <div className={styles.delivery_top_item}>
         <div className={styles.delivery_top_item_head}>
-          <div className=" mr-8">
+          <div className="mr-8">
             <CarIcon width={82} height={59} />
           </div>
-          <p className=" text-[24px] font-bold">Доставка</p>
+          <p className="text-[24px] font-bold">{t('delivery')}</p>
         </div>
         <ul className={styles.delivery_options_list}>
-          <li>Нова Пошта</li>
-          <li>Поштомат НП</li>
-          <li>Кур&apos;єр НП</li>
-          <li>Укрпошта</li>
-          <li>Самовивіз</li>
+          {deliveryOptions.map((option, index) => (
+            <li key={index}>{option}</li>
+          ))}
         </ul>
       </div>
       <div className={styles.delivery_top_image_wrapper}>

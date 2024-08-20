@@ -5,7 +5,8 @@ import NavigationItem from './NavigationItem';
 import { useState } from 'react';
 import CatalogList from './CatalogList';
 import Container from '../Container/Container';
-import Link from 'next/link';
+import { Link } from '@/navigation';
+// import Link from 'next/link';
 
 export const navigationItems = [
   { id: '1', title: 'Про нас', href: '/about_us' },

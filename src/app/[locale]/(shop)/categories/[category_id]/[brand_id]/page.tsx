@@ -1,40 +1,36 @@
-import React from 'react';
 import {
-  getBrandsByCategoryId,
+  getBrandById,
   getCategoryById,
   getFilteredProducts,
-  getProductsByCategory,
-  getSortedProductsByCategory,
+  getProducts,
+  getProductsByBrand,
+  getSeriesByBrandId,
+  getSortedProductsByBrand,
 } from '@/services/api/api';
-import NotFound from '@/app/not-found';
+import NotFound from '@/app/[locale]/not-found';
 import getQueryClient from '@/lib/utils/getQueryClient';
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 import CategoriesProductGroupPage from '@/components/CategoriesProductGroupPage/CategoriesProductGroupPage';
 
 export interface PageProps {
-  params: { category_id: number };
+  params: { category_id: number; brand_id: number };
   searchParams: {
     sort: string | undefined;
-    brand_id: string | undefined;
     price: string | undefined;
+    brand_id: string | undefined;
     page: string | undefined;
   };
 }
 
 async function Page({ params, searchParams }: PageProps) {
-  const { category_id } = params;
-  const { sort, brand_id, price, page: urlPage } = searchParams;
+  const { category_id, brand_id } = params;
+  const { sort, price, brand_id: brandParam, page: urlPage } = searchParams;
   const page = 1;
   const itemsPerPage = 15;
   let pageSize = 15;
   if (urlPage) {
     pageSize = Number(urlPage) * itemsPerPage;
   }
-
-  const response = await getBrandsByCategoryId(category_id, {
-    cache: 'no-store',
-  });
-  const brandData = response?.data;
 
   let sorter = '-add_date';
   if (sort) {
@@ -46,8 +42,8 @@ async function Page({ params, searchParams }: PageProps) {
   }
 
   let brandId = '';
-  if (brand_id) {
-    brandId = brand_id;
+  if (brandParam) {
+    brandId = brandParam;
   }
 
   let filterPrice = '';
@@ -56,23 +52,24 @@ async function Page({ params, searchParams }: PageProps) {
   }
 
   const queryClient = getQueryClient();
+
   await queryClient.prefetchQuery({
-    queryKey: ['products', category_id, page, pageSize],
+    queryKey: ['products', brand_id, page, pageSize],
     queryFn: () =>
-      getProductsByCategory(category_id, page, pageSize, { cache: 'no-store' }),
+      getProductsByBrand(brand_id, page, pageSize, { cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['category_brands', category_id],
-    queryFn: () => getBrandsByCategoryId(category_id, { cache: 'no-store' }),
+    queryKey: ['brands_series', brand_id],
+    queryFn: () => getSeriesByBrandId(brand_id, { cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['productsSorted', category_id, sorter, page, pageSize],
+    queryKey: ['productsSorted', brand_id, sorter, page, pageSize],
     queryFn: () =>
-      getSortedProductsByCategory(category_id, sorter, page, pageSize, {
+      getSortedProductsByBrand(brand_id, sorter, page, pageSize, {
         cache: 'no-store',
       }),
     staleTime: 10 * 1000,
@@ -105,29 +102,37 @@ async function Page({ params, searchParams }: PageProps) {
 
   const dehydratedState = dehydrate(queryClient);
 
-  const data = await getCategoryById(category_id);
-  if (!data) {
+  const categoryData = await getCategoryById(category_id);
+  const brandData = await getBrandById(brand_id);
+  const seriesData = await getSeriesByBrandId(brand_id);
+
+  if (!categoryData?.length || !brandData?.length) {
     return NotFound();
   }
-  const [category] = data;
+
+  const [category] = categoryData;
+  const [brand] = brandData;
 
   const breadcrumsItems = [
     { name: 'Категорії', href: '/categories' },
-    { name: category.name },
+    { name: category.name, href: `/categories/${category_id}` },
+    { name: brand.name },
   ];
 
   return (
     <HydrationBoundary state={dehydratedState}>
       <CategoriesProductGroupPage
-        productsGroup="category"
+        productsGroup="brand"
         category={category}
+        brand={brand}
         groupBrands={brandData}
+        groupSeries={seriesData}
         breadcrumsItems={breadcrumsItems}
         filterBrands={brandId}
         sort={sorter}
+        filterPrice={filterPrice}
         page={page}
         pageSize={pageSize}
-        filterPrice={filterPrice}
       />
     </HydrationBoundary>
   );

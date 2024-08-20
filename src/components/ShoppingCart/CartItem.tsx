@@ -1,6 +1,6 @@
 'use client';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
-import Link from 'next/link';
+// import Link from 'next/link';
 import notFoundImage from '@/../public/notFound.jpg';
 import Image from 'next/image';
 import { HeartWithShadowFilledIcon, HeartWithShadowIcon } from '../icons';
@@ -16,6 +16,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import ConfirmationModal from './ConfirmationalModal';
 import { useState, useRef } from 'react';
+import { Link } from '@/navigation';
 type CartItemProps = {
   id: number;
   close: any;

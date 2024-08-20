@@ -1,17 +1,16 @@
-import NotFound from '@/app/not-found';
+import NotFound from '@/app/[locale]/not-found';
 import CategoriesProductGroupPage from '@/components/CategoriesProductGroupPage/CategoriesProductGroupPage';
 import getQueryClient from '@/lib/utils/getQueryClient';
-
 import {
   getBrandById,
   getCategoryById,
-  getFilteredProductsBySubSubSeria,
+  getFilteredProductsBySubSeria,
   getProducts,
-  getProductsBySubSubSeria,
+  getProductsBySubSeria,
   getSeriaById,
-  getSortedProductsBySubSubSeria,
+  getSortedProductsBySubSeria,
   getSubSeriaById,
-  getSubSubSeriaById,
+  getSubSubSeriesBySubSeriesId,
 } from '@/services/api/api';
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 
@@ -21,7 +20,6 @@ export interface PageProps {
     brand_id: number;
     series_id: number;
     subseries_id: number;
-    subsubseries_id: number;
   };
   searchParams: {
     sort: string | undefined;
@@ -32,8 +30,7 @@ export interface PageProps {
 }
 
 async function Page({ params, searchParams }: PageProps) {
-  const { category_id, brand_id, series_id, subseries_id, subsubseries_id } =
-    params;
+  const { category_id, brand_id, series_id, subseries_id } = params;
   const { sort, price, brand_id: brandParam, page: urlPage } = searchParams;
   const page = 1;
   const itemsPerPage = 15;
@@ -64,18 +61,25 @@ async function Page({ params, searchParams }: PageProps) {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['products', subsubseries_id, page, pageSize],
+    queryKey: ['products', subseries_id, page, pageSize],
     queryFn: () =>
-      getProductsBySubSubSeria(subsubseries_id, page, pageSize, {
+      getProductsBySubSeria(subseries_id, page, pageSize, {
         cache: 'no-store',
       }),
     staleTime: 10 * 1000,
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['productsSorted', subsubseries_id, sorter, page, pageSize],
+    queryKey: ['subcategoties', subseries_id],
     queryFn: () =>
-      getSortedProductsBySubSubSeria(subsubseries_id, sorter, page, pageSize, {
+      getSubSubSeriesBySubSeriesId(subseries_id, { cache: 'no-store' }),
+    staleTime: 10 * 1000,
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ['productsSorted', subseries_id, sorter, page, pageSize],
+    queryFn: () =>
+      getSortedProductsBySubSeria(subseries_id, sorter, page, pageSize, {
         cache: 'no-store',
       }),
     staleTime: 10 * 1000,
@@ -85,16 +89,16 @@ async function Page({ params, searchParams }: PageProps) {
     queryKey: [
       'products',
       category_id,
-      subsubseries_id,
+      subseries_id,
       filterPrice,
       sorter,
       page,
       pageSize,
     ],
     queryFn: () =>
-      getFilteredProductsBySubSubSeria(
+      getFilteredProductsBySubSeria(
         category_id,
-        subsubseries_id,
+        subseries_id,
         filterPrice,
         sorter,
         page,
@@ -112,14 +116,13 @@ async function Page({ params, searchParams }: PageProps) {
   const brandData = await getBrandById(brand_id);
   const seriesData = await getSeriaById(series_id);
   const subSeriesData = await getSubSeriaById(subseries_id);
-  const subSubSeriesData = await getSubSubSeriaById(subsubseries_id);
+  const subSubSeriesData = await getSubSubSeriesBySubSeriesId(subseries_id);
 
   if (
     !categoryData?.length ||
     !brandData?.length ||
     !seriesData?.length ||
-    !subSeriesData?.length ||
-    !subSubSeriesData?.length
+    !subSeriesData?.length
   ) {
     return NotFound();
   }
@@ -128,7 +131,6 @@ async function Page({ params, searchParams }: PageProps) {
   const [brand] = brandData;
   const [series] = seriesData;
   const [subSeries] = subSeriesData;
-  const [subSubSeries] = subSubSeriesData;
 
   const breadcrumsItems = [
     { name: 'Категорії', href: '/categories' },
@@ -140,22 +142,17 @@ async function Page({ params, searchParams }: PageProps) {
     },
     {
       name: subSeries.name,
-      href: `/categories/${category_id}/${brand_id}/${series_id}/${subseries_id}`,
-    },
-    {
-      name: subSubSeries.name,
     },
   ];
 
   return (
     <HydrationBoundary state={dehydratedState}>
       <CategoriesProductGroupPage
-        productsGroup="subsubseria"
+        productsGroup="subseria"
         category={category}
         brand={brand}
         seria={series}
         subseria={subSeries}
-        subsubseria={subSubSeries}
         groupBrands={brandData}
         groupSubSubSeries={subSubSeriesData}
         breadcrumsItems={breadcrumsItems}

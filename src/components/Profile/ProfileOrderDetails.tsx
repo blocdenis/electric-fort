@@ -8,7 +8,8 @@ import Popup from '../Popup/Popup';
 import ReviewForm from './ReviewForm/ReviewForm';
 import { useState } from 'react';
 import AfterReviewSendInfo from './AfterReviewSendInfo';
-import Link from 'next/link';
+import { Link } from '@/navigation';
+// import Link from 'next/link';
 
 interface ProfileOrderDetailsProps {
   product: OrderProductItem;

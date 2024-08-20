@@ -11,7 +11,7 @@ import SingleProduct from '@/components/SingleProduct/SingleProduct';
 import Breadcrumbs from '../Breadcrumb/Breadcrumbs';
 import { getBrandById, getCategoryById } from '@/services/api/api';
 import { Product } from '@/lib/types/types';
-import NotFound from '@/app/not-found';
+import NotFound from '@/app/[locale]/not-found';
 
 interface ProductDetailsProps {
   product: Product;

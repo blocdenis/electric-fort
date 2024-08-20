@@ -4,13 +4,14 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import EyeIcon from '../icons/EyeIcon';
 import styles from './SignUpForm.module.scss';
 import GoogleIcon from '../icons/GoogleIcon';
-import Link from 'next/link';
+// import Link from 'next/link';
 import axios from 'axios';
 import { URL } from '@/constants';
 import CloseEyeIcon from '../icons/CloseEyeIcon';
 import CheckboxTrue from '../icons/CheckboxTrue';
 import CheckboxFalse from '../icons/CheckboxFalse';
 import { useAuth } from '@/context/AuthContext';
+import { Link } from '@/navigation';
 
 type Inputs = {
   email: string;

@@ -10,8 +10,9 @@ import RadioFalse from '../icons/RadioFalse';
 import RadioTrue from '../icons/RadioTrue';
 import { useRouter } from 'next/navigation';
 import AuthModal from '../AuthModal/AuthModal';
-import Link from 'next/link';
+// import Link from 'next/link';
 import CityWarehouseSelect from './CityWarehouseSelect';
+import { Link } from '@/navigation';
 
 enum DeliveryMethods {
   PICKUP = 'Самовивіз',

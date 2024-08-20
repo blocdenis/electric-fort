@@ -12,10 +12,11 @@ import {
   getAllCategories,
   getPopularProducts,
 } from '@/services/api/api';
-import hero from '../../public/Hero.jpg';
-import hero2 from '../../public/Hero2.jpg';
+import hero from 'public/Hero.jpg';
+import hero2 from 'public/Hero2.jpg';
 import getQueryClient from '@/lib/utils/getQueryClient';
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
+import { useTranslations } from 'next-intl';
 
 const slides = [
   {
@@ -54,11 +55,12 @@ export default async function Home() {
   });
 
   const dehydratedState = dehydrate(queryClient);
-
+  // const t = useTranslations('Homepage');
   return (
     <HydrationBoundary state={dehydratedState}>
       <Container className="flex">
         <SidebarWithAttachments showFilters={false} />
+        {/* <div>{t('title')}</div> */}
         <ContentContainer>
           <HeroSlider data={slides} />
           <CategoriesSection />

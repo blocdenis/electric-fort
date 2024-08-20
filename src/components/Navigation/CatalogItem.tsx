@@ -1,11 +1,12 @@
 'use client';
 import React, { useState } from 'react';
 import { ArrowCatalogIcon } from '../icons';
-import Link from 'next/link';
+// import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './Navigation.module.scss';
 import { Brand, Category } from '@/lib/types/types';
 import { formatedString } from '@/lib/utils/formatString';
+import { Link } from '@/navigation';
 
 interface catalogItemProps {
   category: Category;

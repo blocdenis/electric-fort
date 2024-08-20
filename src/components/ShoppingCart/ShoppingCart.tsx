@@ -5,9 +5,10 @@ import { CartItem } from './CartItem';
 import { applyDiscount, discounts } from '@/services/applyDiscount';
 import { formatPriceUAH } from '@/services/formatCurrency';
 import { ArrowCatalogIcon, EmptyCart } from '../icons';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { useProducts } from '@/hooks/useProducts';
 import ArrowCategoriesIcon from '../icons/BackButton';
+import { Link } from '@/navigation';
 
 const ShoppingCart = () => {
   const { cartItems, cartQuantity, closeCart } = useShoppingCart();

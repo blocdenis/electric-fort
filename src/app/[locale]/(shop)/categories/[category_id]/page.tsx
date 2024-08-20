@@ -1,37 +1,40 @@
-import NotFound from '@/app/not-found';
-import CategoriesProductGroupPage from '@/components/CategoriesProductGroupPage/CategoriesProductGroupPage';
-import getQueryClient from '@/lib/utils/getQueryClient';
+import React from 'react';
 import {
-  getBrandById,
+  getBrandsByCategoryId,
   getCategoryById,
-  getFilteredProductsBySeria,
-  getProducts,
-  getProductsBySeria,
-  getSeriaById,
-  getSortedProductsBySeria,
-  getSubSeriesBySeriesId,
+  getFilteredProducts,
+  getProductsByCategory,
+  getSortedProductsByCategory,
 } from '@/services/api/api';
+import NotFound from '@/app/[locale]/not-found';
+import getQueryClient from '@/lib/utils/getQueryClient';
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
+import CategoriesProductGroupPage from '@/components/CategoriesProductGroupPage/CategoriesProductGroupPage';
 
 export interface PageProps {
-  params: { category_id: number; brand_id: number; series_id: number };
+  params: { category_id: number };
   searchParams: {
     sort: string | undefined;
-    price: string | undefined;
     brand_id: string | undefined;
+    price: string | undefined;
     page: string | undefined;
   };
 }
 
 async function Page({ params, searchParams }: PageProps) {
-  const { category_id, brand_id, series_id } = params;
-  const { sort, price, brand_id: brandParam, page: urlPage } = searchParams;
+  const { category_id } = params;
+  const { sort, brand_id, price, page: urlPage } = searchParams;
   const page = 1;
   const itemsPerPage = 15;
   let pageSize = 15;
   if (urlPage) {
     pageSize = Number(urlPage) * itemsPerPage;
   }
+
+  const response = await getBrandsByCategoryId(category_id, {
+    cache: 'no-store',
+  });
+  const brandData = response?.data;
 
   let sorter = '-add_date';
   if (sort) {
@@ -43,8 +46,8 @@ async function Page({ params, searchParams }: PageProps) {
   }
 
   let brandId = '';
-  if (brandParam) {
-    brandId = brandParam;
+  if (brand_id) {
+    brandId = brand_id;
   }
 
   let filterPrice = '';
@@ -53,24 +56,23 @@ async function Page({ params, searchParams }: PageProps) {
   }
 
   const queryClient = getQueryClient();
-
   await queryClient.prefetchQuery({
-    queryKey: ['products', series_id, page, pageSize],
+    queryKey: ['products', category_id, page, pageSize],
     queryFn: () =>
-      getProductsBySeria(series_id, page, pageSize, { cache: 'no-store' }),
+      getProductsByCategory(category_id, page, pageSize, { cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['series_subseries', series_id],
-    queryFn: () => getSubSeriesBySeriesId(series_id, { cache: 'no-store' }),
+    queryKey: ['category_brands', category_id],
+    queryFn: () => getBrandsByCategoryId(category_id, { cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['productsSorted', series_id, sorter, page, pageSize],
+    queryKey: ['productsSorted', category_id, sorter, page, pageSize],
     queryFn: () =>
-      getSortedProductsBySeria(series_id, sorter, page, pageSize, {
+      getSortedProductsByCategory(category_id, sorter, page, pageSize, {
         cache: 'no-store',
       }),
     staleTime: 10 * 1000,
@@ -80,16 +82,16 @@ async function Page({ params, searchParams }: PageProps) {
     queryKey: [
       'products',
       category_id,
-      series_id,
+      brandId,
       filterPrice,
       sorter,
       page,
       pageSize,
     ],
     queryFn: () =>
-      getFilteredProductsBySeria(
+      getFilteredProducts(
         category_id,
-        series_id,
+        brandId,
         filterPrice,
         sorter,
         page,
@@ -103,41 +105,29 @@ async function Page({ params, searchParams }: PageProps) {
 
   const dehydratedState = dehydrate(queryClient);
 
-  const categoryData = await getCategoryById(category_id);
-  const brandData = await getBrandById(brand_id);
-  const seriesData = await getSeriaById(series_id);
-  const subSeriesData = await getSubSeriesBySeriesId(series_id);
-
-  if (!categoryData?.length || !brandData?.length || !seriesData?.length) {
+  const data = await getCategoryById(category_id);
+  if (!data) {
     return NotFound();
   }
-
-  const [category] = categoryData;
-  const [brand] = brandData;
-  const [series] = seriesData;
+  const [category] = data;
 
   const breadcrumsItems = [
     { name: 'Категорії', href: '/categories' },
-    { name: category.name, href: `/categories/${category_id}` },
-    { name: brand.name, href: `/categories/${category_id}/${brand_id}` },
-    { name: series.name },
+    { name: category.name },
   ];
 
   return (
     <HydrationBoundary state={dehydratedState}>
       <CategoriesProductGroupPage
-        productsGroup="seria"
+        productsGroup="category"
         category={category}
-        brand={brand}
-        seria={series}
         groupBrands={brandData}
-        groupSubSeries={subSeriesData}
         breadcrumsItems={breadcrumsItems}
         filterBrands={brandId}
         sort={sorter}
-        filterPrice={filterPrice}
         page={page}
         pageSize={pageSize}
+        filterPrice={filterPrice}
       />
     </HydrationBoundary>
   );

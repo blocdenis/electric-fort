@@ -1,10 +1,11 @@
 import { Product } from '@/lib/types/types';
-import Link from 'next/link';
+// import Link from 'next/link';
 import styles from './SearchInput.module.scss';
 import { HeartWithShadowFilledIcon, HeartWithShadowIcon } from '../icons';
 import { useFavorites } from '@/context/FavoritesContext';
 import Image from 'next/image';
 import notFoundImage from '@/../public/notFound.jpg';
+import { Link } from '@/navigation';
 
 interface Props {
   isLoading: boolean;

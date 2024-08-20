@@ -1,9 +1,7 @@
 'use client';
-// Advantages.tsx
 import React from 'react';
 import styles from './Advantages.module.scss';
 import AdvantagesSection from './AdvantageSection';
-import AdvantagesList from './AdvantageList';
 import AdvantageCard from './AdvantageCard';
 import {
   AdvantagesIconDiscounts,
@@ -14,37 +12,38 @@ import {
   AdvantagesIconStorage,
 } from '../icons';
 
-import { advantagesData } from '@/lib/db/advantagesData';
 import useMediaQuery from '@/hooks/useMediaQuery';
+import { useTranslations } from 'next-intl';
 
 const Advantages: React.FC = () => {
-  const isAboveMediumScreeens = useMediaQuery('(min-width:768px)');
+  const t = useTranslations('advantages');
+  const isAboveMediumScreens = useMediaQuery('(min-width:768px)');
+
   return (
     <div>
       <div className={styles.wrapper_desktop}>
-        <AdvantagesSection title={'Нашi переваги'}>
+        <AdvantagesSection title={t('title')}>
           <div className={styles.cards_wrapper}>
-            <AdvantageCard
-              icon={AdvantagesIconStorage}
-              text="Власний склад та найбільший асортимент"
-            />
+            <AdvantageCard icon={AdvantagesIconStorage} text={t('storage')} />
             <AdvantageCard
               icon={AdvantagesIconIndividual}
-              text="Індивідуальний підхід"
+              text={t('individual')}
             />
             <AdvantageCard
               icon={AdvantagesIconFast}
-              text="Швидка обробка замовлень"
+              text={t('fastProcessing')}
             />
-
-            <AdvantageCard icon={AdvantagesIconPrices} text="Оптові ціни" />
+            <AdvantageCard
+              icon={AdvantagesIconPrices}
+              text={t('wholesalePrices')}
+            />
             <AdvantageCard
               icon={AdvantagesIconOfficial}
-              text="Офіційний представник провідних виробників електричної продукції"
+              text={t('officialRepresentative')}
             />
             <AdvantageCard
               icon={AdvantagesIconDiscounts}
-              text="Додаткові знижки для електриків"
+              text={t('additionalDiscounts')}
             />
           </div>
         </AdvantagesSection>

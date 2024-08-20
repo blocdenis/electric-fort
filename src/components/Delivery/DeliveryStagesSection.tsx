@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import PassIcon from '../icons/PassIcon';
 import CartIconDelivery from '../icons/CartIconDelivery';
@@ -7,40 +8,26 @@ import GeoIcon from '../icons/GeoIcon';
 import styles from './Delivery.module.scss';
 
 function DeliveryStagesSection() {
+  const t = useTranslations('Delivery');
+
+  const steps = t('steps').split(';');
+
   return (
     <section className={styles.delivery_stages}>
-      <h2 className={styles.delivery_text_title}>Як це працює?</h2>
+      <h2 className={styles.delivery_text_title}>{t('how_it_works')}</h2>
       <ul className={styles.delivery_stages_list}>
-        <li className={styles.delivery_stages_item}>
-          <div>
-            <CartIconDelivery width={46} height={46} />
-          </div>
-          <p className=" text-center items-center">Обрати товар</p>
-        </li>
-        <li className={styles.delivery_stages_item}>
-          <div>
-            <PassIcon width={46} height={46} />
-          </div>
-          <p className=" text-center">Вказати дані для відправки</p>
-        </li>
-        <li className={styles.delivery_stages_item}>
-          <div>
-            <TruckIcon />
-          </div>
-          <p className=" text-center">Обрати спосіб доставки</p>
-        </li>
-        <li className={styles.delivery_stages_item}>
-          <div>
-            <CashIcon />
-          </div>
-          <p className=" text-center">Обрати спосіб оплати</p>
-        </li>
-        <li className={styles.delivery_stages_item}>
-          <div>
-            <GeoIcon />
-          </div>
-          <p className=" text-center">Отримати замовлення</p>
-        </li>
+        {steps.map((step, index) => (
+          <li key={index} className={styles.delivery_stages_item}>
+            <div>
+              {index === 0 && <CartIconDelivery width={46} height={46} />}
+              {index === 1 && <PassIcon width={46} height={46} />}
+              {index === 2 && <TruckIcon />}
+              {index === 3 && <CashIcon />}
+              {index === 4 && <GeoIcon />}
+            </div>
+            <p className="text-center">{step}</p>
+          </li>
+        ))}
       </ul>
     </section>
   );

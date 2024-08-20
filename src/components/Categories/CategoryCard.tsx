@@ -1,9 +1,10 @@
 import Image from 'next/image';
 import React from 'react';
 import categotyImg from '../../../public/category-img.jpg';
-import Link from 'next/link';
+// import Link from 'next/link';
 import classNames from 'classnames';
 import styles from './CategoryCard.module.scss';
+import { Link } from '@/navigation';
 
 interface CategoryCardProps {
   category_id?: number;

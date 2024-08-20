@@ -1,19 +1,20 @@
+import NotFound from '@/app/[locale]/not-found';
+import CategoriesProductGroupPage from '@/components/CategoriesProductGroupPage/CategoriesProductGroupPage';
+import getQueryClient from '@/lib/utils/getQueryClient';
 import {
   getBrandById,
   getCategoryById,
-  getFilteredProducts,
+  getFilteredProductsBySeria,
   getProducts,
-  getProductsByBrand,
-  getSeriesByBrandId,
-  getSortedProductsByBrand,
+  getProductsBySeria,
+  getSeriaById,
+  getSortedProductsBySeria,
+  getSubSeriesBySeriesId,
 } from '@/services/api/api';
-import NotFound from '@/app/not-found';
-import getQueryClient from '@/lib/utils/getQueryClient';
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
-import CategoriesProductGroupPage from '@/components/CategoriesProductGroupPage/CategoriesProductGroupPage';
 
 export interface PageProps {
-  params: { category_id: number; brand_id: number };
+  params: { category_id: number; brand_id: number; series_id: number };
   searchParams: {
     sort: string | undefined;
     price: string | undefined;
@@ -23,7 +24,7 @@ export interface PageProps {
 }
 
 async function Page({ params, searchParams }: PageProps) {
-  const { category_id, brand_id } = params;
+  const { category_id, brand_id, series_id } = params;
   const { sort, price, brand_id: brandParam, page: urlPage } = searchParams;
   const page = 1;
   const itemsPerPage = 15;
@@ -54,22 +55,22 @@ async function Page({ params, searchParams }: PageProps) {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['products', brand_id, page, pageSize],
+    queryKey: ['products', series_id, page, pageSize],
     queryFn: () =>
-      getProductsByBrand(brand_id, page, pageSize, { cache: 'no-store' }),
+      getProductsBySeria(series_id, page, pageSize, { cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['brands_series', brand_id],
-    queryFn: () => getSeriesByBrandId(brand_id, { cache: 'no-store' }),
+    queryKey: ['series_subseries', series_id],
+    queryFn: () => getSubSeriesBySeriesId(series_id, { cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
   await queryClient.prefetchQuery({
-    queryKey: ['productsSorted', brand_id, sorter, page, pageSize],
+    queryKey: ['productsSorted', series_id, sorter, page, pageSize],
     queryFn: () =>
-      getSortedProductsByBrand(brand_id, sorter, page, pageSize, {
+      getSortedProductsBySeria(series_id, sorter, page, pageSize, {
         cache: 'no-store',
       }),
     staleTime: 10 * 1000,
@@ -79,16 +80,16 @@ async function Page({ params, searchParams }: PageProps) {
     queryKey: [
       'products',
       category_id,
-      brandId,
+      series_id,
       filterPrice,
       sorter,
       page,
       pageSize,
     ],
     queryFn: () =>
-      getFilteredProducts(
+      getFilteredProductsBySeria(
         category_id,
-        brandId,
+        series_id,
         filterPrice,
         sorter,
         page,
@@ -104,29 +105,33 @@ async function Page({ params, searchParams }: PageProps) {
 
   const categoryData = await getCategoryById(category_id);
   const brandData = await getBrandById(brand_id);
-  const seriesData = await getSeriesByBrandId(brand_id);
+  const seriesData = await getSeriaById(series_id);
+  const subSeriesData = await getSubSeriesBySeriesId(series_id);
 
-  if (!categoryData?.length || !brandData?.length) {
+  if (!categoryData?.length || !brandData?.length || !seriesData?.length) {
     return NotFound();
   }
 
   const [category] = categoryData;
   const [brand] = brandData;
+  const [series] = seriesData;
 
   const breadcrumsItems = [
     { name: 'Категорії', href: '/categories' },
     { name: category.name, href: `/categories/${category_id}` },
-    { name: brand.name },
+    { name: brand.name, href: `/categories/${category_id}/${brand_id}` },
+    { name: series.name },
   ];
 
   return (
     <HydrationBoundary state={dehydratedState}>
       <CategoriesProductGroupPage
-        productsGroup="brand"
+        productsGroup="seria"
         category={category}
         brand={brand}
+        seria={series}
         groupBrands={brandData}
-        groupSeries={seriesData}
+        groupSubSeries={subSeriesData}
         breadcrumsItems={breadcrumsItems}
         filterBrands={brandId}
         sort={sorter}
