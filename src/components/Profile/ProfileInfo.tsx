@@ -102,7 +102,11 @@ function ProfileInfo() {
           </SecondaryButton>
         </div>
       )}
-      {isEditPassword && <ChangePasswordForm />}
+      {isEditPassword && (
+        <ChangePasswordForm
+          handleCancelClick={() => setIsEditPassword(false)}
+        />
+      )}
       {!isEditProfile && (
         <div className={classNames(styles.edit_btn)}>
           <EditIcon onClick={onEditClick} />

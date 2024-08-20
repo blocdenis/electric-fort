@@ -10,20 +10,20 @@ export const userInfoZodSchema = z.object({
   last_name: z
     .string()
     .max(50)
-    .regex(regexName, { message: "Ім'я має містити тільки літери" })
+    .regex(regexName, { message: 'Поле має містити тільки літери' })
     .or(z.string().max(0))
     .nullish(),
   first_name: z
     .string()
     .max(50)
-    .regex(regexName, { message: "Ім'я має містити тільки літери" })
+    .regex(regexName, { message: 'Поле має містити тільки літери' })
     .or(z.string().max(0))
     .nullish(),
   phone: z
     .string()
-    .max(13, { message: 'Має містити не більше 13 символів' })
+    .max(13, { message: 'Поле має містити не більше 13 символів' })
     .regex(regexPhoneNumber, {
-      message: 'Має складатися з цифр у форматі +380ХХХХХХХХХ',
+      message: 'Поле має складатися з цифр у форматі +380ХХХХХХХХХ',
     })
     .or(z.string().max(0))
     .nullish(),
@@ -73,8 +73,27 @@ export const userInfoZodSchema = z.object({
   ]),
 });
 
-export const changePasswordZodSchema = z.object({
-  old_password: z.string().min(8).regex(regexPassword),
-  new_password: z.string().min(8).regex(regexPassword),
-  repeat_new_password: z.string().min(8).regex(regexPassword),
-});
+export const changePasswordZodSchema = z
+  .object({
+    old_password: z
+      .string()
+      .min(8, { message: 'Пароль має містити не меньше 8 символів' }),
+    new_password: z
+      .string()
+      .min(8, { message: 'Пароль має містити не меньше 8 символів' })
+      .regex(regexPassword, {
+        message:
+          'Пароль має містити щонайменьше одну заглавну літеру та один спеціальний символ',
+      }),
+    repeat_new_password: z
+      .string()
+      .min(8, { message: 'Пароль має містити не меньше 8 символів' })
+      .regex(regexPassword, {
+        message:
+          'Пароль має містити щонайменьше одну заглавну літеру та один спеціальний символ',
+      }),
+  })
+  .refine((obj) => obj.new_password === obj.repeat_new_password, {
+    message: 'Пароль має співпадати',
+    path: ['repeat_new_password'],
+  });

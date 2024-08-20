@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { getDirtyFields } from '@/lib/utils/getDirtystrings';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { userInfoZodSchema } from '@/lib/schemas/validationZodSchemas';
+import classNames from 'classnames';
 
 interface ProfileInfoFormProps {
   handleCancelClick: () => void;
@@ -17,15 +18,6 @@ type DeliveryAddress = {
   house: string;
   apartment: string;
 };
-
-interface ProfileInfoFormState {
-  first_name?: string | null;
-  last_name?: string | null;
-  phone?: string | null;
-  email?: string;
-  delivery_address?: DeliveryAddress | null;
-  activity?: UserActivities;
-}
 
 type FormFields = {
   first_name: string | null;
@@ -89,12 +81,18 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
         </label>
         <div>
           <input
-            className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]"
+            className={classNames(
+              {
+                ' outline border border-error_red text-error_red':
+                  errors.last_name,
+              },
+              ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]'
+            )}
             type="text"
             id="last_name"
             {...register('last_name')}
           />
-          <p className=" text-yellow text-sm">
+          <p className=" text-error_red text-sm">
             {errors.last_name && errors.last_name.message}
           </p>
         </div>
@@ -105,12 +103,18 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
         </label>
         <div>
           <input
-            className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]"
+            className={classNames(
+              {
+                ' outline border border-error_red text-error_red':
+                  errors.first_name,
+              },
+              ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]'
+            )}
             type="text"
             id="first_name"
             {...register('first_name')}
           />
-          <p className=" text-yellow text-sm">
+          <p className=" text-error_red text-sm">
             {errors.first_name && errors.first_name.message}
           </p>
         </div>
@@ -121,12 +125,17 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
         </label>
         <div>
           <input
-            className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]"
+            className={classNames(
+              {
+                ' outline border border-error_red text-error_red': errors.phone,
+              },
+              ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]'
+            )}
             type="tel"
             id="phone"
             {...register('phone')}
           />
-          <p className=" text-yellow text-sm">
+          <p className=" text-error_red text-sm">
             {errors.phone && errors.phone.message}
           </p>
         </div>
@@ -137,12 +146,17 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
         </label>
         <div>
           <input
-            className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]"
+            className={classNames(
+              {
+                ' outline border border-error_red text-error_red': errors.email,
+              },
+              ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]'
+            )}
             type="email"
             id="email"
             {...register('email', { required: "Це поле обов'язвове" })}
           />
-          <p className=" text-yellow text-sm">
+          <p className=" text-error_red text-sm">
             {errors.email && errors.email.message}
           </p>
         </div>
@@ -151,54 +165,72 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
         <p className="text-mid mb-3 laptop:w-[228px]">Адреса доставки</p>
         <div className="flex flex-col gap-2">
           <div className="flex laptop:justify-center items-center h-10">
-            <label htmlFor="city" className="w-[105px]">
+            <label htmlFor="delivery_address.city" className="w-[105px]">
               Місто
             </label>
             <div>
               <input
-                className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full"
+                className={classNames(
+                  {
+                    ' outline border border-error_red text-error_red':
+                      errors.delivery_address?.city,
+                  },
+                  ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full'
+                )}
                 type="text"
                 id="city"
                 {...register('delivery_address.city')}
               />
-              <p className=" text-yellow text-sm">
+              {/* <p className=" text-error_red text-sm">
                 {errors.delivery_address?.city &&
                   errors.delivery_address.city.message}
-              </p>
+              </p> */}
             </div>
           </div>
           <div className="flex laptop:justify-center items-center h-[40px]">
-            <label htmlFor="street" className=" w-[105px]">
+            <label htmlFor="delivery_address.street" className=" w-[105px]">
               Вулиця
             </label>
             <div>
               <input
-                className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full"
+                className={classNames(
+                  {
+                    ' outline border border-error_red text-error_red':
+                      errors.delivery_address?.street,
+                  },
+                  ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full'
+                )}
                 type="text"
                 id="street"
                 {...register('delivery_address.street')}
               />
-              <p className=" text-yellow text-sm">
+              {/* <p className=" text-error_red text-sm">
                 {errors.delivery_address?.street &&
                   errors.delivery_address.street.message}
-              </p>
+              </p> */}
             </div>
           </div>
           <div className="flex laptop:justify-center items-center h-[40px]">
-            <label htmlFor="house" className=" w-[105px]">
+            <label htmlFor="delivery_address.house" className=" w-[105px]">
               Будинок
             </label>
             <div>
               <input
-                className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full"
+                className={classNames(
+                  {
+                    ' outline border border-error_red text-error_red':
+                      errors.delivery_address?.house,
+                  },
+                  ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full'
+                )}
                 type="text"
                 id="house"
                 {...register('delivery_address.house')}
               />
-              <p className=" text-yellow text-sm">
+              {/* <p className=" text-error_red text-sm">
                 {errors.delivery_address?.house &&
                   errors.delivery_address.house.message}
-              </p>
+              </p> */}
             </div>
           </div>
           <div className="flex laptop:justify-center items-center h-[40px]">
@@ -207,15 +239,21 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
             </label>
             <div>
               <input
-                className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full"
+                className={classNames(
+                  {
+                    ' outline border border-error_red text-error_red':
+                      errors.delivery_address?.apartment,
+                  },
+                  ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[255px] laptop:h-full'
+                )}
                 type="text"
                 id="apartment"
                 {...register('delivery_address.apartment')}
               />
-              <p className=" text-yellow text-sm">
+              {/* <p className=" text-error_red text-sm">
                 {errors.delivery_address?.apartment &&
                   errors.delivery_address.apartment.message}
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
@@ -225,7 +263,13 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
           Вид діяльності
         </label>
         <select
-          className=" bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]"
+          className={classNames(
+            {
+              ' outline border border-error_red text-error_red':
+                errors.activity,
+            },
+            ' bg-backgroung border border-white h-[40px] px-3 py-[9px] w-[360px]'
+          )}
           id="activity"
           {...register('activity')}
         >
@@ -235,7 +279,7 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
           <option>Виконроб</option>
           <option>Будівельна організація</option>
         </select>
-        <p className=" text-yellow text-sm">
+        <p className=" text-error_red text-sm">
           {errors.activity && errors.activity.message}
         </p>
       </div>
