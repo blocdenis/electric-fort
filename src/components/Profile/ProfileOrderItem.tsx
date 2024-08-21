@@ -27,8 +27,9 @@ function ProfileOrderItem({ order }: ProfileOrderItemProps) {
               [`${styles.order_status__processing}`]:
                 order.status === 'В обробці',
               [`${styles.order_status__sent}`]: order.status === 'Відправлено',
-              [`${styles.order_status__done}`]: order.status === 'Доставлено',
-              [`${styles.order_status__done}`]: order.status === 'Відмінено',
+              [`${styles.order_status__new}`]: order.status === 'Доставлено',
+              [`${styles.order_status__canceled}`]:
+                order.status === 'Відмінено',
               [`${styles.order_status__done}`]: order.status === 'Виконано',
             })}
           >

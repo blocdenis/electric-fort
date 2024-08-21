@@ -65,6 +65,9 @@
 .order_status__done {
   color: $accent-primary-dark;
 }
+.order_status__canceled {
+  color: $red-canceled;
+}
 
 .order_details {
   display: flex;
