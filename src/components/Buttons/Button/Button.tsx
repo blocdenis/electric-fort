@@ -6,6 +6,7 @@ function Button({
   children,
   className,
   onClick,
+  disabled,
   type,
 }: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
@@ -13,6 +14,7 @@ function Button({
       type={type}
       onClick={onClick}
       className={classNames(styles.button, className)}
+      disabled={disabled}
     >
       {children}
     </button>

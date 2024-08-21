@@ -76,7 +76,10 @@ function ProfileOrderItem({ order }: ProfileOrderItemProps) {
         <ul>
           {order.products.map((product) => (
             <li key={product.article}>
-              <ProfileOrderDetails product={product} />
+              <ProfileOrderDetails
+                product={product}
+                orderStatus={order.status}
+              />
             </li>
           ))}
         </ul>

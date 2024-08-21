@@ -8,6 +8,7 @@ import Link from 'next/link';
 import ProfileOrdersHistory from './ProfileOrdersHistory';
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from '@/services/api/api';
+import { ToastContainer } from 'react-toastify';
 
 function Profile() {
   const PROFILE_TABS = {
@@ -138,6 +139,7 @@ function Profile() {
         {tab === PROFILE_TABS.ORDERS_HISTORY && <ProfileOrdersHistory />}
         {tab === PROFILE_TABS.REVIEWS && <ProfileReviews />}
       </div>
+      <ToastContainer />
     </div>
   );
 }

@@ -63,10 +63,10 @@ function ProfileReviewItem({ review }: ProfileReviewItemProps) {
           </div>
         </Link>
         <Link href={`/${review.product_id}`}>
-          <p>{product.name}</p>
+          <p className="text-sm">{product.name}</p>
         </Link>
       </div>
-      <p>{review.respond}</p>
+      <p className="text-sm">{review.respond}</p>
     </div>
   );
 }

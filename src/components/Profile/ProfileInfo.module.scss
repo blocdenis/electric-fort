@@ -71,7 +71,8 @@
   font: $regular20;
 
   @include breakpoint(desktop) {
-    height: 40px;
+    min-height: 40px;
     display: flex;
+    align-items: center;
   }
 }
