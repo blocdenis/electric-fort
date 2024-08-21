@@ -940,13 +940,17 @@ export const updateUser = async (
   });
 };
 
-export const getUserOrders = async (page: number = 1, init?: RequestInit) => {
+export const getUserOrders = async (
+  page: number,
+  pageSize: number = 1,
+  init?: RequestInit
+) => {
   return sendRequestJSON<getUserOrders>(
     `${buildUrl(
       'jwt',
       'user',
       'Order'
-    )}?all_data=true&equal=false&pagination=true&page_size=5&page=${page}`,
+    )}?all_data=true&equal=false&pagination=true&page_size=${pageSize}&page=${page}`,
     {
       method: 'GET',
       credentials: 'include',
