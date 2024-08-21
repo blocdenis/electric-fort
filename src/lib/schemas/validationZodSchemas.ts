@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
-const regexPhoneNumber = /^\+380\d{3}\d{2}\d{2}\d{2}$/;
-const regexName = /^([a-zA-ZА-Яа-яЁёЇїІіЄєҐґ']+)$/;
+const regexPhoneNumber = /^\+380\d{2}\d{3}\d{2}\d{2}$/;
+const regexName = /^([a-zA-ZА-Яа-яЁёЇїІіЄєҐґ'\-\s]+)$/;
 const regexAddress = /^([a-zA-ZА-Яа-яЁёЇїІіЄєҐґ'\d\s\-\.]*)$/; //letters, numbers, whitespace character,"-","."
 const regexPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/; //at least 1 UpperLetter 1 lowerLetter 1 special symbol? min 8 symbols
@@ -9,21 +9,21 @@ const regexPassword =
 export const userInfoZodSchema = z.object({
   last_name: z
     .string()
-    .max(50)
+    .max(100)
     .regex(regexName, { message: 'Поле має містити тільки літери' })
     .or(z.string().max(0))
     .nullish(),
   first_name: z
     .string()
-    .max(50)
+    .max(100)
     .regex(regexName, { message: 'Поле має містити тільки літери' })
     .or(z.string().max(0))
     .nullish(),
   phone: z
     .string()
-    .max(13, { message: 'Поле має містити не більше 13 символів' })
+    .max(17, { message: 'Поле має містити не більше 17 символів' })
     .regex(regexPhoneNumber, {
-      message: 'Поле має складатися з цифр у форматі +380ХХХХХХХХХ',
+      message: 'Поле має складатися з цифр у форматі +380XXXXXXXXX',
     })
     .or(z.string().max(0))
     .nullish(),

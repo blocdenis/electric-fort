@@ -7,6 +7,8 @@ import { getDirtyFields } from '@/lib/utils/getDirtystrings';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { userInfoZodSchema } from '@/lib/schemas/validationZodSchemas';
 import classNames from 'classnames';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface ProfileInfoFormProps {
   handleCancelClick: () => void;
@@ -29,6 +31,7 @@ type FormFields = {
 };
 
 function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
+  const [error, setError] = useState<string>('');
   const { data: user, isFetching } = useQuery({
     queryKey: ['user'],
     queryFn: () => getUserInfo(),
@@ -45,6 +48,12 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
         exact: true,
         refetchType: 'active',
       });
+    },
+    onError(error) {
+      const err: {
+        detail: [{ input: string; loc: string[]; msg: string; type: string }];
+      } = JSON.parse(error.message);
+      setError(err.detail[0].msg);
     },
   });
 
@@ -68,13 +77,26 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
 
   function handleFormSubmit() {
     const changedFilds = getDirtyFields(dirtyFields, getValues());
-    console.log(changedFilds);
-    updateUserData.mutateAsync(changedFilds);
-    handleCancelClick();
+    updateUserData
+      .mutateAsync(changedFilds)
+      .then(() => handleCancelClick())
+      .catch((error: Error) => {
+        const err: {
+          detail: [{ input: string; loc: string[]; msg: string; type: string }];
+        } = JSON.parse(error.message);
+        const msg = err.detail[0].msg;
+        // console.log(msg);
+        toast.error(msg);
+      });
   }
 
   return (
     <form onSubmit={handleSubmit(handleFormSubmit)}>
+      {/* {error ? (
+        <p className=" text-error_red text-sm text-center absolute top-0 right-0">
+          {error}
+        </p>
+      ) : null} */}
       <div className="laptop:h-10 mb-6 flex flex-col laptop:flex-row">
         <label htmlFor="last_name" className="text-mid mb-3 laptop:w-[228px]">
           Прізвище
@@ -133,6 +155,7 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
             )}
             type="tel"
             id="phone"
+            placeholder="+380XXXXXXXXX"
             {...register('phone')}
           />
           <p className=" text-error_red text-sm">
@@ -182,9 +205,9 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
                 {...register('delivery_address.city')}
               />
               {/* <p className=" text-error_red text-sm">
-                {errors.delivery_address?.city &&
-                  errors.delivery_address.city.message}
-              </p> */}
+              {errors.delivery_address?.city &&
+                errors.delivery_address.city.message}
+            </p> */}
             </div>
           </div>
           <div className="flex laptop:justify-center items-center h-[40px]">
@@ -205,9 +228,9 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
                 {...register('delivery_address.street')}
               />
               {/* <p className=" text-error_red text-sm">
-                {errors.delivery_address?.street &&
-                  errors.delivery_address.street.message}
-              </p> */}
+              {errors.delivery_address?.street &&
+                errors.delivery_address.street.message}
+            </p> */}
             </div>
           </div>
           <div className="flex laptop:justify-center items-center h-[40px]">
@@ -228,9 +251,9 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
                 {...register('delivery_address.house')}
               />
               {/* <p className=" text-error_red text-sm">
-                {errors.delivery_address?.house &&
-                  errors.delivery_address.house.message}
-              </p> */}
+              {errors.delivery_address?.house &&
+                errors.delivery_address.house.message}
+            </p> */}
             </div>
           </div>
           <div className="flex laptop:justify-center items-center h-[40px]">
@@ -251,9 +274,9 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
                 {...register('delivery_address.apartment')}
               />
               {/* <p className=" text-error_red text-sm">
-                {errors.delivery_address?.apartment &&
-                  errors.delivery_address.apartment.message}
-              </p> */}
+              {errors.delivery_address?.apartment &&
+                errors.delivery_address.apartment.message}
+            </p> */}
             </div>
           </div>
         </div>
@@ -283,7 +306,6 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
           {errors.activity && errors.activity.message}
         </p>
       </div>
-
       <div className="laptop:text-right laptop:mt-6 absolute bottom-[-120px] flex flex-col-reverse gap-4 w-full laptop:flex-row laptop:w-[390px] laptop:bottom-[-64px] laptop:right-0">
         <button
           onClick={handleCancelClick}

@@ -7,6 +7,7 @@ import ChangePasswordForm from './ChangePasswordForm';
 import classNames from 'classnames';
 import styles from './ProfileInfo.module.scss';
 import ProfileInfoForm from './ProfileInfoForm';
+import { ToastContainer } from 'react-toastify';
 
 function ProfileInfo() {
   const { data: user, isFetching } = useQuery({
@@ -53,29 +54,62 @@ function ProfileInfo() {
       {!isEditProfile && (
         <div>
           <div className={styles.profile_info_item}>
-            <div className="laptop:w-[228px] mb-3">Прізвище</div>
+            <div className="laptop:w-[228px] mb-3 laptop:mb-0">Прізвище</div>
             <span className="px-3 py-[9px] text-base">{last_name}</span>
           </div>
           <div className={styles.profile_info_item}>
-            <div className="laptop:w-[228px] mb-3">Ім’я</div>
+            <div className="laptop:w-[228px] mb-3 laptop:mb-0">Ім’я</div>
             <span className="px-3 py-[9px] text-base">{first_name}</span>
           </div>
           <div className={styles.profile_info_item}>
-            <div className="laptop:w-[228px] mb-3">Номер телефону</div>
+            <div className="laptop:w-[228px] mb-3 laptop:mb-0">
+              Номер телефону
+            </div>
             <span className="px-3 py-[9px] text-base">{phone}</span>
           </div>
           <div className={styles.profile_info_item}>
-            <div className="laptop:w-[228px] mb-3">Пошта*</div>
+            <div className="laptop:w-[228px] mb-3 laptop:mb-0">Пошта*</div>
             <span className="px-3 py-[9px] text-base">{email}</span>
           </div>
           <div className={styles.profile_info_item}>
-            <div className="laptop:w-[228px] mb-3">Адреса доставки</div>
-            {delivery_address ? (
-              <span className="px-3 py-[9px] text-base">{`${delivery_address?.city}, ${delivery_address?.street},буд.${delivery_address?.house},кв.${delivery_address?.apartment}`}</span>
-            ) : null}
+            <div className="laptop:w-[228px] mb-3 laptop:mb-0">
+              Адреса доставки
+            </div>
+            <div className="px-3 py-[9px] laptop:max-w-[74%]">
+              {delivery_address?.city && (
+                <span className=" text-base">{delivery_address?.city}</span>
+              )}
+              {delivery_address?.city && delivery_address.street ? (
+                <span>, </span>
+              ) : null}
+              {delivery_address?.street && (
+                <span className="text-base">
+                  вул.{delivery_address?.street}
+                </span>
+              )}
+              {(delivery_address?.city && delivery_address.house) ||
+              (delivery_address?.street && delivery_address.house) ? (
+                <span>, </span>
+              ) : null}
+              {delivery_address?.house && (
+                <span className="text-base">буд.{delivery_address?.house}</span>
+              )}
+              {(delivery_address?.city && delivery_address.apartment) ||
+              (delivery_address?.street && delivery_address.apartment) ||
+              (delivery_address?.house && delivery_address.apartment) ? (
+                <span>, </span>
+              ) : null}
+              {delivery_address?.apartment && (
+                <span className="text-base">
+                  кв.{delivery_address?.apartment}
+                </span>
+              )}
+            </div>
           </div>
           <div className={styles.profile_info_item}>
-            <div className="laptop:w-[228px] mb-3">Вид діяльності</div>
+            <div className="laptop:w-[228px] mb-3 laptop:mb-0">
+              Вид діяльності
+            </div>
             <span className="px-3 py-[9px] text-base">{activity}</span>
           </div>
         </div>
@@ -92,7 +126,7 @@ function ProfileInfo() {
         <div className="laptop:h-10 flex flex-col gap-[12px] laptop:flex-row">
           <div className="h-10 flex">
             <p className="w-[228px] text-mid">Пароль*</p>
-            <span>*********</span>
+            <span className=" py-[9px] px-3">*********</span>
           </div>
           <SecondaryButton
             onClick={onPasswordEditClick}

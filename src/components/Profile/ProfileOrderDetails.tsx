@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styles from './ProfileOrderItem.module.scss';
 import Button from '../Buttons/Button/Button';
-import { OrderProductItem } from '@/services/api/api';
+import { OrderProductItem, UserOrderStatus } from '@/services/api/api';
 import ReviewIcon from '../icons/ReviewIcon';
 import notFoundImage from '../../../public/notFound.jpg';
 import Popup from '../Popup/Popup';
@@ -12,9 +12,13 @@ import Link from 'next/link';
 
 interface ProfileOrderDetailsProps {
   product: OrderProductItem;
+  orderStatus: UserOrderStatus;
 }
 
-function ProfileOrderDetails({ product }: ProfileOrderDetailsProps) {
+function ProfileOrderDetails({
+  product,
+  orderStatus,
+}: ProfileOrderDetailsProps) {
   const [isReviewOpen, setIsReviewOpen] = useState(false);
   const [isOpenMessageAfterReview, setIsOpenMessageAfterReview] =
     useState(false);
@@ -29,6 +33,8 @@ function ProfileOrderDetails({ product }: ProfileOrderDetailsProps) {
     onCloseOpenReview();
     onCloseOpenMessageAfterReview();
   };
+  console.log(orderStatus);
+
   return (
     <div className={styles.order_details}>
       <Link href={`/${product.id}`}>
@@ -56,6 +62,7 @@ function ProfileOrderDetails({ product }: ProfileOrderDetailsProps) {
           <Button
             className="flex justify-center items-center gap-1 w-[231px] py-[5px]"
             onClick={onCloseOpenReview}
+            disabled={orderStatus !== 'Виконано'}
           >
             <ReviewIcon width={24} height={24} />
             Залишити відгук
