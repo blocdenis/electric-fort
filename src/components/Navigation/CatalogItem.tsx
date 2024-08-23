@@ -10,7 +10,7 @@ import { formatedString } from '@/lib/utils/formatString';
 interface catalogItemProps {
   category: Category;
   brands: Brand[] | undefined;
-  onItemClick: () => void;
+  onItemClick?: () => void;
 }
 
 function CatalogItem({ category, brands, onItemClick }: catalogItemProps) {

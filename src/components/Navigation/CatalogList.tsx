@@ -5,7 +5,7 @@ import { getAllBrands, getAllCategories } from '@/services/api/api';
 import { useQuery } from '@tanstack/react-query';
 
 interface CatalogListProps {
-  onItemClick: () => void;
+  onItemClick?: () => void;
 }
 
 function CatalogList({ onItemClick }: CatalogListProps) {
