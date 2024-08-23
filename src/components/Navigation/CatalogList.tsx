@@ -4,7 +4,11 @@ import CatalogItem from './CatalogItem';
 import { getAllBrands, getAllCategories } from '@/services/api/api';
 import { useQuery } from '@tanstack/react-query';
 
-function CatalogList() {
+interface CatalogListProps {
+  onItemClick?: () => void;
+}
+
+function CatalogList({ onItemClick }: CatalogListProps) {
   const { data: categories } = useQuery({
     queryKey: ['categories'],
     queryFn: () => getAllCategories(),
@@ -21,7 +25,11 @@ function CatalogList() {
     <ul className=" bg-backgroung">
       {categories?.map((category) => (
         <li key={category.id}>
-          <CatalogItem brands={brands} category={category} />
+          <CatalogItem
+            onItemClick={onItemClick}
+            brands={brands}
+            category={category}
+          />
         </li>
       ))}
     </ul>

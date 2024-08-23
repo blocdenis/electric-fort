@@ -38,7 +38,7 @@
   }
 }
 
-.fav_list {
+.fav_list_desktop {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   column-gap: 24px;
@@ -48,9 +48,37 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   @include breakpoint(tablet) {
+    display: none;
+  }
+  // @include breakpoint(tablet) {
+  //   grid-template-columns: repeat(2, minmax(0, 1fr));
+  // }
+  // @include breakpoint(mobile) {
+  //   grid-template-columns: repeat(1, minmax(0, 1fr));
+  // }
+}
+.fav_list_mobile {
+  // display: grid;
+  // grid-template-columns: repeat(4, minmax(0, 1fr));
+  // column-gap: 24px;
+  // row-gap: 32px;
+  // justify-items: center;
+  // @media (min-width: 1024px) and (max-width: 1400px) {
+  //   grid-template-columns: repeat(3, minmax(0, 1fr));
+  // }
+  display: none;
+  @include breakpoint(tablet) {
+    display: grid;
+    column-gap: 24px;
+    row-gap: 32px;
+    justify-items: center;
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   @include breakpoint(mobile) {
+    display: grid;
+    column-gap: 24px;
+    row-gap: 32px;
+    justify-items: center;
     grid-template-columns: repeat(1, minmax(0, 1fr));
   }
 }

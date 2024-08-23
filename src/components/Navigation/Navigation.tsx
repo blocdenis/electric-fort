@@ -56,7 +56,7 @@ function Navigation() {
         </div>
         {isOpen ? (
           <div className={styles.mobile_catalog_container}>
-            <CatalogList />
+            <CatalogList onItemClick={handleOpenCloseMenu} />
           </div>
         ) : null}
       </Container>

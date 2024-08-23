@@ -10,9 +10,10 @@ import { formatedString } from '@/lib/utils/formatString';
 interface catalogItemProps {
   category: Category;
   brands: Brand[] | undefined;
+  onItemClick?: () => void;
 }
 
-function CatalogItem({ category, brands }: catalogItemProps) {
+function CatalogItem({ category, brands, onItemClick }: catalogItemProps) {
   const { id, name } = category;
   const categoryBrands = brands?.filter((brand) => brand.category_id === id);
   const [isClicked, setIsClicked] = useState(false);
@@ -22,7 +23,9 @@ function CatalogItem({ category, brands }: catalogItemProps) {
   return (
     <div className={styles.category}>
       <div className={styles.category_item}>
-        <Link href={`/categories/${id}`}>{formatedString(name)}</Link>
+        <Link onClick={onItemClick} href={`/categories/${id}`}>
+          {formatedString(name)}
+        </Link>
         {categoryBrands?.length ? (
           <button onClick={handleArrowClick} id="arrowBtn">
             <ArrowCatalogIcon />
@@ -39,7 +42,7 @@ function CatalogItem({ category, brands }: catalogItemProps) {
           >
             <ul>
               {categoryBrands.map((item) => (
-                <li key={item.id}>
+                <li onClick={onItemClick} key={item.id}>
                   <Link href={`/categories/${id}/${item.id}`}>
                     {formatedString(item.name)}
                   </Link>
