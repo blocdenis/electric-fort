@@ -1,7 +1,8 @@
 @use '/src/scss/abstracts/' as *;
 
 .show_more {
-  padding: 8.5px 60px 7.5px 60px;
+  padding: 12px;
+  min-width: 250px;
   background-color: $white;
   border: 1px solid $accent-primary;
   color: black;
