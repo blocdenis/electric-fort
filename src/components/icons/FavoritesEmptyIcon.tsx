@@ -1,61 +1,108 @@
 import { SVGProps } from 'react';
 const FavoritesEmptyIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
     width="145"
     height="197"
     viewBox="0 0 145 197"
     fill="none"
+    xmlns="http://www.w3.org/2000/svg"
     {...props}
   >
     <path
+      d="M6 191.97V19.1894H42.2708V6H102.942V19.1894H139.213V191.97H6Z"
       stroke="#69AF00"
-      strokeWidth="4"
-      d="M6 191.97V19.19h36.27V6h60.672v13.19h36.271v172.78H6ZM53.48 17.21h38.25"
+      stroke-width="4"
     />
+    <path d="M53.4806 17.2109H91.7298" stroke="#69AF00" stroke-width="4" />
     <path
+      d="M27.1041 42.2715L116.792 42.2715"
       stroke="#9CEC25"
-      strokeWidth="4"
-      d="M27.104 42.272h89.688M27.104 58.098h89.688M27.104 73.926h89.688M27.104 89.752h89.688M27.104 105.579h89.688M27.104 121.407h89.688M27.104 137.234h89.688M27.104 153.062h89.688M27.104 168.889h89.688"
+      stroke-width="4"
     />
     <path
-      stroke="#69AF00"
-      strokeWidth="4"
-      d="M17.872 180.759V30.4h108.153V180.76H17.872Z"
+      d="M27.1041 58.0977L116.792 58.0977"
+      stroke="#9CEC25"
+      stroke-width="4"
     />
-    <g filter="url(#a)">
+    <path
+      d="M27.1041 73.9258L116.792 73.9258"
+      stroke="#9CEC25"
+      stroke-width="4"
+    />
+    <path
+      d="M27.1041 89.752L116.792 89.752"
+      stroke="#9CEC25"
+      stroke-width="4"
+    />
+    <path
+      d="M27.1041 105.579L116.792 105.579"
+      stroke="#9CEC25"
+      stroke-width="4"
+    />
+    <path
+      d="M27.1041 121.407L116.792 121.407"
+      stroke="#9CEC25"
+      stroke-width="4"
+    />
+    <path
+      d="M27.1041 137.234L116.792 137.234"
+      stroke="#9CEC25"
+      stroke-width="4"
+    />
+    <path
+      d="M27.1041 153.062L116.792 153.062"
+      stroke="#9CEC25"
+      stroke-width="4"
+    />
+    <path
+      d="M27.1041 168.889L116.792 168.889"
+      stroke="#9CEC25"
+      stroke-width="4"
+    />
+    <path
+      d="M17.8718 180.759V30.4004H126.025V180.759H17.8718Z"
+      stroke="#69AF00"
+      stroke-width="4"
+    />
+    <g filter="url(#filter0_d_726_27243)">
       <path
+        d="M87.742 67.9912C81.8899 67.9912 76.2732 70.7858 72.6072 75.1674C68.9412 70.7858 63.3245 67.9912 57.4724 67.9912C47.1134 67.9912 38.9743 76.3059 38.9743 86.9667C38.9743 99.9735 50.4095 110.634 67.7304 126.746L72.6072 131.3L77.484 126.746C94.8049 110.634 106.24 99.9735 106.24 86.9667C106.24 76.3059 98.101 67.9912 87.742 67.9912Z"
         fill="#FFE500"
-        d="M87.742 67.991c-5.852 0-11.469 2.795-15.135 7.176-3.666-4.381-9.282-7.176-15.135-7.176-10.359 0-18.498 8.315-18.498 18.976 0 13.007 11.436 23.667 28.756 39.779l4.877 4.554 4.877-4.554c17.32-16.112 28.756-26.772 28.756-39.78 0-10.66-8.139-18.975-18.498-18.975Z"
       />
     </g>
     <defs>
       <filter
-        id="a"
-        width="69.266"
-        height="65.309"
-        x="37.974"
-        y="67.991"
-        colorInterpolationFilters="sRGB"
+        id="filter0_d_726_27243"
+        x="37.9743"
+        y="67.9912"
+        width="69.2658"
+        height="65.3086"
         filterUnits="userSpaceOnUse"
+        color-interpolation-filters="sRGB"
       >
-        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feFlood flood-opacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
-          result="hardAlpha"
+          type="matrix"
           values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+          result="hardAlpha"
         />
         <feOffset dy="1" />
-        <feGaussianBlur stdDeviation=".5" />
+        <feGaussianBlur stdDeviation="0.5" />
         <feComposite in2="hardAlpha" operator="out" />
-        <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
-        <feBlend
-          in2="BackgroundImageFix"
-          result="effect1_dropShadow_726_27278"
+        <feColorMatrix
+          type="matrix"
+          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
         />
         <feBlend
+          mode="normal"
+          in2="BackgroundImageFix"
+          result="effect1_dropShadow_726_27243"
+        />
+        <feBlend
+          mode="normal"
           in="SourceGraphic"
-          in2="effect1_dropShadow_726_27278"
+          in2="effect1_dropShadow_726_27243"
           result="shape"
         />
       </filter>
