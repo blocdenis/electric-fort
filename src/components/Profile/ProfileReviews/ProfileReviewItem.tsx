@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import notFoundImage from '../../../public/notFound.jpg';
+import notFoundImage from '../../../../public/notFound.jpg';
 import { useQuery } from '@tanstack/react-query';
 import {
   ProductRespond,

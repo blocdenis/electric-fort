@@ -1,6 +1,6 @@
 import React from 'react';
 import ProfileReviewItem from './ProfileReviewItem';
-import ShowMoreButton from '../Buttons/ShowMoreButton/ShowMoreButton';
+import ShowMoreButton from '../../Buttons/ShowMoreButton/ShowMoreButton';
 import { useQuery } from '@tanstack/react-query';
 import { getUserReviews } from '@/services/api/api';
 import { useFilters } from '@/context/FiltersContext';

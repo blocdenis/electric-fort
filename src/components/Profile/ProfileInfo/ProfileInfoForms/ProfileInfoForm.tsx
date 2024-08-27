@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SecondaryButton from '../Buttons/SecondaryButton';
+import SecondaryButton from '../../../Buttons/SecondaryButton';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { UserActivities, getUserInfo, updateUser } from '@/services/api/api';
 import { useForm } from 'react-hook-form';

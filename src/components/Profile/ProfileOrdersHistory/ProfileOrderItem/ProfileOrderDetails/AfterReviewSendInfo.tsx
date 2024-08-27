@@ -1,6 +1,4 @@
-import Image from 'next/image';
-import React from 'react';
-import Success from '../icons/Success';
+import Success from '@/components/icons/Success';
 
 function AfterReviewSendInfo() {
   return (

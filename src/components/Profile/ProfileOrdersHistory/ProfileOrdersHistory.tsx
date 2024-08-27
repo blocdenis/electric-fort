@@ -1,9 +1,9 @@
 import React from 'react';
-import ProfileOrderItem from './ProfileOrderItem';
+import ProfileOrderItem from './ProfileOrderItem/ProfileOrderItem';
 import { useQuery } from '@tanstack/react-query';
 import { getUserOrders } from '@/services/api/api';
 import { useFilters } from '@/context/FiltersContext';
-import ShowMoreButton from '../Buttons/ShowMoreButton/ShowMoreButton';
+import ShowMoreButton from '../../Buttons/ShowMoreButton/ShowMoreButton';
 
 function ProfileOrdersHistory() {
   const { urlPage } = useFilters();

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import SecondaryButton from '../Buttons/SecondaryButton';
+import SecondaryButton from '../../../Buttons/SecondaryButton';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateUser } from '@/services/api/api';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { changePasswordZodSchema } from '@/lib/schemas/validationZodSchemas';
 import classNames from 'classnames';
-import CloseEyeIcon from '../icons/CloseEyeIcon';
-import EyeIcon from '../icons/EyeIcon';
+import CloseEyeIcon from '../../../icons/CloseEyeIcon';
+import EyeIcon from '../../../icons/EyeIcon';
 
 interface ChangePasswordFormProps {
   handleCancelClick: () => void;
