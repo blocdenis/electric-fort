@@ -23,6 +23,7 @@ type FavoritesProviderProps = {
 type FavoritesContext = {
   openCloseFavorites: () => void;
   openCloseAuth: () => void;
+  openCloseRegister: () => void;
   deleteFromFavorites: UseMutationResult<string, Error, number, unknown>;
   addToFavorites: UseMutationResult<string, Error, number, unknown>;
   favoritesItems: Product[] | undefined;
@@ -40,6 +41,7 @@ export function useFavorites() {
 export function FavoritesProvider({ children }: FavoritesProviderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
   const { data: favoritesItems, isPending } = useQuery({
     queryKey: ['favorites'],
@@ -72,6 +74,7 @@ export function FavoritesProvider({ children }: FavoritesProviderProps) {
 
   const openCloseFavorites = () => setIsOpen((prevVal) => !prevVal);
   const openCloseAuth = () => setIsAuthOpen((prevVal) => !prevVal);
+  const openCloseRegister = () => setIsRegisterOpen((prevVal) => !prevVal);
 
   const favoritesQuantity = favoritesItems?.length ? favoritesItems.length : 0;
 
@@ -82,6 +85,7 @@ export function FavoritesProvider({ children }: FavoritesProviderProps) {
         deleteFromFavorites,
         openCloseFavorites,
         openCloseAuth,
+        openCloseRegister,
         favoritesItems,
         isPending,
         favoritesQuantity,
@@ -92,7 +96,18 @@ export function FavoritesProvider({ children }: FavoritesProviderProps) {
       <Popup isOpen={isOpen} onClick={openCloseFavorites}>
         <Favorites />
       </Popup>
-      {isAuthOpen && <AuthModal onClose={openCloseAuth}></AuthModal>}
+      {isAuthOpen && (
+        <AuthModal
+          isRegistrationForm={false}
+          onClose={openCloseAuth}
+        ></AuthModal>
+      )}
+      {isRegisterOpen && (
+        <AuthModal
+          isRegistrationForm={true}
+          onClose={openCloseRegister}
+        ></AuthModal>
+      )}
     </FavoritesContext.Provider>
   );
 }

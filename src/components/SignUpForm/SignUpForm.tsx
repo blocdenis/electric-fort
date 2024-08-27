@@ -42,9 +42,15 @@ const loginUser = async (data: LoginData) => {
   return response.data;
 };
 
-export default function SignUpForm({ closeModal }: { closeModal: () => void }) {
+export default function SignUpForm({
+  closeModal,
+  isRegistrationForm,
+}: {
+  closeModal: () => void;
+  isRegistrationForm: boolean;
+}) {
   const { setIsAuthenticated } = useAuth();
-  const [isRegistration, setIsRegistration] = useState(false);
+  const [isRegistration, setIsRegistration] = useState(isRegistrationForm);
   const [passwordShown, setPasswordShown] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -86,12 +92,12 @@ export default function SignUpForm({ closeModal }: { closeModal: () => void }) {
         setIsAuthenticated(true);
       }
       reset();
+      closeModal();
     } catch (error) {
       setError('An error occurred. Please try again.');
       console.error('Error:', error);
     } finally {
       setLoading(false);
-      closeModal();
     }
   };
 

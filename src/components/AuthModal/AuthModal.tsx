@@ -6,10 +6,11 @@ import { CrossIcon } from '../icons';
 
 interface AuthModalProps {
   onClose: () => void;
+  isRegistrationForm: boolean;
   id?: string;
 }
 
-const AuthModal: FC<AuthModalProps> = ({ onClose, id }) => {
+const AuthModal: FC<AuthModalProps> = ({ onClose, id, isRegistrationForm }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,7 +37,10 @@ const AuthModal: FC<AuthModalProps> = ({ onClose, id }) => {
           <CrossIcon />
         </span>
         <LogoIcon />
-        <SignUpForm closeModal={onClose} />
+        <SignUpForm
+          isRegistrationForm={isRegistrationForm}
+          closeModal={onClose}
+        />
       </div>
     </div>
   );

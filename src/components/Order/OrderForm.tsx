@@ -438,7 +438,9 @@ const OrderForm = () => {
         </Link>
       </div>
 
-      {isAuthOpen && <AuthModal onClose={closeModal} />}
+      {isAuthOpen && (
+        <AuthModal isRegistrationForm={false} onClose={closeModal} />
+      )}
     </form>
   );
 };
