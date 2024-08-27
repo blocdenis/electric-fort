@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SecondaryButton from '../Buttons/SecondaryButton';
+import SecondaryButton from '../../../Buttons/SecondaryButton';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { UserActivities, getUserInfo, updateUser } from '@/services/api/api';
 import { useForm } from 'react-hook-form';
@@ -85,7 +85,6 @@ function ProfileInfoForm({ handleCancelClick }: ProfileInfoFormProps) {
           detail: [{ input: string; loc: string[]; msg: string; type: string }];
         } = JSON.parse(error.message);
         const msg = err.detail[0].msg;
-        // console.log(msg);
         toast.error(msg);
       });
   }

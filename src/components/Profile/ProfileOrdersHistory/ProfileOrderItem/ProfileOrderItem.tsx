@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import styles from './ProfileOrderItem.module.scss';
-import { ArrowCatalogIcon } from '../icons';
+import { ArrowCatalogIcon } from '../../../icons';
 import { useState } from 'react';
-import ProfileOrderDetails from './ProfileOrderDetails';
+import ProfileOrderDetails from './ProfileOrderDetails/ProfileOrderDetails';
 import { UserOrder } from '@/services/api/api';
 import { formatDate } from '@/lib/utils/formatDate';
 

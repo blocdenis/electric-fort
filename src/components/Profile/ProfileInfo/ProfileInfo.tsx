@@ -1,13 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { EditIcon } from '../icons';
+import { EditIcon } from '../../icons';
 import { getUserInfo, updateUser } from '@/services/api/api';
-import SecondaryButton from '../Buttons/SecondaryButton';
+import SecondaryButton from '../../Buttons/SecondaryButton';
 import { useState } from 'react';
-import ChangePasswordForm from './ChangePasswordForm';
+import ChangePasswordForm from './ProfileInfoForms/ChangePasswordForm';
 import classNames from 'classnames';
 import styles from './ProfileInfo.module.scss';
-import ProfileInfoForm from './ProfileInfoForm';
-import { ToastContainer } from 'react-toastify';
+import ProfileInfoForm from './ProfileInfoForms/ProfileInfoForm';
+import Loading from '@/components/Loading/Loading';
 
 function ProfileInfo() {
   const { data: user, isFetching } = useQuery({
@@ -28,7 +28,7 @@ function ProfileInfo() {
   if (!user) {
     return (
       <div className="border border-primary_green py-10 pr-8 pl-12 h-full">
-        Loading
+        <Loading />
       </div>
     );
   }

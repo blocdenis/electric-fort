@@ -1,11 +1,11 @@
 'use client';
-import ProfileInfo from './ProfileInfo';
+import ProfileInfo from './ProfileInfo/ProfileInfo';
 import classNames from 'classnames';
 import styles from './Profile.module.scss';
 import { useState } from 'react';
-import ProfileReviews from './ProfileReviews';
+import ProfileReviews from './ProfileReviews/ProfileReviews';
 import Link from 'next/link';
-import ProfileOrdersHistory from './ProfileOrdersHistory';
+import ProfileOrdersHistory from './ProfileOrdersHistory/ProfileOrdersHistory';
 import { useQuery } from '@tanstack/react-query';
 import { getUserInfo } from '@/services/api/api';
 import { ToastContainer } from 'react-toastify';

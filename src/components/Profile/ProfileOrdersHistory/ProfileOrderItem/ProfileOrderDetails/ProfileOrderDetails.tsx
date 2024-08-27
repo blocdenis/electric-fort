@@ -1,10 +1,10 @@
 import Image from 'next/image';
-import styles from './ProfileOrderItem.module.scss';
-import Button from '../Buttons/Button/Button';
+import styles from './../ProfileOrderItem.module.scss';
+import Button from '../../../../Buttons/Button/Button';
 import { OrderProductItem, UserOrderStatus } from '@/services/api/api';
-import ReviewIcon from '../icons/ReviewIcon';
-import notFoundImage from '../../../public/notFound.jpg';
-import Popup from '../Popup/Popup';
+import ReviewIcon from '../../../../icons/ReviewIcon';
+import notFoundImage from '../../../../../../public/notFound.jpg';
+import Popup from '../../../../Popup/Popup';
 import ReviewForm from './ReviewForm/ReviewForm';
 import { useState } from 'react';
 import AfterReviewSendInfo from './AfterReviewSendInfo';

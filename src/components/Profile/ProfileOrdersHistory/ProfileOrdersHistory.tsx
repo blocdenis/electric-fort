@@ -1,9 +1,10 @@
 import React from 'react';
-import ProfileOrderItem from './ProfileOrderItem';
+import ProfileOrderItem from './ProfileOrderItem/ProfileOrderItem';
 import { useQuery } from '@tanstack/react-query';
 import { getUserOrders } from '@/services/api/api';
 import { useFilters } from '@/context/FiltersContext';
-import ShowMoreButton from '../Buttons/ShowMoreButton/ShowMoreButton';
+import ShowMoreButton from '../../Buttons/ShowMoreButton/ShowMoreButton';
+import Loading from '@/components/Loading/Loading';
 
 function ProfileOrdersHistory() {
   const { urlPage } = useFilters();
@@ -20,11 +21,7 @@ function ProfileOrdersHistory() {
   const orders = data?.data;
 
   if (!data) {
-    return (
-      <div className="h-full flex flex-col items-center justify-center gap-5 laptop:px-[20px] laptop:py-[20px]">
-        <p className="w-full text-center text-lg">Loading...</p>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (

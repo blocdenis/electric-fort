@@ -9,13 +9,13 @@ const regexPassword =
 export const userInfoZodSchema = z.object({
   last_name: z
     .string()
-    .max(100)
+    .max(100, { message: 'Поле може міститити не більше 100 символів' })
     .regex(regexName, { message: 'Поле має містити тільки літери' })
     .or(z.string().max(0))
     .nullish(),
   first_name: z
     .string()
-    .max(100)
+    .max(100, { message: 'Поле може міститити не більше 100 символів' })
     .regex(regexName, { message: 'Поле має містити тільки літери' })
     .or(z.string().max(0))
     .nullish(),
