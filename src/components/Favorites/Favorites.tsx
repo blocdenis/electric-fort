@@ -5,17 +5,25 @@ import FavoritesList from './FavoritesList';
 import FavoritesEmpty from './FavoritesEmpty';
 import { useFavorites } from '@/context/FavoritesContext';
 import { useAuth } from '@/context/AuthContext';
-import { products } from '@/lib/db/products';
 
 function Favorites() {
   const { isAuthenticated, isLoading } = useAuth();
 
-  const { favoritesItems, isPending, openCloseFavorites, openCloseAuth } =
-    useFavorites();
+  const {
+    favoritesItems,
+    isPending,
+    openCloseFavorites,
+    openCloseAuth,
+    openCloseRegister,
+  } = useFavorites();
 
-  function handleEnterRegisterClick() {
+  function handleEnterLoginClick() {
     openCloseFavorites();
     openCloseAuth();
+  }
+  function handleEnterRegisterClick() {
+    openCloseFavorites();
+    openCloseRegister();
   }
 
   return (
@@ -33,7 +41,7 @@ function Favorites() {
           <div className={styles.warning_buttons_block}>
             <Button
               className="w-[281px] py-[11px]"
-              onClick={handleEnterRegisterClick}
+              onClick={handleEnterLoginClick}
             >
               Увійти
             </Button>

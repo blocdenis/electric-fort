@@ -222,7 +222,9 @@ const Header = () => {
       >
         <BurgerMenu isOpen={isMenuOpen} onCloseClick={handleMenuToggle} />
       </Backdrop>
-      {isAuthOpen && <AuthModal id="auth" onClose={closeModal} />}
+      {isAuthOpen && (
+        <AuthModal isRegistrationForm={false} id="auth" onClose={closeModal} />
+      )}
     </header>
   );
 };
