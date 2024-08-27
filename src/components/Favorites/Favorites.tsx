@@ -18,11 +18,11 @@ function Favorites() {
   } = useFavorites();
 
   function handleEnterLoginClick() {
-    openCloseFavorites();
+    // openCloseFavorites();
     openCloseAuth();
   }
   function handleEnterRegisterClick() {
-    openCloseFavorites();
+    // openCloseFavorites();
     openCloseRegister();
   }
 
