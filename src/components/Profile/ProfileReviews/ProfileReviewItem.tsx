@@ -8,6 +8,7 @@ import {
 } from '@/services/api/api';
 import { formatDate } from '@/lib/utils/formatDate';
 import Link from 'next/link';
+import Loading from '@/components/Loading/Loading';
 
 interface ProfileReviewItemProps {
   review: ProductRespond;
@@ -28,8 +29,21 @@ function ProfileReviewItem({ review }: ProfileReviewItemProps) {
     staleTime: 10 * 1000,
   });
 
-  if (!data) {
-    return <p>Такого товару не знайдено</p>;
+  if (!user || !data) {
+    return (
+      <div className=" mb-[10px] pb-8 border-b laptop:mb-6">
+        <div className="flex justify-between items-start mb-4">
+          <span className=" bg-gray-300 w-44 h-6 animate-pulse"></span>
+          <span className=" text-xs bg-gray-300 w-14 h-4 animate-pulse "></span>
+        </div>
+        <div className="flex gap-2 laptop:gap-3 items-center mb-4">
+          <div className=" relative bg-gray-300 animate-pulse w-[66px] h-[80px] laptop:w-[56px] laptop:h-[69px]"></div>
+
+          <span className="bg-gray-300 w-[57vw] h-10 text-sm"></span>
+        </div>
+        <p className=" bg-gray-300 w-full h-10 text-sm"></p>
+      </div>
+    );
   }
 
   const [product] = data;

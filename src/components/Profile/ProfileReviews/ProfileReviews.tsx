@@ -4,6 +4,7 @@ import ShowMoreButton from '../../Buttons/ShowMoreButton/ShowMoreButton';
 import { useQuery } from '@tanstack/react-query';
 import { getUserReviews } from '@/services/api/api';
 import { useFilters } from '@/context/FiltersContext';
+import Loading from '@/components/Loading/Loading';
 
 function ProfileReviews() {
   const { urlPage } = useFilters();
@@ -11,7 +12,7 @@ function ProfileReviews() {
   const itemsPerPage = 3;
   const pageSize = Number(urlPage) * itemsPerPage; //for fetching data
 
-  const { data } = useQuery({
+  const { data, isFetching } = useQuery({
     queryKey: ['userReviews', page, pageSize],
     queryFn: () => getUserReviews(Number(page), Number(pageSize)),
     staleTime: 10 * 1000,
@@ -20,11 +21,7 @@ function ProfileReviews() {
   const userReviews = data?.data;
 
   if (!data) {
-    return (
-      <div className="h-full flex flex-col items-center justify-center gap-5 laptop:px-[20px] laptop:py-[20px]">
-        <p className="w-full text-center text-lg">Loading...</p>
-      </div>
-    );
+    return <Loading />;
   }
 
   return (
@@ -41,7 +38,7 @@ function ProfileReviews() {
 
           {data?.count > pageSize ? (
             <div className="flex justify-center">
-              <ShowMoreButton className=" mx-auto" />
+              <ShowMoreButton isDisabled={isFetching} className=" mx-auto" />
             </div>
           ) : null}
         </div>
