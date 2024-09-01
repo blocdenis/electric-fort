@@ -9,8 +9,9 @@ import ContentContainer from '@/components/Container/ContentContainer';
 import getQueryClient from '@/lib/utils/getQueryClient';
 import { getAllBrands, getAllCategories } from '@/services/api/api';
 import { dehydrate } from '@tanstack/react-query';
+import { unstable_setRequestLocale } from 'next-intl/server';
 
-async function Page() {
+async function Page({ params: { locale } }: { params: { locale: string } }) {
   const links = [{ name: 'Категорії' }];
   const queryClient = getQueryClient();
 
@@ -27,7 +28,7 @@ async function Page() {
   });
 
   const dehydratedState = dehydrate(queryClient);
-
+  unstable_setRequestLocale(locale);
   return (
     <Container className="flex">
       <SidebarWithAttachments showFilters={false} />

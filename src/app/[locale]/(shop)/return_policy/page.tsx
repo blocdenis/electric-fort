@@ -7,11 +7,12 @@ import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments'
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import Text from '@/components/Text/Text';
 import { useTranslations } from 'next-intl';
+import { unstable_setRequestLocale } from 'next-intl/server';
 
-function Page() {
+function Page({ params: { locale } }: { params: { locale: string } }) {
   const t = useTranslations('return_exchange');
   const breadcrumbsItems = [{ name: t('title') }];
-
+  unstable_setRequestLocale(locale);
   return (
     <Container className="flex">
       <SidebarWithAttachments showFilters={false} />

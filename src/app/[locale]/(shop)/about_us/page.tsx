@@ -8,9 +8,10 @@ import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments'
 import Text from '@/components/Text/Text';
 import CheckMarkIcon from '@/components/icons/CheckMarkIcon';
 import { useTranslations } from 'next-intl';
+import { unstable_setRequestLocale } from 'next-intl/server';
 import React from 'react';
 
-function Page() {
+function Page({ params: { locale } }: { params: { locale: string } }) {
   const t = useTranslations('AboutUs');
   const links = [{ name: t('breadcrumbs') }];
   const electricalGoodsTypes = [
@@ -26,6 +27,7 @@ function Page() {
     'універсальний набір інструментів для електриків-монтажників;',
     'металевий лоток, кабель-канал, труба гофрована.',
   ];
+  unstable_setRequestLocale(locale);
   return (
     <Container className="flex">
       <SidebarWithAttachments showFilters={false} />
