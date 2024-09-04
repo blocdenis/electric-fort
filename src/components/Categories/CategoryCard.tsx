@@ -44,7 +44,7 @@ function CategoryCard({
           <Image
             width={140}
             height={140}
-            src={image ? image[1] : categotyImg}
+            src={image ? `data:${image[0]}; base64, ${image[1]}` : categotyImg}
             alt="product-category-image"
           ></Image>
         </div>
