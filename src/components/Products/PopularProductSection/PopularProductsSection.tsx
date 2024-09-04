@@ -68,9 +68,6 @@ const PopularProductsSection: React.FC<PopularProductsSectionProps> = ({
               640: {
                 slidesPerView: 2,
               },
-              970: {
-                slidesPerView: 3,
-              },
               1024: {
                 slidesPerView: 2,
               },
