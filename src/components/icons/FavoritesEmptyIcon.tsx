@@ -11,58 +11,54 @@ const FavoritesEmptyIcon = (props: SVGProps<SVGSVGElement>) => (
     <path
       d="M6 191.97V19.1894H42.2708V6H102.942V19.1894H139.213V191.97H6Z"
       stroke="#69AF00"
-      stroke-width="4"
+      strokeWidth="4"
     />
-    <path d="M53.4806 17.2109H91.7298" stroke="#69AF00" stroke-width="4" />
+    <path d="M53.4806 17.2109H91.7298" stroke="#69AF00" strokeWidth="4" />
     <path
       d="M27.1041 42.2715L116.792 42.2715"
       stroke="#9CEC25"
-      stroke-width="4"
+      strokeWidth="4"
     />
     <path
       d="M27.1041 58.0977L116.792 58.0977"
       stroke="#9CEC25"
-      stroke-width="4"
+      strokeWidth="4"
     />
     <path
       d="M27.1041 73.9258L116.792 73.9258"
       stroke="#9CEC25"
-      stroke-width="4"
+      strokeWidth="4"
     />
-    <path
-      d="M27.1041 89.752L116.792 89.752"
-      stroke="#9CEC25"
-      stroke-width="4"
-    />
+    <path d="M27.1041 89.752L116.792 89.752" stroke="#9CEC25" strokeWidth="4" />
     <path
       d="M27.1041 105.579L116.792 105.579"
       stroke="#9CEC25"
-      stroke-width="4"
+      strokeWidth="4"
     />
     <path
       d="M27.1041 121.407L116.792 121.407"
       stroke="#9CEC25"
-      stroke-width="4"
+      strokeWidth="4"
     />
     <path
       d="M27.1041 137.234L116.792 137.234"
       stroke="#9CEC25"
-      stroke-width="4"
+      strokeWidth="4"
     />
     <path
       d="M27.1041 153.062L116.792 153.062"
       stroke="#9CEC25"
-      stroke-width="4"
+      strokeWidth="4"
     />
     <path
       d="M27.1041 168.889L116.792 168.889"
       stroke="#9CEC25"
-      stroke-width="4"
+      strokeWidth="4"
     />
     <path
       d="M17.8718 180.759V30.4004H126.025V180.759H17.8718Z"
       stroke="#69AF00"
-      stroke-width="4"
+      strokeWidth="4"
     />
     <g filter="url(#filter0_d_726_27243)">
       <path
@@ -78,9 +74,9 @@ const FavoritesEmptyIcon = (props: SVGProps<SVGSVGElement>) => (
         width="69.2658"
         height="65.3086"
         filterUnits="userSpaceOnUse"
-        color-interpolation-filters="sRGB"
+        colorInterpolationFilters="sRGB"
       >
-        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           type="matrix"

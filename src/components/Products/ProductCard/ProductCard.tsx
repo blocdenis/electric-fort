@@ -75,7 +75,7 @@ function ProductCard({
                 : notFoundImage
             }
             alt={`${name} image`}
-            objectFit="contain"
+            style={{ objectFit: 'contain' }}
             fill={true}
             sizes="100%"
           />

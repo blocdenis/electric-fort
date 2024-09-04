@@ -114,7 +114,7 @@ function CategoriesProductsList({
     ? Math.ceil(data.count / itemsPerPage)
     : 1;
 
-  console.log('Hello from categories Products List');
+  // console.log('Hello from categories Products List');
 
   return (
     <>
