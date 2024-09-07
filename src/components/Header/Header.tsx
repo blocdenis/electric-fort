@@ -70,7 +70,7 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   return (
-    <header className="bg-backgroung">
+    <header className="bg-backgroung sticky top-[-213px] z-[11] tablet:top-[-165px] laptop:top-0 ">
       <div className={styles.header}>
         <div className={styles.header_top}>
           <Container>

@@ -10,15 +10,17 @@ import { Brand } from '@/lib/types/types';
 function SidebarWithAttachments({ showFilters }: { showFilters: boolean }) {
   return (
     <Sidebar>
-      {showFilters && <Filters />}
-      <CatalogList />
-      <div className="flex flex-col gap-4  mt-8">
-        <h3 className=" mb-4">Контакти</h3>
-        <ContactText textToCopy="+38(066) 459-88-87" color="white" />
-        <ContactText textToCopy="+38(068) 459-88-87" color="white" />
-        <ContactContent color="white" />
+      <div className=" laptop:sticky laptop:top-[257px]">
+        {showFilters && <Filters />}
+        <CatalogList />
+        <div className="flex flex-col gap-4  mt-8">
+          <h3 className=" mb-4">Контакти</h3>
+          <ContactText textToCopy="+38(066) 459-88-87" color="white" />
+          <ContactText textToCopy="+38(068) 459-88-87" color="white" />
+          <ContactContent color="white" />
+        </div>
+        <Map className=" mt-6 h-[183px] w-[304px] bg-gray-100" />
       </div>
-      <Map className=" mt-6 h-[183px] w-[304px] bg-gray-100" />
     </Sidebar>
   );
 }
