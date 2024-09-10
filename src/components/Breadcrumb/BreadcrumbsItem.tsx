@@ -11,7 +11,7 @@ function BreadcrumbsItem({ name, href, ...props }: BreadcrambsItemProps) {
       {name}
     </Link>
   ) : (
-    <span>{name}</span>
+    <span title={name}>{name}</span>
   );
 }
 
