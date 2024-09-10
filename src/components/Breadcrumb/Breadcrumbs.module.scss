@@ -1,6 +1,9 @@
 @use '../../scss/abstracts/' as *;
 .container {
-  width: fit-content;
+  width: 100%;
+  @include breakpoint(tablet) {
+    width: fit-content;
+  }
   display: flex;
   color: #acacac;
   font: $regular14;
@@ -28,6 +31,7 @@
   padding: 0 12px;
   width: fit-content;
   text-wrap: nowrap;
+  white-space: nowrap;
   &:last-child {
     overflow: hidden;
     text-overflow: ellipsis;
