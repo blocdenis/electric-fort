@@ -58,6 +58,7 @@ const HeroSlider: FC<CarouselProps> = ({ data }) => {
             width={400}
             height={600}
             className="hero-image"
+            priority
           />
         </div>
       ))}
