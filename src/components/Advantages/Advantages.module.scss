@@ -65,6 +65,7 @@
 }
 
 .item {
+  z-index: -1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -94,6 +95,7 @@
 }
 
 .advantages {
+  z-index: -1;
   display: flex;
   width: 27vw;
   height: 481px;
