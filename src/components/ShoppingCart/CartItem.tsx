@@ -111,6 +111,7 @@ export function CartItem({ id, close }: CartItemProps) {
             alt={`${cartItem?.name} image`}
             width={80}
             height={98}
+            style={{ objectFit: 'contain' }}
             priority
           />
         </Link>
