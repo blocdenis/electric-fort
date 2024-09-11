@@ -1,6 +1,7 @@
 @use '../../../scss/abstracts/' as *;
 
 .section_heading {
+  z-index: -1;
   font: $bold36;
   height: fit-content;
   display: flex;
