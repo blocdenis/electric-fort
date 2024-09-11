@@ -64,7 +64,7 @@ function ProductCard({
     <div className=" inline-block bg-white w-[286px] h-[400px] px-4 pt-4 pb-6 shadow-[0_1px_1px_0_rgba(0,0,0,0.25)]">
       <div className=" flex justify-center w-[254px] h-[176px] overflow-hidden mb-4 ">
         <Link
-          className=" w-[254px] h-[176px]"
+          className=" relative w-[254px] h-[176px]"
           onClick={onCardClick}
           href={productPageLink}
         >
@@ -76,13 +76,8 @@ function ProductCard({
                 : notFoundImage
             }
             alt={`${name} image`}
-            style={{
-              objectFit: 'contain',
-              maxHeight: '100%',
-              maxWidth: '100%',
-            }}
-            width={254}
-            height={254}
+            style={{ objectFit: 'contain' }}
+            fill={true}
             sizes="100%"
           />
         </Link>
