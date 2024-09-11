@@ -9,6 +9,7 @@ import CarIcon from '../icons/CarIcon';
 import ImageSlider from '../ImageSlider/ImageSlider';
 import { Product } from '@/lib/types/Product.type';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
+import { formatPriceUAH } from '@/services/formatCurrency';
 
 const ProductDescription = ({ product }: { product: Product }) => {
   const { isFavorite, addToFavorites, deleteFromFavorites } = useFavorites();
@@ -43,7 +44,7 @@ const ProductDescription = ({ product }: { product: Product }) => {
         <div className="article">код:{product.article}</div>
         <div className="price-section">
           <div>
-            <span className="price">{product.price}</span>грн/
+            <span className="price">{formatPriceUAH(product.price)}</span>грн/
             {product.unit_of_measurement}
           </div>
           <div className=" flex justify-between items-center ">

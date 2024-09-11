@@ -13,6 +13,7 @@ import SecondaryButton from '@/components/Buttons/SecondaryButton';
 import { useShoppingCart } from '@/context/ShoppingCartContext';
 import { useFavorites } from '@/context/FavoritesContext';
 import { useEffect, useState } from 'react';
+import { formatPriceUAH } from '@/services/formatCurrency';
 
 interface ProductCardProps extends Product {
   onCardClick?: () => void;
@@ -91,7 +92,7 @@ function ProductCard({
           </p>
         </Link>
         <div className="flex items-center justify-start ">
-          <p className={styles.product_price}>{price}</p>
+          <p className={styles.product_price}>{formatPriceUAH(price)}</p>
           <span className={styles.product_price_measurement_unit}>грн/</span>
           <p
             className={styles.product_price_measurement_unit}
