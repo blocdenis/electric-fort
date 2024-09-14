@@ -148,7 +148,8 @@
   z-index: 5;
 
   @include breakpoint(desktop) {
-    &:hover {
+    &:hover,
+    &:focus-within {
       & .subcategory {
         color: $white;
         display: block;
