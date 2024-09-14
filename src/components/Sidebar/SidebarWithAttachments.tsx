@@ -10,9 +10,7 @@ import { Brand } from '@/lib/types/types';
 function SidebarWithAttachments({ showFilters }: { showFilters: boolean }) {
   return (
     <Sidebar>
-      <div
-      // className=" laptop:sticky laptop:top-[257px]"
-      >
+      <div className=" laptop:sticky laptop:top-[257px]">
         {showFilters && <Filters />}
         <CatalogList />
         <div className="flex flex-col gap-4  mt-8">

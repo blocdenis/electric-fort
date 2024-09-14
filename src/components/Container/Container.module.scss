@@ -4,6 +4,14 @@
   padding: 0 64px;
   margin: 0 auto;
   max-width: 1440px;
+  @include breakpoint(desktop) {
+    & aside:hover,
+    aside:focus-within {
+      & ~ .content_container {
+        z-index: -1;
+      }
+    }
+  }
 
   @media screen and (min-width: 1024px) and (max-width: 1439px) {
     padding: 0px 32px;
