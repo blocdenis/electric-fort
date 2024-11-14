@@ -50,9 +50,11 @@ function CategoryCard({
         </div>
         <div className="px-[10px]">
           <h3
+            title={name}
             className={classNames(
               ' text-black text-center',
-              styles.category_title
+              styles.category_title,
+              styles.truncated_text
             )}
           >
             {name}
