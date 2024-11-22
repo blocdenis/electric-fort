@@ -5,12 +5,12 @@ import ContactText from '../Contact/ContactText/ContactText';
 import ContactContent from '../Contact/ContactContent/ContactContent';
 import Map from '../Map/Map';
 import Filters from '../Filters/Filters';
-import { Brand } from '@/lib/types/types';
 
 function SidebarWithAttachments({ showFilters }: { showFilters: boolean }) {
   return (
     <Sidebar>
-      <div className=" laptop:sticky laptop:top-[257px]">
+      {/* <div className=" laptop:sticky laptop:top-[257px]"> */}
+      <div>
         {showFilters && <Filters />}
         <CatalogList />
         <div className="flex flex-col gap-4  mt-8">
