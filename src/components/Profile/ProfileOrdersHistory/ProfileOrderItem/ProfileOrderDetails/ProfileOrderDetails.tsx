@@ -33,7 +33,7 @@ function ProfileOrderDetails({
     onCloseOpenReview();
     onCloseOpenMessageAfterReview();
   };
-  console.log(orderStatus);
+  // console.log(orderStatus);
 
   return (
     <div className={styles.order_details}>

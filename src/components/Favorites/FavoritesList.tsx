@@ -20,7 +20,7 @@ function FavoritesList({ products }: FavoritesListProps) {
   const pageSize_mobile: number = page * itemsPerPage_mobile;
   const pageSize_desktop: number = page * itemsPerPage_desktop;
 
-  console.log(pageSize_desktop);
+  // console.log(pageSize_desktop);
 
   if (!products) {
     return <Loading />;
