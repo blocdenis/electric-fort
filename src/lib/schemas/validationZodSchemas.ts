@@ -97,3 +97,10 @@ export const changePasswordZodSchema = z
     message: 'Пароль має співпадати',
     path: ['repeat_new_password'],
   });
+
+export const reviewTextZodSchema = z.object({
+  review: z
+    .string()
+    .min(1, { message: 'Відгук має містити не меньше одного символа' })
+    .max(4999, { message: 'Максимальна кількість символів 4999' }),
+});
