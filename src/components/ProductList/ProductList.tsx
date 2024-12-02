@@ -114,8 +114,10 @@ const ProductsList: React.FC<ProductsListProps> = ({
         <SectionTitle title={'Результати пошуку'} />
       </div>
 
-      <span className={styles.counter}>Знайдено {products?.count} товарів</span>
-      <div className="px-6">
+      <div className="px-6 flex flex-col gap-3 tablet:flex-row tablet:justify-between">
+        <span className={styles.counter}>
+          Знайдено {products?.count} товарів
+        </span>
         <Sort />
       </div>
 

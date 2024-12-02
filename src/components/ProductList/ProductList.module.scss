@@ -10,9 +10,9 @@
   }
 }
 .counter {
+  font: $regular14;
+  color: #acacac;
   @include breakpoint(tablet) {
-    font: $regular14;
-    color: #acacac;
-    padding-left: 40px;
+    padding-left: 16px;
   }
 }
