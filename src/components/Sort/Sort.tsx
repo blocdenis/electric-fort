@@ -39,12 +39,12 @@ function Sort({ isDisable }: SortProps) {
 
   useEffect(() => {
     if (sort !== '') {
-      console.log('sort use effect add');
+      // console.log('sort use effect add');
       router.push(pathname + '?' + createQueryString('sort', `${sort}`), {
         scroll: false,
       });
     } else {
-      console.log('sort use effect delete');
+      // console.log('sort use effect delete');
       router.push(pathname + '?' + deleteQueryString('sort'), {
         scroll: false,
       });

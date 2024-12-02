@@ -154,14 +154,14 @@ function FilteredProductsList({
   });
 
   if (!data) {
-    return isLoading && <div>Hello Loading</div>;
+    return isLoading && <div>Loading</div>;
   }
 
   const estimatedNumberOfPages = data.count
     ? Math.ceil(data.count / itemsPerPage)
     : 1;
 
-  console.log('Hello from filtered Product list');
+  // console.log('Hello from filtered Product list');
   // console.log(data);
 
   return (
