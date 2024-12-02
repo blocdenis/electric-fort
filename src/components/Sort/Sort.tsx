@@ -39,12 +39,12 @@ function Sort({ isDisable }: SortProps) {
 
   useEffect(() => {
     if (sort !== '') {
-      console.log('sort use effect add');
+      // console.log('sort use effect add');
       router.push(pathname + '?' + createQueryString('sort', `${sort}`), {
         scroll: false,
       });
     } else {
-      console.log('sort use effect delete');
+      // console.log('sort use effect delete');
       router.push(pathname + '?' + deleteQueryString('sort'), {
         scroll: false,
       });
@@ -83,9 +83,9 @@ function Sort({ isDisable }: SortProps) {
   };
 
   return (
-    <div className="flex flex-col items-start px-4 laptop:flex-row laptop:items-center laptop:justify-end gap-3 text-grey text-sm mb-4">
+    <div className="flex flex-col items-start px-4 tablet:flex-row tablet:items-center tablet:justify-end gap-3 text-grey text-sm mb-4">
       <p className={classNames({ 'text-dark_grey': isDisable })}>Сортувати:</p>
-      <div className="flex justify-between w-full laptop:w-fit laptop:gap-3 laptop:justify-end">
+      <div className="flex justify-start gap-3 w-full tablet:w-fit tablet:gap-3 tablet:justify-end">
         <button
           className={styles.sort}
           onClick={handleSortClick}

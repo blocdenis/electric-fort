@@ -41,13 +41,13 @@ const BrandsFilter: React.FC = () => {
 
   useEffect(() => {
     if (selectedBrands?.length === 0) {
-      console.log('brand filter delete string');
+      // console.log('brand filter delete string');
       router.push(pathname + '?' + deleteQueryString('brand_id'), {
         scroll: false,
       });
       return;
     } else {
-      console.log('brand filter create string');
+      // console.log('brand filter create string');
 
       router.push(
         pathname +
