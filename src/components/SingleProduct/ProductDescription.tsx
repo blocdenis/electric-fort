@@ -26,14 +26,10 @@ const ProductDescription = ({ product }: { product: Product }) => {
     addToCart(product.id);
   };
 
-  const productImages = product.images
-    ? [
-        `data:${product.images[0][0]};base64,${product.images[0][1]}`,
-        `data:${product.images[0][0]};base64,${product.images[0][1]}`,
-        `data:${product.images[0][0]};base64,${product.images[0][1]}`,
-        `data:${product.images[0][0]};base64,${product.images[0][1]}`,
-      ]
-    : [''];
+  const productImages =
+    product.images && product.images[0]
+      ? product.images.map((image) => `data:${image[0]};base64,${image[1]}`)
+      : [''];
   return (
     <div className="product-description-container">
       <div className="image-section">

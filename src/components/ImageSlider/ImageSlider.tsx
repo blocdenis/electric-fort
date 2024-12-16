@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styles from './ImageSlider.module.scss';
 import Image from 'next/image';
 import notFound from './../../../public/notFound.jpg';
+import Lightbox from 'yet-another-react-lightbox';
+import 'yet-another-react-lightbox/styles.css';
 
 interface ImageSliderProps {
   images: string[];
@@ -9,10 +11,13 @@ interface ImageSliderProps {
 
 const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [open, setOpen] = useState(false);
+
+  // console.log(images);
 
   return (
     <div className={styles['image-slider']}>
-      <div className={styles['main-image']}>
+      <div className={styles['main-image']} onClick={() => setOpen(true)}>
         <Image
           src={images[0] !== '' ? images[currentIndex] : notFound}
           width={252}
@@ -38,6 +43,14 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
           </div>
         ))}
       </div>
+      <Lightbox
+        open={open}
+        close={() => setOpen(false)}
+        slides={images.map((item, index) => ({
+          src: item,
+          alt: `Image${index}`,
+        }))}
+      />
     </div>
   );
 };
