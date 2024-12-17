@@ -40,10 +40,10 @@ const ProductDescription = ({ product }: { product: Product }) => {
         <div className="article">код:{product.article}</div>
         <div className="price-section">
           <div>
-            <span className="price">{formatPriceUAH(product.price)}</span>грн/
+            <span className="price">{product.price}</span>грн/
             {product.unit_of_measurement}
           </div>
-          <div className=" flex justify-between items-center ">
+          <div className=" flex gap-10 items-center ">
             <div className="btn">
               <SecondaryButton
                 className="px-[60px]"

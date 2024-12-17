@@ -5,6 +5,7 @@ import ImageSlider from '../ImageSlider/ImageSlider';
 import { Product } from '@/lib/types/Product.type';
 import Specification from './specification/Specification';
 import Image from 'next/image';
+import notFoundImage from '@/../public/notFound.jpg';
 
 const specifications = [
   { characteristic: 'Бренд', description: 'Schneider' },
@@ -23,7 +24,11 @@ const ProductSpecification = ({ product }: { product: Product }) => {
             {product.images && (
               <Image
                 className="object-cover"
-                src={`data:${product.images[0][0]};base64,${product.images[0][1]}`}
+                src={
+                  product.images && product.images[0]
+                    ? `data:${product.images[0][0]};base64,${product.images[0][1]}`
+                    : notFoundImage
+                }
                 width={152}
                 height={194}
                 alt={`Product Image ${product.id + 1}`}
@@ -38,9 +43,9 @@ const ProductSpecification = ({ product }: { product: Product }) => {
               грн/
               {product.unit_of_measurement}
             </div>
-            <div className=" flex justify-between items-center ">
-              <div className="btn">
-                <SecondaryButton className="btn">Купити</SecondaryButton>
+            <div className=" flex gap-10 items-center ">
+              <div>
+                <SecondaryButton className="w-[188px]">Купити</SecondaryButton>
               </div>
 
               <div className=" flex justify-center items-center w-[41px] h-[41px]  ">

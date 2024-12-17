@@ -175,6 +175,8 @@ export interface ProductRespond {
   product_id: number;
   respond: string;
   add_date: string;
+  first_name: string;
+  last_name: string;
 }
 
 type getUserProductResponds = {
@@ -837,6 +839,27 @@ export const getProductById = async (
   );
 };
 
+export const getProductReviewsByProductId = async (
+  //   params: Record<string, string> = {},
+  productId: number,
+  init?: RequestInit
+) => {
+  return sendRequestJSON<getUserProductResponds>(
+    `${buildUrl(
+      'get',
+      'ProductRespond'
+    )}?all_data=true&field=product_id&search=${productId}&equal=true&pagination=true`,
+    {
+      method: 'GET',
+      credentials: 'include',
+      headers: {
+        ...(init && init.headers),
+        'content-type': 'application/json',
+      },
+    }
+  );
+};
+
 // Favorites
 
 export const getFavorites = async (
@@ -1132,3 +1155,5 @@ const checkAuth = async () => {
   console.log('User authenticated:', authenticated);
 };
 // checkAuth();
+
+// Product
