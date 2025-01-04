@@ -71,7 +71,7 @@ function ProductCard({
           <Image
             className=""
             src={
-              images
+              images && images[0]
                 ? `data:${images[0][0]}; base64, ${images[0][1]}`
                 : notFoundImage
             }

@@ -2,6 +2,7 @@
 import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 import LogOutButton from '@/components/Buttons/LogOutButton/LogOutButton';
 import Container from '@/components/Container/Container';
+import Loading from '@/components/Loading/Loading';
 import PrivateRoute from '@/components/PrivateRoute/PrivateRoute';
 import Profile from '@/components/Profile/Profile';
 import Section from '@/components/Section/Section';
@@ -10,8 +11,11 @@ import { useAuth } from '@/context/AuthContext';
 
 function Page() {
   const links = [{ name: 'Особистий кабінет' }];
-  const { isAuthenticated } = useAuth();
-  console.log(isAuthenticated);
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <PrivateRoute isAuth={isAuthenticated}>

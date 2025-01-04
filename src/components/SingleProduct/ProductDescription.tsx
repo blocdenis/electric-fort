@@ -26,14 +26,10 @@ const ProductDescription = ({ product }: { product: Product }) => {
     addToCart(product.id);
   };
 
-  const productImages = product.images
-    ? [
-        `data:${product.images[0][0]};base64,${product.images[0][1]}`,
-        `data:${product.images[0][0]};base64,${product.images[0][1]}`,
-        `data:${product.images[0][0]};base64,${product.images[0][1]}`,
-        `data:${product.images[0][0]};base64,${product.images[0][1]}`,
-      ]
-    : [''];
+  const productImages =
+    product.images && product.images[0]
+      ? product.images.map((image) => `data:${image[0]};base64,${image[1]}`)
+      : [''];
   return (
     <div className="product-description-container">
       <div className="image-section">
@@ -44,10 +40,10 @@ const ProductDescription = ({ product }: { product: Product }) => {
         <div className="article">код:{product.article}</div>
         <div className="price-section">
           <div>
-            <span className="price">{formatPriceUAH(product.price)}</span>грн/
+            <span className="price">{product.price}</span>грн/
             {product.unit_of_measurement}
           </div>
-          <div className=" flex justify-between items-center ">
+          <div className=" flex gap-10 items-center ">
             <div className="btn">
               <SecondaryButton
                 className="px-[60px]"

@@ -34,7 +34,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       try {
         const status = await checkAuthStatus();
         setIsAuthenticated(status);
-        console.log(status);
+        // console.log(status);
       } catch (error) {
         setIsError(true);
       } finally {
