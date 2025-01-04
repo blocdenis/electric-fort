@@ -1,4 +1,4 @@
-// 'use client';
+'use client';
 import React from 'react';
 import Container from '@/components/Container/Container';
 import ContentContainer from '@/components/Container/ContentContainer';
@@ -7,41 +7,76 @@ import Section from '@/components/Section/Section';
 import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 import SingleProduct from '@/components/SingleProduct/SingleProduct';
 // import { Product } from '@/lib/types/Product.type';
-
 import Breadcrumbs from '../Breadcrumb/Breadcrumbs';
-import { getBrandById, getCategoryById } from '@/services/api/api';
-import { Product } from '@/lib/types/types';
+import {
+  getAllBrands,
+  getAllCategories,
+  getProductById,
+} from '@/services/api/api';
+// import { Product } from '@/lib/types/types';
 import NotFound from '@/app/not-found';
+import { useQuery } from '@tanstack/react-query';
+import Loading from '../Loading/Loading';
 
 interface ProductDetailsProps {
-  product: Product;
+  productId: number;
 }
 
-const ProductDetails: React.FC<ProductDetailsProps> = async ({ product }) => {
-  const categoryData = await getCategoryById(product.category_id);
-  const brandData = await getBrandById(product.brand_id);
+const ProductDetails: React.FC<ProductDetailsProps> = ({ productId }) => {
+  const { data: productData, isLoading: isLoadingProductData } = useQuery({
+    queryKey: ['product', productId],
+    queryFn: () => getProductById(productId, { cache: 'no-store' }),
+    staleTime: 10 * 1000,
+  });
 
-  if (!categoryData || !brandData) {
-    return NotFound();
+  const product = productData ? productData[0] : undefined;
+
+  const { data: categories, isLoading: isLoadingCategories } = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => getAllCategories({ cache: 'no-store' }),
+    staleTime: 10 * 1000,
+  });
+
+  const { data: brands, isLoading: isLoadingBrands } = useQuery({
+    queryKey: ['brands'],
+    queryFn: () => getAllBrands({ cache: 'no-store' }),
+    staleTime: 10 * 1000,
+  });
+
+  const category = categories?.find((item) => item.id === product?.category_id);
+  const brand = brands?.find((item) => item.id === product?.brand_id);
+
+  // const categoryData = await getCategoryById(product?.category_id);
+  // const brandData = await getBrandById(product?.brand_id);
+
+  if (isLoadingCategories || isLoadingBrands) {
+    return <Loading />;
   }
 
-  const [category] = categoryData;
-  const [brand] = brandData;
+  if (!product) {
+    return <NotFound />;
+  }
 
   const breadcrumbsItens = [
     { name: 'Категорії', href: '/categories' },
     { name: category?.name, href: `/categories/${category?.id}` },
     { name: brand?.name, href: `/categories/${category?.id}/${brand?.id}` },
-    { name: product.name },
+    { name: product?.name },
   ];
   return (
     <Container className="flex">
       <SidebarWithAttachments showFilters={false} />
       <ContentContainer>
-        <Breadcrumbs items={breadcrumbsItens} />
-        <Section>
-          <SingleProduct product={product} />
-        </Section>
+        {isLoadingProductData ? (
+          <Loading />
+        ) : (
+          <>
+            <Breadcrumbs items={breadcrumbsItens} />
+            <Section>
+              <SingleProduct product={product} />
+            </Section>
+          </>
+        )}
         <PopularProductsSection title="Також вас можуть зацікавити" />
         <PopularProductsSection title="Нещодавно переглянуті" />
       </ContentContainer>

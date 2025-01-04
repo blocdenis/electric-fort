@@ -1,11 +1,18 @@
+'use client';
 import React from 'react';
 import CategoryCard from './CategoryCard';
 import styles from './CategoriesList.module.scss';
 import { getAllCategories } from '@/services/api/api';
 import { formatedString } from '@/lib/utils/formatString';
+import { useQuery } from '@tanstack/react-query';
 
-async function CategoriesList() {
-  const categories = await getAllCategories();
+function CategoriesList() {
+  const { data: categories, isPending } = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => getAllCategories(),
+    staleTime: 10 * 1000,
+  });
+  // const categories = await getAllCategories();
 
   return (
     <ul className={styles.categories_list}>

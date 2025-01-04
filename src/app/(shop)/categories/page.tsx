@@ -8,7 +8,7 @@ import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments'
 import ContentContainer from '@/components/Container/ContentContainer';
 import getQueryClient from '@/lib/utils/getQueryClient';
 import { getAllBrands, getAllCategories } from '@/services/api/api';
-import { dehydrate } from '@tanstack/react-query';
+import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 
 async function Page() {
   const links = [{ name: 'Категорії' }];
@@ -36,7 +36,9 @@ async function Page() {
         <Section>
           <div className=" mx-auto overflow-hidden">
             <SectionTitle className="mb-4" title="Категорії товарів" />
-            <CategoriesList />
+            <HydrationBoundary state={dehydratedState}>
+              <CategoriesList />
+            </HydrationBoundary>
           </div>
         </Section>
       </ContentContainer>
