@@ -16,13 +16,14 @@ import {
 // import { Product } from '@/lib/types/types';
 import NotFound from '@/app/not-found';
 import { useQuery } from '@tanstack/react-query';
+import Loading from '../Loading/Loading';
 
 interface ProductDetailsProps {
   productId: number;
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({ productId }) => {
-  const { data: productData } = useQuery({
+  const { data: productData, isLoading: isLoadingProductData } = useQuery({
     queryKey: ['product', productId],
     queryFn: () => getProductById(productId, { cache: 'no-store' }),
     staleTime: 10 * 1000,
@@ -30,13 +31,13 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ productId }) => {
 
   const product = productData ? productData[0] : undefined;
 
-  const { data: categories } = useQuery({
+  const { data: categories, isLoading: isLoadingCategories } = useQuery({
     queryKey: ['categories'],
     queryFn: () => getAllCategories({ cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
-  const { data: brands } = useQuery({
+  const { data: brands, isLoading: isLoadingBrands } = useQuery({
     queryKey: ['brands'],
     queryFn: () => getAllBrands({ cache: 'no-store' }),
     staleTime: 10 * 1000,
@@ -48,8 +49,12 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ productId }) => {
   // const categoryData = await getCategoryById(product?.category_id);
   // const brandData = await getBrandById(product?.brand_id);
 
+  if (isLoadingCategories || isLoadingBrands) {
+    return <Loading />;
+  }
+
   if (!product) {
-    return NotFound();
+    return <NotFound />;
   }
 
   const breadcrumbsItens = [
@@ -62,10 +67,16 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ productId }) => {
     <Container className="flex">
       <SidebarWithAttachments showFilters={false} />
       <ContentContainer>
-        <Breadcrumbs items={breadcrumbsItens} />
-        <Section>
-          <SingleProduct product={product} />
-        </Section>
+        {isLoadingProductData ? (
+          <Loading />
+        ) : (
+          <>
+            <Breadcrumbs items={breadcrumbsItens} />
+            <Section>
+              <SingleProduct product={product} />
+            </Section>
+          </>
+        )}
         <PopularProductsSection title="Також вас можуть зацікавити" />
         <PopularProductsSection title="Нещодавно переглянуті" />
       </ContentContainer>

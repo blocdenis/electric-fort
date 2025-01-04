@@ -12,7 +12,7 @@ import ArrowCategoriesIcon from '../icons/BackButton';
 const ShoppingCart = () => {
   const { cartItems, cartQuantity, closeCart } = useShoppingCart();
   const { products } = useProducts();
-  console.log(cartItems);
+  // console.log(cartItems);
   const calculateTotal = () => {
     const total = cartItems?.reduce((total, cartItem) => {
       const item = products.find((i) => i.id === cartItem.id);

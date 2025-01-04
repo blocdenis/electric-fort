@@ -1,12 +1,14 @@
 'use state';
 import React from 'react';
 import SecondaryButton from '../Buttons/SecondaryButton';
-import { HeartWithShadowIcon } from '../icons';
+import { HeartWithShadowFilledIcon, HeartWithShadowIcon } from '../icons';
 import { Product } from '@/lib/types/Product.type';
 import Image from 'next/image';
 import Reviews from './reviews/Reviews';
 import notFoundImage from '@/../public/notFound.jpg';
 import { ProductRespond } from '@/services/api/api';
+import { useShoppingCart } from '@/context/ShoppingCartContext';
+import { useFavorites } from '@/context/FavoritesContext';
 
 const ProductReview = ({
   product,
@@ -15,30 +17,6 @@ const ProductReview = ({
   product: Product;
   reviews: ProductRespond[] | undefined;
 }) => {
-  // const reviews: Review[] = [
-  //   {
-  //     id: 1,
-  //     name: 'Елена Тимошенко',
-  //     date: '12.01.2024',
-  //     reviewText:
-  //       'Був смажень, і швимкі яски Спіралили в кружві, І марамулькали псашки, Як трулі долові. Був смажень, і швимкі яски Спіралили в кружві, І марамулькали псашки, ',
-  //   },
-  //   {
-  //     id: 2,
-  //     name: 'Елена Тимошенко',
-  //     date: '12.01.2024',
-  //     reviewText:
-  //       'Був смажень, і швимкі яски Спіралили в кружві, І марамулькали псашки, Як трулі долові. Був смажень, і швимкі яски Спіралили в кружві, І марамулькали псашки, ',
-  //   },
-  //   {
-  //     id: 3,
-  //     name: 'Елена Тимошенко',
-  //     date: '12.01.2024',
-  //     reviewText:
-  //       'Був смажень, і швимкі яски Спіралили в кружві, І марамулькали псашки, Як трулі долові. Був смажень, і швимкі яски Спіралили в кружві, І марамулькали псашки, ',
-  //   },
-  // ];
-
   // const { data: reviewsData, isPending } = useQuery({
   //   queryKey: ['reviews', product.id],
   //   queryFn: () => getProductReviewsByProductId(product.id),
@@ -46,6 +24,20 @@ const ProductReview = ({
   // });
 
   // const reviews = reviewsData?.data;
+
+  const { isFavorite, addToFavorites, deleteFromFavorites } = useFavorites();
+  const { addToCart } = useShoppingCart();
+
+  const handleFavoriteIconClick = () => {
+    if (isFavorite(product.id)) {
+      deleteFromFavorites.mutateAsync(product.id);
+    } else {
+      addToFavorites.mutateAsync(product.id);
+    }
+  };
+  const increaseCartQuantity = () => {
+    addToCart(product.id);
+  };
 
   return (
     <div className="specification-container">
@@ -96,14 +88,29 @@ const ProductReview = ({
 
             <div className=" flex gap-10 items-center ">
               <div>
-                <SecondaryButton className="w-[188px]">Купити</SecondaryButton>
+                <SecondaryButton
+                  className="px-[60px]"
+                  onClick={() => increaseCartQuantity()}
+                >
+                  Купити
+                </SecondaryButton>
               </div>
               <div className=" flex justify-center items-center w-[41px] h-[41px]  ">
-                <HeartWithShadowIcon
-                  width={41}
-                  height={41}
-                  className=" fill-yellow hover:scale-[128%] transition-transform duration-300"
-                />
+                {isFavorite(product.id) ? (
+                  <HeartWithShadowFilledIcon
+                    onClick={handleFavoriteIconClick}
+                    width={32}
+                    height={30}
+                    className=" fill-yellow hover:scale-[128%] transition-transform duration-300"
+                  />
+                ) : (
+                  <HeartWithShadowIcon
+                    onClick={handleFavoriteIconClick}
+                    width={32}
+                    height={30}
+                    className=" fill-yellow hover:scale-[128%] transition-transform duration-300"
+                  />
+                )}
               </div>
             </div>
           </div>

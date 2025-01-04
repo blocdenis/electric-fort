@@ -95,7 +95,7 @@ export function CartItem({ id, close }: CartItemProps) {
   };
   const cartItemPrice = cartItem?.price;
   const quantitys = cartItem?.number ?? 1;
-  console.log(total(cartItemPrice, quantitys));
+  // console.log(total(cartItemPrice, quantitys));
 
   return (
     <div key={cartItem?.id} className="cart-item">

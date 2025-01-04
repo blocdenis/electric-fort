@@ -10,10 +10,10 @@ export const checkAuthStatus = async (): Promise<boolean> => {
     });
 
     if (response.status === 200) {
-      console.log('Cookies after auth:', document.cookie);
+      // console.log('Cookies after auth:', document.cookie);
       return true;
     }
-    console.log('Cookies after failed auth:', document.cookie);
+    // console.log('Cookies after failed auth:', document.cookie);
     return false;
   } catch (error) {
     throw error;
