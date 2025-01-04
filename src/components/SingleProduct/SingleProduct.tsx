@@ -48,7 +48,11 @@ const SingleProduct = ({ product }: { product: Product }) => {
           </li>
           <li
             onClick={handleChange}
-            className={`tab ${currentTab === TABS.REVIEW ? 'active-tab' : ''}`}
+            className={`tab ${
+              currentTab === `${TABS.REVIEW} ${reviewsData?.count}`
+                ? 'active-tab'
+                : ''
+            }`}
           >
             {`${TABS.REVIEW} ${reviewsData?.count}`}
           </li>
