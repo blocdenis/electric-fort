@@ -113,7 +113,7 @@ const Header = () => {
                     target="_blank"
                   />
                 </div>
-                <div className={styles.container_lang}>
+                {/* <div className={styles.container_lang}>
                   <button
                     className={`${styles.button} ${
                       activeLanguage === 'UA' ? styles.active : ''
@@ -131,7 +131,7 @@ const Header = () => {
                   >
                     RU
                   </button>
-                </div>
+                </div> */}
                 <div>
                   {isAuthenticated ? (
                     <Link

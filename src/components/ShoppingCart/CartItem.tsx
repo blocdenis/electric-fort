@@ -100,26 +100,28 @@ export function CartItem({ id, close }: CartItemProps) {
   return (
     <div key={cartItem?.id} className="cart-item">
       <div className="product-info">
-        <Link href={`/${cartItem?.id}`} replace onClick={close}>
-          <Image
-            className="image"
-            src={
-              cartItem?.images
-                ? `data:${cartItem?.images[0][0]}; base64, ${cartItem?.images[0][1]}`
-                : notFoundImage
-            }
-            alt={`${cartItem?.name} image`}
-            width={80}
-            height={98}
-            style={{ objectFit: 'contain' }}
-            priority
-          />
-        </Link>
-        <span className="product-name">
+        <div className="product-image">
+          <Link href={`/${cartItem?.id}`} replace onClick={close}>
+            <Image
+              className="image"
+              src={
+                cartItem?.images
+                  ? `data:${cartItem?.images[0][0]}; base64, ${cartItem?.images[0][1]}`
+                  : notFoundImage
+              }
+              alt={`${cartItem?.name} image`}
+              width={80}
+              height={98}
+              style={{ objectFit: 'contain' }}
+              priority
+            />
+          </Link>
+        </div>
+        <div className="product-name">
           <Link href={`/${cartItem?.id}`} replace onClick={close}>
             {cartItem?.name}
           </Link>
-        </span>
+        </div>
       </div>
       <div className="info-wrapper">
         <div className="items-info">

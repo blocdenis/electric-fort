@@ -160,7 +160,7 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
           <ContactText textToCopy="+38(066) 459-88-87" color="#69AF00" />
           <ContactText textToCopy="+38(068) 459-88-87" color="#69AF00" />
         </div>
-        <div className="flex items-center justify-center mb-8">
+        {/* <div className="flex items-center justify-center mb-8">
           <div className=" flex gap-3">
             <button className=" hover:text-yellow">
               <span>UA</span>
@@ -170,7 +170,7 @@ function BurgerMenu({ onCloseClick, isOpen }: BurgerMenuProps) {
               <span>RU</span>
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
