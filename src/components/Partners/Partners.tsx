@@ -39,6 +39,8 @@ function Partners() {
             }}
             autoplay={{
               delay: 2500,
+              pauseOnMouseEnter: true,
+              disableOnInteraction: false,
             }}
             // loop
             loopAddBlankSlides
@@ -53,10 +55,11 @@ function Partners() {
                   <div className=" w-[74px] h-[74px] [&>img]:w- lg:w-[106px] lg:h-[106px] flex items-center justify-center">
                     <Image
                       className=" w-full"
-                      width={74}
-                      height={74}
+                      width={0}
+                      height={0}
                       src={logo}
                       alt={`${name} logo`}
+                      style={{ width: '100%', height: 'auto' }}
                     />
                   </div>
                 </a>

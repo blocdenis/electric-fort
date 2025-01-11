@@ -3,7 +3,8 @@ import { z } from 'zod';
 const regexPhoneNumber = /^\+380\d{2}\d{3}\d{2}\d{2}$/;
 const regexName = /^([a-zA-ZА-Яа-яЁёЇїІіЄєҐґ'\-\s]+)$/;
 const regexAddress = /^([a-zA-ZА-Яа-яЁёЇїІіЄєҐґ'\d\s\-\.]*)$/; //letters, numbers, whitespace character,"-","."
-const regexPassword =
+export const regexEmail = /^[a-zA-Z0-9_.±]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
+export const regexPassword =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/; //at least 1 UpperLetter 1 lowerLetter 1 special symbol? min 8 symbols
 
 export const userInfoZodSchema = z.object({

@@ -11,6 +11,7 @@ import CloseEyeIcon from '../icons/CloseEyeIcon';
 import CheckboxTrue from '../icons/CheckboxTrue';
 import CheckboxFalse from '../icons/CheckboxFalse';
 import { useAuth } from '@/context/AuthContext';
+import { regexEmail, regexPassword } from '@/lib/schemas/validationZodSchemas';
 
 type Inputs = {
   email: string;
@@ -107,14 +108,36 @@ export default function SignUpForm({
         <label>Електронна пошта</label>
         <input
           placeholder="Введіть електронну пошту"
-          {...register('email', { required: true })}
+          // {...register('email', { required: true })}
+          {...register('email', {
+            required: { value: true, message: "Це поле обов'язкове" },
+            pattern: {
+              value: regexEmail,
+              message: 'Email адреса вказана неправильно',
+            },
+          })}
         />
+        {errors.email && (
+          <span className={styles.error_message}>{errors.email.message}</span>
+        )}
         <div className={styles.password_container}>
           <label>Пароль</label>
           <input
             placeholder="Пароль (не менше 8 символів)"
             type={passwordShown ? 'text' : 'password'}
-            {...register('password', { required: true })}
+            // {...register('password', { required: true })}
+            {...register('password', {
+              required: { value: true, message: "Це поле обов'язкове" },
+              minLength: {
+                value: 8,
+                message: 'Пароль має містити не меньше 8 символів',
+              },
+              pattern: {
+                value: regexPassword,
+                message:
+                  'Пароль має містити щонайменьше одну заглавну літеру та один спеціальний символ',
+              },
+            })}
           />
           {passwordShown ? (
             <CloseEyeIcon
@@ -128,6 +151,11 @@ export default function SignUpForm({
             />
           )}
         </div>
+        {errors.password && (
+          <span className={styles.error_message}>
+            {errors.password.message}
+          </span>
+        )}
         {!isRegistration && (
           <div className={styles.policy_container}>
             <label className={styles.checkbox_container}>
@@ -155,7 +183,7 @@ export default function SignUpForm({
                   required: true,
                   validate: (val: string | undefined) => {
                     if (watch('password') !== val) {
-                      return 'Your passwords do not match';
+                      return 'Пароль має співпадати';
                     }
                   },
                 })}
@@ -172,6 +200,11 @@ export default function SignUpForm({
                 />
               )}
             </div>
+            {errors.confirm_password && (
+              <span className={styles.error_message}>
+                {errors.confirm_password.message}
+              </span>
+            )}
             <div className={styles.policy_container}>
               <label className={styles.checkbox_container}>
                 <input
@@ -187,9 +220,6 @@ export default function SignUpForm({
               </Link>
             </div>
           </>
-        )}
-        {errors.password && (
-          <span className={styles.error_message}>Це поле обовязкове</span>
         )}
         <input
           type="submit"
