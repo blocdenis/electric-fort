@@ -21,7 +21,8 @@
 .content {
   display: flex;
   align-items: center;
-  gap: 204px;
+  width: 55%;
+  justify-content: space-between;
   h1 {
     @include breakpoint(tablet) {
       display: none;
