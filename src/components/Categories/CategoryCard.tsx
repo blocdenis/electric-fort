@@ -42,8 +42,9 @@ function CategoryCard({
       >
         <div className=" w-[160px] h-[160px] flex items-center justify-center object-cover">
           <Image
-            width={140}
-            height={140}
+            width={0}
+            height={0}
+            style={{ width: '140px', height: '140px' }}
             src={image ? `data:${image[0]}; base64, ${image[1]}` : categotyImg}
             alt="product-category-image"
           ></Image>
