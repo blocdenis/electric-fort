@@ -1156,4 +1156,73 @@ const checkAuth = async () => {
 };
 // checkAuth();
 
+// text from auth panel
+
+export const getAboutUs = async (
+  //   params: Record<string, string> = {},
+  init?: RequestInit
+) => {
+  return sendRequestJSON<string>(`${buildUrl('txt', 'about_us')}`, {
+    method: 'GET',
+    // credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
+};
+
+export const getDelivery = async (
+  //   params: Record<string, string> = {},
+  init?: RequestInit
+) => {
+  return sendRequestJSON<string>(`${buildUrl('txt', 'delivery')}`, {
+    method: 'GET',
+    // credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
+};
+export const getReturnPolicy = async (
+  //   params: Record<string, string> = {},
+  init?: RequestInit
+) => {
+  return sendRequestJSON<string>(`${buildUrl('txt', 'return_policy')}`, {
+    method: 'GET',
+    // credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
+};
+export const getCooperationOD = async (
+  //   params: Record<string, string> = {},
+  init?: RequestInit
+) => {
+  return sendRequestJSON<string>(`${buildUrl('txt', 'cooperation_od')}`, {
+    method: 'GET',
+    // credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
+};
+export const getCooperationTM = async (
+  //   params: Record<string, string> = {},
+  init?: RequestInit
+) => {
+  return sendRequestJSON<string>(`${buildUrl('txt', 'cooperation_tm')}`, {
+    method: 'GET',
+    // credentials: 'include',
+    headers: {
+      ...(init && init.headers),
+      'content-type': 'application/json',
+    },
+  });
+};
+
 // Product
