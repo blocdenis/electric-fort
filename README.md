@@ -26,14 +26,14 @@ The app also automatically deployed on Vercel for development purposes. Please c
 
 ## Tech Stack
 
-Next.js
-React Context for state management
-TypeScript
-Tailwind CSS
-TanStackQuery
-Swiper
-Zod
-React Hook Form
-Yet Another React Lightbox
+Next.js (https://nextjs.org/)  
+React Context API for state management  
+TypeScript   
+Tailwind CSS (https://tailwindcss.com/docs/installation)  
+TanStackQuery (https://tanstack.com/query/latest/docs/framework/react/overview)  
+Swiper (https://swiperjs.com/react)  
+Zod (https://zod.dev/)  
+React Hook Form (https://react-hook-form.com/)  
+Yet Another React Lightbox (https://yet-another-react-lightbox.com/documentation)
 
 
