@@ -10,6 +10,8 @@ import getQueryClient from '@/lib/utils/getQueryClient';
 import { getAllBrands, getAllCategories } from '@/services/api/api';
 import { HydrationBoundary, dehydrate } from '@tanstack/react-query';
 
+export const revalidate = 0;
+
 async function Page() {
   const links = [{ name: 'Категорії' }];
   const queryClient = getQueryClient();

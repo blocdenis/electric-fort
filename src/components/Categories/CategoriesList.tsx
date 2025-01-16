@@ -5,16 +5,19 @@ import styles from './CategoriesList.module.scss';
 import { getAllCategories } from '@/services/api/api';
 import { formatedString } from '@/lib/utils/formatString';
 import { useQuery } from '@tanstack/react-query';
+import Loading from '../Loading/Loading';
 
 function CategoriesList() {
-  const { data: categories, isPending } = useQuery({
+  const { data: categories, isLoading } = useQuery({
     queryKey: ['categories'],
     queryFn: () => getAllCategories(),
     staleTime: 10 * 1000,
   });
   // const categories = await getAllCategories();
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <ul className={styles.categories_list}>
       {categories?.map((category) => (
         <li

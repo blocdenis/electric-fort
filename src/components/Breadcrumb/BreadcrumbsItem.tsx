@@ -7,7 +7,7 @@ export type BreadcrambsItemProps = Omit<LinkProps, 'href'> & {
 
 function BreadcrumbsItem({ name, href, ...props }: BreadcrambsItemProps) {
   return href ? (
-    <Link href={href} {...props}>
+    <Link title={name} href={href} {...props}>
       {name}
     </Link>
   ) : (

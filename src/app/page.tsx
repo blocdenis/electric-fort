@@ -32,24 +32,26 @@ const slides = [
   },
 ];
 
+export const revalidate = 0;
+
 export default async function Home() {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: ['popularProducts'],
     queryFn: () => getPopularProducts(),
-    staleTime: 0,
+    staleTime: 10 * 1000,
   });
 
   await queryClient.prefetchQuery({
     queryKey: ['categories'],
-    queryFn: () => getAllCategories(),
+    queryFn: () => getAllCategories({ cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
   await queryClient.prefetchQuery({
     queryKey: ['brands'],
-    queryFn: () => getAllBrands(),
+    queryFn: () => getAllBrands({ cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 

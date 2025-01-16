@@ -27,6 +27,7 @@ import SeriesList from '../Categories/SeriesList';
 import SubSubseriesList from '../Categories/SubSubseriesList';
 import SubseriesList from '../Categories/SubseriesList';
 import { useFilters } from '@/context/FiltersContext';
+import Loading from '../Loading/Loading';
 
 interface CategoriesProductGroupProps {
   productsGroup: ProductGroup;
@@ -67,7 +68,11 @@ function CategoriesProductGroupPage({
 }: CategoriesProductGroupProps) {
   const { setShownBrands } = useFilters();
 
-  const { data: filteredProducts, isPending } = useQuery({
+  const {
+    data: filteredProducts,
+    isPending,
+    isLoading,
+  } = useQuery({
     queryKey: [
       'products',
       category.id,
@@ -187,9 +192,12 @@ function CategoriesProductGroupPage({
             {filterBrands === '' && filterPrice === '' ? (
               isSubGoupInGroup ? (
                 <>
-                  {productsGroup === 'category' && (
-                    <BrandsList categoryId={category.id} />
-                  )}
+                  {productsGroup === 'category' &&
+                    (isLoading ? (
+                      <Loading />
+                    ) : (
+                      <BrandsList categoryId={category.id} />
+                    ))}
                   {productsGroup === 'brand' && brand && (
                     <SeriesList categoryId={category.id} brandId={brand?.id} />
                   )}

@@ -6,7 +6,7 @@
 
 .specificationItem {
   display: flex;
-  //   align-items: center;
+  align-items: baseline;
   gap: 12px;
 }
 
@@ -15,7 +15,7 @@
 }
 
 .underline {
-  width: 232px;
+  min-width: 50px;
   flex: 2;
   border-bottom: 1px dashed #ccc;
 }
