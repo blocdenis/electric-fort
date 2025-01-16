@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a frontend part for an e-commerce website of electric goods.
+This project is created using [Next.js]. For more info see the Next.js Documentation(https://nextjs.org/). 
 
 ## Getting Started
 
-First, run the development server:
+To get started you can simply clone this electric-fort repository and install the dependencies.
 
-```bash
+Clone the electric-fort repository using git:
+git clone https://github.com/blocdenis/electric-fort
+
+Install dependencies with this command:
+npm install
+
+Run the application with this command:
+npm start
+
+For run the application in dev mode use this command:
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Live Demonstration
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Development server run on [http://localhost:3000](http://localhost:3000).
+The production version of website is here - https://electrychnafortecia.com/ 
+The app also automatically deployed on Vercel for development purposes. Please check it out here - https://electric-fort.vercel.app/.
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+Next.js (https://nextjs.org/)  
+React Context API for state management  
+TypeScript   
+Tailwind CSS (https://tailwindcss.com/docs/installation)  
+TanStackQuery (https://tanstack.com/query/latest/docs/framework/react/overview)  
+Swiper (https://swiperjs.com/react)  
+Zod (https://zod.dev/)  
+React Hook Form (https://react-hook-form.com/)  
+Yet Another React Lightbox (https://yet-another-react-lightbox.com/documentation)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

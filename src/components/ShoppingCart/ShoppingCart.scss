@@ -95,9 +95,11 @@
       }
       .product-image {
         min-width: 80px;
+        width: 80px;
         height: auto;
         @include breakpoint(tablet) {
           min-width: 110px;
+          width: 110px;
           height: auto;
         }
       }
@@ -225,6 +227,9 @@
       align-items: center;
       justify-content: center;
       gap: 32px;
+      @media screen and (min-width: 1024px) and (max-width: 1120px) {
+        gap: 10px;
+      }
       @include breakpoint(mobile) {
         width: 110px;
         gap: 22px;

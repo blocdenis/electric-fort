@@ -17,14 +17,6 @@ const ProductReview = ({
   product: Product;
   reviews: ProductRespond[] | undefined;
 }) => {
-  // const { data: reviewsData, isPending } = useQuery({
-  //   queryKey: ['reviews', product.id],
-  //   queryFn: () => getProductReviewsByProductId(product.id),
-  //   staleTime: 10 * 1000,
-  // });
-
-  // const reviews = reviewsData?.data;
-
   const { isFavorite, addToFavorites, deleteFromFavorites } = useFavorites();
   const { addToCart } = useShoppingCart();
 
@@ -41,7 +33,7 @@ const ProductReview = ({
 
   return (
     <div className="specification-container">
-      <div className="specification-block">
+      <div className="specification-block-1">
         {reviews ? (
           reviews.length !== 0 ? (
             <Reviews reviews={reviews} />

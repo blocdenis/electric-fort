@@ -6,14 +6,12 @@ import PopularProductsSection from '@/components/Products/PopularProductSection/
 import Section from '@/components/Section/Section';
 import SidebarWithAttachments from '@/components/Sidebar/SidebarWithAttachments';
 import SingleProduct from '@/components/SingleProduct/SingleProduct';
-// import { Product } from '@/lib/types/Product.type';
 import Breadcrumbs from '../Breadcrumb/Breadcrumbs';
 import {
-  getAllBrands,
-  getAllCategories,
+  getBrandById,
+  getCategoryById,
   getProductById,
 } from '@/services/api/api';
-// import { Product } from '@/lib/types/types';
 import NotFound from '@/app/not-found';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../Loading/Loading';
@@ -31,25 +29,30 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ productId }) => {
 
   const product = productData ? productData[0] : undefined;
 
-  const { data: categories, isLoading: isLoadingCategories } = useQuery({
-    queryKey: ['categories'],
-    queryFn: () => getAllCategories({ cache: 'no-store' }),
+  const { data: productCategory, isLoading: isLoadingCategory } = useQuery({
+    queryKey: ['category'],
+    queryFn: () =>
+      getCategoryById(product?.category_id ?? 0, { cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
-  const { data: brands, isLoading: isLoadingBrands } = useQuery({
-    queryKey: ['brands'],
-    queryFn: () => getAllBrands({ cache: 'no-store' }),
+  const { data: productBrand, isLoading: isLoadingBrand } = useQuery({
+    queryKey: ['brand', product?.id],
+    queryFn: () => getBrandById(product?.brand_id ?? 0, { cache: 'no-store' }),
     staleTime: 10 * 1000,
   });
 
-  const category = categories?.find((item) => item.id === product?.category_id);
-  const brand = brands?.find((item) => item.id === product?.brand_id);
+  let category;
+  let brand;
 
-  // const categoryData = await getCategoryById(product?.category_id);
-  // const brandData = await getBrandById(product?.brand_id);
+  if (productCategory) {
+    category = productCategory[0];
+  }
+  if (productBrand) {
+    brand = productBrand[0];
+  }
 
-  if (isLoadingCategories || isLoadingBrands) {
+  if (isLoadingCategory || isLoadingBrand) {
     return <Loading />;
   }
 
