@@ -85,6 +85,7 @@
       display: flex;
       flex-direction: row;
       justify-content: space-between;
+      gap: 24px;
       // :last-child {
       //   width: auto;
       // }
@@ -122,58 +123,61 @@
 .specification-container {
   display: flex;
   flex-direction: row;
+  gap: 12px;
+  margin-top: 32px;
   // justify-content: space-between;
   @include breakpoint(tablet) {
     display: flex;
     flex-direction: column-reverse;
   }
-  .specification-block {
-    flex: 1;
-    margin-top: 32px;
-    .specification-description {
+  .specification-block-1 {
+    @include breakpoint(desktop) {
+      flex-basis: 100%;
+    }
+  }
+
+  .specification-description {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+
+    .specification-image {
+      width: 154px;
+      height: 194px;
+      @include breakpoint(mobile) {
+        display: none;
+      }
+    }
+    .spesification-description {
       display: flex;
-      flex-direction: row;
-      gap: 8px;
-      .specification-image {
-        width: 154px;
-        height: 194px;
-        @include breakpoint(mobile) {
-          display: none;
+      flex-direction: column;
+      gap: 24px;
+      .specification-name-container {
+        @include breakpoint(tablet) {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: space-between;
         }
       }
-      .spesification-description {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-        // width: 267px;
-        .specification-name-container {
-          @include breakpoint(tablet) {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: space-between;
-          }
-        }
-        .specification-name {
-          font: $semibold16;
-        }
-        .specification-article {
-          font: $regular14;
-        }
-        .specification-mesurement {
-          @include breakpoint(mobile) {
-            font: $semibold24;
-          }
-        }
-        .specification-price {
+      .specification-name {
+        font: $semibold16;
+      }
+      .specification-article {
+        font: $regular14;
+      }
+      .specification-mesurement {
+        @include breakpoint(mobile) {
           font: $semibold24;
-          @include breakpoint(mobile) {
-            font: $bold36;
-          }
         }
-        .btn {
-          width: 188px;
-          padding-top: 7px;
+      }
+      .specification-price {
+        font: $semibold24;
+        @include breakpoint(mobile) {
+          font: $bold36;
         }
+      }
+      .btn {
+        padding-top: 7px;
       }
     }
   }

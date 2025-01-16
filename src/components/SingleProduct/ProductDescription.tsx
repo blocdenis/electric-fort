@@ -43,10 +43,10 @@ const ProductDescription = ({ product }: { product: Product }) => {
             <span className="price">{product.price}</span>грн/
             {product.unit_of_measurement}
           </div>
-          <div className=" flex gap-10 items-center ">
-            <div className="btn">
+          <div className=" flex gap-10 items-center pt-6 ">
+            <div className="w-[75%]">
               <SecondaryButton
-                className="px-[60px]"
+                className="px-[60px] w-full"
                 onClick={() => increaseCartQuantity()}
               >
                 Купити
