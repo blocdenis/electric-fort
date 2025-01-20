@@ -246,7 +246,9 @@ const OrderForm = () => {
   return (
     <form className="order-form" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-section">
-        <h2>Оформлення замовлення</h2>
+        <h2 className=" invisible h-0 laptop:visible laptop:h-full">
+          Оформлення замовлення
+        </h2>
 
         <div className="header">
           <h3>1. Особисті дані</h3>
@@ -313,7 +315,7 @@ const OrderForm = () => {
         <div className="form-grid">
           {Object.values(DeliveryMethods).map((method, index) => (
             <div key={index} className="form-grid-item">
-              <label className="flex flex-row gap-4">
+              <label className="flex flex-row gap-4 text-md">
                 <input
                   type="radio"
                   value={method}
@@ -397,7 +399,7 @@ const OrderForm = () => {
         <div className="fortm-grid">
           {paymentMethods[deliveryMethod].map((method, index) => (
             <div key={index} className="form-grid-item">
-              <label className="flex flex-row gap-4">
+              <label className="flex flex-row gap-4 text-md">
                 <input
                   type="radio"
                   value={method}

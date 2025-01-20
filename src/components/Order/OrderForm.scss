@@ -20,11 +20,16 @@
 
   span {
     color: #3c3c3c;
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 
+.form-section h4 {
+  font: $regular24;
+  margin-bottom: 24px;
+}
 .form-section h3 {
+  font: $regular24;
   padding: 12px;
   background-color: #9cec25;
   color: #3c3c3c;
@@ -79,6 +84,7 @@
   justify-content: flex-end;
   flex-direction: column;
   align-items: flex-end;
+  padding-right: 16px;
   p {
     font-size: 11px;
     font-weight: 400;
@@ -91,6 +97,7 @@
   }
 }
 .submit-button {
+  font: $regular18;
   padding: 1rem;
   border: none;
   background-color: #9cec25;
@@ -102,10 +109,13 @@
   }
 }
 
-.cart-modal-content {
+.cart-modal-content-order {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  .cart-hero {
+    color: white;
+  }
 }
 
 .cart-hero {
@@ -205,7 +215,8 @@
   gap: 12px;
   padding-right: 12px;
 }
-.cart-modal-content {
+.cart-modal-content-order {
+  background-color: #2a4700;
   @include breakpoint(tablet) {
     background-color: transparent;
   }

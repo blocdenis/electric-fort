@@ -63,22 +63,17 @@
     padding-bottom: 24px;
     padding-top: 24px;
 
-    .desktop_wrapper {
-      @include breakpoint(tablet) {
-        display: none;
-      }
-    }
-
-    // @include breakpoint(tablet) {
-    //   margin-top: 24px;
-    //   height: auto;
-    // }
     @include breakpoint(tablet) {
       display: flex;
       flex-direction: column;
       padding-bottom: 24px;
       margin-top: 24px;
       height: auto;
+    }
+    .desktop_wrapper {
+      @include breakpoint(tablet) {
+        display: none;
+      }
     }
     .product-info {
       display: flex;
@@ -157,6 +152,9 @@
       display: flex;
       justify-content: right;
       font: $regular14;
+      @include breakpoint(mobile) {
+        font: $regular12;
+      }
     }
     span {
       font: $regular16;
