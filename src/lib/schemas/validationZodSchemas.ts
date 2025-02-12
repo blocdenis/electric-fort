@@ -81,18 +81,18 @@ export const changePasswordZodSchema = z
       .min(8, { message: 'Пароль має містити не меньше 8 символів' }),
     new_password: z
       .string()
-      .min(8, { message: 'Пароль має містити не меньше 8 символів' })
-      .regex(regexPassword, {
-        message:
-          'Пароль має містити щонайменьше одну заглавну літеру та один спеціальний символ',
-      }),
+      .min(8, { message: 'Пароль має містити не меньше 8 символів' }),
+    // .regex(regexPassword, {
+    //   message:
+    //     'Пароль має містити щонайменьше одну заглавну літеру та один спеціальний символ',
+    // }),
     repeat_new_password: z
       .string()
-      .min(8, { message: 'Пароль має містити не меньше 8 символів' })
-      .regex(regexPassword, {
-        message:
-          'Пароль має містити щонайменьше одну заглавну літеру та один спеціальний символ',
-      }),
+      .min(8, { message: 'Пароль має містити не меньше 8 символів' }),
+    // .regex(regexPassword, {
+    //   message:
+    //     'Пароль має містити щонайменьше одну заглавну літеру та один спеціальний символ',
+    // }),
   })
   .refine((obj) => obj.new_password === obj.repeat_new_password, {
     message: 'Пароль має співпадати',

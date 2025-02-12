@@ -111,10 +111,10 @@ export default function SignUpForm({
           // {...register('email', { required: true })}
           {...register('email', {
             required: { value: true, message: "Це поле обов'язкове" },
-            pattern: {
-              value: regexEmail,
-              message: 'Email адреса вказана неправильно',
-            },
+            // pattern: {
+            //   value: regexEmail,
+            //   message: 'Email адреса вказана неправильно',
+            // },
           })}
         />
         {errors.email && (
@@ -132,11 +132,11 @@ export default function SignUpForm({
                 value: 8,
                 message: 'Пароль має містити не меньше 8 символів',
               },
-              pattern: {
-                value: regexPassword,
-                message:
-                  'Пароль має містити щонайменьше одну заглавну літеру та один спеціальний символ',
-              },
+              // pattern: {
+              //   value: regexPassword,
+              //   message:
+              //     'Пароль має містити щонайменьше одну заглавну літеру та один спеціальний символ',
+              // },
             })}
           />
           {passwordShown ? (
