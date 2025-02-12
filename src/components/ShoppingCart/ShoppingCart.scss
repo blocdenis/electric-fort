@@ -63,16 +63,6 @@
     padding-bottom: 24px;
     padding-top: 24px;
 
-    .desktop_wrapper {
-      @include breakpoint(tablet) {
-        display: none;
-      }
-    }
-
-    // @include breakpoint(tablet) {
-    //   margin-top: 24px;
-    //   height: auto;
-    // }
     @include breakpoint(tablet) {
       display: flex;
       flex-direction: column;
@@ -80,13 +70,18 @@
       margin-top: 24px;
       height: auto;
     }
+    .desktop_wrapper {
+      @include breakpoint(tablet) {
+        display: none;
+      }
+    }
     .product-info {
       display: flex;
       flex-direction: row;
       gap: 53px;
       align-items: center;
-      width: 55%;
-      // flex-grow: 1;
+      width: 50%;
+
       @include breakpoint(tablet) {
         width: 100%;
         display: flex;
@@ -124,6 +119,10 @@
       }
     }
     .product-description {
+      min-width: 67px;
+      display: flex;
+      flex-direction: column;
+
       @include breakpoint(tablet) {
         display: flex;
         flex-direction: row;
@@ -135,6 +134,9 @@
           text-align: right;
           width: fit-content;
         }
+      }
+      @include breakpoint(mobile) {
+        min-width: 0px;
       }
     }
     .mobile_wrapper {
@@ -150,6 +152,9 @@
       display: flex;
       justify-content: right;
       font: $regular14;
+      @include breakpoint(mobile) {
+        font: $regular12;
+      }
     }
     span {
       font: $regular16;
@@ -203,12 +208,9 @@
       flex-direction: row;
       gap: 53px;
       align-items: center;
-      justify-content: space-between;
-      width: 45%;
-      // height: 100%;
-      @include breakpoint(desktop) {
-        gap: 24px;
-      }
+      justify-content: flex-end;
+      width: 50%;
+
       @include breakpoint(tablet) {
         width: 100%;
         gap: 24px;

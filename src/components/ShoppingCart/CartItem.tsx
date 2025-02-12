@@ -72,15 +72,15 @@ export function CartItem({ id, close }: CartItemProps) {
   const handleRemoveClick = () => {
     setIsModalOpen(true);
   };
-  const handleDecrease = () => {
+  const handleDecrease = (id: number) => {
     decreaseFromCart(id);
   };
 
-  const handleConfirmRemove = () => {
+  const handleConfirmRemove = (id: number) => {
     removeFromCart(id);
     setIsModalOpen(false);
   };
-  const increaseCartQuantity = () => {
+  const increaseCartQuantity = (id: number) => {
     addToCart(id);
   };
 
@@ -133,13 +133,13 @@ export function CartItem({ id, close }: CartItemProps) {
             <p>Кількість</p>
             <div className="quantity-controls">
               <button
-                onClick={() => handleDecrease()}
+                onClick={() => handleDecrease(id)}
                 // disabled={cartQuantity === 1}
               >
                 -
               </button>
               <span>{quantity}</span>
-              <button onClick={() => increaseCartQuantity()}>+</button>
+              <button onClick={() => increaseCartQuantity(id)}>+</button>
             </div>
           </div>
           <div className="product-description">
@@ -171,7 +171,7 @@ export function CartItem({ id, close }: CartItemProps) {
           <ConfirmationModal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
-            onConfirm={handleConfirmRemove}
+            onConfirm={() => handleConfirmRemove(id)}
             buttonRef={trashButtonRef}
           />
         </div>

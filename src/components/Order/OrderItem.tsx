@@ -15,7 +15,8 @@ import {
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState, useRef } from 'react';
 import ConfirmationModal from '../ShoppingCart/ConfirmationalModal';
-import './OrderForm.scss';
+// import './OrderForm.scss';
+import styles from './OrderItem.module.scss';
 
 type OrderItemProps = {
   id: number;
@@ -98,36 +99,39 @@ export function OrderItem({ id, close }: OrderItemProps) {
   const quantitys = cartItem?.number ?? 1;
 
   return (
-    <div key={cartItem?.id} className="cart-item">
-      <Link href={`/${cartItem?.id}`} replace onClick={close}>
-        <Image
-          className="image"
-          src={
-            cartItem?.images
-              ? `data:${cartItem?.images[0][0]}; base64, ${cartItem?.images[0][1]}`
-              : notFoundImage
-          }
-          alt={`${cartItem?.name} image`}
-          width={80}
-          height={98}
-          priority
-        />
-      </Link>
-      <div className="product-info">
-        <span className="product-name">
+    <div key={cartItem?.id} className={styles.cart_item}>
+      <div className={styles.product_image}>
+        <Link href={`/${cartItem?.id}`} replace onClick={close}>
+          <Image
+            className="image"
+            src={
+              cartItem?.images
+                ? `data:${cartItem?.images[0][0]}; base64, ${cartItem?.images[0][1]}`
+                : notFoundImage
+            }
+            alt={`${cartItem?.name} image`}
+            width={80}
+            height={98}
+            style={{ objectFit: 'contain' }}
+            priority
+          />
+        </Link>
+      </div>
+      <div className={styles.product_info}>
+        <div className={styles.product_name}>
           <Link href={`/${cartItem?.id}`} replace onClick={close}>
             {cartItem?.name}
           </Link>
-        </span>
-        <div className="info-wrapper">
-          <div className="items-info">
-            <div className="product-description">
+        </div>
+        <div className={styles.info_wrapper}>
+          <div className={styles.items_info}>
+            <div className={styles.product_description}>
               <p>Ціна</p>
               <span>{formatPriceUAH(cartItem?.price)}</span>
             </div>
-            <div className="product-description">
+            <div className={styles.product_description}>
               <p>Кількість</p>
-              <div className="quantity-controls">
+              <div className={styles.quantity_controls}>
                 <button
                   onClick={() => handleDecrease()}
                   // disabled={cartQuantity === 1}
@@ -138,12 +142,12 @@ export function OrderItem({ id, close }: OrderItemProps) {
                 <button onClick={() => increaseCartQuantity()}>+</button>
               </div>
             </div>
-            <div className="product-description">
+            <div className={styles.product_description}>
               <p>Сума</p>
               <span>{formatPriceUAH(total(cartItemPrice, quantitys))}</span>
             </div>
           </div>
-          <div className="icon-container">
+          <div className={styles.icon_container}>
             <div className=" flex justify-center items-center w-[41px] h-[41px]">
               {isFavorite(id) ? (
                 <HeartWithShadowFilledIcon
