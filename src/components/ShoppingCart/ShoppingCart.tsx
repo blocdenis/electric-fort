@@ -1,18 +1,27 @@
 import { useShoppingCart } from '@/context/ShoppingCartContext';
-import React from 'react';
 import './ShoppingCart.scss';
 import { CartItem } from './CartItem';
-import { applyDiscount, discounts } from '@/services/applyDiscount';
+import { applyDiscount } from '@/services/applyDiscount';
 import { formatPriceUAH } from '@/services/formatCurrency';
 import { ArrowCatalogIcon, EmptyCart } from '../icons';
 import Link from 'next/link';
 import { useProducts } from '@/hooks/useProducts';
 import ArrowCategoriesIcon from '../icons/BackButton';
+import Loading from '../Loading/Loading';
+import { useAuth } from '@/context/AuthContext';
+import { useQuery } from '@tanstack/react-query';
+import { getUserInfo } from '@/services/api/api';
 
 const ShoppingCart = () => {
-  const { cartItems, cartQuantity, closeCart } = useShoppingCart();
+  const { data: user, isLoading: isLoadingUser } = useQuery({
+    queryKey: ['user'],
+    queryFn: () => getUserInfo(),
+    staleTime: 10 * 1000,
+  });
+
+  const { cartItems, cartQuantity, closeCart, isPending } = useShoppingCart();
   const { products } = useProducts();
-  // console.log(cartItems);
+
   const calculateTotal = () => {
     const total = cartItems?.reduce((total, cartItem) => {
       const item = products.find((i) => i.id === cartItem.id);
@@ -25,41 +34,51 @@ const ShoppingCart = () => {
     return total !== undefined ? total.toFixed(2) : '0.00';
   };
   const totalAmount = parseFloat(calculateTotal());
+  const { isAuthenticated } = useAuth();
+
+  const discount = isAuthenticated && user ? user?.discount : 0;
+
   return (
     <div className="cart-modal-content">
       {cartQuantity > 0 ? (
-        <>
-          <h2 className="cart-hero">Кошик</h2>
-          {cartItems?.map((item) => (
-            <CartItem key={item.id} {...item} close={closeCart} />
-          ))}
-          <div className="flex flex-col gap-4">
-            <div className="checkout-container">
-              <div className="checkout-info">
-                <p>Сума</p> <span>{calculateTotal()}</span>
+        isLoadingUser || isPending || !totalAmount ? (
+          <Loading />
+        ) : (
+          <>
+            <h2 className="cart-hero">Кошик</h2>
+            {cartItems?.map((item) => (
+              <CartItem key={item.id} {...item} close={closeCart} />
+            ))}
+            <div className="flex flex-col gap-4">
+              <div className="checkout-container">
+                <div className="checkout-info">
+                  <p>Сума</p> <span>{totalAmount}</span>
+                </div>
+                <div className="checkout-info">
+                  <p>Знижка</p> <span>{discount} %</span>
+                </div>
+                <div className="checkout-info">
+                  <p>До сплати</p>{' '}
+                  <span>
+                    {formatPriceUAH(applyDiscount(totalAmount, discount))}
+                  </span>
+                </div>
               </div>
-              <div className="checkout-info">
-                <p>Знижка</p> <span>{discounts(totalAmount)} %</span>
-              </div>
-              <div className="checkout-info">
-                <p>До сплати</p>{' '}
-                <span>{formatPriceUAH(applyDiscount(totalAmount))}</span>
+              <div className="flex flex-row justify-between content-start">
+                <button
+                  onClick={closeCart}
+                  className="flex flex-row gap-3 items-center "
+                >
+                  <ArrowCatalogIcon rotation={180} fill="white" />
+                  <Link href={'/'}>Продовжити покупки</Link>
+                </button>
+                <button className="checkout-btn" onClick={closeCart}>
+                  <Link href={'/order'}>Оформити замовлення</Link>
+                </button>
               </div>
             </div>
-            <div className="flex flex-row justify-between content-start">
-              <button
-                onClick={closeCart}
-                className="flex flex-row gap-3 items-center "
-              >
-                <ArrowCatalogIcon rotation={180} fill="white" />
-                <Link href={'/'}>Продовжити покупки</Link>
-              </button>
-              <button className="checkout-btn" onClick={closeCart}>
-                <Link href={'/order'}>Оформити замовлення</Link>
-              </button>
-            </div>
-          </div>
-        </>
+          </>
+        )
       ) : (
         <div>
           <div className="empty-cart">

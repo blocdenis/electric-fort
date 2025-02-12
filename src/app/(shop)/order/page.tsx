@@ -2,7 +2,7 @@ import Breadcrumbs from '@/components/Breadcrumb/Breadcrumbs';
 
 import React from 'react';
 import OrderForm from '../../../components/Order/OrderForm';
-import './styles.scss';
+import styles from './styles.module.scss';
 import OrderCart from '@/components/Order/OrderCart';
 import Container from '@/components/Container/Container';
 
@@ -12,7 +12,7 @@ const OrderPage = () => {
     <div>
       <Container>
         <Breadcrumbs items={breadcrumbsItens} />
-        <div className="container">
+        <div className={styles.container}>
           <div className="item">
             <OrderForm />
           </div>
