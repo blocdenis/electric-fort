@@ -12,6 +12,8 @@ import { useRouter } from 'next/navigation';
 import AuthModal from '../AuthModal/AuthModal';
 import Link from 'next/link';
 import CityWarehouseSelect from './CityWarehouseSelect';
+import { useQuery } from '@tanstack/react-query';
+import { getUserInfo } from '@/services/api/api';
 
 enum DeliveryMethods {
   PICKUP = 'Самовивіз',
@@ -46,6 +48,12 @@ interface IForm {
 
 const OrderForm = () => {
   const { isAuthenticated } = useAuth();
+  const { data: user, isFetching } = useQuery({
+    queryKey: ['user'],
+    queryFn: () => getUserInfo(),
+    enabled: isAuthenticated,
+  });
+
   const router = useRouter();
   const { cartItems, clearCart } = useShoppingCart();
   const {
@@ -57,6 +65,10 @@ const OrderForm = () => {
     reset,
   } = useForm<IForm>({
     defaultValues: {
+      firstName: user?.first_name ?? '',
+      lastName: user?.last_name ?? '',
+      email: user?.email ?? '',
+      phone: user?.phone ?? '',
       dilivery: DeliveryMethods.PICKUP,
       payment: PaymentMethods.ONLINE,
     },
@@ -162,6 +174,20 @@ const OrderForm = () => {
   }, [deliveryMethod]);
 
   useEffect(() => {
+    setValue('firstName', isAuthenticated ? user?.first_name ?? '' : '', {});
+    setValue('lastName', isAuthenticated ? user?.last_name ?? '' : '', {});
+    setValue('email', isAuthenticated ? user?.email ?? '' : '', {});
+    setValue('phone', isAuthenticated ? user?.phone ?? '' : '', {});
+  }, [
+    setValue,
+    isAuthenticated,
+    user?.first_name,
+    user?.last_name,
+    user?.email,
+    user?.phone,
+  ]);
+
+  useEffect(() => {
     setValue('pib', `${firstName || ''} ${lastName || ''}`.trim());
   }, [firstName, lastName, setValue]);
 
@@ -244,206 +270,216 @@ const OrderForm = () => {
   );
 
   return (
-    <form className="order-form" onSubmit={handleSubmit(onSubmit)}>
-      <div className="form-section">
-        <h2 className=" invisible h-0 laptop:visible laptop:h-full">
-          Оформлення замовлення
-        </h2>
+    <>
+      <form className="order-form" onSubmit={handleSubmit(onSubmit)}>
+        <div className="form-section">
+          <h2 className=" invisible h-0 laptop:visible laptop:h-full">
+            Оформлення замовлення
+          </h2>
 
-        <div className="header">
-          <h3>1. Особисті дані</h3>
-          {!isAuthenticated && (
-            <div className="btn-block">
-              <span>Вже маєш акаунт ? </span>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  openModal();
-                }}
-                className="btn"
-              >
-                Увійти
-              </button>
-            </div>
+          <div className="header">
+            <h3>1. Особисті дані</h3>
+            {!isAuthenticated && (
+              <div className="btn-block">
+                <span>Вже маєш акаунт ? </span>
+                <button onClick={openModal} className="btn">
+                  Увійти
+                </button>
+              </div>
+            )}
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="firstName">Ім&apos;я*</label>
+            <input
+              id="firstName"
+              placeholder="Ім'я"
+              {...register('firstName', {
+                required: true,
+              })}
+            />
+            {errors.firstName && <span>Обов&apos;язкове поле</span>}
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="lastName">Прізвище*</label>
+            <input
+              id="lastName"
+              placeholder="Прізвище"
+              {...register('lastName', { required: true })}
+            />
+            {errors.lastName && <span>Обов&apos;язкове поле</span>}
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="email">Електронна пошта*</label>
+            <input
+              placeholder="Введіть електронну пошту"
+              id="email"
+              type="email"
+              {...register('email', { required: true })}
+            />
+            {errors.email && <span>Обов&apos;язкове поле</span>}
+          </div>
+
+          <div className="form-field">
+            <label htmlFor="phone">Номер телефону*</label>
+            <input
+              id="phone"
+              type="tel"
+              placeholder="+380 (__)___-__-__"
+              {...register('phone', { required: true })}
+            />
+            {errors.phone && <span>Обов&apos;язкове поле</span>}
+          </div>
+        </div>
+        <div className="form-section">
+          <h3>2. Доставка</h3>
+          <div className="form-grid">
+            {Object.values(DeliveryMethods).map((method, index) => (
+              <div key={index} className="form-grid-item">
+                <label className="flex flex-row gap-4 text-md">
+                  <input
+                    type="radio"
+                    value={method}
+                    {...register('dilivery', { required: true })}
+                  />
+                  {watch('dilivery') === method ? (
+                    <RadioTrue />
+                  ) : (
+                    <RadioFalse />
+                  )}
+                  {method}
+                </label>
+              </div>
+            ))}
+            {errors.dilivery && <span>Обов&apos;язкове поле</span>}
+          </div>
+        </div>
+
+        {showCityInput && (
+          <CityWarehouseSelect
+            onSelectCity={handleSelectCity}
+            onSelectWarehouse={handleSelectWarehouse}
+          />
+        )}
+        {showTownInput && (
+          <div className="form-field">
+            <label htmlFor="street">misto</label>
+            <input
+              id="city_dilivery"
+              placeholder="misto"
+              {...register('city_dilivery', { required: true })}
+            />
+            {errors.city_dilivery && <span>Обов&apos;язкове поле</span>}
+          </div>
+        )}
+        {showDepartmentInput && (
+          <div className="form-field">
+            <label htmlFor="deartment">viddilenia</label>
+            <input
+              id="apartment"
+              placeholder="Квартира"
+              {...register('department', { required: true })}
+            />
+            {errors.department && <span>Обов&apos;язкове поле</span>}
+          </div>
+        )}
+
+        {showStreetInput && (
+          <div className="form-field">
+            <label htmlFor="street">Вулиця*</label>
+            <input
+              id="street"
+              placeholder="Вулиця"
+              {...register('street', { required: true })}
+            />
+            {errors.street && <span>Обов&apos;язкове поле</span>}
+          </div>
+        )}
+        {showHouseInput && (
+          <div className="form-field">
+            <label htmlFor="house">Будинок*</label>
+            <input
+              id="house"
+              placeholder="Будинок"
+              {...register('house', { required: true })}
+            />
+            {errors.house && <span>Обов&apos;язкове поле</span>}
+          </div>
+        )}
+
+        {showApartmentInput && (
+          <div className="form-field">
+            <label htmlFor="apartment">Квартира*</label>
+            <input
+              id="apartment"
+              placeholder="Квартира"
+              {...register('apartment', { required: true })}
+            />
+            {errors.apartment && <span>Обов&apos;язкове поле</span>}
+          </div>
+        )}
+
+        <div className="form-section">
+          <h3>3. Оплата</h3>
+          <div className="fortm-grid">
+            {paymentMethods[deliveryMethod].map((method, index) => (
+              <div key={index} className="form-grid-item">
+                <label className="flex flex-row gap-4 text-md">
+                  <input
+                    type="radio"
+                    value={method}
+                    {...register('payment', { required: true })}
+                  />
+                  <div className="radio-icon">
+                    {watch('payment') === method ? (
+                      <RadioTrue />
+                    ) : (
+                      <RadioFalse />
+                    )}
+                  </div>
+
+                  <span className="payment-method-text">{method}</span>
+                </label>
+              </div>
+            ))}
+            {errors.payment && <span>Обов&apos;язкове поле</span>}
+          </div>
+          {paymentMethod === PaymentMethods.COD && (
+            <p className="cod-info">
+              Важливо! Якщо оплачувати готівкою при отриманні - до суми
+              замовлення буде додано 2% + 20 грн від суми замовлення
+              (післяплата) згідно тарифів Нової Пошти
+            </p>
           )}
         </div>
 
-        <div className="form-field">
-          <label htmlFor="firstName">Ім&apos;я*</label>
-          <input
-            id="firstName"
-            placeholder="Ім'я"
-            {...register('firstName', { required: true })}
-          />
-          {errors.firstName && <span>Обов&apos;язкове поле</span>}
+        <div className="form-section">
+          <h4>Додати коментар до замовлення</h4>
+          <div className="form-field">
+            <textarea
+              {...register('comment')}
+              placeholder="Введіть ваш текст"
+            />
+          </div>
         </div>
 
-        <div className="form-field">
-          <label htmlFor="lastName">Прізвище*</label>
-          <input
-            id="lastName"
-            placeholder="Прізвище"
-            {...register('lastName', { required: true })}
-          />
-          {errors.lastName && <span>Обов&apos;язкове поле</span>}
+        <div className="button-container">
+          <button type="submit" className="submit-button">
+            Підтвердити замовлення
+          </button>
+          <Link href="/oferta">
+            <p>
+              Підтверджуючи замовлення, ви приймаєте умови угоди користувача
+            </p>
+          </Link>
         </div>
-
-        <div className="form-field">
-          <label htmlFor="email">Електронна пошта*</label>
-          <input
-            placeholder="Введіть електронну пошту"
-            id="email"
-            type="email"
-            {...register('email', { required: true })}
-          />
-          {errors.email && <span>Обов&apos;язкове поле</span>}
-        </div>
-
-        <div className="form-field">
-          <label htmlFor="phone">Номер телефону*</label>
-          <input
-            id="phone"
-            type="tel"
-            placeholder="+380 (__)___-__-__"
-            {...register('phone', { required: true })}
-          />
-          {errors.phone && <span>Обов&apos;язкове поле</span>}
-        </div>
-      </div>
-      <div className="form-section">
-        <h3>2. Доставка</h3>
-        <div className="form-grid">
-          {Object.values(DeliveryMethods).map((method, index) => (
-            <div key={index} className="form-grid-item">
-              <label className="flex flex-row gap-4 text-md">
-                <input
-                  type="radio"
-                  value={method}
-                  {...register('dilivery', { required: true })}
-                />
-                {watch('dilivery') === method ? <RadioTrue /> : <RadioFalse />}
-                {method}
-              </label>
-            </div>
-          ))}
-          {errors.dilivery && <span>Обов&apos;язкове поле</span>}
-        </div>
-      </div>
-
-      {showCityInput && (
-        <CityWarehouseSelect
-          onSelectCity={handleSelectCity}
-          onSelectWarehouse={handleSelectWarehouse}
-        />
-      )}
-      {showTownInput && (
-        <div className="form-field">
-          <label htmlFor="street">misto</label>
-          <input
-            id="city_dilivery"
-            placeholder="misto"
-            {...register('city_dilivery', { required: true })}
-          />
-          {errors.city_dilivery && <span>Обов&apos;язкове поле</span>}
-        </div>
-      )}
-      {showDepartmentInput && (
-        <div className="form-field">
-          <label htmlFor="deartment">viddilenia</label>
-          <input
-            id="apartment"
-            placeholder="Квартира"
-            {...register('department', { required: true })}
-          />
-          {errors.department && <span>Обов&apos;язкове поле</span>}
-        </div>
-      )}
-
-      {showStreetInput && (
-        <div className="form-field">
-          <label htmlFor="street">Вулиця*</label>
-          <input
-            id="street"
-            placeholder="Вулиця"
-            {...register('street', { required: true })}
-          />
-          {errors.street && <span>Обов&apos;язкове поле</span>}
-        </div>
-      )}
-      {showHouseInput && (
-        <div className="form-field">
-          <label htmlFor="house">Будинок*</label>
-          <input
-            id="house"
-            placeholder="Будинок"
-            {...register('house', { required: true })}
-          />
-          {errors.house && <span>Обов&apos;язкове поле</span>}
-        </div>
-      )}
-
-      {showApartmentInput && (
-        <div className="form-field">
-          <label htmlFor="apartment">Квартира*</label>
-          <input
-            id="apartment"
-            placeholder="Квартира"
-            {...register('apartment', { required: true })}
-          />
-          {errors.apartment && <span>Обов&apos;язкове поле</span>}
-        </div>
-      )}
-
-      <div className="form-section">
-        <h3>3. Оплата</h3>
-        <div className="fortm-grid">
-          {paymentMethods[deliveryMethod].map((method, index) => (
-            <div key={index} className="form-grid-item">
-              <label className="flex flex-row gap-4 text-md">
-                <input
-                  type="radio"
-                  value={method}
-                  {...register('payment', { required: true })}
-                />
-                <div className="radio-icon">
-                  {watch('payment') === method ? <RadioTrue /> : <RadioFalse />}
-                </div>
-
-                <span className="payment-method-text">{method}</span>
-              </label>
-            </div>
-          ))}
-          {errors.payment && <span>Обов&apos;язкове поле</span>}
-        </div>
-        {paymentMethod === PaymentMethods.COD && (
-          <p className="cod-info">
-            Важливо! Якщо оплачувати готівкою при отриманні - до суми замовлення
-            буде додано 2% + 20 грн від суми замовлення (післяплата) згідно
-            тарифів Нової Пошти
-          </p>
-        )}
-      </div>
-
-      <div className="form-section">
-        <h4>Додати коментар до замовлення</h4>
-        <div className="form-field">
-          <textarea {...register('comment')} placeholder="Введіть ваш текст" />
-        </div>
-      </div>
-
-      <div className="button-container">
-        <button type="submit" className="submit-button">
-          Підтвердити замовлення
-        </button>
-        <Link href="/oferta">
-          <p> Підтверджуючи замовлення, ви приймаєте умови угоди користувача</p>
-        </Link>
-      </div>
-
+      </form>
       {isAuthOpen && (
         <AuthModal isRegistrationForm={false} onClose={closeModal} />
       )}
-    </form>
+    </>
   );
 };
 
