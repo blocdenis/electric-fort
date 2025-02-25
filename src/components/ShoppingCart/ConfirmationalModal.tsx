@@ -18,7 +18,7 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   useEffect(() => {
     if (isOpen && buttonRef.current && modalRef.current) {
       const buttonRect = buttonRef.current.getBoundingClientRect();
-      modalRef.current.style.top = `${buttonRect.top + window.scrollY}px`;
+      modalRef.current.style.top = `${buttonRect.top}px`;
     }
   }, [isOpen, buttonRef]);
 
